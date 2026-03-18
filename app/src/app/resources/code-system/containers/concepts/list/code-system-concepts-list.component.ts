@@ -63,6 +63,7 @@ interface FilterProperty {
 
 const INITIAL_FULL_LOAD = 20;
 const PREVIEW_LOADING_MINIMUM = 200;
+const ROOT_CONCEPT_PAGE_SIZE = 100;
 
 @Component({
     selector: 'tw-code-system-concepts-list',
@@ -114,6 +115,8 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   protected query = new ConceptSearchParams();
   protected searchResult = SearchResult.empty<CodeSystemConcept>();
   protected rootConcepts?: ConceptNode[] = [];
+  protected rootConceptsTotal = 0;
+  protected rootConceptLimit = ROOT_CONCEPT_PAGE_SIZE;
 
   protected filter: Filter = {open: false, inputType: 'contains'};
   protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
@@ -178,23 +181,51 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   }
 
   protected groupConcepts(groupParam: string): void {
-    this.loadRootConcepts(groupParam).subscribe(resp => {
-      this.rootConcepts = resp.map(c => this.mapToNode(c));
-      if (this.rootConcepts.length > PREVIEW_LOADING_MINIMUM) {
-        this.needsPreview = true;
-        this.rootConcepts.slice(0, INITIAL_FULL_LOAD).forEach(node => node.detailsExpanded = true);
-      }
+    this.rootConceptLimit = ROOT_CONCEPT_PAGE_SIZE;
+    this.loadRootConceptsPage(groupParam, 0, this.rootConceptLimit).subscribe(resp => {
+      this.rootConceptsTotal = resp.meta.total ?? resp.data.length;
+      this.codeToNodeMap.clear();
+      this.rootConcepts = resp.data.map(c => this.mapToNode(c));
+      this.updatePreviewState();
     });
   }
 
-  private loadRootConcepts(groupParam: string): Observable<CodeSystemConcept[]> {
+  private loadRootConceptsPage(groupParam: string, offset: number, limit: number): Observable<SearchResult<CodeSystemConcept>> {
     const params = new ConceptSearchParams();
     params.associationRoot = groupParam;
     params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
-    params.limit = 10000;
+    params.offset = offset;
+    params.limit = limit;
 
-    return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params)).pipe(map(resp => resp.data));
+    return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params));
+  }
+
+  protected loadMoreRootConcepts(): void {
+    if (!this.codeSystem?.hierarchyMeaning || this.rootConcepts.length >= this.rootConceptsTotal) {
+      return;
+    }
+
+    this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, this.rootConcepts.length, ROOT_CONCEPT_PAGE_SIZE).subscribe(resp => {
+      this.rootConceptLimit += resp.data.length;
+      this.rootConceptsTotal = resp.meta.total ?? this.rootConceptsTotal;
+      this.rootConcepts = [...this.rootConcepts, ...resp.data.map(c => this.mapToNode(c))];
+      this.updatePreviewState();
+    });
+  }
+
+  protected loadAllRootConcepts(): void {
+    if (!this.codeSystem?.hierarchyMeaning || this.rootConcepts.length >= this.rootConceptsTotal) {
+      return;
+    }
+
+    const remaining = this.rootConceptsTotal - this.rootConcepts.length;
+    this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, this.rootConcepts.length, remaining).subscribe(resp => {
+      this.rootConceptLimit += resp.data.length;
+      this.rootConceptsTotal = resp.meta.total ?? this.rootConceptsTotal;
+      this.rootConcepts = [...this.rootConcepts, ...resp.data.map(c => this.mapToNode(c))];
+      this.updatePreviewState();
+    });
   }
 
 
@@ -308,6 +339,13 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     };
     this.codeToNodeMap.set(node.code, node);
     return node;
+  }
+
+  private updatePreviewState(): void {
+    this.needsPreview = this.rootConcepts.length > PREVIEW_LOADING_MINIMUM;
+    if (this.needsPreview) {
+      this.rootConcepts.slice(0, INITIAL_FULL_LOAD).forEach(node => node.detailsExpanded = true);
+    }
   }
 
 
@@ -526,6 +564,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
       query: this.query,
       expandedNodes: expanded,
+      rootConceptLimit: this.rootConceptLimit,
 
       scrollY: window.scrollY
     });
@@ -542,10 +581,19 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
       tap(resp => this.searchResult = resp)
     );
 
-    const rootConcepts$ = (this.codeSystem?.hierarchyMeaning ? this.loadRootConcepts(this.codeSystem.hierarchyMeaning) : of([])).pipe(
-      mergeMap(concepts => {
-        const roots = concepts.map(c => this.mapToNode(c));
-        const children: Observable<{code: string, data: CodeSystemConcept[]}>[] = state.expandedNodes.map(code => {
+    this.rootConceptLimit = state.rootConceptLimit ?? ROOT_CONCEPT_PAGE_SIZE;
+
+    const expandedNodes = state.expandedNodes ?? [];
+    const initialRootConcepts$: Observable<SearchResult<CodeSystemConcept>> = this.codeSystem?.hierarchyMeaning
+      ? this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, 0, this.rootConceptLimit)
+      : of(SearchResult.empty<CodeSystemConcept>());
+
+    const rootConcepts$ = initialRootConcepts$.pipe(
+      mergeMap((resp: SearchResult<CodeSystemConcept>) => {
+        this.rootConceptsTotal = resp.meta.total ?? resp.data.length;
+        this.codeToNodeMap.clear();
+        const roots = resp.data.map(c => this.mapToNode(c));
+        const children: Observable<{code: string, data: CodeSystemConcept[]}>[] = expandedNodes.map(code => {
           return this.loadChildren(code).pipe(map(r => ({code, data: r.data})));
         });
         return forkJoin([of(roots), ...children]);
@@ -562,6 +610,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
           }
         };
         this.rootConcepts.forEach(c => expand(c));
+        this.updatePreviewState();
       })
     );
 

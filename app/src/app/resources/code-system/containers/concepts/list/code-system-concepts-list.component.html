@@ -153,6 +153,20 @@
           @for (root of rootConcepts; track root) {
             <ng-container *ngTemplateOutlet="treeView; context: {node: root, level: 0}"/>
           }
+          @if (rootConcepts.length < rootConceptsTotal) {
+            <tr>
+              <td colspan="100%">
+                <div class="m-items-middle m-justify-center" style="gap: .5rem;">
+                  <m-button (mClick)="loadMoreRootConcepts()" [mLoading]="loader.state['group']" [disabled]="loader.isLoading">
+                    {{'core.load-more' | translate}} ({{rootConcepts.length}} / {{rootConceptsTotal}})
+                  </m-button>
+                  <m-button (mClick)="loadAllRootConcepts()" [mLoading]="loader.state['group']" [disabled]="loader.isLoading">
+                    {{'core.load-all' | translate}}
+                  </m-button>
+                </div>
+              </td>
+            </tr>
+          }
           <tr *mTableNoData>
             <td colspan="100%">
               <m-no-data></m-no-data>
@@ -196,80 +210,95 @@
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
           (click)="selectConcept(node.concept)"
           >
+        @if (!groupOpened || !needsPreview || node.detailsExpanded) {
           <ng-container *ngTemplateOutlet="rowContent; context: {node: node, level: level}"/>
+        } @else {
+          <ng-container *ngTemplateOutlet="previewRowContent; context: {node: node, level: level}"/>
+        }
         </tr>
+
         @for (child of node.children; track child) {
           <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
         }
       </ng-template>
 
+      <ng-template #treeSpacer let-level="level">
+        <span
+          aria-hidden="true"
+          [style.margin-left.rem]="level"
+          style="display: inline-block; width: 2rem; height: 2rem;"
+        ></span>
+      </ng-template>
+
+      <ng-template #designationContent let-node="node">
+        <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+          @for (designation of (node.concept | apply: getDesignations) | apply: sortDesignations: version?.preferredLanguage; track designation) {
+            @if ((!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
+              (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))) {
+              <span class="m-bold">{{designation.language}}</span>
+              {{designation.name}}
+            }
+          }
+        </div>
+      </ng-template>
+
+      <ng-template #previewRowContent let-node="node" let-level="level">
+        <td>
+          <div class="m-items-middle m-bold">
+            <ng-container *ngTemplateOutlet="treeSpacer; context: {level: level}"/>
+            {{node.code}}
+          </div>
+        </td>
+        <td>
+          <ng-container *ngTemplateOutlet="designationContent; context: {node: node}"/>
+        </td>
+        <td></td>
+        <td></td>
+      </ng-template>
 
       <ng-template #rowContent let-node="node" let-level="level">
         <td>
-          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
-            <div class="m-items-middle m-bold">
-              @if (groupOpened) {
+          <div class="m-items-middle m-bold">
+            @if (groupOpened) {
+              @if (node.expandable) {
                 <m-icon-button
                   [style.padding-left.rem]="level"
-                  [style.opacity]="node.expandable ? '1' : '0'"
-                  [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
+                  [mIcon]="node.loading ? 'loading' : node.expanded ? 'folder-open' : 'folder'"
                   (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"
                 ></m-icon-button>
+              } @else {
+                <ng-container *ngTemplateOutlet="treeSpacer; context: {level: level}"/>
               }
+            }
 
-              @if (node.code | apply: getConceptEditRoute; as route) {
-                <a [routerLink]="route.path" [queryParams]="route.query">
-                  {{node.code}}
-                </a>
-              }
-            </div>
-          } @else {
-            <div class="m-items-middle m-bold">
-              @if (groupOpened) {
-                <m-icon-button
-                  [style.padding-left.rem]="level"
-                  [style.opacity]="'1'"
-                  [mIcon]="'file'"
-                ></m-icon-button>
-              }
-              {{node.code}}
-            </div>
-          }
-        </td>
-        <td>
-          <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-            @for (designation of (node.concept | apply: getDesignations) | apply: sortDesignations: version?.preferredLanguage; track designation) {
-              @if ((!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
-                (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))) {
-                <span class="m-bold">{{designation.language}}</span>
-                {{designation.name}}
-              }
+            @if (node.code | apply: getConceptEditRoute; as route) {
+              <a [routerLink]="route.path" [queryParams]="route.query">
+                {{node.code}}
+              </a>
             }
           </div>
         </td>
         <td>
-          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
-            <div>
-              @for (property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties); track property) {
-                <div style="display: flex"
-                  >
-                  <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
-                  <tw-property-value-input style="flex: 1; text-align: right"
-                    viewMode
-                    [ngModel]="property.value"
-                    [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-                    [codeSystem]="codeSystem.id"
-                  ></tw-property-value-input>
-                </div>
-              }
-            </div>
-          } @else {
-            <span class="m-muted">{{((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)?.length || 0}}</span>
-          }
+          <ng-container *ngTemplateOutlet="designationContent; context: {node: node}"/>
         </td>
         <td>
-          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
-            <m-dropdown>
+          <div>
+            @for (property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties); track property) {
+              <div style="display: flex"
+                >
+                <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+                <tw-property-value-input style="flex: 1; text-align: right"
+                  viewMode
+                  [ngModel]="property.value"
+                  [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                  [codeSystem]="codeSystem.id"
+                ></tw-property-value-input>
+              </div>
+            }
+          </div>
+        </td>
+        <td>
+          <m-dropdown>
             <a *m-dropdown-item (mClick)="openFhir(node.code)">
               {{'web.code-system-concept.list.open-fhir' | translate}}
             </a>
@@ -288,8 +317,7 @@
                 {{'web.code-system-concept.list.propagate-properties' | translate}}
               </a>
             }
-            </m-dropdown>
-          }
+          </m-dropdown>
         </td>
       </ng-template>
     </tw-table>

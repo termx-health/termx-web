@@ -35,6 +35,7 @@
 		"session-expiration-error": "Session is expired!",
 		"filter": "Filter",
 		"form-invalid": "Form invalid.  Please review the data",
+		"load-all": "Load all",
 		"load-more": "Load more",
 		"no-data": "No data",
 		"no-privilege": {

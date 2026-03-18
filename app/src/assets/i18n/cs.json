@@ -29,6 +29,7 @@
         "session-expiration-error": "Relace vypršela!",
         "filter": "Filtr",
         "form-invalid": "Formulář je neplatný. Zkontrolujte data.",
+        "load-all": "Načíst vše",
         "load-more": "Načíst více",
         "no-data": "Žádná data",
         "no-privilege": {

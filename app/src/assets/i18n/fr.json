@@ -8,6 +8,10 @@
     "nl": "Néerlandais",
     "cs": "Czech"
   },
+  "core": {
+    "load-all": "Tout charger",
+    "load-more": "Charger plus"
+  },
   "web": {
     "resource-context": {
       "details": "Détails"
