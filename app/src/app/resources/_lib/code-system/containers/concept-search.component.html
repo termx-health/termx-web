@@ -7,8 +7,17 @@
   [autoUnselect]="false"
   [multiple]="multiple | toBoolean">
   @for (key of (data | keys); track key) {
+    <ng-template #optionLabel>
+      <span class="m-items-middle" style="gap: .5rem;">
+        <span>{{key | apply:getLabel}}</span>
+        @if (key | apply:getStatus; as status) {
+          <tw-status-tag [status]="status" compact />
+        }
+      </span>
+    </ng-template>
     <m-option
       [mValue]="valueType === 'code' ? data[key]?.code : data[key]?.id"
-    [mLabel]="key | apply:getLabel"></m-option>
+      [mLabel]="key | apply:getLabel"
+      [mLabelTemplate]="showStatus ? optionLabel : undefined"></m-option>
   }
 </m-select>
