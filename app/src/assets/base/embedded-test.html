@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TermX Embedded Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: #ffffff;
+      border-bottom: 1px solid #d0d7de;
+    }
+
+    .toolbar label {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .toolbar input {
+      flex: 1;
+      min-width: 16rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #c7d0d9;
+      border-radius: 0.5rem;
+      font: inherit;
+    }
+
+    .toolbar button {
+      padding: 0.5rem 0.9rem;
+      border: 1px solid #0f62fe;
+      border-radius: 0.5rem;
+      background: #0f62fe;
+      color: #ffffff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <form class="toolbar" id="controls">
+      <label for="path">Embedded path</label>
+      <input id="path" name="path" value="/embedded/landing">
+      <button type="submit">Reload iframe</button>
+    </form>
+    <iframe id="app-frame" title="TermX embedded test"></iframe>
+  </div>
+
+  <script>
+    const form = document.getElementById('controls');
+    const pathInput = document.getElementById('path');
+    const frame = document.getElementById('app-frame');
+
+    function normalizePath(path) {
+      if (!path) {
+        return '/embedded/landing';
+      }
+      return path.startsWith('/') ? path : `/${path}`;
+    }
+
+    function updateFrame(path) {
+      const normalized = normalizePath(path);
+      const url = `${window.location.origin}${normalized}`;
+      frame.src = url;
+      window.history.replaceState({}, '', `${window.location.pathname}?path=${encodeURIComponent(normalized)}`);
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const initialPath = params.get('path') || pathInput.value;
+    pathInput.value = initialPath;
+    updateFrame(initialPath);
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      updateFrame(pathInput.value);
+    });
+  </script>
+</body>
+</html>

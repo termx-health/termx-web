@@ -9,6 +9,7 @@ import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/c
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-web/resources/code-system/services/code-system-coding-reference.service';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, Co
 
   public value?: any;
   protected codingReference?: CodingReferenceSummary;
+  protected embedded = !!environment.embedded;
   private lastReferenceKey?: string;
 
   public onChange = (x: any): void => x;
