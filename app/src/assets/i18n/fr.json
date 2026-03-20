@@ -15,6 +15,10 @@
       "status": "Statut"
     }
   },
+  "core": {
+    "load-all": "Tout charger",
+    "load-more": "Charger plus"
+  },
   "web": {
     "resource-context": {
       "details": "Détails"
@@ -27,6 +31,16 @@
         "manual": "Créer manuellement",
         "open-fhir": "Ouvrir dans FHIR",
         "title": "Définitions de structure"
+      }
+    },
+    "map-set-version": {
+      "form": {
+        "details-header": "Détails de la version"
+      }
+    },
+    "value-set-version": {
+      "form": {
+        "details-header": "Détails de la version"
       }
     },
     "task": {

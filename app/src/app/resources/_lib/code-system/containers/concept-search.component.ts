@@ -6,13 +6,14 @@ import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxj
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from 'term-web/resources/_lib/code-system';
 import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
 
 @Component({
     selector: 'tw-concept-search',
     templateUrl: './concept-search.component.html',
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true }, DestroyService],
-    imports: [MuiSelectModule, FormsModule, ApplyPipe, KeysPipe, ToBooleanPipe]
+    imports: [MuiSelectModule, FormsModule, ApplyPipe, KeysPipe, ToBooleanPipe, StatusTagComponent]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   private conceptService = inject(CodeSystemConceptLibService);
@@ -24,6 +25,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
+  @Input() @BooleanInput() public showStatus: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
 
   @Input() public codeSystem?: string;
@@ -159,6 +161,10 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     if (this.displayType === 'name' || this.displayType === 'codeName') {
       displays.push(this.getDisplay(this.data[key]));
     }
-    return displays.filter(d => isDefined(d)).join(' ');
+    return [...new Set(displays.filter(d => isDefined(d)))].join(' ');
+  };
+
+  protected getStatus = (key: string): string | undefined => {
+    return ConceptUtil.getLastVersion(this.data[key])?.status;
   };
 }

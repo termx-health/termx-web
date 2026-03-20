@@ -13,6 +13,10 @@
       "name": "Naam",
       "publisher": "Uitgever",
       "status": "Status"
+    },
+    "core": {
+      "load-all": "Alles laden",
+      "load-more": "Meer laden"
     }
   },
   "web": {
@@ -27,6 +31,16 @@
         "manual": "Handmatig aanmaken",
         "open-fhir": "Openen in FHIR",
         "title": "Structuurdefinities"
+      }
+    },
+    "map-set-version": {
+      "form": {
+        "details-header": "Versiedetails"
+      }
+    },
+    "value-set-version": {
+      "form": {
+        "details-header": "Versiedetails"
       }
     },
     "task": {

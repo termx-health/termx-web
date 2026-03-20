@@ -1,7 +1,7 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.resource.conf-attribute.multiple' | translate}}</div>
-    @if (configurationAttributes) {
+    @if (!viewMode && configurationAttributes) {
       <m-dropdown>
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'entities.resource.conf-attribute.often-used-attributes' | translate}}
@@ -15,7 +15,7 @@
 
   @if (attributes) {
     <form #form="ngForm">
-      <m-editable-table #rowsTable [mData]="attributes" [mRowInstance]="rowInstance" [mAddAllowed]="false">
+      <m-editable-table #rowsTable [mData]="attributes" [mRowInstance]="rowInstance" [mAddAllowed]="false" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
         <m-editable-column [mTitle]="'entities.resource.conf-attribute.attribute'" mName="attribute">
           <ng-template #viewTemplate let-a>
             <label m-tooltip [mTitle]="a.attribute | apply: attributeDesignation:configurationAttributes:'definition'">

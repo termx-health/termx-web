@@ -23,6 +23,7 @@ export class TerminologyConceptSearchComponent implements OnChanges {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
+  @Input() @BooleanInput() public showStatus: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
 
   @Input() public codeSystem?: string;

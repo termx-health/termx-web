@@ -35,6 +35,7 @@
 		"session-expiration-error": "Session is expired!",
 		"filter": "Filter",
 		"form-invalid": "Form invalid.  Please review the data",
+		"load-all": "Load all",
 		"load-more": "Load more",
 		"no-data": "No data",
 		"no-privilege": {
@@ -1177,6 +1178,7 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Add version",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"entities": {
 					"add-entity": "",
@@ -1712,6 +1714,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Add version",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"view-header": ""
 			},
@@ -2478,6 +2481,7 @@
 					"warning": "Concept has no active version"
 				},
 				"download": "",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"rule-set": {
 					"rule": {

@@ -15,6 +15,10 @@
       "status": "Status"
     }
   },
+  "core": {
+    "load-all": "Alle laden",
+    "load-more": "Mehr laden"
+  },
   "web": {
     "resource-context": {
       "details": "Details"
@@ -27,6 +31,15 @@
         "manual": "Manuell erstellen",
         "open-fhir": "In FHIR öffnen",
         "title": "Strukturdefinitionen"
+    },
+    "map-set-version": {
+      "form": {
+        "details-header": "Versionsdetails"
+      }
+    },
+    "value-set-version": {
+      "form": {
+        "details-header": "Versionsdetails"
       }
     },
     "task": {

@@ -1,4 +1,5 @@
 var twConfig = {
+  "embedded": 'json:${EMBEDDED}',
   "baseHref": "${BASE_HREF}",
   "oauthIssuer": "${OAUTH_ISSUER}",
   "oauthClientId": "${OAUTH_CLIENT_ID}",

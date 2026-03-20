@@ -7,6 +7,7 @@ export const environment: Environment = {
   appVersion: packageJson.version,
   production: true,
   yupiEnabled: false,
+  embedded: dynamicEnv.embedded ?? false,
   baseHref: dynamicEnv.baseHref || '/',
 
   defaultLanguage: dynamicEnv.defaultLanguage || 'en',

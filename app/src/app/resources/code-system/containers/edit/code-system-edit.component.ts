@@ -26,13 +26,15 @@ import { CodeSystemPropertiesComponent as CodeSystemPropertiesComponent_1 } from
 import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
 import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
 import { CodeSystemValueSetAddComponent as CodeSystemValueSetAddComponent_1 } from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
+import { ResourceReadonlyConceptComponent } from 'term-web/resources/resource/components/resource-readonly-concept.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
 import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
     templateUrl: 'code-system-edit.component.html',
-    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, MuiFormModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, MuiRadioModule, AssociationTypeSearchComponent, SequenceSelectComponent, MuiCheckboxModule, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, CodeSystemPropertiesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, CodeSystemValueSetAddComponent_1, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceContextComponent, ResourceFormComponent_1, MuiFormModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, MuiRadioModule, AssociationTypeSearchComponent, SequenceSelectComponent, MuiCheckboxModule, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, CodeSystemPropertiesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, CodeSystemValueSetAddComponent_1, ResourceReadonlyConceptComponent, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class CodeSystemEditComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
@@ -45,6 +47,7 @@ export class CodeSystemEditComponent implements OnInit {
   protected mode: 'edit' | 'add' = 'add';
   protected viewMode = false;
   protected canEdit = false;
+  protected versions: any[] = [];
 
   @ViewChild("form") public form?: NgForm;
 
@@ -56,14 +59,15 @@ export class CodeSystemEditComponent implements OnInit {
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public ngOnInit(): void {
-   this.route.paramMap.subscribe(paramMap => {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
+    this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 
      if (isDefined(id)) {
        this.mode = 'edit';
-       this.viewMode = true;
        this.canEdit = this.authService.hasPrivilege(id + '.CodeSystem.edit');
        this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
+       this.codeSystemService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
      }
      this.codeSystem = this.writeCS(new CodeSystem());
     });
@@ -97,6 +101,12 @@ export class CodeSystemEditComponent implements OnInit {
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  protected openEdit(): void {
+    if (this.codeSystem?.id) {
+      this.router.navigate(['/resources/code-systems', this.codeSystem.id, 'edit']);
+    }
   }
 
   private writeCS(cs: CodeSystem): CodeSystem {

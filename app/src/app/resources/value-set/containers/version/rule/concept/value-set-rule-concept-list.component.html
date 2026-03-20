@@ -16,25 +16,36 @@
         </m-editable-column>
 
         <m-editable-column mWidth="20%" [mTitle]="'entities.value-set-version-concept.concept'" mName="concept" required>
-          <ng-template #viewTemplate let-c>{{c.concept.code}}</ng-template>
+          <ng-template #viewTemplate let-c>
+            {{ c.concept.code | localizedConceptName: {codeSystem: rule?.codeSystem} | async | apply:getCodeLabel:c.concept.code }}
+          </ng-template>
           <ng-template #editTemplate let-c let-ngModelName="ngModelName">
             @if (csContentPresent) {
               <tw-term-concept-search
                   [name]="ngModelName"
                   [(ngModel)]="c.concept.code"
-                  [displayType]="'code'"
+                  [displayType]="'codeName'"
                   [codeSystem]="rule.codeSystem"
                   [codeSystemVersionId]="rule.codeSystemVersion?.id"
                   [codeSystemVersionReleaseDateLe]="lockedDate"
                   [codeSystemVersionExpirationDateGe]="lockedDate"
                   [codeSystemEntityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null"
                   [codeSystemVersionUri]="rule.codeSystemVersion?.uri"
+                  [showStatus]="true"
                   valueType="code"
                   autofocus
                   required></tw-term-concept-search>
             }
             @if (!csContentPresent) {
               <m-input [name]="ngModelName" [(ngModel)]="c.concept.code" required></m-input>
+            }
+          </ng-template>
+        </m-editable-column>
+
+        <m-editable-column mWidth="10%" [mTitle]="'entities.value-set-version.status'" mName="status">
+          <ng-template #viewTemplate let-c>
+            @if (c | apply:conceptReferenceStatus:c.concept.code | async; as status) {
+              <tw-status-tag [status]="status" />
             }
           </ng-template>
         </m-editable-column>

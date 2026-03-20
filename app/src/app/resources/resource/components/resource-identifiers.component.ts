@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/core-util';
-import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiInputModule, MuiTableModule } from '@kodality-web/marina-ui';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -15,6 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
         MuiCoreModule,
         FormsModule,
         MuiEditableTableModule,
+        MuiTableModule,
         MuiInputModule,
         TranslatePipe,
     ],

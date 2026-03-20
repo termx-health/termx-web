@@ -122,6 +122,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "embedded": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "app/src/environments/environment.ts",
+                  "with": "app/src/environments/environment.embedded.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -134,6 +148,9 @@
             },
             "development": {
               "buildTarget": "app:build:development"
+            },
+            "embedded": {
+              "buildTarget": "app:build:embedded"
             }
           },
           "defaultConfiguration": "development"

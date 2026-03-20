@@ -7,7 +7,7 @@ import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
-import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiSelectModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { AsyncPipe } from '@angular/common';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
@@ -38,6 +38,7 @@ import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pi
         MuiNumberInputModule,
         ValueSetConceptSelectComponent,
         MuiDividerModule,
+        MuiIconModule,
         CodeSystemSearchComponent,
         ValueSetSearchComponent,
         MuiSelectModule,
@@ -64,6 +65,7 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
 
   protected designationProperties: EntityProperty[] = [];
   protected basicProperties: EntityProperty[];
+  protected expandedDesignationPropertyKey?: string;
   protected expandedBasicPropertyKey?: string;
 
   protected designationRowInstance: EntityProperty = {kind: 'designation', type: 'string', showInList: true, rule: {filters: []}, status: 'active'};
@@ -136,14 +138,21 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
     }
   }
 
-  protected getBasicPropertyKey = (p: EntityProperty): string => {
+  protected getPropertyKey = (p: EntityProperty): string => {
     return p?.id ? `id:${p.id}` : `name:${p?.name || ''}`;
   };
+
+  protected toggleDesignationPropertyExpand(p: EntityProperty, event?: any): void {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    const key = this.getPropertyKey(p);
+    this.expandedDesignationPropertyKey = this.expandedDesignationPropertyKey === key ? undefined : key;
+  }
 
   protected toggleBasicPropertyExpand(p: EntityProperty, event?: any): void {
     event?.preventDefault?.();
     event?.stopPropagation?.();
-    const key = this.getBasicPropertyKey(p);
+    const key = this.getPropertyKey(p);
     this.expandedBasicPropertyKey = this.expandedBasicPropertyKey === key ? undefined : key;
   }
 }

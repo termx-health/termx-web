@@ -105,9 +105,15 @@
         @if ('Coding' === property?.type) {
           <span [class.coding-compact-view]="compact" class="m-items-middle" [style.gap]="compact ? '0.15rem' : '0.5rem'">
             @if (compact && codingReference?.href) {
-              <a m-tooltip [mTitle]="value?.code" [href]="codingReference.href" target="_blank" rel="noopener noreferrer">
-                {{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}
-              </a>
+              @if (embedded) {
+                <a m-tooltip [mTitle]="value?.code" [href]="codingReference.href">
+                  {{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}
+                </a>
+              } @else {
+                <a m-tooltip [mTitle]="value?.code" [href]="codingReference.href" target="_blank" rel="noopener noreferrer">
+                  {{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}
+                </a>
+              }
             } @else {
               <label m-tooltip [mTitle]="value?.code">{{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}</label>
             }

@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:embedded": "ng serve --configuration embedded",
     "build": "ng build",
     "watch:lib": "ng build lib --watch --configuration production",
     "test": "ng test",

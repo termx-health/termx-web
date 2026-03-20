@@ -1,12 +1,17 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, validateForm, AutofocusDirective } from '@kodality-web/core-util';
-import {CodeSystemLibService, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule} from 'term-web/resources/_lib';
-import { MuiCardModule, MarinPageLayoutModule, MuiCoreModule, MuiEditableTableModule, MuiNumberInputModule, MuiInputModule, MuiTextareaModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
-import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
-import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
-import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ApplyPipe, AutofocusDirective, BooleanInput, isDefined, validateForm } from '@kodality-web/core-util';
+import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiCoreModule, MuiEditableTableModule, MuiFormModule, MuiIconModule, MuiInputModule, MuiModalModule, MuiNumberInputModule, MuiTextareaModule } from '@kodality-web/marina-ui';
 import { TranslatePipe } from '@ngx-translate/core';
+import { map, Observable, shareReplay } from 'rxjs';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { CodeSystemLibService, EntityProperty, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule } from 'term-web/resources/_lib';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemCodingReferenceService } from 'term-web/resources/code-system/services/code-system-coding-reference.service';
 
 @Component({
     selector: 'tw-value-set-rule-concept-list',
@@ -15,6 +20,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         MuiCardModule,
         MarinPageLayoutModule,
         MuiCoreModule,
+        ApplyPipe,
+        AsyncPipe,
         FormsModule,
         MuiEditableTableModule,
         MuiNumberInputModule,
@@ -22,9 +29,11 @@ import { TranslatePipe } from '@ngx-translate/core';
         AutofocusDirective,
         MuiInputModule,
         ValueSetConceptSelectComponent,
+        LocalizedConceptNamePipe,
         MuiTextareaModule,
         MuiIconModule,
         AddButtonComponent,
+        StatusTagComponent,
         MuiModalModule,
         MuiFormModule,
         MuiButtonModule,
@@ -32,8 +41,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     ],
 })
 export class ValueSetRuleConceptListComponent implements OnChanges {
-  private valueSetService = inject(ValueSetLibService);
   private codeSystemService = inject(CodeSystemLibService);
+  private codingReferenceService = inject(CodeSystemCodingReferenceService);
 
   @Input() public valueSet?: string;
   @Input() public valueSetVersion?: string;
@@ -44,6 +53,8 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
 
   protected rowInstance: ValueSetVersionConcept = {additionalDesignations: [], display: {}, concept: {}};
   protected csContentPresent: boolean = true;
+  protected conceptReferenceProperty: EntityProperty = {type: 'Coding'};
+  private statusCache = new Map<string, Observable<string | undefined>>();
 
   protected modalData: {visible?: boolean, content?: string} = {};
 
@@ -134,5 +145,44 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
     result.push(current);
     return result;
   }
+
+  protected conceptReferenceValue = (item: ValueSetVersionConcept): {code?: string, codeSystem?: string, codeSystemVersion?: string} => {
+    return {
+      code: item?.concept?.code,
+      codeSystem: item?.concept?.codeSystem || this.rule?.codeSystem,
+      codeSystemVersion: this.rule?.codeSystemVersion?.version
+    };
+  };
+
+  protected conceptReferenceStatus = (item: ValueSetVersionConcept, code?: string): Observable<string | undefined> => {
+    const key = [
+      item?.concept?.codeSystem || this.rule?.codeSystem || '',
+      code || item?.concept?.code || '',
+      this.rule?.codeSystemVersion?.version || ''
+    ].join('|');
+
+    if (!this.statusCache.has(key)) {
+      this.statusCache.set(
+        key,
+        this.codingReferenceService.load(this.conceptReferenceProperty, this.conceptReferenceValue(item))
+          .pipe(
+            map(reference => reference?.status),
+            shareReplay({bufferSize: 1, refCount: true})
+          )
+      );
+    }
+
+    return this.statusCache.get(key)!;
+  };
+
+  protected getCodeLabel = (name: string | undefined, code: string | undefined): string | undefined => {
+    if (!name) {
+      return code;
+    }
+    if (!code || name === code) {
+      return name;
+    }
+    return `${code} ${name}`;
+  };
 
 }

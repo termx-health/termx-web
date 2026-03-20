@@ -1,68 +1,89 @@
+@if (mode === 'edit' && codeSystem?.id) {
+  <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="details"></tw-resource-context>
+}
 <m-spinner [mLoading]="loader.state['save']">
   @if (codeSystem) {
     <form nz-row [nzGutter]="12" #form="ngForm">
       <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
         <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
           <div *m-card-header class="m-justify-between">
-            <div class="m-card__title">{{'web.code-system.form.' + mode + '-header' | translate}}</div>
+            <div class="m-card__title">{{(viewMode ? 'web.code-system.form.details-header' : 'web.code-system.form.' + mode + '-header') | translate}}</div>
             @if (viewMode && canEdit) {
-              <m-button mDisplay="text" (mClick)="viewMode = false">
+              <m-button mDisplay="text" (mClick)="openEdit()">
                 {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
               </m-button>
             }
           </div>
           <div *mCardContent="!loader.isLoading">
-            <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
-            <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
+            <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode" [viewMode]="viewMode"></tw-resource-form>
             <m-form-row>
-              <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
-                <tw-value-set-concept-select name="content" [(ngModel)]="codeSystem.content" valueSet="codesystem-content-mode" required/>
+              <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" [required]="!viewMode">
+                @if (!viewMode) {
+                  <tw-value-set-concept-select name="content" [(ngModel)]="codeSystem.content" valueSet="codesystem-content-mode" [required]="!viewMode"/>
+                }
+                @if (viewMode) {
+                  <tw-resource-readonly-concept [value]="codeSystem.content" valueSet="codesystem-content-mode"></tw-resource-readonly-concept>
+                }
               </m-form-item>
               <div *mFormCol>
                 @if (codeSystem.content === 'supplement') {
                   <m-form-item mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
-                    <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive/>
+                    <tw-code-system-search [disabled]="viewMode" name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive/>
                   </m-form-item>
                 }
               </div>
             </m-form-row>
             <m-form-row>
-              <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" required>
-                <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
-                  <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
-                  <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
-                </m-radio-group>
+              <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" [required]="!viewMode">
+                @if (!viewMode) {
+                  <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" [required]="!viewMode">
+                    <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
+                    <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
+                  </m-radio-group>
+                }
+                @if (viewMode) {
+                  <span>{{('web.case-sensitive.options.' + codeSystem.caseSensitive) | translate}}</span>
+                }
               </m-form-item>
               <div *mFormCol></div>
             </m-form-row>
             <m-form-row>
               <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
-                <tw-association-type-search name="hierarchyMeaning"
-                  [(ngModel)]="codeSystem.hierarchyMeaning"
-                  associationKind="codesystem-hierarchy-meaning"
-                  valuePrimitive/>
+                @if (!viewMode) {
+                  <tw-association-type-search name="hierarchyMeaning"
+                    [(ngModel)]="codeSystem.hierarchyMeaning"
+                    associationKind="codesystem-hierarchy-meaning"
+                    valuePrimitive/>
+                }
+                @if (viewMode) {
+                  <span>{{codeSystem.hierarchyMeaning}}</span>
+                }
                 </m-form-item>
                 <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
-                  <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
+                  @if (!viewMode) {
+                    <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
+                  }
+                  @if (viewMode) {
+                    <span>{{codeSystem.sequence}}</span>
+                  }
                 </m-form-item>
               </m-form-row>
               @if (codeSystem.hierarchyMeaning) {
                 <m-form-row>
                   <m-form-item *mFormCol mName="hierarchyGrouping" mLabel="entities.code-system.disable-hierarchy-grouping">
-                    <m-checkbox name="hierarchyGrouping" [(ngModel)]="codeSystem.settings.disableHierarchyGrouping"/>
+                    <m-checkbox name="hierarchyGrouping" [(ngModel)]="codeSystem.settings.disableHierarchyGrouping" [readOnly]="viewMode"/>
                   </m-form-item>
                   <div *mFormCol></div>
                 </m-form-row>
               }
-              <tw-resource-identifiers [(identifiers)]="codeSystem.identifiers"></tw-resource-identifiers>
-              <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes"></tw-resource-configuration-attributes>
-              <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
-              <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
+              <tw-resource-identifiers [(identifiers)]="codeSystem.identifiers" [viewMode]="viewMode"></tw-resource-identifiers>
+              <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes" [viewMode]="viewMode"></tw-resource-configuration-attributes>
+              <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id" [viewMode]="viewMode"></tw-cs-properties>
+              <tw-resource-contacts [(contacts)]="codeSystem.contacts" [viewMode]="viewMode"></tw-resource-contacts>
               @if (mode === 'add') {
                 <tw-resource-version-form></tw-resource-version-form>
               }
-              <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
-            </fieldset>
+              <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet" [viewMode]="viewMode"></tw-cs-value-set>
           </div>
 
           <ng-container *m-card-footer>
@@ -76,11 +97,9 @@
       </div>
 
       <div nz-col [nzMd]="6" [nzXs]="24">
-        <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
           <m-card [mShowSkeleton]="loader.isLoading">
-            <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
+            <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings" [viewMode]="viewMode"/>
           </m-card>
-        </fieldset>
       </div>
     </form>
   }

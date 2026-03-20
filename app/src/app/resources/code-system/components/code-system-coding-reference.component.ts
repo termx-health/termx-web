@@ -1,6 +1,7 @@
 import { Component, DoCheck, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { MuiDividerModule } from '@kodality-web/marina-ui';
 import { BooleanInput } from '@kodality-web/core-util';
+import { environment } from 'environments/environment';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { EntityProperty } from 'term-web/resources/_lib';
 import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-web/resources/code-system/services/code-system-coding-reference.service';
@@ -13,7 +14,11 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
       <span class="coding-reference">
         @if (!compact) {
           @if (reference?.href) {
-            <a [href]="reference?.href" target="_blank" rel="noopener noreferrer">{{ displayCode }}</a>
+            @if (embedded) {
+              <a [href]="reference?.href">{{ displayCode }}</a>
+            } @else {
+              <a [href]="reference?.href" target="_blank" rel="noopener noreferrer">{{ displayCode }}</a>
+            }
           } @else {
             <a>{{ displayCode }}</a>
           }
@@ -51,11 +56,14 @@ export class CodeSystemCodingReferenceComponent implements OnChanges, DoCheck {
   protected reference?: CodingReferenceSummary;
   private lastLookupKey?: string;
 
+  protected readonly embedded = !!environment.embedded;
+
   protected get displayCode(): string | undefined {
     return this.reference?.code || this.value?.code;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    console.log('environment', environment, this.embedded);
     if (changes['property'] || changes['value']) {
       this.refreshReference();
     }

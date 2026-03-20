@@ -4,7 +4,7 @@
     <!--    Source    -->
 
     <m-form-item mName="sourceType" mLabel="web.map-set.form.scope.source" required>
-      <m-radio-group name="sourceType" [(ngModel)]="scope.sourceType" (ngModelChange)="onSourceTypeChange($event)" required>
+      <m-radio-group name="sourceType" [(ngModel)]="scope.sourceType" (ngModelChange)="onSourceTypeChange($event)" [disabled]="viewMode" required>
         <label m-radio-button mValue="code-system">{{'web.map-set.form.scope.type.code-system' | translate}}</label>
         <label m-radio-button mValue="value-set">{{'web.map-set.form.scope.type.value-set' | translate}}</label>
         <label m-radio-button mValue="external-canonical-uri">{{'web.map-set.form.scope.type.external-canonical-uri' | translate}}</label>
@@ -12,17 +12,17 @@
     </m-form-item>
 
     @if (scope.sourceType === 'code-system' && scope.sourceCodeSystems) {
-      <m-editable-table #rowsTable [mData]="scope.sourceCodeSystems" [mRowInstance]="rowInstance">
+      <m-editable-table #rowsTable [mData]="scope.sourceCodeSystems" [mRowInstance]="rowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
         <m-editable-column [mTitle]="'web.map-set.form.scope.code-system'" mName="sourceCodeSystem">
           <ng-template #viewTemplate let-cs>{{cs.id}}</ng-template>
           <ng-template #editTemplate let-cs let-ngModelName="ngModelName">
-            <tw-code-system-search [name]="ngModelName" [(ngModel)]="cs.id" valuePrimitive required></tw-code-system-search>
+            <tw-code-system-search [name]="ngModelName" [(ngModel)]="cs.id" valuePrimitive [disabled]="viewMode" required></tw-code-system-search>
           </ng-template>
         </m-editable-column>
         <m-editable-column [mTitle]="'web.map-set.form.scope.code-system-version'" mName="sourceCodeSystemVersion">
           <ng-template #viewTemplate let-cs>{{cs.version}}</ng-template>
           <ng-template #editTemplate let-cs let-ngModelName="ngModelName">
-            <m-select [name]="ngModelName" [(ngModel)]="cs.version" required>
+            <m-select [name]="ngModelName" [(ngModel)]="cs.version" [disabled]="viewMode" required>
               @for (v of (cs.id | apply:loadCodeSystemVersions | async); track v.version) {
                 <m-option [mValue]="v.version" [mLabel]="v.version"></m-option>
               }
@@ -35,10 +35,10 @@
     @if (scope.sourceType === 'value-set' && scope.sourceValueSet) {
       <m-form-row>
         <m-form-item *mFormCol mName="sourceValueSet" mLabel="web.map-set.form.scope.value-set" required>
-          <tw-value-set-search name="sourceValueSet" [(ngModel)]="scope.sourceValueSet.id" valuePrimitive required></tw-value-set-search>
+          <tw-value-set-search name="sourceValueSet" [(ngModel)]="scope.sourceValueSet.id" valuePrimitive [disabled]="viewMode" required></tw-value-set-search>
         </m-form-item>
         <m-form-item *mFormCol mName="sourceValueSetVersion" mLabel="web.map-set.form.scope.value-set-version" required>
-          <m-select name="sourceValueSetVersion" [(ngModel)]="scope.sourceValueSet.version" required>
+          <m-select name="sourceValueSetVersion" [(ngModel)]="scope.sourceValueSet.version" [disabled]="viewMode" required>
             @for (v of (scope.sourceValueSet.id | apply:loadValueSetVersions | async); track v.version) {
               <m-option [mValue]="v.version" [mLabel]="v.version"></m-option>
             }
@@ -50,7 +50,7 @@
     @if (scope.sourceType === 'external-canonical-uri' && scope.sourceValueSet) {
       <m-form-row>
         <m-form-item mName="sourceValueSetUri" mLabel="web.map-set.form.scope.uri" required>
-          <m-input name="sourceValueSetUri" [(ngModel)]="scope.sourceValueSet.uri" required></m-input>
+          <m-input name="sourceValueSetUri" [(ngModel)]="scope.sourceValueSet.uri" [readOnly]="!!viewMode" required></m-input>
         </m-form-item>
       </m-form-row>
     }
@@ -58,7 +58,7 @@
     <!--    Target    -->
 
     <m-form-item mName="targetType" mLabel="web.map-set.form.scope.target" required>
-      <m-radio-group name="targetType" [(ngModel)]="scope.targetType" (ngModelChange)="onTargetTypeChange($event)" required>
+      <m-radio-group name="targetType" [(ngModel)]="scope.targetType" (ngModelChange)="onTargetTypeChange($event)" [disabled]="viewMode" required>
         <label m-radio-button mValue="code-system">{{'web.map-set.form.scope.type.code-system' | translate}}</label>
         <label m-radio-button mValue="value-set">{{'web.map-set.form.scope.type.value-set' | translate}}</label>
         <label m-radio-button mValue="external-canonical-uri">{{'web.map-set.form.scope.type.external-canonical-uri' | translate}}</label>
@@ -66,17 +66,17 @@
     </m-form-item>
 
     @if (scope.targetType === 'code-system' && scope.targetCodeSystems) {
-      <m-editable-table #rowsTable [mData]="scope.targetCodeSystems" [mRowInstance]="rowInstance">
+      <m-editable-table #rowsTable [mData]="scope.targetCodeSystems" [mRowInstance]="rowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
         <m-editable-column [mTitle]="'web.map-set.form.scope.code-system'" mName="targetCodeSystems">
           <ng-template #viewTemplate let-cs>{{cs.id}}</ng-template>
           <ng-template #editTemplate let-cs let-ngModelName="ngModelName">
-            <tw-code-system-search [name]="ngModelName" [(ngModel)]="cs.id" valuePrimitive required></tw-code-system-search>
+            <tw-code-system-search [name]="ngModelName" [(ngModel)]="cs.id" valuePrimitive [disabled]="viewMode" required></tw-code-system-search>
           </ng-template>
         </m-editable-column>
         <m-editable-column [mTitle]="'web.map-set.form.scope.code-system-version'" mName="targetCodeSystemVersion">
           <ng-template #viewTemplate let-cs>{{cs.version}}</ng-template>
           <ng-template #editTemplate let-cs let-ngModelName="ngModelName">
-            <m-select [name]="ngModelName" [(ngModel)]="cs.version" required>
+            <m-select [name]="ngModelName" [(ngModel)]="cs.version" [disabled]="viewMode" required>
               @for (v of (cs.id | apply:loadCodeSystemVersions | async); track v.version) {
                 <m-option [mValue]="v.version" [mLabel]="v.version"></m-option>
               }
@@ -89,10 +89,10 @@
     @if (scope.targetType === 'value-set' && scope.targetValueSet) {
       <m-form-row>
         <m-form-item *mFormCol mName="targetValueSet" mLabel="web.map-set.form.scope.value-set" required>
-          <tw-value-set-search name="targetValueSet" [(ngModel)]="scope.targetValueSet.id" valuePrimitive required></tw-value-set-search>
+          <tw-value-set-search name="targetValueSet" [(ngModel)]="scope.targetValueSet.id" valuePrimitive [disabled]="viewMode" required></tw-value-set-search>
         </m-form-item>
         <m-form-item *mFormCol mName="targetValueSetVersion" mLabel="web.map-set.form.scope.value-set-version" required>
-          <m-select name="targetValueSetVersion" [(ngModel)]="scope.targetValueSet.version" required>
+          <m-select name="targetValueSetVersion" [(ngModel)]="scope.targetValueSet.version" [disabled]="viewMode" required>
             @for (v of (scope.targetValueSet.id | apply:loadValueSetVersions | async); track v.version) {
               <m-option [mValue]="v.version" [mLabel]="v.version"></m-option>
             }
@@ -104,7 +104,7 @@
     @if (scope.targetType === 'external-canonical-uri' && scope.targetValueSet) {
       <m-form-row>
         <m-form-item *mFormCol mName="targetValueSetUri" mLabel="web.map-set.form.scope.uri" required>
-          <m-input name="targetValueSetUri" [(ngModel)]="scope.targetValueSet.uri" required></m-input>
+          <m-input name="targetValueSetUri" [(ngModel)]="scope.targetValueSet.uri" [readOnly]="!!viewMode" required></m-input>
         </m-form-item>
       </m-form-row>
     }

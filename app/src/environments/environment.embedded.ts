@@ -6,7 +6,7 @@ export const environment: Environment = {
   appVersion: packageJson.version,
   production: false,
   yupiEnabled: true,
-  embedded: false,
+  embedded: true,
   baseHref: '/',
 
   defaultLanguage: 'en',

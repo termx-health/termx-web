@@ -13,7 +13,74 @@
     }
   </div>
   <form #form="ngForm">
-    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance">
+    @if (viewMode) {
+      <m-table [mData]="properties" [mLoading]="loader.isLoading" mSize="small">
+        <tr *mTableHead>
+          <th style="width: 4rem"></th>
+          <th>{{'entities.entity-property.name' | translate}}</th>
+          <th>{{'entities.entity-property.uri' | translate}}</th>
+          <th>{{'entities.entity-property.type' | translate}}</th>
+          <th>{{'entities.entity-property.required' | translate}}</th>
+          <th>{{'entities.entity-property.description' | translate}}</th>
+          <th>{{'entities.entity-property.order-number' | translate}}</th>
+        </tr>
+
+        <ng-container *mTableRow="let p">
+          <tr>
+            <td>
+              <a class="m-clickable" (click)="togglePropertyExpand(p, $event)">
+                <m-icon [mCode]="(p | apply:getPropertyKey) === expandedPropertyKey ? 'up' : 'down'"></m-icon>
+              </a>
+            </td>
+            <td>{{p.name}}</td>
+            <td>{{p.uri}}</td>
+            <td>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td>{{p.description | localName}}</td>
+            <td>{{p.orderNumber}}</td>
+          </tr>
+          @if ((p | apply:getPropertyKey) === expandedPropertyKey) {
+            <tr>
+              <td colspan="7">
+                <m-form-row>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.name">
+                    {{p.name}}
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.uri">
+                    {{p.uri}}
+                  </m-form-item>
+                </m-form-row>
+                <m-form-item mLabel="entities.entity-property.description">
+                  {{p.description | localName}}
+                </m-form-item>
+                <m-form-row>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.type">
+                    {{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.order-number">
+                    {{p.orderNumber}}
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.required">
+                    <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                  </m-form-item>
+                </m-form-row>
+
+                @if ('Coding' === p.type) {
+                  <m-divider>{{'entities.entity-property.rule.singular' | translate}}</m-divider>
+                  <m-form-item mLabel="entities.entity-property.rule.code-systems">
+                    {{p.rule?.codeSystems?.join(', ')}}
+                  </m-form-item>
+                  <m-form-item mLabel="entities.entity-property.rule.value-set">
+                    {{p.rule?.valueSet}}
+                  </m-form-item>
+                }
+              </td>
+            </tr>
+          }
+        </ng-container>
+      </m-table>
+    } @else {
+    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
       <m-editable-column [mTitle]="'entities.entity-property.name'">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
       </m-editable-column>
@@ -37,7 +104,7 @@
       <m-editable-column>
         <ng-template #viewTemplate let-p>
           <div class="m-justify-right">
-            @if (p.id) {
+            @if (p.id && !viewMode) {
               <m-dropdown>
                 <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.map-set.form.properties.delete-property-usages' | translate}}</a>
               </m-dropdown>
@@ -118,6 +185,7 @@
         </tr>
       </ng-template>
     </m-editable-table>
+    }
   </form>
 
 </m-card>
