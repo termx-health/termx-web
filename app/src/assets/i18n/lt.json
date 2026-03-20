@@ -1,2324 +1,2707 @@
 {
-	"core": {
-		"back": "Grįžti",
-		"btn": {
-			"add": "Pridėti",
-			"cancel": "Atšaukti",
-			"clear-all": "Išvalyti viską",
-			"close": "Užverti",
-			"confirm": "Patvirtinti",
-			"copied": "Nukopijuota",
-			"copy": "Kopijuoti",
-			"custom": "Tinkinti",
-			"delete": "Šalinti",
-			"duplicate": "Dubliuoti",
-			"edit": "Redaguoti",
-			"export": "Eksportuoti",
-			"import": "Importuoti",
-			"proceed": "Tęsti",
-			"query": "Užklausa",
-			"save": "Išsaugoti",
-			"search": "Ieškoti",
-			"select": "Pasirinkti",
-			"send": "Siųsti"
-		},
-		"confirm": "Ar tikrai?",
-		"data-lost-warning": "Pakeitimai nebus išsaugoti!",
-		"delete-confirm": "Tikrai šalinti?",
-		"filter": "Filtruoti",
-		"form-invalid": "Netinkama forma.  Peržiūrėkite duomenis",
-		"load-all": "Užkrauti viską",
-		"load-more": "Užkrauti daugiau",
-		"no-data": "Duomenų nėra",
-		"no-privilege": {
-			"access": "Prieiga: {{path}}",
-			"error": "403 prieiga draudžiama",
-			"privileges": {
-				"plural": "Jūs neturite šių privilegijų: {{privileges}}",
-				"singular": "Jūs neturite šios privilegijos: {{privilege}}"
-			}
-		},
-		"version-select": {
-			"custom": "Rinktis"
-		}
-	},
-	"entities": {
-		"association-type": {
-			"code": "Kodas",
-			"description": "Aprašas",
-			"directed": "Nukreiptas",
-			"forward-name": "Pavadinimai nuo pradžių",
-			"kind": "Rūšis",
-			"reverse-name": "Pavadinimai atvirkštine tvarka"
-		},
-		"code-system": {
-			"base-code-system": "Bazinė kodų sistema",
-			"case-sensitivity": "Skirti didžiąsias ir mažąsias raides",
-			"concepts": "Terminai",
-			"contacts": "Kontaktai",
-			"content": "Turinys",
-			"description": "Aprašas",
-			"designations": "Pavadinimai",
-			"hierarchy-meaning": "Hierarchijos reikšmė",
-			"disable-hierarchy-grouping": "Atjungti hierarchinį grupavimą",
-			"id": "ID",
-			"name": "Kompiuterinis pavadinimas",
-			"narrative": "Naratyvas",
-			"plural": "Kodų sistemos",
-			"properties": "Savybės (properties)",
-			"publisher": "Leidėjas",
-			"sequence": "Sąvokos identifikacinio kodo seka",
-			"supported-languages": "Palaikomos kalbos",
-			"title": "Antraštė",
-			"uri": "Universalusis ištekliaus identifikatorius (URI)",
-			"uri-short": "URI",
-			"versions": "Versijos"
-		},
-		"code-system-association": {
-			"status": "Statusas",
-			"target-code": "Paskirtis kodas",
-			"target-id": "Paskirtis ID",
-			"type": "Tipas",
-			"versions": "Sąsajos versijos"
-		},
-		"code-system-concept": {
-			"code": "Kodas",
-			"code-system": "Kodų sistema (code system)",
-			"description": "Komentaras",
-			"type": "Tipas",
-			"versions": "Sąvokos versijos"
-		},
-		"code-system-entity": {
-			"type": "Tipas",
-			"versions": "Esybės versijos"
-		},
-		"code-system-entity-version": {
-			"association-order": "Eilės tvarka",
-			"association-status": "Statusas",
-			"association-target": "Paskirtis",
-			"association-type": "Sąsaja",
-			"associations": "Sąsajos",
-			"code": "Kodas",
-			"created": "Sukurta",
-			"description": "Komentaras",
-			"designations": "Pavadinimai (designations)",
-			"id": "ID",
-			"property-values": "Savybės",
-			"references": "Ryšiai",
-			"status": "Statusas"
-		},
-		"code-system-version": {
-			"description": "Aprašas",
-			"entities": "Esybės versijos",
-			"expiration-date": "Numatomas naudojimas iki",
-			"id": "Identifikatorius",
-			"preferred-language": "Pagrindinė kalba",
-			"release-date": "Numatomas naudojimas nuo",
-			"source": "Leidėjas",
-			"status": "Statusas",
-			"supported-languages": "Palaikomos kalbos",
-			"type": "Tipas",
-			"version": "Versija"
-		},
-		"common": {
-			"privileges": "Privilegijos",
-			"versions": "Versijos"
-		},
-		"contact-detail": {
-			"name": "Vardas, pavardė",
-			"telecom": {
-				"system": "Sistema",
-				"use": "Naudojimas",
-				"value": "Reikšmė"
-			},
-			"telecoms": "Telekomunikacija"
-		},
-		"designation": {
-			"case-significance": "Didžiųjų ir mažųjų raidžių reikšmingumas",
-			"description": "Aprašas",
-			"designation-kind": "Pavadinimo rūšis",
-			"language": "Kalba",
-			"name": "Pavadinimas",
-			"preferred": "Pirminis",
-			"rendering": "Atvaizdavimas",
-			"status": "Statusas",
-			"type": "Tipas"
-		},
-		"entity-property": {
-			"description": "Aprašas",
-			"kind": "Rūšis",
-			"name": "Pavadinimas",
-			"order-number": "Eilės tvarka",
-			"preferred": "Pirminis",
-			"required": "Privaloma",
-			"rule": {
-				"code-systems": "Kodų sistemos",
-				"compose": "Sukurti",
-				"filters": "Filtrai",
-				"operator": "Priskyrimas",
-				"property": "Savybė",
-				"singular": "Taisyklė",
-				"type": "Tipas",
-				"value": "Reikšmė",
-				"value-set": "Reikšmių rinkinys (value set)"
-			},
-			"show-in-list": "Rodyti sąraše",
-			"status": "Statusas",
-			"type": "Tipas",
-			"uri": "URI",
-			"value": "Reikšmė"
-		},
-		"implementation-guide": {
-			"id": "ID",
-			"multiple": "daug",
-			"single": "vienas",
-			"title": "Pavadinimas"
-		},
-		"implementation-guide-version": {
-			"algorithm": "Algoritmas",
-			"date": "Data",
-			"depends-on": {
-				"package-id": "Paketo ID",
-				"reason": "Priežastis",
-				"single": "vienas",
-				"version": "Versija"
-			},
-			"empty-github-url": "",
-			"fhir-version": "",
-			"github-url": "",
-			"group": {
-				"description": "",
-				"multiple": "",
-				"name": ""
-			},
-			"multiple": "",
-			"package-id": "",
-			"page": {
-				"group": "",
-				"multiple": "",
-				"name": "",
-				"page": "",
-				"space": "",
-				"type": ""
-			},
-			"resource": {
-				"group": "",
-				"multiple": "",
-				"name": "",
-				"reference": "",
-				"type": "",
-				"version": ""
-			},
-			"single": "",
-			"template": "",
-			"version": "Versija"
-		},
-		"map-set": {
-			"associations": "Ryšiai",
-			"description": "Aprašas",
-			"domain": "Domenas",
-			"id": "ID",
-			"name": "Pavadinimas",
-			"plural": "Terminijos ryšių (map sets) rinkiniai",
-			"properties": "Savybės",
-			"publisher": "Leidėjas",
-			"source-code-systems": "Išeities kodų sistemos (code system)",
-			"source-value-set": "Išeities reikšmių rinkinys (value set)",
-			"target-code-systems": "Paskirties kodų sistemos (code system)",
-			"target-value-set": "Paskirties reikšmių rinkinys (value set)",
-			"title": "Pavadinimas",
-			"uri": "URI",
-			"versions": "Versijos"
-		},
-		"map-set-association": {
-			"concept": "Terminas",
-			"source": "Išeitis",
-			"status": "Statusas",
-			"target": "Paskirtis",
-			"type": "Tipas"
-		},
-		"map-set-entity": {
-			"id": "ID",
-			"versions": "Versijos"
-		},
-		"map-set-entity-version": {
-			"created-at": "Sukurta",
-			"description": "Aprašas",
-			"id": "ID",
-			"status": "Statusas"
-		},
-		"map-set-version": {
-			"algorithm": "Algoritmas",
-			"description": "Aprašas",
-			"expiration-date": "Numatomas naudojimas iki",
-			"id": "Identifikatorius",
-			"preferred-language": "Pageidaujama kalba",
-			"release-date": "Numatomas naudojimas nuo",
-			"source": "Leidėjas",
-			"status": "Statusas",
-			"supported-languages": "Palaikomos kalbos",
-			"version": "Versija"
-		},
-		"measurement-unit": {
-			"alias": "Sinonimas",
-			"code": "Kodas",
-			"definitionUnit": "Bazinis matavimo vienetas",
-			"definitionValue": "Bazinė reikšmė",
-			"id": "ID",
-			"kind": "Rūšis",
-			"mappings": "Terminologijų ryšiai",
-			"name": "Pavadinimas",
-			"period": "Laikotarpis",
-			"rounding": "Apvalinimas"
-		},
-		"measurement-unit-mapping": {
-			"system": "Sistema",
-			"system-unit": "Sistemos matavimo vienetas",
-			"system-value": "Sistemos reikšmė"
-		},
-		"naming-system": {
-			"code-system": "Kodų sistema (code system)",
-			"description": "Aprašas",
-			"id": "ID",
-			"identifiers": "Identifikatoriai",
-			"kind": "Rūšis",
-			"name": "Pavadinimas",
-			"source": "Leidėjas",
-			"status": "Statusas"
-		},
-		"naming-system-identifier": {
-			"type": "Tipas",
-			"value": "Reikšmė"
-		},
-		"observation-definition": {
-			"alias": "Sinonimas",
-			"category": "Kategorija",
-			"code": "Kodas",
-			"components": {
-				"binding": "Saitas",
-				"cardinality": "Kardinalumas",
-				"code": "Kodas",
-				"multiple": "Komponentai",
-				"names": "Pavadinimai",
-				"order-number": "Eilės tvarka",
-				"type": "Tipas",
-				"unit": {
-					"singular": "Matavimo vienetas",
-					"system": "Matavimo vienetų sistema"
-				},
-				"value-set": "Reikšmių rinkinys (value set)"
-			},
-			"definition": "Apibrėžimas",
-			"details": "Išsami informacija",
-			"interpretations": {
-				"category": {
-					"age": "Amžius",
-					"gender": "Lytis",
-					"gestation-age": "Gestacinis amžius",
-					"singular": "Kategorija"
-				},
-				"condition": "Sąlyga (CQL)",
-				"fhir-interpretation-code": "FHIR interpretacijos kodas",
-				"order-number": "Eilės tvarka",
-				"range": {
-					"code-system": "Kodų sistema (code system)",
-					"code-system-concepts": "Kodų sistemos terminai",
-					"numeric-range": "Skaičių diapazonas",
-					"singular": "Diapazonas",
-					"value-set": "Reikšmių rinkinys (value set)"
-				},
-				"snomed-interpretation-code": "SNOMED interpretacijos kodas",
-				"state": "Kriterijų tekstas",
-				"target": "Komponentas"
-			},
-			"keywords": "Raktiniai žodžiai",
-			"mappings": {
-				"code-system": "Kodų sistema (code system)",
-				"concept": "Terminas",
-				"condition": "Sąlyga",
-				"map-set": "Terminijos ryšių rinkinys (map set)",
-				"multiple": "Terminologijų ryšiai",
-				"order-number": "Eilės tvarka",
-				"relation": "Ryšys",
-				"target": "Komponentas"
-			},
-			"members": {
-				"cardinality": "Kardinalumas",
-				"code": "Kodas",
-				"multiple": "Nariai",
-				"names": "Vardai",
-				"order-number": "Eilės tvarka"
-			},
-			"name": "Pavadinimas",
-			"protocol": {
-				"circumstances": "Duomenų rinkimo aplinkybės",
-				"circumstances-value-set": "Surinktų duomenų reikšmių rinkinys (value set)",
-				"circumstances-values": "Surinktų duomenų reikšmės",
-				"components": "Papildomi parametrai",
-				"device": "Įrenga",
-				"device-value-set": "Įrengios reikšmių rinkinys (value set)",
-				"device-values": "Įrangos reikšmės",
-				"measurement-location": "Matavimo taškas",
-				"measurement-location-value-set": "Matavimo taško reikšmių rinkinys (value set)",
-				"measurement-location-values": "Matavimo taško reikšmės",
-				"method": "Metodas",
-				"method-value-set": "Metodo reikšmių rinkinys (value set)",
-				"method-values": "Metodo reikšmės",
-				"position": "Pozicija",
-				"position-value-set": "Pozicijos reikšmių rinkinys (value set)",
-				"position-values": "Pozicijos reikšmės",
-				"single": "Protokolas",
-				"specimen": "Ėminys",
-				"specimen-value-set": "Ėminio reikšmių rinkinys (value set)",
-				"specimen-values": "Ėminio reikšmės"
-			},
-			"publisher": "Leidėjas",
-			"state": "Būsena",
-			"status": "Statusas",
-			"structure": "Struktūra",
-			"time-precision": "Laiko fiksavimo tikslumas",
-			"url": "URL",
-			"value": {
-				"behaviour": "Elgsena",
-				"expression": "Išraiška",
-				"multiple-results-allowed": "Leidžiami keli rezultatai",
-				"type": "Tipas",
-				"unit": {
-					"singular": "Matavimo vienetas",
-					"system": "Matavimo vienetų sistema"
-				},
-				"usage": "Naudojimas",
-				"value-set": "Reikšmių rinkinys (value set)",
-				"values": "Reikšmės"
-			},
-			"version": "Versija"
-		},
-		"package": {
-			"code": "Kodas",
-			"plural": "Paketai",
-			"singular": "Paketas",
-			"version": {
-				"plural": "Versijos",
-				"singular": "Versija",
-				"version": "Versija"
-			}
-		},
-		"page": {
-			"contents": "Turinys",
-			"links": "Tėviniai puslapiai",
-			"plural": "Puslapiai",
-			"relations": "Ryšiai",
-			"status": "Statusas",
-			"tags": "Gairės",
-			"template": "Šablonas"
-		},
-		"page-content": {
-			"content": "Turinys",
-			"content-type": "Turinio tipas",
-			"lang": "Kalba",
-			"name": "Pavadinimas"
-		},
-		"page-link": {
-			"order-number": "Užsakymo numeris",
-			"source": "Išeitis",
-			"target": "Paskirtis"
-		},
-		"page-relation": {
-			"target": "Paskirtis",
-			"type": "Tipas"
-		},
-		"privilege": {
-			"actions": "Veiksmai",
-			"code": "Kodas",
-			"kind": "Rūšis",
-			"name": "Vardas, pavardė",
-			"resources": "Ištekliai"
-		},
-		"privilege-resource": {
-			"edit": "Redaguoti",
-			"publish": "Publikuoti",
-			"resource-id": "Išteklio ID",
-			"type": "Tipas",
-			"view": "Peržiūrėti"
-		},
-		"provenance": {
-			"activity": "Veikla",
-			"author": "Autorius",
-			"changes": "Pakeitimai",
-			"date": "Data",
-			"target": "Paskirtis"
-		},
-		"resource": {
-			"copyright": {
-				"holder": "Autorių teisių turėtojas",
-				"jurisdiction": "Jurisdikcija",
-				"single": "Autorių teisės",
-				"statement": "Autorių teisių pareiškimas"
-			},
-			"description": "Aprašas",
-			"experimental": "Eksperimentinis",
-			"id": "ID",
-			"identifiers": {
-				"multiple": "Identifikatoriai",
-				"multiple-version": "Versijų identifikatoriai",
-				"system": "Sistema",
-				"value": "Reikšmė"
-			},
-			"name": "Pavadinimas",
-			"permissions": {
-				"admin": "Administravimas",
-				"editor": "Redagavimas",
-				"endorser": "Tvirtinimo",
-				"multiple": "Teisės",
-				"viewer": "Peržiūra"
-			},
-			"publisher": "Leidėjas",
-			"purpose": "Paskirtis",
-			"settings": {
-				"approval-required": "Būtinas patvirtinimas",
-				"multiple": "Nustatymai",
-				"review-required": "Būtina peržiūra"
-			},
-			"supported-languages": "Palaikomos kalbos",
-			"title": "Pavadinimas",
-			"uri": "URI",
-			"use-context": "Naudojimo kontekstas",
-			"version": {
-				"algorithm": "Algoritmas",
-				"description": "Aprašas",
-				"from": "Numatoma naudoti nuo",
-				"preferred-language": "Pageidajama kalba",
-				"single": "Versija",
-				"to": "Numatoma naudoti iki",
-				"version": "Versija"
-			}
-		},
-		"sequence": {
-			"code": "Kodas",
-			"description": "Aprašas",
-			"luvs": "Paskutinės naudotos reikšmės",
-			"pattern": "Seka",
-			"restart": "Pradėti iš naujo",
-			"start-from": "Pradėti nuo"
-		},
-		"sequence-luv": {
-			"luv": "Paskutinė naudota reikšmė",
-			"period": "Laikotarpis"
-		},
-		"snomed-branch": {
-			"base": "Bazė",
-			"creation": "Sukurta",
-			"deleted": "Pašalinta",
-			"head": "Pagrindas",
-			"locked": "Užrakinta",
-			"metadata": "Metaduomenys",
-			"path": "Kelias",
-			"state": "Būsena"
-		},
-		"snomed-codesystem": {
-			"branch-path": "Atšakos kelias",
-			"country-code": "Valstybės kodas",
-			"daily-build-available": "Prieinami kasdieniai atnaujinimai",
-			"dependant-version-effective-time": "Priklausomų versijų galiojimo pradžia",
-			"imported": "Suimportuota",
-			"languages": "Kalbos",
-			"latest-version": "Naujausia versija",
-			"name": "Pavadinimas",
-			"short-name": "Trumpas pavadinimas",
-			"versions": "Versijos"
-		},
-		"snomed-codesystem-version": {
-			"effective-date": "Galiojimo pradžios data"
-		},
-		"snomed-concept": {
-			"concept-id": "Sąvokos ID",
-			"descriptions": "Aprašai",
-			"fsn": "Sąvokos pilnas pavadinimas (FSN)",
-			"kts-references": "Ryšiai terminologijų sistemoje",
-			"provenance": "Auditas",
-			"pt": "Pageidaujamas aprašymas (PT)",
-			"refsets": "Refsets",
-			"relationships": "Ryšiai",
-			"snomed-references": "SNOMED nuorodos",
-			"term": "Terminas",
-			"translations": "Vertimai"
-		},
-		"snomed-description": {
-			"acceptability": "Sąvokos priimtinumas (acceptability)",
-			"concept-id": "Sąvokos ID",
-			"description-id": "Aprašo ID",
-			"lang": "Kalba",
-			"refset": "Refsets",
-			"term": "Terminas",
-			"type": "Tipas"
-		},
-		"snomed-reference": {
-			"concept": "Terminas",
-			"type": "Tipas"
-		},
-		"snomed-refset": {
-			"target": "Paskirtis",
-			"type": "Tipas"
-		},
-		"snomed-relationship": {
-			"active": "Aktyvus",
-			"group": "Grupė",
-			"target": "Paskirtis",
-			"type": "Tipas"
-		},
-		"snomed-translation": {
-			"acceptability": "Sąvokos priimtinumas (acceptability)",
-			"acceptability-options": {
-				"acceptable": "Priimtinas",
-				"preferred": "Pageidaujamas"
-			},
-			"branch": "Atšaka",
-			"concept-id": "Sąvokos ID",
-			"description-id": "Aprašo ID",
-			"language": "Kalba",
-			"module": "Modulis",
-			"status": "Statusas",
-			"task": "Užduotis",
-			"term": "Terminas",
-			"type": "Tipas",
-			"type-options": {
-				"fully-specified-name": "Pilnas pavadinimas",
-				"synonym": "Sinonimas"
-			}
-		},
-		"space": {
-			"acl": "ACL",
-			"active": "Aktyvus",
-			"code": "Kodas",
-			"editors": "Redaktoriai",
-			"github": "Github",
-			"name": "Vardas, pavardė",
-			"owners": "Kūrėjai",
-			"packages": "Paketai",
-			"plural": "Erdvės",
-			"shared": "Bendrasis",
-			"singular": "Erdvė",
-			"terminology-servers": "Terminologijos serveriai",
-			"viewers": "Turintys peržiūros teisę"
-		},
-		"structure-definition": {
-			"code": "Kodas",
-			"content": "Turinys",
-			"content-format": "Turinio formatas",
-			"content-type": "Turinio tipas",
-			"name": "Pavadinimas",
-			"parent": "Kilmė (parent)",
-			"plural": "Struktūros apibrėžtys",
-			"publisher": "Leidėjas",
-			"status": "Būsena",
-			"url": "URL",
-			"version": "Versija"
-		},
-		"task": {
-			"assignee": "Priskirtas naudotojas",
-			"author": "Autorius",
-			"created": "Sukurta",
-			"modified": "Pakeista",
-			"modified-by": "Pakeitimų autorius",
-			"number": "Skaičius",
-			"plural": "Užduotys",
-			"priority": "Pirmenybė",
-			"project": "Projektas",
-			"status": "Statusas",
-			"title": "Antraštė",
-			"type": "Tipas",
-			"workflow": "Darbo eiga"
-		},
-		"template": {
-			"code": "Kodas",
-			"content": "Turinys",
-			"content-type": "Turinio tipas",
-			"names": "Pavadinimai"
-		},
-		"terminology-server": {
-			"active": "Aktyvus",
-			"auth-config": "OAuth 2.0",
-			"code": "Kodas",
-			"current-installation": "Esama sistema",
-			"headers": "HTTP headers",
-			"kind": "Rūšis",
-			"name": "Pavadinimas",
-			"plural": "Serveriai",
-			"root-url": "Pagrindinis URL",
-			"singular": "Serveris"
-		},
-		"transformation-definition": {
-			"name": "Pavadinimas",
-			"plural": "FML transformacijos",
-			"singular": "FML transformacija",
-			"source": "Šaltinis",
-			"source-fhir": "FHIR",
-			"source-local": "TermX",
-			"source-static": "Statinis šaltinis",
-			"source-url": "URL"
-		},
-		"value-set": {
-			"concepts": "Terminai",
-			"contacts": "Kontaktai",
-			"description": "Aprašas",
-			"id": "ID",
-			"name": "Kompiuterinis pavadinimas",
-			"narrative": "Naratyvas",
-			"plural": "Reikšmių rinkiniai (value sets)",
-			"publisher": "Leidėjas",
-			"status": "Statusas",
-			"title": "Antraštė",
-			"uri": "Resurso adresas (URI)",
-			"uri-short": "URI",
-			"versions": "Versijos"
-		},
-		"value-set-rule-filter": {
-			"operator": {
-				"descendent-of": "Reikšmė kilusi iš sąvokos (descendant)",
-				"equal": "=",
-				"in": "Reikšmė įeina į sudėtį (in)",
-				"is-a": "Reikšmė yra (is a)",
-				"label": "Ryšys"
-			},
-			"property": {
-				"concept": "Terminas",
-				"constraint": "Ribojimas",
-				"label": "Savybė"
-			},
-			"value": "Reikšmė"
-		},
-		"value-set-rule-set": {
-			"exclude": "Pašalinti",
-			"inactive": "Neaktyvūs terminai",
-			"include": "Įtraukti",
-			"locked-date": "Užrakinimo data",
-			"rule": {
-				"based-on": "Atranka",
-				"code-system": "Kodų sistema (code system)",
-				"code-system-version": "Kodų sistemos versija",
-				"compose": "Sukurti",
-				"concepts": "Terminai",
-				"filters": "Filtrai",
-				"properties": "Savybės",
-				"value-set": "Reikšmių rinkinys (value set)",
-				"value-set-version": "Reikšmių rinkinio (value set) versija"
-			},
-			"rules": "Taisyklės"
-		},
-		"value-set-version": {
-			"algorithm": "Algoritmas",
-			"concepts": "Terminai",
-			"created": "Sukurta",
-			"description": "Aprašas",
-			"expiration-date": "Numatomas naudojimas iki",
-			"id": "Identifikatorius",
-			"preferred-language": "Pageidaujama kalba",
-			"release-date": "Numatomas naudojimas nuo",
-			"rule-set": "Taisyklių aibė",
-			"source": "Leidėjas",
-			"status": "Statusas",
-			"supported-languages": "Palaikomos kalbos",
-			"version": "Versija"
-		},
-		"value-set-version-concept": {
-			"additional-designations": "Papildomi pavadinimai",
-			"concept": "Terminas",
-			"designations": "Pavadinimai",
-			"display": "Pavadinimas",
-			"order-number": "Eilės tvarka"
-		}
-	},
-	"language": {
-		"de": "Vokiečių",
-		"en": "Anglų",
-		"et": "Estų",
-		"fr": "Prancūzų",
-		"lt": "Lietuvių",
-		"nl": "Olandų",
-		"cs": "Czech"
-	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Netinkami simboliai: \"{{sequenceInvalidCharacters}}\""
-	},
-	"web": {
-		"app": {
-			"header": "TermX"
-		},
-		"association-type": {
-			"form": {
-				"add-header": "Pridėti ryšio tipą",
-				"edit-header": "Redaguoti ryšio tipą",
-				"view-header": "Peržiūrėti ryšio tipą"
-			},
-			"list": {
-				"add-association-type": "Pridėti ryšio tipą",
-				"title": "Pavadinimas"
-			}
-		},
-		"case-sensitive": {
-			"code-is": {
-				"ci": "Kode NEreikšminga didžiųjų ir mažųjų raidžių skirtis",
-				"cs": "Kode reikšminga didžiųjų ir mažųjų raidžių skirtis"
-			},
-			"options": {
-				"ci": "Nepaisyti didžiųjų ir mažųjų raidžių skirtumų",
-				"cl": "Nepaisyti pirmojo simbolio raidžių dydžio skirtumų",
-				"cs": "Paisyti didžiųjų ir mažųjų raidžių skirtumų"
-			}
-		},
-		"code-system": {
-			"form": {
-				"add-header": "Kurti naują kodų sistemą",
-				"concepts": {
-					"add-concept": "Pridėti terminą",
-					"concept": "Terminas",
-					"contains": "Apima",
-					"eq": "Lygu",
-					"validate": "Tikrinti kodų sistemą"
-				},
-				"delete-property-usages": "Šalinti savybės naudojimą",
-				"edit-header": "Redaguoti kodų sistemą",
-				"header": "Kodų sistema",
-				"properties": {
-					"add-property": "Pridėti savybę",
-					"add-supplement": "Pridėti priedą",
-					"delete-property": "Šalinti savybę",
-					"delete-supplement": "Šalinti priedą",
-					"often-used-designations": "Dažnai naudojami pavadinimai",
-					"often-used-properties": "Dažnai naudojamos savybės"
-				},
-				"versions": {
-					"duplicate": {
-						"create-new-entity-version": "Kurti naujas esybės versijas",
-						"duplicate-header": "Kurti kodų sistemos versijos kopiją",
-						"source-code-system": "Išeities kodų sistema:",
-						"source-version": "Išeities versija:",
-						"target-version": "Paskirties versija:"
-					},
-					"list": {
-						"add-new-version": "Pridėti naują versiją",
-						"add-version": "Pridėti versiją",
-						"compare": "Palyginti",
-						"duplicate-version": "Kopijuoti versiją",
-						"export-fhir-json": "Eksportuoti FHIR JSON",
-						"export-fhir-xml": "Eksportuoti FHIR XML",
-						"open-fhir": "Atidaryti FHIR URL"
-					}
-				},
-				"view-header": "Peržiūrėti kodų sistemą"
-			},
-			"list": {
-				"add-code-system": "Pridėti kodų sistemą",
-				"count": "Skaičius",
-				"domain": "Domenas",
-				"duplicate": {
-					"header": "Kurti kodų sistemos kopiją",
-					"source-code-system": "Išeities kodų sistema:",
-					"target-code-system": "Paskirties kodų sistema:",
-					"target-uri": "Paskirties URI:"
-				},
-				"import-fhir": "Importuoti išorinę FHIR struktūrą",
-				"import-ucum": "Importuoti UCUM essence XML",
-				"last-version": "Naujausia versija",
-				"manual": "Rankiniu būdu",
-				"open-fhir": "Atidaryti FHIR URL",
-				"status": "Statusas",
-				"title": "Kodų sistemos",
-				"uri": "URI",
-				"versions-expiration-date": "Galiojimo pabaigos data",
-				"versions-release-date": "Paskelbimo data",
-				"versions-version": "Versija"
-			},
-			"summary": {
-				"add-concept": "Pridėti terminą",
-				"add-version": "Pridėti versiją",
-				"all-tasks": "Visos užduotys",
-				"code-system": "Kodų sistema (code system)",
-				"compare": "Palyginti",
-				"concepts": "Terminai",
-				"duplicate-version-modal": {
-					"header": "Dubliuoti kodų sistemos versiją",
-					"version": "Nauja versija"
-				},
-				"opened-tasks": "Aktyvios užduotys",
-				"related-artifacts": "Susiję artefaktai",
-				"unlinked-concepts": {
-					"author": "Autorius",
-					"concept": "Terminas",
-					"create-task": "Kurti užduotį",
-					"designation": "Pavadinimas",
-					"link-to": "Nuoroda į {{version}}",
-					"no-versions": "Juodraštinių versijų nerasta",
-					"status": "Statusas",
-					"task": "Užduotis",
-					"task-modal": {
-						"assignee": "Priskirtas naudotojas",
-						"cs-version": "Nuoroda į kodų sistemos versiją",
-						"header": "Kurti patvirtinimo užduotį"
-					},
-					"title": "Nesusietos sąvokos",
-					"version": "Versija"
-				},
-				"versions": "Versijos"
-			}
-		},
-		"code-system-association": {
-			"form": {
-				"target": "Paskirtis"
-			}
-		},
-		"code-system-compare": {
-			"added": "Pridėta",
-			"changed": "Pakeista",
-			"compare": "Palyginti",
-			"deleted": "Pašalinta",
-			"source": "Išeitis",
-			"source-code-system": "Išeities kodų sistema",
-			"target": "Paskirtis",
-			"target-code-system": "Paskirties kodų sistema"
-		},
-		"code-system-concept": {
-			"filter": {
-				"language-filter": "Kalbos filtras",
-				"property-filter": "Savybių filtras",
-				"property-name-filter": "Savybių pavadinimų filtras",
-				"search-property-value-placeholder": "Ieškoti savybės pavadinimo",
-				"select-language-placeholder": "Pasirinkti kalbą",
-				"select-property-placeholder": "Pasirinkti savybę",
-				"select-version-placeholder": "Pasirinkti versiją",
-				"version-filter": "Versijos filtras"
-			},
-			"form": {
-				"add-header": "Pridėti sąvoką",
-				"add-task": "Pridėti komentarą",
-				"all-tasks": "Visos užduotys",
-				"concept": "Sąvoka",
-				"linked-with-code-systems": "Susieta su kodų sistemos versijomis",
-				"map-sets": {
-					"concept-code": "Sąvokos kodas",
-					"concept-display": "Sąvokos pavadinimas",
-					"direction": "Kryptis",
-					"equivalence": "Atitikimas",
-					"header": "Ryšiai",
-					"map-set": "Ryšių rinkinys"
-				},
-				"opened-tasks": "Aktyvios užduotys",
-				"related-artifacts": "Susiję artefaktai",
-				"task-modal": {
-					"comment": "Komentaras",
-					"header": "Pridėti komentarą"
-				},
-				"value-sets": {
-					"definition": "Apibrėžimas",
-					"header": "Antraštė",
-					"value-set": "Reikšmių rinkinys"
-				},
-				"version": {
-					"code-system-version": "Kodų sistemos versija",
-					"header": "Versija {{created}}",
-					"new": "Nauja versija",
-					"new-version": "Nauja versija"
-				},
-				"wiki": {
-					"header": "Antraštė",
-					"name": "Pavadinimas",
-					"slug": "Santrumpa"
-				}
-			},
-			"group": {
-				"association": "Ryšiai",
-				"property": "Savybė",
-				"type": "Tipas"
-			},
-			"list": {
-				"add-concept-child": "Pridėti priklausantį terminą",
-				"external": "Išorinis",
-				"open-fhir": "Atidaryti FHIR URL",
-				"propagate-properties": "Įkelti savybes į priklausančius terminus",
-				"unlink-concept": "Atsieti terminą nuo versijos"
-			},
-			"property-list": {
-				"concepts": "Terminai",
-				"properties": "Savybės"
-			}
-		},
-		"code-system-concept-version": {
-			"add-version": "Pridėti versiją",
-			"association": {
-				"add-association": "Pridėti sąsają",
-				"delete-association": "Pašalinti sąsają",
-				"edit-association": "Redaguoti sąsają"
-			},
-			"designation": {
-				"add-designation": "Pridėti pavadinimą",
-				"add-supplement": "Pridėti papildymą",
-				"delete-designation": "Pašalinti pavadinimą",
-				"edit-designation": "Redaguoti pavadinimą",
-				"multi-language-input": {
-					"add-translation": "Pridėti vertimą",
-					"placeholder": "Šablonas"
-				}
-			},
-			"property-value": {
-				"add-property-value": "Pridėti savybės reikšmę",
-				"add-supplement": "Pridėti papildymą",
-				"coding-value-system": "Kodo reikšmių sistema",
-				"delete-property-value": "Pašalinti savybę",
-				"edit-property-value": "Redaguoti savybę"
-			}
-		},
-		"code-system-validator": {
-			"circular-dependencies-detector": {
-				"detect": "Tikrinti",
-				"title": "Pasikartojančių priskyrimų tikrinimas"
-			},
-			"code-system": "Kodų sistema",
-			"result": {
-				"title": "Rezultatas"
-			},
-			"uniqueness-validator": {
-				"designations": "Pavadinimai",
-				"empty-properties": "Neužpildytos savybės",
-				"ignore-empty-properties": "Ignoruoti neužpildytas savybes",
-				"properties": "Savybės",
-				"title": "Unikalumo tikrinimas",
-				"validate": "Tikrinti"
-			}
-		},
-		"code-system-version": {
-			"form": {
-				"add-header": "Pridėti versiją",
-				"edit-header": "Redaguoti versiją",
-				"entities": {
-					"add-entity": "Pridėti esybę",
-					"entity-version": "Pridėti versiją",
-					"modal": {
-						"add-header": "Pridėti",
-						"entity-version": "Versija"
-					}
-				},
-				"view-header": "Peržiūra"
-			},
-			"summary": {
-				"all-tasks": "Visos užduotys",
-				"code-system-version": "Kodų sistemos versija",
-				"edit-version": "Redaguoti versiją",
-				"info": {
-					"activate": "Aktyvuoti",
-					"create-approve": "Perduoti patvirtinimui",
-					"create-review": "Perduoti peržiūrai",
-					"definition": "Apibrėžimas",
-					"download": "Parsisiuntimas",
-					"last-approved": "Paskutinio patvirtinimo data",
-					"last-modified": "Paskutinių pakeitimų data",
-					"last-reviewed": "Paskutinės peržiūros data",
-					"make-draft": "Paskelbti juodraščiu",
-					"none": "Nėra",
-					"retire": "Paskelbti nebegaliojančiu",
-					"show-changes": "Rodyti pakeitimus",
-					"sync-with-github": "Sinchronizuoti su Github"
-				},
-				"opened-tasks": "Aktyvios užduotys",
-				"task-modal": {
-					"assignee": "Priskirtas naudotojas",
-					"header": "Kurti {{type}} užduotį",
-					"success-msg": "Užduotis sukurta"
-				}
-			}
-		},
-		"contacts": {
-			"list": {
-				"add-contact": "Pridėti kontaktą",
-				"header": "Kontaktai"
-			},
-			"modal": {
-				"add-header": "Pridėti kontaktą",
-				"edit-header": "Redaguoti kontaktą",
-				"name": "Vardas, pavardė"
-			}
-		},
-		"defined-entity-property": {
-			"form": {
-				"add-header": "Pridėti nustatytą savybę",
-				"edit-header": "Redaguoti nustatytą savybę",
-				"kind": {
-					"designation": "Paskirtis",
-					"property": "Savybė"
-				}
-			},
-			"list": {
-				"add-new": "Pridėti naują savybę",
-				"property-used": "Savybė naudojama ir negali būti keičiama.",
-				"title": "Nustatytos savybės"
-			}
-		},
-		"dev-code-system-relation": {
-			"map-set": {
-				"code": "Kodas",
-				"header": "Antraštė",
-				"name": "Pavadinimas"
-			},
-			"value-set": {
-				"code": "Kodas",
-				"generate": "Kurti momentinę versiją (snapshot)",
-				"header": "Antraštė",
-				"name": "Pavadinimas",
-				"publisher": "Leidėjas",
-				"uri": "URI",
-				"value-set": "Reikšmių rinkinys (value set)",
-				"value-set-code": "Reikšmių rinkinio kodas"
-			}
-		},
-		"global-search": {
-			"dashboard": {
-				"code-systems": "Kodų sistemos (code systems)",
-				"concepts": "Terminai",
-				"header": "Ieškoti",
-				"map-sets": "Terminijos ryšių rinkiniai (map sets)",
-				"measurement-unit": "Matavimo vienetas",
-				"snomed": "SNOMED",
-				"value-sets": "Reikšmių rinkiniai (value sets)"
-			}
-		},
-		"implementation-guide": {
-			"form": {
-				"add-header": "Pridėti",
-				"edit-header": "Redaguoti"
-			},
-			"list": {
-				"add": "Pridėti",
-				"add-fhir": "Pridėti per FHIR",
-				"add-manual": "Pridėti rankiniu būdu",
-				"last-version": "Paskutinė versija",
-				"open-fhir": "Atidaryti FHIR versiją"
-			},
-			"summary": {
-				"add-version": "Pridėti versiją"
-			}
-		},
-		"implementation-guide-version": {
-			"form": {
-				"add-header": "Pridėti",
-				"edit-header": "Redaguoti"
-			},
-			"summary": {
-				"activate": "Aktyvuoti",
-				"edit-version": "Redaguoti versiją",
-				"last-modified": "Paskutiniai pakeitimai",
-				"make-draft": "Paskelbti juodraščiu",
-				"none": "Nėra",
-				"retire": "Paskelbti nebegaliojančiu"
-			}
-		},
-		"integration": {
-			"fhir": {
-				"code-system": {
-					"find-matches": {
-						"exact": "Tikslus atitikmuo",
-						"properties": "Savybės",
-						"property-name": "Pavadinimas",
-						"property-value": "Reikšmė",
-						"system": "Sistema",
-						"version": "Versija"
-					},
-					"lookup": {
-						"code": "Kodas",
-						"date": "Data",
-						"properties": "Savybės",
-						"system": "Sistema",
-						"version": "Versija"
-					},
-					"subsumes": {
-						"code-a": "Kodas A",
-						"code-b": "Kodas B",
-						"system": "Sistema",
-						"version": "Versija"
-					},
-					"validate-code": {
-						"code": "Kodas",
-						"display": "Naudojamas pavadinimas",
-						"url": "URL",
-						"version": "Versija"
-					}
-				},
-				"concept-map": {
-					"closure": {
-						"code": "Kodas",
-						"concepts": "Terminai",
-						"name": "Pavadinimas",
-						"system": "Sistema",
-						"version": "Versija"
-					},
-					"translate": {
-						"code": "Kodas",
-						"concept-map-version": "Terminų žemėlapio (concept map) versija",
-						"system": "Sistema (URL)",
-						"target-system": "Paskirties sistema",
-						"uri": "URL",
-						"version": "Versija"
-					}
-				},
-				"value-set": {
-					"expand": {
-						"url": "URL",
-						"value-set-version": "Reikšmių rinkinio versija"
-					},
-					"validate-code": {
-						"code": "Kodas",
-						"display": "Naudojamas pavadinimas",
-						"system": "Sistema",
-						"system-version": "Sistemos versija",
-						"url": "URL",
-						"value-set-version": "Reikšmių rinkinio (value set) versija"
-					}
-				}
-			},
-			"file-import": {
-				"association": {
-					"association-type": "Sąryšio tipas",
-					"code-system": "Kodų sistema (code system)",
-					"code-system-version": "Kodų sistemos versija",
-					"column-value-separator": "Reikšmės stulpelyje atskirtos simboliu",
-					"download-template": "Šablono atsisiuntimas",
-					"file": "Ryšių duomenys CSV formatu",
-					"file-column": "Importuojamų duomenų stulpelis",
-					"import": "Ryšių duomenų importavimas",
-					"mapped-column": "Paskirties stulpelis",
-					"order": "Eilės tvarka",
-					"source": "Išeitis",
-					"target": "Paskirtis"
-				},
-				"code-system": {
-					"general": {
-						"delete-concepts": "Pašalinti visus kodų sistemos terminus prieš importuojant?",
-						"generate-valueset": "Kurti reikšmių rinkinį (value set)",
-						"hold": "Palikti",
-						"merge": "Sulieti senus ir naujus duomenis",
-						"overlap-of-concepts": "Veiksmas, jeigu terminai sutampa",
-						"replace": "Pakeisti seną terminą nauju",
-						"resource-id": "Ištekliaus ID"
-					},
-					"import": "Kodų sistemos failo importavimas",
-					"properties": {
-						"delimiter": "Skirtuko simbolis",
-						"download-diff": "Atsisiųsti skirtumų palyginimą",
-						"download-log": "Atsisiųsti auditą",
-						"format": "Formatas",
-						"header": "Savybės",
-						"import": "Importuoti",
-						"import-data": "Importuoti duomenis",
-						"kts-property": "TermX savybė",
-						"lang": "Kalba",
-						"preferred": "Pageidaujama",
-						"type": "Tipas",
-						"type-column": "{{type}} stulpelis",
-						"validate-data": "Patikrinti duomenis neimportuojant"
-					},
-					"source": {
-						"analyze": "Analizuoti",
-						"file": "Duomenys",
-						"header": "Importuojamas failas",
-						"link": "Nuoroda",
-						"types": {
-							"csv": "CSV",
-							"tsv": "TSV",
-							"xlsx": "XLSX"
-						}
-					}
-				},
-				"concept-map": {
-					"delete-associations": "Pašalinti visus ryšius prieš importuojant?",
-					"download-template": "Parsisiųsti šabloną",
-					"file": "Duomenys",
-					"hold": "Palikti",
-					"ignore": "Praleisti besidubliuojančius duomenis",
-					"import": "Terminijos ryšių failo importavimas",
-					"keep-both": "Palikti abu",
-					"map-id": "Terminijos ryšių ID",
-					"map-name": "Terminijos ryšių pavadinimas",
-					"map-version": "Terminijos ryšių versija",
-					"overlap-of-associations": "Veiksmas aptikus ryšių pasikartojimą",
-					"source-value-set": "Šaltinis (reikšmių sistema)",
-					"target-value-set": "Paskirtis (reikšmių sistema)"
-				},
-				"create-new": "Sukurti naują",
-				"not-found": "Nerasta?",
-				"process": "Apdoroti",
-				"success-message": "Duomenų apdorojimas baigtas",
-				"title": "Duomenų importavimas",
-				"value-set": {
-					"analyze": "Analizuoti",
-					"file": "Duomenys",
-					"import": "Reikšmių sistemos duomenų importavimas",
-					"import-data": "Importuoti duomenis",
-					"source": "Šaltinis",
-					"validate-data": "Patikrinti duomenis neįkeliant"
-				}
-			},
-			"import": {
-				"atc": "ATC {{edition}} importavimas",
-				"base-code-system": "Pirminė kodų sistema (code system)",
-				"code-system": "Kodų sistema",
-				"code-system-description": "Kodų sistemos aprašas",
-				"code-system-name": "Kodų sistemos pavadinimas",
-				"code-system-version-description": "Kodų sistemos versijos aprašas",
-				"icd-10": "ICD-10 {{edition}} importavimas",
-				"ichi": "ICHI {{edition}} importavimas",
-				"loinc": "LOINC importavimas",
-				"orphanet": "Retų ligų importavimas",
-				"publisher": "Leidėjas",
-				"source-url": "Pirminis URL",
-				"uri": "URI",
-				"ucum": "UCUM essence XML importavimas",
-				"valid-from": "Galioja nuo",
-				"valid-to": "Galioja iki",
-				"version": "Versija"
-			},
-			"loinc-import": {
-				"answer-list": "Atsakymų sąrašas (answer list)",
-				"answer-list-link": "Atsakymų sąrašo sąsajos (answer list link)",
-				"import": "Importuoti",
-				"language": "Kalba",
-				"loinc": "LOINC",
-				"loinc-import": "LOINC importavimas",
-				"loinc-import-warning": "Dėmesio! LOINC importavimas užtrunka. Priklausomai nuo duomenų kiekio, jis gali užimti 10-60 min. Tęsti?",
-				"loinc-terminology": "LOINC terminologija",
-				"order-observation": "Stebėjimas (order observation)",
-				"panels": "Panelės (panels)",
-				"parts": "Dalys (parts)",
-				"supplementary-properties": "Papildomos savybės",
-				"translations": "Vertimai"
-			},
-			"response": "Atsakymas",
-			"send-request": "Siųsti užklausą",
-			"set-default-data": "Nustatyti numatytuosius duomenis",
-			"systems": {
-				"atc": "ATC",
-				"fhir": "FHIR",
-				"icd-10": "ICD-10",
-				"ichi": "ICHI",
-				"loinc": "LOINC",
-				"orphanet": "Orphanet",
-				"ucum": "UCUM"
-			}
-		},
-		"landing": {
-			"resources": {
-				"title": "Ištekliai",
-				"types": {
-					"code-system": "Kodų sistemos (code systems)",
-					"map-set": "Terminijos ryšių rinkiniai (map sets)",
-					"value-set": "Reikšmių rinkiniai (value sets)"
-				}
-			},
-			"summary": {
-				"open-tasks": "Aktyvios užduotys",
-				"pages": "Puslapiai",
-				"spaces": "Darbalaukiai",
-				"title": "Naudotojas"
-			},
-			"tasks": {
-				"actions": {
-					"create": "Kurti užduotį"
-				},
-				"assigned-to-me": "Jums priskirtos užduotys",
-				"created-by-me": "Jūsų sukurtos užduotys",
-				"title": "Užduotys"
-			}
-		},
-		"loinc": {
-			"answer-list": {
-				"answers": "Atsakymai",
-				"code": "Atsakymų sąrašo kodas",
-				"name": "Atsakymų sąrašo pavadinimas",
-				"oid": "OID",
-				"used-by": "Naudojama"
-			},
-			"loinc": {
-				"class": "Klasė",
-				"code": "LOINC",
-				"component": "Komponentas",
-				"filter": {
-					"both": "Abu",
-					"class": "Klasė",
-					"clinical": "Klinikinis",
-					"contains": "Apima",
-					"eq": "Tiksliai atitinka",
-					"lab": "Labor",
-					"method": "Metodas",
-					"observation": "Stebėjimas",
-					"ord-obs": "Ord/Obs",
-					"order": "Eilės tvarka",
-					"property": "Savybė",
-					"recent-searches": "Naujausios paieškos",
-					"scale": "Atsakymo tipas",
-					"survey": "Apžvalga",
-					"system": "Sistema",
-					"timing": "Laikas",
-					"type": "Tipas"
-				},
-				"method": "Metodas",
-				"name": "Ilgas bendrinis pavadinimas",
-				"ord-obs": "Ord/Obs",
-				"property": "Savybė",
-				"scale": "Atsakymo tipas",
-				"system": "Sistema",
-				"timing": "Laikas",
-				"type": "Tipas",
-				"values": "Reikšmės"
-			},
-			"part": {
-				"code": "Dalies kodas",
-				"name": "Dalies pavadinimas",
-				"used-by": "Naudojama"
-			}
-		},
-		"map-set": {
-			"form": {
-				"add-header": "Kurti naują Terminijos ryšių rinkinį (map set)",
-				"edit-header": "Redaguoti Terminijos ryšių rinkinį (map set)",
-				"header": "Terminijos ryšių rinkiniai (map sets)",
-				"properties": {
-					"delete-property-usages": "Pašalinti ryšius su nurodytomis savybėmis",
-					"often-used": "Dažnai naudojamos savybės"
-				},
-				"scope": {
-					"code-system": "Kodų sistema",
-					"code-system-version": "Kodų sistemos versija",
-					"source": "Išeitis",
-					"target": "Paskirtis",
-					"title": "Sritis",
-					"type": {
-						"code-system": "Kodų sistema",
-						"external-canonical-uri": "Išorinis kanoninis URI",
-						"value-set": "Reikšmių rinkinys (value set)"
-					},
-					"uri": "URI",
-					"value-set": "Reikšmių rinkinys (value set)",
-					"value-set-version": "Reikšmių rinkinio versija"
-				},
-				"view-header": "Peržiūra"
-			},
-			"list": {
-				"add-map-set": "Pridėti Terminijos ryšių rinkinį (map set)",
-				"add-version": "Pridėti versiją",
-				"import-fhir": "Importuoti išorinę FHIR struktūrą",
-				"last-version": "Naujausia versija",
-				"manual": "Rankiniu būdu",
-				"open-fhir": "Atidaryti FHIR URL",
-				"operations": "Veiksmai",
-				"status": "Statusas",
-				"title": "Pavadinimas",
-				"versions": "Versijos",
-				"versions-expiration-date": "Galiojimo pabaigos data",
-				"versions-release-date": "Paskelbimo data",
-				"versions-version": "Versija"
-			},
-			"summary": {
-				"add-version": "Pridėti versiją",
-				"all-tasks": "Visos užduotys",
-				"map-set": "Terminijos ryšių rinkiniai",
-				"opened-tasks": "Aktyvios užduotys",
-				"related-artifacts": "Susiję artefaktai",
-				"versions": "Versijos"
-			}
-		},
-		"map-set-association": {
-			"form": {
-				"add-header": "Pridėti",
-				"edit-header": "Redaguoti",
-				"source-concept": "Šaltinis (terminas)",
-				"source-system": "Šaltinis (sistema)",
-				"status": "Statusas",
-				"target-concept": "Paskirtis (terminas)",
-				"target-system": "Paskirtis (sistema)",
-				"type": "Tipas",
-				"view-header": "Peržiūra"
-			},
-			"list": {
-				"add-association": "Pridėti ryšį",
-				"associations": "Rušiai",
-				"code-system": "Kodų sistema",
-				"operations": "Veiksmai"
-			}
-		},
-		"map-set-entity-version": {
-			"modal": {
-				"add-header": "Pridėti",
-				"edit-header": "Redaguoti",
-				"entity-version": "Versija",
-				"link-header": "Susieti"
-			},
-			"table": {
-				"activate": "Aktyvuoti",
-				"add-version": "Pridėti versiją",
-				"header": "",
-				"link-version": "Susieti versiją",
-				"retire": "Paskelbti nebegaliojančiu"
-			}
-		},
-		"map-set-version": {
-			"form": {
-				"add-header": "Pridėti versiją",
-				"details-header": "Versijos detalės",
-				"edit-header": "Redaguoti versiją",
-				"view-header": "Peržiūrėti versiją"
-			},
-			"summary": {
-				"associations": {
-					"add-property-value": "Pridėti savybės reikšmę",
-					"add-target": "Pridėti paskirties ryšius",
-					"bulk-copy": "Kopijuoti viską",
-					"code": "Kodas",
-					"content": "Turinys",
-					"display": "Pavadinimai",
-					"external-mapping": "Išoriniai ryšiai",
-					"mappings": "Terminų ryšiai",
-					"mark-as-verified": "Žymėti kaip patvirtintą",
-					"properties": "Savybės",
-					"relationship": "Ryšys",
-					"set-as-no-map": "Nustatyti, kad ryšių nėra",
-					"source-code": "Išeities kodas",
-					"source-concepts": "Išeities terminai",
-					"source-cs": "Išeities kodų sistema",
-					"source-display": "Išeities pavadinimas",
-					"target-code": "Paskirties kodas",
-					"target-concepts": "Paskirties terminai",
-					"target-cs": "Paskirties kodų sistema",
-					"target-display": "Paskirties pavadinimas",
-					"target-mapping": "Paskirties ryšiai",
-					"unmap": "Panaikinti ryšius",
-					"unmapped-concepts": "Nepriskirti terminai",
-					"unverified": "Nepatikrintas",
-					"verify": "Patikrinti"
-				},
-				"edit-version": "Redaguoti versiją",
-				"info": {
-					"activate": "Aktyvuoti",
-					"create-approve": "Kurti patvirtinimo užduotį",
-					"create-review": "Kurti peržiūros užduotį",
-					"definition": "Apibrėžtis",
-					"download": "Parsisiuntimas",
-					"last-approved": "Paskutinio patvirtinimo data",
-					"last-modified": "Paskutinio pakeitimo data",
-					"last-reviewed": "Paskutinės peržiūros data",
-					"load-from-github": "Įkelti iš Github",
-					"make-draft": "Paskelbti juodraščiu",
-					"none": "Nėra",
-					"push-to-github": "Įkelti į „Github“",
-					"retire": "Paskelbti nebegaliojančiu"
-				},
-				"map-set-version": "Terminijos ryšių rinkinio versija",
-				"statistics": {
-					"automap-code": "Automatiškai nustatyti pagal kodą",
-					"automap-code-designation": "Automatiškai nustatyti pagal kodą ir pavadinimą",
-					"automap-designation": "Automatiškai nustatyti pagal pavadinimą",
-					"broader": "Platesnis",
-					"equivalent": "Tikslus atitikmuo",
-					"inactive-sources": "Neaktyvūs išeities šaltiniai",
-					"inactive-targets": "Neaktyvios paskirtys",
-					"narrower": "Siauresnis",
-					"no-map": "Nėra terminologijų ryšio",
-					"source-concepts": "Išeities terminai",
-					"title": "Statistika",
-					"unmapped": "Nepriskirtas ryšys"
-				},
-				"statistics-warning": "Kad būtų galima perskaičiuoti statistiką, Terminijos ryšių rinkinio būsena turi būti juodraštis.",
-				"task-modal": {
-					"assignee": "Priskirtas naudotojas",
-					"header": "Kurti {{type}} užduotį",
-					"success-msg": "Užduotis sukurta"
-				}
-			}
-		},
-		"measurement-unit": {
-			"form": {
-				"add-header": "Pridėti matavimo vienetą",
-				"add-kind": "Pridėti rūšį",
-				"edit-header": "Redaguoti matavimo vienetą",
-				"from": "Laikotarpis nuo",
-				"select-kind": "Pasirinkti rūšį",
-				"to": "Laikotarpis iki",
-				"view-header": "Peržiūrėti matavimo vienetą"
-			},
-			"list": {
-				"title": "Pavadinimas"
-			},
-			"mapping": {
-				"list": {
-					"add-mapping": "Pridėti terminologijų ryšius"
-				},
-				"modal": {
-					"add-header": "Pridėti terminologijų ryšius",
-					"edit-header": "Redaguoti terminologijų ryšius"
-				}
-			}
-		},
-		"naming-system": {
-			"form": {
-				"add-header": "Kurti naują pavadinimų sistemą",
-				"edit-header": "Redaguoti pavadinimų sistemą",
-				"view-header": "Peržiūrėti pavadinimų sistemą"
-			},
-			"list": {
-				"add-naming-system": "Pridėti pavadinimų sistemą",
-				"naming-system": "Pavadinimų sistema",
-				"title": "Pavadinimas",
-				"type": "Tipas"
-			}
-		},
-		"observation-definition": {
-			"behaviour": {
-				"computable": "Apskaičiuojamas",
-				"editable": "Redaguojamas",
-				"read-only": "Tik peržiūrėti"
-			},
-			"cardinality": {
-				"max": "maks.",
-				"min": "min."
-			},
-			"divider": {
-				"components": "Komponentai",
-				"data": "Data",
-				"description": "Aprašas",
-				"identification": "Identifikavimas",
-				"interpretation": "Interpretavimas",
-				"mappings": "Terminologijų ryšiai",
-				"members": "Priskirti terminai",
-				"protocol": "Protokolas",
-				"state": "Būsena",
-				"value": "Reikšmė"
-			},
-			"filter": {
-				"category": "Kategorija",
-				"structure": "Struktūra",
-				"value-type": "Reikšmės tipas"
-			},
-			"header-add": "Pridėti stebėjimo apibrėžimą",
-			"header-edit": "Stebėjimo apibrėžimas {{code}}",
-			"import": "Pradėti importą",
-			"import-from-loinc": "Importuoti iš LOINC",
-			"import-success-message": "Stebėjimo apibrėžimo importavimas pavyko",
-			"info": {
-				"data": "Duomenų struktūros aprašas",
-				"mappings": "Sąvokų atvaizdis nuo stebėjimo apibrėžimo iki kitų kodų sistemų",
-				"protocol": "Stebėjimo matavimo metodologija",
-				"state": "Gebėjimas apibūdinti objekto būseną stebėjimo proceso metu."
-			},
-			"interpretation-category": {
-				"absolute": "Absoliutus",
-				"critical": "Kritinis",
-				"reference": "Nuoroda"
-			},
-			"protocol-usage": {
-				"not-in-use": "Nenaudojamas",
-				"value-set": "Naudojamas (reikšmių rinkinys)",
-				"values": "Naudojamos (reikšmės)"
-			},
-			"select-snomed": "Pasirinkti iš SNOMED",
-			"structure": {
-				"component": "Komponentas",
-				"panel": "Panelė",
-				"value": "Reikšmė"
-			},
-			"time-precision": {
-				"period": "Laikotarpis",
-				"timestamp": "Tikslus laikas"
-			}
-		},
-		"package": {
-			"add-header": "Pridėti paketą",
-			"edit-header": "Redaguoti paketą"
-		},
-		"privileges": {
-			"add-header": "Pridėti privilegiją",
-			"edit-header": "Redaguoti privilegiją",
-			"privileges": "Privilegijos",
-			"resources": {
-				"modal": {
-					"actions": {
-						"edit": "Redaguoti",
-						"publish": "Publikuoti",
-						"view": "Peržiūrėti"
-					},
-					"add-header": "Pridėti išteklių",
-					"edit-header": "Redaguoti išteklių",
-					"resource-id": "Išteklius",
-					"resource-type": "Tipas",
-					"type": {
-						"Admin": "Administratorius",
-						"Any": "Bet kuris",
-						"CodeSystem": "Kodų sistema",
-						"ValueSet": "Reikšmių sistema",
-						"MapSet": "Terminijos ryšių rinkinys",
-						"NamingSystem": "Pavadinimų sistema",
-						"AssociationType": "Ryšių tipai",
-						"Space": "Darbalaukis",
-						"Wiki": "Wiki",
-						"ObservationDefinition": "Stebėjimų apibrėžimai",
-						"StructureDefinition": "Struktūros apibrėžimai",
-						"TransformationDefinition": "Transformacijos apibrėžimas",
-						"Task": "Užduotis",
-						"Privilege": "Privilegija",
-						"TerminologyServer": "Terminologijų serveris"
-					}
-				},
-				"table": {
-					"add-resource": "Pridėti išteklių",
-					"delete-resource": "Šalinti išteklių",
-					"head": "Ištekliai"
-				}
-			},
-			"table": {
-				"add-privilege": "Pridėti privilegiją",
-				"delete-privilege": "Panaikinti privilegiją"
-			}
-		},
-		"publication-status": {
-			"operations": {
-				"activate": "Aktyvuoti",
-				"retire": "Paskelbti nebegaliojančiu",
-				"save-as-draft": "Išsaugoti juodraštį"
-			}
-		},
-		"resource-context": {
-			"all-versions": "Visos versijos",
-			"concepts": "Terminai",
-			"details": "Išsami informacija",
-			"properties": "Savybės",
-			"provenance": "Auditas",
-			"summary": "Santrauka"
-		},
-		"resource-form": {
-			"id-change-modal": {
-				"header": "Keisti ID",
-				"id": "Naujas ID"
-			},
-			"open-uri": "Atidaryti URI"
-		},
-		"resource-import-modal": {
-			"file": "Duomenys",
-			"header": "Importuoti išorinę FHIR struktūrą",
-			"id": "ID",
-			"source": "Šaltinis",
-			"type": "Tipas",
-			"url": "URL"
-		},
-		"resources": {
-			"tabset": {
-				"association-types": "Ryšių tipai",
-				"code-systems": "Kodų sistemos",
-				"map-sets": "Terminijos ryšių rinkiniai",
-				"naming-systems": "Pavadinimų sistemos",
-				"value-sets": "Reikšmių rinkiniai"
-			}
-		},
-		"sequence": {
-			"form": {
-				"add-header": "Pridėti seką",
-				"edit-header": "Redaguoti seką"
-			},
-			"list": {
-				"add-sequence": "Pridėti seką"
-			}
-		},
-		"snomed": {
-			"branch": {
-				"form": {
-					"add-header": "Pridėti atšaką",
-					"based-on": "Bazinė versija",
-					"edit-header": "Atšaka {{path}} ",
-					"name": "Pavadinimas",
-					"parent-branch": "Tėvinė atšaka",
-					"release-date": "Paskelbimo data"
-				},
-				"list": {
-					"add-branch": "Pridėti atšaką",
-					"codesystem": {
-						"add-edition": "Pridėti leidimą",
-						"header": "Leidimai",
-						"imported": "Suimportuota"
-					},
-					"daily-build": "Kasdien atnaujinamos atšakos",
-					"edition-modal": {
-						"country-code": "Dviženklis valstybės kodas",
-						"header": "Pridėti leidimą",
-						"name": "Pavadinimas"
-					},
-					"header": "",
-					"working": "Redaguojamos atšakos"
-				},
-				"management": {
-					"add-to-branch": "Pridėti prie atšakos",
-					"authoring-stats": "Pakeitimų statistika",
-					"changed-fsn": "Pakeista pilnas pavadinimas (FSN)",
-					"create-cs-version": "Versijos pakeitimai",
-					"cs-version-modal": {
-						"header": "Sukurti naują kodų sistemos versiją"
-					},
-					"export-modal": {
-						"header": "Eksportuoti į RF2 zip archyvą",
-						"type": "Tipas"
-					},
-					"export-to-rf2": "Eksportuoti į RF2",
-					"header": "Atšaka {{path}}",
-					"import-failed": "Importavimas iš RF2 zip archyvo nesėkmingas",
-					"import-from-rf2": "Importuoti iš RF2",
-					"import-modal": {
-						"create-version": "Kurti kodų sistemos versiją",
-						"file": "Duomenys",
-						"header": "Importuoti iš RF2 zip archyvo",
-						"type": "Tipas"
-					},
-					"import-succeeded": "Importavimas iš RF2 zip archyvo sėkmingas",
-					"import-warning": "Importavimo metu bus sukurta redagavimui skirta nomenklatūros atšaka. Kodų sistema sukurta nebus. Priklausomai nuo naudojamo SNOMED paketo dydžio, įkėlimas gali užtrukti virš 30-60 min.",
-					"inactivate-synonym": "Deaktyvuoti sinonimą",
-					"inactivated-synonyms": "Deaktyvuoti sinonimai",
-					"integrity-check": "Vientisumo patikrinimas",
-					"lock": "Užrakinti",
-					"lock-modal": {
-						"header": "Užrakinti atšaką",
-						"message": "Pranešimas"
-					},
-					"new-descriptions": "Nauji aprašymai",
-					"new-synonyms": "Nauji sinonimai",
-					"reactivate-synonym": "Iš naujo aktyvuoti sinonimą",
-					"reactivated-synonyms": "Iš naujo aktyvuoti sinonimai",
-					"synonym-deactivation-modal": {
-						"description": "Aprašymo id",
-						"header": "Deaktyvuoti sinonimą"
-					},
-					"synonym-reactivation-modal": {
-						"description": "Aprašymo id",
-						"header": "Iš naujo aktyvuoti sinonimą"
-					},
-					"total-descriptions": "Viso aprašų atšakoje: {{total}}",
-					"unlinked-translations": "Viso nesusietų vertimų: {{count}}",
-					"unlock": "Atrakinti"
-				}
-			},
-			"codesystem": {
-				"form": {
-					"export-to-rf2": "Eksportuoti į RF2 archyvą",
-					"header": "Kodų sistema {{name}}",
-					"import-from-rf2": "Importuoti iš RF2 archyvo",
-					"import-warning": "Importavimo metu bus sukurta atšaka ir ją atitinkanti kodų sistemos versija. Ši funkcija turi būti naudojama importuojant paskelbtą nomenklatūros versiją arba kuriant galutinę versiją iš redaguojamos atšakos. Priklausomai nuo naudojamo SNOMED paketo, įkėlimas gali užtrukti virš 30-60 min.",
-					"upgrade": "Atnaujinti versiją",
-					"upgrade-modal": {
-						"dependant-version": "Nauja išvestinė versija",
-						"header": "Atnaujinti kodų sistemą pagal kitą nomenklatūros versiją"
-					}
-				}
-			},
-			"rf2-export": "RF2 eksportas",
-			"search": {
-				"ecl": "ECL",
-				"ecl-placeholder": "ECL išraiška",
-				"import-refset-concepts": "Importuoti terminų rinkinį (refset)",
-				"refsets": "Papildomų terminų rinkiniai (refsets)",
-				"taxonomy": "Taksonomija"
-			}
-		},
-		"space": {
-			"add-btn": "Pridėti darbalaukį",
-			"add-header": "Pridėti darbalaukį",
-			"all-packages": "Visi paketai",
-			"edit-header": "Redaguoti darbalaukį",
-			"github-clean": "Viskas atnaujinta!",
-			"github-commit-message": "Pranešimas apie pakeitimus",
-			"github-empty": "Nėra pakeitimų",
-			"github-integration": "Github integravimas",
-			"github-pull": "Įkelti pakeitimus iš",
-			"github-pull-confirm": "Tikrai norite pakeisti esamus duomenis duomenimis iš kodo saugyklos?",
-			"github-pull-confirm-achtung": "DĖMESIO. Šio veiksmo neįmanoma atšaukti. Galite prarasti duomenis.",
-			"github-push": "Įkelti pakeitimus į",
-			"github-sync": "Sinchronizuoti su Github",
-			"import-btn": "Importuoti darbalaukį",
-			"import-error-message": "Darbalaukio importavimas nesėkmingas",
-			"import-success-message": "Darbalaukio importavimas sėkmingas",
-			"new-version": "Nauja versija",
-			"open-in-new-tab": "Atidaryti naujame skyrelyje",
-			"resource-import-error-message": "Ištekliaus importavimas nesėkmingas",
-			"resource-import-success-message": "Ištekliaus importavimas sėkmingas",
-			"resources": "Ištekliai",
-			"select-context": "Pasirinkite kontekstą"
-		},
-		"structure-definition": {
-			"form": {
-				"add-element": "Pridėti elementą",
-				"add-header": "Pridėti struktūros apibrėžimą",
-				"binding": "Saitas",
-				"cardinality": "Kardinalumas",
-				"code": "Kodas",
-				"definition": "Apibrėžimas",
-				"definition-header": "Apibrėžimas",
-				"display": "Pavadinimai",
-				"edit-header": "Redaguoti struktūrą",
-				"element-header": "Elementai",
-				"error-modal": {
-					"delete-content": "Šalinti turinį ir tęsti",
-					"fhir-to-fsh": "Iš FHIR į FSH",
-					"fsh-to-fhir": "Iš FSH į FHIR",
-					"no-save-proceed": "Tęsti be pakeitimų"
-				},
-				"fixed-coding": "Fiksuotasis kodavimas",
-				"fixed-uri": "Fiksuotasis URI",
-				"fsh-header": "FSH",
-				"json-header": "JSON",
-				"modal": {
-					"content": "Turite neišsaugotų pakeitimų!",
-					"no-save-proceed": "Tęsti",
-					"save-proceed": "Išsaugoti ir tęsti"
-				},
-				"name": "Pavadinimas",
-				"path": "Kelias",
-				"primary-source": "Išeities šaltinis",
-				"short-description": "Trumpas aprašas",
-				"strength": "Stiprumas",
-				"system": "Sistema",
-				"value-set": "Reikšmių rinkinys",
-				"view-header": "Peržiūra"
-			},
-			"list": {
-				"add-structure-definition": "Pridėti struktūros apibrėžimą",
-				"delete-confirm": "Ar tikrai norite šalinti duomenis? Peržiūrėkite išteklius, kurie gali naudoti šį apibrėžimą.",
-				"import": "Importuoti",
-				"import-fhir": "Importuoti iš FHIR",
-				"import-url": "URL",
-				"manual": "Kurti rankiniu būdu",
-				"open-fhir": "Atidaryti FHIR",
-				"title": "Struktūros apibrėžtys"
-			},
-			"view": {
-				"binding": "Saitas",
-				"fixed": "Fiksuotasis"
-			}
-		},
-		"structure-definition-constraint": {
-			"list": {
-				"add-constraint": "Pridėti ribojimą",
-				"header": "Ribojimai"
-			},
-			"modal": {
-				"add-header": "Pridėti ribojimą",
-				"edit-header": "Redaguoti ribojimą",
-				"error": "Klaida",
-				"expression": "Išraiška",
-				"human": "Žmogaus",
-				"key": "Raktas",
-				"requirements": "Reikalavimai",
-				"severity": "Klaidos reikšmingumas",
-				"source": "Šaltinis",
-				"warning": "Įspėjimas"
-			}
-		},
-		"structure-definition-type": {
-			"list": {
-				"add-type": "Pridėti tipą",
-				"header": "Tipai"
-			},
-			"modal": {
-				"add-header": "Pridėti tipą",
-				"code": "Kodas",
-				"edit-header": "Redaguoti tipą",
-				"target-profile": "Paskirties profilis"
-			}
-		},
-		"task": {
-			"activity": "Veikla",
-			"add-btn": "Pridėti užduotį",
-			"add-comment": "Pridėti naują komentarą",
-			"context": "Kontekstas",
-			"context-type": "Resource type",
-			"context-resource": "Resource",
-			"filter": {
-				"assignee": "Priskirtas naudotojas",
-				"author": "Autorius",
-				"created": "Sukurta",
-				"finished": "Baigta",
-				"presets": {
-					"header": "Išankstinės parinktys",
-					"mine": "Jūsų sukurtos",
-					"to-me": "Jums priskirtos"
-				},
-				"priority": "Prioritetas",
-				"project": "Projektas",
-				"requested-performer": "Atsakingas asmuo",
-				"status": "Statusas",
-				"type": "Tipas"
-			},
-			"select-project": "Rinktis projektą"
-		},
-		"template": {
-			"form": {
-				"add-content": "Pridėti turinį",
-				"add-header": "Pridėti šabloną",
-				"edit-header": "Redaguoti šabloną"
-			},
-			"list": {
-				"add-template": "Pridėti šabloną"
-			}
-		},
-		"terminology-server": {
-			"add-btn": "Pridėti serverį",
-			"add-header": "Pridėti serverį",
-			"auth-config": {
-				"access-token-url": "Prieigos duomenų URL (Access Token URL)",
-				"client-id": "Kliento ID",
-				"client-secret": "Kliento raktas (client secret)"
-			},
-			"edit-header": "Redaguoti serverį",
-			"headers": {
-				"key": "Raktas",
-				"value": "Reikšmė"
-			},
-			"kind": {
-				"fhir": "FHIR serveris",
-				"snomed": "SNOMED serveris",
-				"terminology": "Terminologijos serveris"
-			}
-		},
-		"tools": {
-			"terminology-service-api": {
-				"button": "Mygtukas",
-				"content": "Terminologijos paslaugų API leidžia automatizuotai keistis klinikinės terminologijos turiniu ir ištekliais.",
-				"header": "Terminologijos paslaugos API"
-			},
-			"termx-service-api": {
-				"content": "Turinys",
-				"header": "TermX Service API"
-			}
-		},
-		"transformation-definition": {
-			"edit": {
-				"created": "Sukurta {{date}}",
-				"updated": "Atnaujinta {{date}}"
-			},
-			"execution": {
-				"generate": "Kurti",
-				"input": "Įvedimas",
-				"output": "Išvedimas",
-				"transform": "Transformuoti"
-			},
-			"list": {
-				"add-btn": "Pridėti transformaciją",
-				"created-by": "Sukūrė: {{user}}",
-				"last-modified": "Paskutinis pakeitimas"
-			},
-			"resource-form": {
-				"compile": "Kompiliuoti",
-				"content": "Turinys",
-				"definition": "Struktūros apibrėžimas",
-				"download-fml": "FML",
-				"download-json": "JSON",
-				"download-xml": "XML",
-				"fhir-resource": "Išteklius",
-				"fhir-server": "FHIR serveris",
-				"fml-generation-failed": "Nepavyko sukurti FML",
-				"generate": "Kurti",
-				"invalid-resource-url": "Nepavyko įkelti struktūros apibrėžimo",
-				"map-set": "Terminijos ryšių rinkinys",
-				"mapping": "Struktūros atvaizdavimas",
-				"preview-hide": "Slėpti",
-				"preview-show": "Rodyti",
-				"resource-url": "Ištekliaus atsisiuntimo adresas",
-				"save-as": "Išsaugoti kaip",
-				"switch-to-text-editor": {
-					"cancel": "Atšaukti",
-					"confirm": "Tęsti",
-					"title": "Perjungti į teksto redagavimo režimą",
-					"warning": "DĖMESIO! Šio veiksmo neįmanoma atšaukti!"
-				},
-				"url": "URL",
-				"visual-editor": "Vizualinis redagavimas",
-				"visual-editor-disabled": "Užpildykite pavadinimo lauką"
-			},
-			"resources": {
-				"new": "-- naujas --",
-				"type.conceptmap": "Terminų ryšių vaizdavimas",
-				"type.definition": "Apibrėžimai",
-				"type.mapping": "Importavimas",
-				"type.mapping-main": "Terminologijų ryšiai"
-			}
-		},
-		"value-set": {
-			"concepts": {
-				"no-version": "Nepasirinkote versijos",
-				"select-version": "Pasirinkite versiją terminų peržiūrai"
-			},
-			"form": {
-				"add-header": "Kurti naują reikšmių rinkinį",
-				"edit-header": "Redaguoti reikšmių rinkinį",
-				"versions": {
-					"add-version": "Pridėti versiją",
-					"export-fhir-expansion": "Eksportuoti FHIR JSON su išskleidimu",
-					"export-fhir-json": "Eksportuoti FHIR JSON",
-					"export-fhir-xml": "Eksportuoti FHIR XML",
-					"open-fhir": "Atidaryti FHIR URL"
-				},
-				"view-header": "Peržiūrėti reikšmių rinkinį"
-			},
-			"list": {
-				"add-value-set": "Pridėti reikšmių rinkinį",
-				"expansion": "Išskleistos savybės",
-				"import-fhir": "Importuoti išorinę FHIR struktūrą",
-				"last-version": "Naujausia versija",
-				"manual": "Rankiniu būdu",
-				"open-fhir": "Atidaryti FHIR URL",
-				"status": "Statusas",
-				"title": "Reikšmių rinkiniai (value sets)",
-				"versions-expiration-date": "iki {{expirationDate}}",
-				"versions-release-date": "Nuo {{releaseDate}}",
-				"versions-version": "Versijos pavadinimas: {{version}}"
-			},
-			"summary": {
-				"add-version": "Pridėti versiją",
-				"all-tasks": "Visos užduotys",
-				"duplicate-version-modal": {
-					"header": "Dubliuoti reikšmių rinkinio  versiją",
-					"version": "Nauja versija"
-				},
-				"expansions": "Išplėtimai",
-				"opened-tasks": "Aktyvios užduotys",
-				"related-artifacts": "Susiję artefaktai",
-				"total-concepts": "Visi terminai",
-				"value-set": "Reikšmių rinkinys (value set)",
-				"versions": "Versijos"
-			}
-		},
-		"value-set-version": {
-			"form": {
-				"add-concept": "Pridėti terminą",
-				"add-header": "Pridėti versiją",
-				"concepts": {
-					"warning": "Terminas neturi aktyvuotos versijos"
-				},
-				"download": "Atsisiuntimas",
-				"details-header": "Versijos detalės",
-				"edit-header": "Redaguoti versiją",
-				"rule-set": {
-					"rule": {
-						"add-designation": "Pridėti pavadinimą",
-						"all": "Visi terminai",
-						"bulk-copy": "Kopijuoti visus duomenis",
-						"code-system": "Kodų sistema",
-						"content": "Turinys",
-						"exact": "Tikslus atitikimas",
-						"exclude": "Neįtraukti",
-						"filter": "Filtravimas pagal savybes",
-						"include": "Įtraukti",
-						"value-set": "Reikšmių rinkinys (value set)"
-					}
-				},
-				"view-header": "Peržiūra"
-			},
-			"summary": {
-				"edit-version": "Redaguoti versiją",
-				"expansion": "Išplėtimas",
-				"expansion-limit-info": "Rodoma 20 savybių.  Serveryje yra dar savybių: {{count}}.",
-				"expansion-see-all": "Žiūrėti visą terminų sąrašą.",
-				"expansion-warning": "Kad būtų galima perskaičiuoti išplėtimus, reikšmių rinkinys turi turėti juodraščio statusą.",
-				"info": {
-					"activate": "Aktyvuoti",
-					"create-approve": "Kurti patvirtinimo užduotį",
-					"create-review": "Kurti peržiūros užduotį",
-					"definition": "Apibrėžimas",
-					"download": "Atsisiuntimas",
-					"expansion": "Išplėtimas",
-					"last-approved": "Paskutinio patvirtinimo data",
-					"last-modified": "Paskutinių pakeitimų data",
-					"last-reviewed": "Paskutinės peržiūros data",
-					"make-draft": "Paskelbti juodraščiu",
-					"none": "Nėra",
-					"retire": "Paskelbti nebegaliojančiu",
-					"show-changes": "Rodyti pakeitimus",
-					"sync-with-github": "Sinchronizuoti su Githubu"
-				},
-				"rule": "Taisyklė",
-				"rule-set": "Taisyklių rinkinys",
-				"task-modal": {
-					"assignee": "Paskirtas asmuo",
-					"header": "Kurti užduotį: {{type}} ",
-					"success-msg": "Užduotis sukurta"
-				},
-				"value-set-version": "Reikšmių rinkinio (value set) versija"
-			}
-		},
-		"value-set-version-concept": {
-			"form": {
-				"add-header": "Pridėti",
-				"designation-language": "Kalba",
-				"designation-name": "Pavadinimas",
-				"edit-header": "Redaguoti"
-			}
-		},
-		"value-set-version-rule": {
-			"form": {
-				"add-header": "Pridėti",
-				"concept": {
-					"add-concept": "Pridėti terminą",
-					"modal-header": ""
-				},
-				"edit-header": "Redaguoti",
-				"filter": {
-					"add-filter": "Pridėti filtrą",
-					"modal-header": ""
-				}
-			}
-		},
-		"wiki-page": {
-			"comments": {
-				"created-at": "Sukurta {{date}}",
-				"modified-at": "Pakeista {{date}}",
-				"read-more": "Skaityti daugiau",
-				"reply": "Atsakyti",
-				"resolve": "Uždaryti"
-			},
-			"details": {
-				"add-content": "Pridėti turinį",
-				"concept": "Terminas",
-				"contents": "Turinys",
-				"cs": "Kodų sistema (code system)",
-				"csc": "",
-				"def": "Struktūros apibrėžimas",
-				"ms": "Terminijos ryšių rinkiniai (map set)",
-				"none": "Nėra",
-				"page": "Puslapis",
-				"relations": "Ryšiai",
-				"tags": "Gairės",
-				"usages": "Rodyklės",
-				"vs": "Reikšmių rinkinys (value set)",
-				"vsc": ""
-			},
-			"edit": {
-				"header": {
-					"version": "Versija: {{version}}"
-				},
-				"image-modal": {
-					"choose-file": "Pasirinkite paveiksliuką įkėlimui",
-					"header": "Duomenys"
-				},
-				"menu": {
-					"comments": {
-						"title": "Pavadinimas"
-					},
-					"diagrams": "Diagramos",
-					"files": "Duomenys",
-					"line-wrap": {
-						"off": "Rodyti vientisai",
-						"on": "Perkelti eilutes"
-					},
-					"preview": {
-						"hide": "Slėpti peržiūrą",
-						"show": "Rodyti peržiūrą"
-					},
-					"structure-definition": {
-						"add": "Pridėti struktūros apibrėžimą",
-						"copy": "Kopijuoti nuorodą",
-						"title": "Struktūros apibrėžimas"
-					}
-				},
-				"structure-definition-modal": {
-					"description": "Ar norite išsaugoti esamo puslapio turinį prieš pereidami prie struktūros apibrėžimo?",
-					"header": "Neišsaugoti pakeitimai bus pašalinti!",
-					"proceed-without-saving": "Tęsti neišsaugant",
-					"save-and-proceed": "Išsaugoti ir tęsti"
-				}
-			},
-			"header": {
-				"add-subpage": "Pridėti priklausantį puslapį",
-				"copy-raw": "Kopijuoti neapdorotus duomenis",
-				"modified": "Šį puslapį {{date}} redagavo <b>{{user}}</b>."
-			},
-			"history": {
-				"header": {
-					"tooltips": {
-						"copy-raw": "Kopijuoti duomenis tiesiogiai",
-						"edit": "Naudoti kaip redagavimo šabloną",
-						"line-by-line": "Eilučių palyginimas",
-						"preview": "Peržiūra",
-						"side-by-side": "Versijų palyginimas",
-						"view-diff": "Skirtumai"
-					}
-				},
-				"timeline": {
-					"header": "Redagavimo chronologija",
-					"load-more": "Daugiau",
-					"source-item": "A",
-					"target-item": "B"
-				}
-			},
-			"no-space": {
-				"desc": "Norėdami tęsti, pasirinkite darbalaukį",
-				"title": "Nepasirinktas darbalaukis"
-			},
-			"overview": {
-				"pages": "Puslapiai",
-				"recently-modified": {
-					"created": "Sukurta {{date}}",
-					"header": "Neseniai pakeista",
-					"updated": "Atnaujinta {{date}}"
-				}
-			},
-			"setup": {
-				"add-header": "Pridėti puslapį",
-				"add-structure-definition": "Pridėti struktūros apibrėžimą",
-				"content-header": "Turinys",
-				"content-type-tooltip": "Keičiant turinio tipą gali pasikeisti turinio reikšmės",
-				"copy-to-clipboard": "Kopijuoti",
-				"edit-header": "Keisti nustatymus",
-				"relation-header": "Ryšiai",
-				"usages": "Panaudojimai"
-			},
-			"sidebar": {
-				"delete-confirm": "Tikrai šalinti? Visi priklausantys puslapiai taip pat bus pašalinti!",
-				"pages": "Puslapiai"
-			},
-			"spaces": "Darbalaukiai",
-			"texteditor": {
-				"quick-actions": {
-					"link-modal": {
-						"code-system": "Kodų sistema",
-						"concept": "Terminas",
-						"concept-code-system": "Terminas priklauso kodų sistemai",
-						"header": "Kurti nuorodą",
-						"link-name": "Nuorodos pavadinimas",
-						"map-set": "Terminijos ryšių rinkinys",
-						"page": "Puslapis",
-						"resource": "Išteklius",
-						"resource-type": "Ištekliaus tipas",
-						"search-externally": "Ieškoti kitame darbalaukyje",
-						"space": "Darbalaukis",
-						"url": "URL",
-						"value-set": "Reikšmių rinkinys"
-					},
-					"structure-definition-modal": {
-						"base-definition-url": "Bazinis apibrėžimo adresas",
-						"header": "Pasirinkti struktūros apibrėžimą",
-						"simplifier": "Supaprastintas variantas",
-						"structure-definition": "Struktūros apibrėžimas",
-						"url": "Adresas"
-					},
-					"template-modal": {
-						"header": "Pasirinkite šabloną",
-						"template": "Šablonas"
-					}
-				}
-			}
-		},
-		"ucum": {
-			"menu": {
-				"export": "Eksportuoti"
-			},
-			"export-modal": {
-				"header": "Eksportuoti UCUM vienetus",
-				"hint": "Jei papildiniai nepasirinkti, bus eksportuoti visi UCUM papildiniai.",
-				"supplements": "Papildiniai"
-			},
-			"import-modal": {
-				"file": "Failas",
-				"header": "Importuoti UCUM essence XML"
-			}
-		}
-	}
+  "core": {
+    "back": "Grįžti",
+    "btn": {
+      "add": "Pridėti",
+      "cancel": "Atšaukti",
+      "clear-all": "Išvalyti viską",
+      "close": "Užverti",
+      "confirm": "Patvirtinti",
+      "copied": "Nukopijuota",
+      "copy": "Kopijuoti",
+      "custom": "Tinkinti",
+      "delete": "Šalinti",
+      "duplicate": "Dubliuoti",
+      "edit": "Redaguoti",
+      "export": "Eksportuoti",
+      "import": "Importuoti",
+      "proceed": "Tęsti",
+      "query": "Užklausa",
+      "save": "Išsaugoti",
+      "search": "Ieškoti",
+      "select": "Pasirinkti",
+      "send": "Siųsti"
+    },
+    "confirm": "Ar tikrai?",
+    "data-lost-warning": "Pakeitimai nebus išsaugoti!",
+    "delete-confirm": "Tikrai šalinti?",
+    "error": {
+      "403": {
+        "message": "Neturite teisės pasiekti šį resursą.",
+        "title": "Prieiga uždrausta"
+      }
+    },
+    "filter": "Filtruoti",
+    "form-invalid": "Netinkama forma.  Peržiūrėkite duomenis",
+    "load-all": "Užkrauti viską",
+    "load-more": "Užkrauti daugiau",
+    "no-data": "Duomenų nėra",
+    "no-privilege": {
+      "access": "Prieiga: {{path}}",
+      "error": "403 prieiga draudžiama",
+      "privileges": {
+        "plural": "Jūs neturite šių privilegijų: {{privileges}}",
+        "singular": "Jūs neturite šios privilegijos: {{privilege}}"
+      }
+    },
+    "session-expiration-error": "Sesija pasibaigė!",
+    "session-expiration-warning": "Sesija pasibaigs mažiau nei per 5 minutes!",
+    "version-select": {
+      "custom": "Rinktis"
+    }
+  },
+  "entities": {
+    "association-type": {
+      "code": "Kodas",
+      "description": "Aprašas",
+      "directed": "Nukreiptas",
+      "forward-name": "Pavadinimai nuo pradžių",
+      "kind": "Rūšis",
+      "reverse-name": "Pavadinimai atvirkštine tvarka"
+    },
+    "checklist": {
+      "rule": "Rule",
+      "whitelist": "Whitelist"
+    },
+    "checklist-rule": {
+      "active": "Active",
+      "code": "Code",
+      "codeSystem": "CodeSystem",
+      "concept": "Concept",
+      "description": "Description",
+      "design": "Design",
+      "human": "Human",
+      "mapSet": "MapSet",
+      "release": "Release",
+      "resource-type": "Resource type",
+      "severity": "Severity",
+      "software": "Software",
+      "target": "Target",
+      "title": "Title",
+      "type": "Type",
+      "valueSet": "ValueSet",
+      "verification": "Verification"
+    },
+    "code-system": {
+      "base-code-system": "Bazinė kodų sistema",
+      "case-sensitivity": "Skirti didžiąsias ir mažąsias raides",
+      "concepts": "Terminai",
+      "contacts": "Kontaktai",
+      "content": "Turinys",
+      "description": "Aprašas",
+      "designations": "Pavadinimai",
+      "disable-hierarchy-grouping": "Atjungti hierarchinį grupavimą",
+      "hierarchy-meaning": "Hierarchijos reikšmė",
+      "id": "ID",
+      "name": "Kompiuterinis pavadinimas",
+      "narrative": "Naratyvas",
+      "plural": "Kodų sistemos",
+      "properties": "Savybės (properties)",
+      "publisher": "Leidėjas",
+      "sequence": "Sąvokos identifikacinio kodo seka",
+      "single": "Code System",
+      "supplement": "Supplement",
+      "supported-languages": "Palaikomos kalbos",
+      "title": "Antraštė",
+      "uri": "Universalusis ištekliaus identifikatorius (URI)",
+      "uri-short": "URI",
+      "versions": "Versijos"
+    },
+    "code-system-association": {
+      "status": "Statusas",
+      "target-code": "Paskirtis kodas",
+      "target-id": "Paskirtis ID",
+      "type": "Tipas",
+      "versions": "Sąsajos versijos"
+    },
+    "code-system-concept": {
+      "code": "Kodas",
+      "code-system": "Kodų sistema (code system)",
+      "description": "Komentaras",
+      "plural": "Concepts",
+      "type": "Tipas",
+      "versions": "Sąvokos versijos"
+    },
+    "code-system-entity": {
+      "type": "Tipas",
+      "versions": "Esybės versijos"
+    },
+    "code-system-entity-version": {
+      "association-order": "Eilės tvarka",
+      "association-status": "Statusas",
+      "association-target": "Paskirtis",
+      "association-type": "Sąsaja",
+      "associations": "Sąsajos",
+      "code": "Kodas",
+      "created": "Sukurta",
+      "description": "Komentaras",
+      "designation": "Designation",
+      "designations": "Pavadinimai (designations)",
+      "id": "ID",
+      "property-values": "Savybės",
+      "references": "Ryšiai",
+      "status": "Statusas"
+    },
+    "code-system-version": {
+      "base-version": "Parent code system version",
+      "description": "Aprašas",
+      "entities": "Esybės versijos",
+      "expiration-date": "Numatomas naudojimas iki",
+      "id": "Identifikatorius",
+      "preferred-language": "Pagrindinė kalba",
+      "release-date": "Numatomas naudojimas nuo",
+      "single": "Code System Version",
+      "source": "Leidėjas",
+      "status": "Statusas",
+      "supported-languages": "Palaikomos kalbos",
+      "type": "Tipas",
+      "uri": "URI",
+      "version": "Versija"
+    },
+    "common": {
+      "privileges": "Privilegijos",
+      "versions": "Versijos"
+    },
+    "contact-detail": {
+      "name": "Vardas, pavardė",
+      "telecom": {
+        "system": "Sistema",
+        "use": "Naudojimas",
+        "value": "Reikšmė"
+      },
+      "telecoms": "Telekomunikacija"
+    },
+    "designation": {
+      "case-significance": "Didžiųjų ir mažųjų raidžių reikšmingumas",
+      "description": "Aprašas",
+      "designation-kind": "Pavadinimo rūšis",
+      "language": "Kalba",
+      "name": "Pavadinimas",
+      "preferred": "Pirminis",
+      "rendering": "Atvaizdavimas",
+      "status": "Statusas",
+      "type": "Tipas"
+    },
+    "entity-property": {
+      "description": "Aprašas",
+      "kind": "Rūšis",
+      "name": "Pavadinimas",
+      "order-number": "Eilės tvarka",
+      "preferred": "Pirminis",
+      "required": "Privaloma",
+      "rule": {
+        "code-systems": "Kodų sistemos",
+        "compose": "Sukurti",
+        "filters": "Filtrai",
+        "operator": "Priskyrimas",
+        "property": "Savybė",
+        "singular": "Taisyklė",
+        "type": "Tipas",
+        "value": "Reikšmė",
+        "value-set": "Reikšmių rinkinys (value set)"
+      },
+      "show-in-list": "Rodyti sąraše",
+      "status": "Statusas",
+      "type": "Tipas",
+      "uri": "URI",
+      "value": "Reikšmė"
+    },
+    "implementation-guide": {
+      "id": "ID",
+      "multiple": "daug",
+      "single": "vienas",
+      "title": "Pavadinimas"
+    },
+    "implementation-guide-version": {
+      "algorithm": "Algoritmas",
+      "date": "Data",
+      "depends-on": {
+        "package-id": "Paketo ID",
+        "reason": "Priežastis",
+        "single": "vienas",
+        "version": "Versija"
+      },
+      "empty-github-url": "",
+      "fhir-version": "",
+      "github-branch": "Branch",
+      "github-url": "",
+      "group": {
+        "description": "",
+        "multiple": "",
+        "name": ""
+      },
+      "multiple": "",
+      "package-id": "",
+      "page": {
+        "group": "",
+        "multiple": "",
+        "name": "",
+        "page": "",
+        "space": "",
+        "type": ""
+      },
+      "resource": {
+        "group": "",
+        "multiple": "",
+        "name": "",
+        "reference": "",
+        "type": "",
+        "version": ""
+      },
+      "single": "",
+      "template": "",
+      "version": "Versija"
+    },
+    "map-set": {
+      "associations": "Ryšiai",
+      "description": "Aprašas",
+      "domain": "Domenas",
+      "id": "ID",
+      "name": "Pavadinimas",
+      "plural": "Terminijos ryšių (map sets) rinkiniai",
+      "properties": "Savybės",
+      "publisher": "Leidėjas",
+      "source-code-systems": "Išeities kodų sistemos (code system)",
+      "source-value-set": "Išeities reikšmių rinkinys (value set)",
+      "target-code-systems": "Paskirties kodų sistemos (code system)",
+      "target-value-set": "Paskirties reikšmių rinkinys (value set)",
+      "title": "Pavadinimas",
+      "uri": "URI",
+      "versions": "Versijos"
+    },
+    "map-set-association": {
+      "concept": "Terminas",
+      "source": "Išeitis",
+      "status": "Statusas",
+      "target": "Paskirtis",
+      "type": "Tipas"
+    },
+    "map-set-entity": {
+      "id": "ID",
+      "versions": "Versijos"
+    },
+    "map-set-entity-version": {
+      "created-at": "Sukurta",
+      "description": "Aprašas",
+      "id": "ID",
+      "status": "Statusas"
+    },
+    "map-set-version": {
+      "algorithm": "Algoritmas",
+      "description": "Aprašas",
+      "expiration-date": "Numatomas naudojimas iki",
+      "id": "Identifikatorius",
+      "preferred-language": "Pageidaujama kalba",
+      "release-date": "Numatomas naudojimas nuo",
+      "source": "Leidėjas",
+      "status": "Statusas",
+      "supported-languages": "Palaikomos kalbos",
+      "version": "Versija"
+    },
+    "measurement-unit": {
+      "alias": "Sinonimas",
+      "code": "Kodas",
+      "definitionUnit": "Bazinis matavimo vienetas",
+      "definitionValue": "Bazinė reikšmė",
+      "id": "ID",
+      "kind": "Rūšis",
+      "mappings": "Terminologijų ryšiai",
+      "name": "Pavadinimas",
+      "period": "Laikotarpis",
+      "rounding": "Apvalinimas"
+    },
+    "measurement-unit-mapping": {
+      "system": "Sistema",
+      "system-unit": "Sistemos matavimo vienetas",
+      "system-value": "Sistemos reikšmė"
+    },
+    "naming-system": {
+      "code-system": "Kodų sistema (code system)",
+      "description": "Aprašas",
+      "id": "ID",
+      "identifiers": "Identifikatoriai",
+      "kind": "Rūšis",
+      "name": "Pavadinimas",
+      "source": "Leidėjas",
+      "status": "Statusas"
+    },
+    "naming-system-identifier": {
+      "type": "Tipas",
+      "value": "Reikšmė"
+    },
+    "observation-definition": {
+      "alias": "Sinonimas",
+      "category": "Kategorija",
+      "code": "Kodas",
+      "components": {
+        "binding": "Saitas",
+        "cardinality": "Kardinalumas",
+        "code": "Kodas",
+        "multiple": "Komponentai",
+        "names": "Pavadinimai",
+        "order-number": "Eilės tvarka",
+        "type": "Tipas",
+        "unit": {
+          "singular": "Matavimo vienetas",
+          "system": "Matavimo vienetų sistema"
+        },
+        "value-set": "Reikšmių rinkinys (value set)"
+      },
+      "definition": "Apibrėžimas",
+      "details": "Išsami informacija",
+      "interpretations": {
+        "category": {
+          "age": "Amžius",
+          "gender": "Lytis",
+          "gestation-age": "Gestacinis amžius",
+          "singular": "Kategorija"
+        },
+        "condition": "Sąlyga (CQL)",
+        "fhir-interpretation-code": "FHIR interpretacijos kodas",
+        "order-number": "Eilės tvarka",
+        "range": {
+          "code-system": "Kodų sistema (code system)",
+          "code-system-concepts": "Kodų sistemos terminai",
+          "numeric-range": "Skaičių diapazonas",
+          "singular": "Diapazonas",
+          "value-set": "Reikšmių rinkinys (value set)"
+        },
+        "snomed-interpretation-code": "SNOMED interpretacijos kodas",
+        "state": "Kriterijų tekstas",
+        "target": "Komponentas"
+      },
+      "keywords": "Raktiniai žodžiai",
+      "mappings": {
+        "code-system": "Kodų sistema (code system)",
+        "concept": "Terminas",
+        "condition": "Sąlyga",
+        "map-set": "Terminijos ryšių rinkinys (map set)",
+        "multiple": "Terminologijų ryšiai",
+        "order-number": "Eilės tvarka",
+        "relation": "Ryšys",
+        "target": "Komponentas"
+      },
+      "members": {
+        "cardinality": "Kardinalumas",
+        "code": "Kodas",
+        "multiple": "Nariai",
+        "names": "Vardai",
+        "order-number": "Eilės tvarka"
+      },
+      "name": "Pavadinimas",
+      "protocol": {
+        "circumstances": "Duomenų rinkimo aplinkybės",
+        "circumstances-value-set": "Surinktų duomenų reikšmių rinkinys (value set)",
+        "circumstances-values": "Surinktų duomenų reikšmės",
+        "components": "Papildomi parametrai",
+        "device": "Įrenga",
+        "device-value-set": "Įrengios reikšmių rinkinys (value set)",
+        "device-values": "Įrangos reikšmės",
+        "measurement-location": "Matavimo taškas",
+        "measurement-location-value-set": "Matavimo taško reikšmių rinkinys (value set)",
+        "measurement-location-values": "Matavimo taško reikšmės",
+        "method": "Metodas",
+        "method-value-set": "Metodo reikšmių rinkinys (value set)",
+        "method-values": "Metodo reikšmės",
+        "position": "Pozicija",
+        "position-value-set": "Pozicijos reikšmių rinkinys (value set)",
+        "position-values": "Pozicijos reikšmės",
+        "single": "Protokolas",
+        "specimen": "Ėminys",
+        "specimen-value-set": "Ėminio reikšmių rinkinys (value set)",
+        "specimen-values": "Ėminio reikšmės"
+      },
+      "publisher": "Leidėjas",
+      "state": "Būsena",
+      "status": "Statusas",
+      "structure": "Struktūra",
+      "time-precision": "Laiko fiksavimo tikslumas",
+      "url": "URL",
+      "value": {
+        "behaviour": "Elgsena",
+        "expression": "Išraiška",
+        "multiple-results-allowed": "Leidžiami keli rezultatai",
+        "type": "Tipas",
+        "unit": {
+          "singular": "Matavimo vienetas",
+          "system": "Matavimo vienetų sistema"
+        },
+        "usage": "Naudojimas",
+        "value-set": "Reikšmių rinkinys (value set)",
+        "values": "Reikšmės"
+      },
+      "version": "Versija"
+    },
+    "package": {
+      "code": "Kodas",
+      "plural": "Paketai",
+      "singular": "Paketas",
+      "version": {
+        "plural": "Versijos",
+        "singular": "Versija",
+        "version": "Versija"
+      }
+    },
+    "page": {
+      "contents": "Turinys",
+      "links": "Tėviniai puslapiai",
+      "plural": "Puslapiai",
+      "relations": "Ryšiai",
+      "status": "Statusas",
+      "tags": "Gairės",
+      "template": "Šablonas"
+    },
+    "page-content": {
+      "content": "Turinys",
+      "content-type": "Turinio tipas",
+      "lang": "Kalba",
+      "name": "Pavadinimas"
+    },
+    "page-link": {
+      "order-number": "Užsakymo numeris",
+      "source": "Išeitis",
+      "target": "Paskirtis"
+    },
+    "page-relation": {
+      "target": "Paskirtis",
+      "type": "Tipas"
+    },
+    "privilege": {
+      "actions": "Veiksmai",
+      "code": "Kodas",
+      "kind": "Rūšis",
+      "name": "Vardas, pavardė",
+      "resources": "Ištekliai"
+    },
+    "privilege-resource": {
+      "edit": "Redaguoti",
+      "publish": "Publikuoti",
+      "resource-id": "Išteklio ID",
+      "type": "Tipas",
+      "view": "Peržiūrėti"
+    },
+    "provenance": {
+      "activity": "Veikla",
+      "author": "Autorius",
+      "changes": "Pakeitimai",
+      "date": "Data",
+      "target": "Paskirtis"
+    },
+    "release": {
+      "authors": "Authors",
+      "code": "Code",
+      "name": "Name",
+      "planned": "Planned",
+      "plural": "Releases",
+      "release-date": "Release date",
+      "resource": {
+        "code-system": "Code system",
+        "errors": "Errors",
+        "map-set": "Map set",
+        "name": "Name",
+        "plural": "Resources",
+        "reference": "Reference",
+        "structure-definition": "Structure definition",
+        "structure-map": "Structure map",
+        "sync-state": "Sync state",
+        "type": "Type",
+        "value-set": "Value set",
+        "version": "Version"
+      },
+      "single": "Release",
+      "status": "Status",
+      "terminology-server": "Terminology server"
+    },
+    "resource": {
+      "conf-attribute": {
+        "attribute": "Attribute",
+        "language": "Language",
+        "multiple": "Configuration attributes",
+        "often-used-attributes": "Often used attributes",
+        "value": "Value"
+      },
+      "copyright": {
+        "holder": "Autorių teisių turėtojas",
+        "jurisdiction": "Jurisdikcija",
+        "single": "Autorių teisės",
+        "statement": "Autorių teisių pareiškimas"
+      },
+      "description": "Aprašas",
+      "experimental": "Eksperimentinis",
+      "external-web-source": "External web source",
+      "form": {
+        "identifiers": {
+          "often-used-identifiers": "Frequently used..."
+        }
+      },
+      "id": "ID",
+      "identifiers": {
+        "multiple": "Identifikatoriai",
+        "multiple-version": "Versijų identifikatoriai",
+        "system": "Sistema",
+        "value": "Reikšmė"
+      },
+      "name": "Pavadinimas",
+      "other-title": "Other title",
+      "permissions": {
+        "admin": "Administravimas",
+        "editor": "Redagavimas",
+        "endorser": "Tvirtinimo",
+        "multiple": "Teisės",
+        "viewer": "Peržiūra"
+      },
+      "publisher": "Leidėjas",
+      "purpose": "Paskirtis",
+      "replaces": "Replaces",
+      "settings": {
+        "approval-required": "Būtinas patvirtinimas",
+        "multiple": "Nustatymai",
+        "review-required": "Būtina peržiūra"
+      },
+      "source-reference": "Source reference",
+      "supported-languages": "Palaikomos kalbos",
+      "title": "Pavadinimas",
+      "topic": "Topic",
+      "uri": "URI",
+      "use-context": "Naudojimo kontekstas",
+      "version": {
+        "algorithm": "Algoritmas",
+        "description": "Aprašas",
+        "from": "Numatoma naudoti nuo",
+        "preferred-language": "Pageidajama kalba",
+        "single": "Versija",
+        "to": "Numatoma naudoti iki",
+        "version": "Versija"
+      }
+    },
+    "sequence": {
+      "code": "Kodas",
+      "daily": "daily",
+      "description": "Aprašas",
+      "luvs": "Paskutinės naudotos reikšmės",
+      "monthly": "monthly",
+      "never": "never",
+      "pattern": "Seka",
+      "restart": "Pradėti iš naujo",
+      "start-from": "Pradėti nuo",
+      "yearly": "yearly"
+    },
+    "sequence-luv": {
+      "luv": "Paskutinė naudota reikšmė",
+      "period": "Laikotarpis"
+    },
+    "snomed-branch": {
+      "base": "Bazė",
+      "creation": "Sukurta",
+      "deleted": "Pašalinta",
+      "head": "Pagrindas",
+      "locked": "Užrakinta",
+      "metadata": "Metaduomenys",
+      "path": "Kelias",
+      "state": "Būsena"
+    },
+    "snomed-codesystem": {
+      "branch-path": "Atšakos kelias",
+      "country-code": "Valstybės kodas",
+      "daily-build-available": "Prieinami kasdieniai atnaujinimai",
+      "dependant-version-effective-time": "Priklausomų versijų galiojimo pradžia",
+      "imported": "Suimportuota",
+      "languages": "Kalbos",
+      "latest-version": "Naujausia versija",
+      "name": "Pavadinimas",
+      "short-name": "Trumpas pavadinimas",
+      "versions": "Versijos"
+    },
+    "snomed-codesystem-version": {
+      "effective-date": "Galiojimo pradžios data"
+    },
+    "snomed-concept": {
+      "concept-id": "Sąvokos ID",
+      "descriptions": "Aprašai",
+      "fsn": "Sąvokos pilnas pavadinimas (FSN)",
+      "kts-references": "Ryšiai terminologijų sistemoje",
+      "provenance": "Auditas",
+      "pt": "Pageidaujamas aprašymas (PT)",
+      "refsets": "Refsets",
+      "relationships": "Ryšiai",
+      "snomed-references": "SNOMED nuorodos",
+      "term": "Terminas",
+      "translations": "Vertimai"
+    },
+    "snomed-description": {
+      "acceptability": "Sąvokos priimtinumas (acceptability)",
+      "concept-id": "Sąvokos ID",
+      "description-id": "Aprašo ID",
+      "lang": "Kalba",
+      "refset": "Refsets",
+      "term": "Terminas",
+      "type": "Tipas"
+    },
+    "snomed-reference": {
+      "concept": "Terminas",
+      "type": "Tipas"
+    },
+    "snomed-refset": {
+      "target": "Paskirtis",
+      "type": "Tipas"
+    },
+    "snomed-relationship": {
+      "active": "Aktyvus",
+      "group": "Grupė",
+      "target": "Paskirtis",
+      "type": "Tipas"
+    },
+    "snomed-translation": {
+      "acceptability": "Sąvokos priimtinumas (acceptability)",
+      "acceptability-options": {
+        "acceptable": "Priimtinas",
+        "preferred": "Pageidaujamas"
+      },
+      "branch": "Atšaka",
+      "concept-id": "Sąvokos ID",
+      "description-id": "Aprašo ID",
+      "language": "Kalba",
+      "module": "Modulis",
+      "status": "Statusas",
+      "task": "Užduotis",
+      "term": "Terminas",
+      "type": "Tipas",
+      "type-options": {
+        "fully-specified-name": "Pilnas pavadinimas",
+        "synonym": "Sinonimas"
+      }
+    },
+    "space": {
+      "acl": "ACL",
+      "active": "Aktyvus",
+      "code": "Kodas",
+      "editors": "Redaktoriai",
+      "github": "Github",
+      "name": "Vardas, pavardė",
+      "owners": "Kūrėjai",
+      "packages": "Paketai",
+      "plural": "Erdvės",
+      "shared": "Bendrasis",
+      "singular": "Erdvė",
+      "terminology-servers": "Terminologijos serveriai",
+      "viewers": "Turintys peržiūros teisę"
+    },
+    "structure-definition": {
+      "code": "Kodas",
+      "content": "Turinys",
+      "content-format": "Turinio formatas",
+      "content-type": "Turinio tipas",
+      "name": "Pavadinimas",
+      "parent": "Kilmė (parent)",
+      "plural": "Struktūros apibrėžtys",
+      "publisher": "Leidėjas",
+      "status": "Būsena",
+      "url": "URL",
+      "version": "Versija"
+    },
+    "task": {
+      "assignee": "Priskirtas naudotojas",
+      "author": "Autorius",
+      "created": "Sukurta",
+      "modified": "Pakeista",
+      "modified-by": "Pakeitimų autorius",
+      "number": "Skaičius",
+      "plural": "Užduotys",
+      "priority": "Pirmenybė",
+      "project": "Projektas",
+      "status": "Statusas",
+      "title": "Antraštė",
+      "type": "Tipas",
+      "workflow": "Darbo eiga"
+    },
+    "template": {
+      "code": "Kodas",
+      "content": "Turinys",
+      "content-type": "Turinio tipas",
+      "names": "Pavadinimai"
+    },
+    "terminology-server": {
+      "access-info": "Access info",
+      "active": "Aktyvus",
+      "auth-config": "OAuth 2.0",
+      "auth-name": "Name",
+      "auth-status": "Status",
+      "auth-url": "URL",
+      "auth-version": "Version",
+      "authoritative": "Authoritative CodeSystems",
+      "authoritative-valuesets": "Authoritative ValueSets",
+      "code": "Kodas",
+      "current-installation": "Esama sistema",
+      "exclusions": "Exclusions",
+      "fhir-version": "Version",
+      "fhir-version-url": "URL",
+      "fhir-versions": "FHIR versions",
+      "headers": "HTTP headers",
+      "kind": "Rūšis",
+      "name": "Pavadinimas",
+      "plural": "Serveriai",
+      "root-url": "Pagrindinis URL",
+      "singular": "Serveris",
+      "supported-operations": "Supported operations",
+      "usage": "Usage"
+    },
+    "transformation-definition": {
+      "name": "Pavadinimas",
+      "plural": "FML transformacijos",
+      "singular": "FML transformacija",
+      "source": "Šaltinis",
+      "source-fhir": "FHIR",
+      "source-local": "TermX",
+      "source-static": "Statinis šaltinis",
+      "source-url": "URL"
+    },
+    "ucum": {
+      "base-unit": {
+        "code": "Code",
+        "codeUC": "Code (Uppercase)",
+        "description": "Description",
+        "dimension": "Dimension",
+        "kind": "Kind",
+        "names": "Names",
+        "printSymbol": "Print Symbol",
+        "property": "Property"
+      },
+      "defined-unit": {
+        "class": "Class",
+        "code": "Code",
+        "codeUC": "Code (Uppercase)",
+        "description": "Description",
+        "kind": "Kind",
+        "metric": "Metric",
+        "names": "Names",
+        "printSymbol": "Print Symbol",
+        "property": "Property",
+        "special": "Special"
+      },
+      "prefix": {
+        "code": "Code",
+        "codeUC": "Code (Uppercase)",
+        "description": "Description",
+        "kind": "Kind",
+        "names": "Names",
+        "printSymbol": "Print Symbol"
+      }
+    },
+    "value-set": {
+      "concepts": "Terminai",
+      "contacts": "Kontaktai",
+      "description": "Aprašas",
+      "id": "ID",
+      "name": "Kompiuterinis pavadinimas",
+      "narrative": "Naratyvas",
+      "plural": "Reikšmių rinkiniai (value sets)",
+      "publisher": "Leidėjas",
+      "status": "Statusas",
+      "title": "Antraštė",
+      "uri": "Resurso adresas (URI)",
+      "uri-short": "URI",
+      "versions": "Versijos"
+    },
+    "value-set-rule-filter": {
+      "operator": {
+        "descendent-of": "Reikšmė kilusi iš sąvokos (descendant)",
+        "equal": "=",
+        "in": "Reikšmė įeina į sudėtį (in)",
+        "is-a": "Reikšmė yra (is a)",
+        "label": "Ryšys"
+      },
+      "property": {
+        "concept": "Terminas",
+        "constraint": "Ribojimas",
+        "label": "Savybė"
+      },
+      "value": "Reikšmė"
+    },
+    "value-set-rule-set": {
+      "exclude": "Pašalinti",
+      "inactive": "Neaktyvūs terminai",
+      "include": "Įtraukti",
+      "locked-date": "Užrakinimo data",
+      "rule": {
+        "based-on": "Atranka",
+        "code-system": "Kodų sistema (code system)",
+        "code-system-version": "Kodų sistemos versija",
+        "compose": "Sukurti",
+        "concepts": "Terminai",
+        "filters": "Filtrai",
+        "properties": "Savybės",
+        "value-set": "Reikšmių rinkinys (value set)",
+        "value-set-version": "Reikšmių rinkinio (value set) versija"
+      },
+      "rules": "Taisyklės"
+    },
+    "value-set-version": {
+      "algorithm": "Algoritmas",
+      "concepts": "Terminai",
+      "created": "Sukurta",
+      "description": "Aprašas",
+      "expiration-date": "Numatomas naudojimas iki",
+      "id": "Identifikatorius",
+      "preferred-language": "Pageidaujama kalba",
+      "release-date": "Numatomas naudojimas nuo",
+      "rule-set": "Taisyklių aibė",
+      "source": "Leidėjas",
+      "status": "Statusas",
+      "supported-languages": "Palaikomos kalbos",
+      "version": "Versija"
+    },
+    "value-set-version-concept": {
+      "additional-designations": "Papildomi pavadinimai",
+      "concept": "Terminas",
+      "designations": "Pavadinimai",
+      "display": "Pavadinimas",
+      "order-number": "Eilės tvarka"
+    }
+  },
+  "language": {
+    "cs": "Czech",
+    "de": "Vokiečių",
+    "en": "Anglų",
+    "et": "Estų",
+    "fr": "Prancūzų",
+    "lt": "Lietuvių",
+    "nl": "Olandų"
+  },
+  "marina.ui.form.validationError": {
+    "sequenceInvalidCharacters": "Netinkami simboliai: \"{{sequenceInvalidCharacters}}\""
+  },
+  "web": {
+    "app": {
+      "header": "TermX"
+    },
+    "association-type": {
+      "form": {
+        "add-header": "Pridėti ryšio tipą",
+        "edit-header": "Redaguoti ryšio tipą",
+        "view-header": "Peržiūrėti ryšio tipą"
+      },
+      "list": {
+        "add-association-type": "Pridėti ryšio tipą",
+        "title": "Pavadinimas"
+      }
+    },
+    "case-sensitive": {
+      "code-is": {
+        "ci": "Kode NEreikšminga didžiųjų ir mažųjų raidžių skirtis",
+        "cs": "Kode reikšminga didžiųjų ir mažųjų raidžių skirtis"
+      },
+      "options": {
+        "ci": "Nepaisyti didžiųjų ir mažųjų raidžių skirtumų",
+        "cl": "Nepaisyti pirmojo simbolio raidžių dydžio skirtumų",
+        "cs": "Paisyti didžiųjų ir mažųjų raidžių skirtumų"
+      }
+    },
+    "checklist-rule": {
+      "add-btn": "Add rule",
+      "add-header": "Add rule",
+      "checklist": "Checklist",
+      "edit-header": "Edit rule"
+    },
+    "code-system": {
+      "form": {
+        "add-header": "Kurti naują kodų sistemą",
+        "concepts": {
+          "activate-draft-concepts": "Activate draft concepts",
+          "add-concept": "Pridėti terminą",
+          "add-supplement-concept": "Add supplement concept",
+          "concept": "Terminas",
+          "contains": "Apima",
+          "designation-languages": "Designation languages",
+          "eq": "Lygu",
+          "filter-disabled": "Switch to the flattened list mode to enable the filter functionality",
+          "properties": "Properties",
+          "validate": "Tikrinti kodų sistemą"
+        },
+        "delete-property-usages": "Šalinti savybės naudojimą",
+        "details-header": "Code system details",
+        "edit-header": "Redaguoti kodų sistemą",
+        "header": "Kodų sistema",
+        "properties": {
+          "add-property": "Pridėti savybę",
+          "add-supplement": "Pridėti priedą",
+          "delete-property": "Šalinti savybę",
+          "delete-supplement": "Šalinti priedą",
+          "often-used-designations": "Dažnai naudojami pavadinimai",
+          "often-used-properties": "Dažnai naudojamos savybės"
+        },
+        "versions": {
+          "duplicate": {
+            "create-new-entity-version": "Kurti naujas esybės versijas",
+            "duplicate-header": "Kurti kodų sistemos versijos kopiją",
+            "source-code-system": "Išeities kodų sistema:",
+            "source-version": "Išeities versija:",
+            "target-version": "Paskirties versija:"
+          },
+          "list": {
+            "add-new-version": "Pridėti naują versiją",
+            "add-version": "Pridėti versiją",
+            "compare": "Palyginti",
+            "duplicate-version": "Kopijuoti versiją",
+            "export-fhir-json": "Eksportuoti FHIR JSON",
+            "export-fhir-xml": "Eksportuoti FHIR XML",
+            "open-fhir": "Atidaryti FHIR URL"
+          }
+        },
+        "view-header": "Peržiūrėti kodų sistemą"
+      },
+      "list": {
+        "add-code-system": "Pridėti kodų sistemą",
+        "count": "Skaičius",
+        "create-supplement": "Create supplement",
+        "domain": "Domenas",
+        "duplicate": {
+          "header": "Kurti kodų sistemos kopiją",
+          "source-code-system": "Išeities kodų sistema:",
+          "target-code-system": "Paskirties kodų sistema:",
+          "target-uri": "Paskirties URI:"
+        },
+        "import-fhir": "Importuoti išorinę FHIR struktūrą",
+        "import-ucum": "Importuoti UCUM essence XML",
+        "last-version": "Naujausia versija",
+        "manual": "Rankiniu būdu",
+        "open-fhir": "Atidaryti FHIR URL",
+        "space": "Space",
+        "status": "Statusas",
+        "supplement": {
+          "create-supplement": "Create supplement",
+          "header": "Create supplement code system",
+          "source-code-system": "Base code system:",
+          "target-code-system": "Supplement code system ID:",
+          "target-uri": "Supplement code system URI:"
+        },
+        "title": "Kodų sistemos",
+        "uri": "URI",
+        "versions-expiration-date": "Galiojimo pabaigos data",
+        "versions-release-date": "Paskelbimo data",
+        "versions-version": "Versija"
+      },
+      "summary": {
+        "add-concept": "Pridėti terminą",
+        "add-task": "Add task",
+        "add-version": "Pridėti versiją",
+        "all-tasks": "Visos užduotys",
+        "code-system": "Kodų sistema (code system)",
+        "compare": "Palyginti",
+        "concepts": "Terminai",
+        "duplicate-version-modal": {
+          "header": "Dubliuoti kodų sistemos versiją",
+          "version": "Nauja versija"
+        },
+        "opened-tasks": "Aktyvios užduotys",
+        "related-artifacts": "Susiję artefaktai",
+        "unlinked-concepts": {
+          "author": "Autorius",
+          "concept": "Terminas",
+          "create-task": "Kurti užduotį",
+          "designation": "Pavadinimas",
+          "link-to": "Nuoroda į {{version}}",
+          "no-versions": "Juodraštinių versijų nerasta",
+          "status": "Statusas",
+          "task": "Užduotis",
+          "task-modal": {
+            "assignee": "Priskirtas naudotojas",
+            "cs-version": "Nuoroda į kodų sistemos versiją",
+            "header": "Kurti patvirtinimo užduotį"
+          },
+          "title": "Nesusietos sąvokos",
+          "version": "Versija"
+        },
+        "versions": "Versijos"
+      }
+    },
+    "code-system-association": {
+      "form": {
+        "target": "Paskirtis"
+      }
+    },
+    "code-system-checklist": {
+      "add-whitelist-item": "Add whitelist item",
+      "errors": "Errors",
+      "failed": "Failed",
+      "mode": {
+        "configuration": "Configuration",
+        "validation": "Validation"
+      },
+      "passed": "Passed",
+      "run-check": "Run check",
+      "run-checks": "Run all software checks",
+      "show-all": "Show all",
+      "show-unaccomplished": "Unaccomplished only"
+    },
+    "code-system-compare": {
+      "added": "Pridėta",
+      "changed": "Pakeista",
+      "compare": "Palyginti",
+      "deleted": "Pašalinta",
+      "source": "Išeitis",
+      "source-code-system": "Išeities kodų sistema",
+      "target": "Paskirtis",
+      "target-code-system": "Paskirties kodų sistema"
+    },
+    "code-system-concept": {
+      "filter": {
+        "language-filter": "Kalbos filtras",
+        "property-filter": "Savybių filtras",
+        "property-name-filter": "Savybių pavadinimų filtras",
+        "search-property-value-placeholder": "Ieškoti savybės pavadinimo",
+        "select-language-placeholder": "Pasirinkti kalbą",
+        "select-property-placeholder": "Pasirinkti savybę",
+        "select-version-placeholder": "Pasirinkti versiją",
+        "version-filter": "Versijos filtras"
+      },
+      "form": {
+        "add-header": "Pridėti sąvoką",
+        "add-task": "Pridėti komentarą",
+        "all-tasks": "Visos užduotys",
+        "concept": "Sąvoka",
+        "linked-with-code-systems": "Susieta su kodų sistemos versijomis",
+        "map-sets": {
+          "concept-code": "Sąvokos kodas",
+          "concept-display": "Sąvokos pavadinimas",
+          "direction": "Kryptis",
+          "equivalence": "Atitikimas",
+          "header": "Ryšiai",
+          "map-set": "Ryšių rinkinys"
+        },
+        "opened-tasks": "Aktyvios užduotys",
+        "related-artifacts": "Susiję artefaktai",
+        "task-modal": {
+          "comment": "Komentaras",
+          "header": "Pridėti komentarą"
+        },
+        "value-sets": {
+          "definition": "Apibrėžimas",
+          "header": "Antraštė",
+          "value-set": "Reikšmių rinkinys"
+        },
+        "version": {
+          "code-system-version": "Kodų sistemos versija",
+          "header": "Versija {{created}}",
+          "new": "Nauja versija",
+          "new-version": "Nauja versija"
+        },
+        "wiki": {
+          "header": "Antraštė",
+          "name": "Pavadinimas",
+          "slug": "Santrumpa"
+        }
+      },
+      "group": {
+        "association": "Ryšiai",
+        "property": "Savybė",
+        "type": "Tipas"
+      },
+      "list": {
+        "add-concept-child": "Pridėti priklausantį terminą",
+        "external": "Išorinis",
+        "open-fhir": "Atidaryti FHIR URL",
+        "propagate-properties": "Įkelti savybes į priklausančius terminus",
+        "unlink-concept": "Atsieti terminą nuo versijos"
+      },
+      "property-list": {
+        "concepts": "Terminai",
+        "properties": "Savybės"
+      }
+    },
+    "code-system-concept-version": {
+      "add-version": "Pridėti versiją",
+      "association": {
+        "add-association": "Pridėti sąsają",
+        "delete-association": "Pašalinti sąsają",
+        "edit-association": "Redaguoti sąsają"
+      },
+      "designation": {
+        "add-designation": "Pridėti pavadinimą",
+        "add-supplement": "Pridėti papildymą",
+        "delete-designation": "Pašalinti pavadinimą",
+        "edit-designation": "Redaguoti pavadinimą",
+        "multi-language-input": {
+          "add-translation": "Pridėti vertimą",
+          "placeholder": "Šablonas"
+        }
+      },
+      "property-value": {
+        "add-property-value": "Pridėti savybės reikšmę",
+        "add-supplement": "Pridėti papildymą",
+        "coding-value-system": "Kodo reikšmių sistema",
+        "delete-property-value": "Pašalinti savybę",
+        "edit-property-value": "Redaguoti savybę"
+      }
+    },
+    "code-system-validator": {
+      "circular-dependencies-detector": {
+        "detect": "Tikrinti",
+        "title": "Pasikartojančių priskyrimų tikrinimas"
+      },
+      "code-system": "Kodų sistema",
+      "result": {
+        "title": "Rezultatas"
+      },
+      "uniqueness-validator": {
+        "designations": "Pavadinimai",
+        "empty-properties": "Neužpildytos savybės",
+        "ignore-empty-properties": "Ignoruoti neužpildytas savybes",
+        "properties": "Savybės",
+        "title": "Unikalumo tikrinimas",
+        "validate": "Tikrinti"
+      }
+    },
+    "code-system-version": {
+      "form": {
+        "add-header": "Pridėti versiją",
+        "details-header": "Version details",
+        "edit-header": "Redaguoti versiją",
+        "entities": {
+          "add-entity": "Pridėti esybę",
+          "entity-version": "Pridėti versiją",
+          "modal": {
+            "add-header": "Pridėti",
+            "entity-version": "Versija"
+          }
+        },
+        "view-header": "Peržiūra"
+      },
+      "summary": {
+        "add-task": "Add task",
+        "all-tasks": "Visos užduotys",
+        "code-system-version": "Kodų sistemos versija",
+        "edit-version": "Redaguoti versiją",
+        "info": {
+          "activate": "Aktyvuoti",
+          "add-to-release": "Add to release",
+          "create-approve": "Perduoti patvirtinimui",
+          "create-related-vs-version": "Create related ValueSet version",
+          "create-review": "Perduoti peržiūrai",
+          "definition": "Apibrėžimas",
+          "download": "Parsisiuntimas",
+          "last-approved": "Paskutinio patvirtinimo data",
+          "last-modified": "Paskutinių pakeitimų data",
+          "last-reviewed": "Paskutinės peržiūros data",
+          "make-draft": "Paskelbti juodraščiu",
+          "none": "Nėra",
+          "release-unspecified": "Release is unspecified",
+          "retire": "Paskelbti nebegaliojančiu",
+          "show-changes": "Rodyti pakeitimus",
+          "sync-with-github": "Sinchronizuoti su Github"
+        },
+        "opened-tasks": "Aktyvios užduotys",
+        "task-modal": {
+          "assignee": "Priskirtas naudotojas",
+          "header": "Kurti {{type}} užduotį",
+          "success-msg": "Užduotis sukurta"
+        },
+        "version-metadata": "Version metadata"
+      }
+    },
+    "concept-drawer": {
+      "add-all": "Add all",
+      "add-selected": "Add selected",
+      "code-system-required": "Code System is required"
+    },
+    "contacts": {
+      "list": {
+        "add-contact": "Pridėti kontaktą",
+        "header": "Kontaktai"
+      },
+      "modal": {
+        "add-header": "Pridėti kontaktą",
+        "edit-header": "Redaguoti kontaktą",
+        "name": "Vardas, pavardė"
+      }
+    },
+    "defined-entity-property": {
+      "form": {
+        "add-header": "Pridėti nustatytą savybę",
+        "edit-header": "Redaguoti nustatytą savybę",
+        "kind": {
+          "designation": "Paskirtis",
+          "property": "Savybė"
+        }
+      },
+      "list": {
+        "add-new": "Pridėti naują savybę",
+        "property-used": "Savybė naudojama ir negali būti keičiama.",
+        "title": "Nustatytos savybės"
+      }
+    },
+    "dev-code-system-relation": {
+      "map-set": {
+        "code": "Kodas",
+        "header": "Antraštė",
+        "name": "Pavadinimas"
+      },
+      "value-set": {
+        "code": "Kodas",
+        "generate": "Kurti momentinę versiją (snapshot)",
+        "header": "Antraštė",
+        "name": "Pavadinimas",
+        "publisher": "Leidėjas",
+        "uri": "URI",
+        "value-set": "Reikšmių rinkinys (value set)",
+        "value-set-code": "Reikšmių rinkinio kodas"
+      }
+    },
+    "global-search": {
+      "dashboard": {
+        "code-systems": "Kodų sistemos (code systems)",
+        "concepts": "Terminai",
+        "filter": {
+          "space": "Space"
+        },
+        "header": "Ieškoti",
+        "map-sets": "Terminijos ryšių rinkiniai (map sets)",
+        "measurement-unit": "Matavimo vienetas",
+        "snomed": "SNOMED",
+        "ucum": "UCUM",
+        "value-sets": "Reikšmių rinkiniai (value sets)"
+      }
+    },
+    "implementation-guide": {
+      "form": {
+        "add-header": "Pridėti",
+        "edit-header": "Redaguoti"
+      },
+      "list": {
+        "add": "Pridėti",
+        "add-fhir": "Pridėti per FHIR",
+        "add-manual": "Pridėti rankiniu būdu",
+        "last-version": "Paskutinė versija",
+        "open-fhir": "Atidaryti FHIR versiją"
+      },
+      "summary": {
+        "add-version": "Pridėti versiją"
+      }
+    },
+    "implementation-guide-github": {
+      "branch-not-exists": "Branch does not exist",
+      "create-branch": "Create branch",
+      "github-base-branch": "Base branch",
+      "github-clean": "Everything is up to date!",
+      "github-commit-message": "Commit message",
+      "github-empty": "Nothing to commit",
+      "github-push": "Push changes to",
+      "ig-initialize": "Initialize Implementation Guide from",
+      "ig-not-initialized": "Implementation Guide is not initialized"
+    },
+    "implementation-guide-version": {
+      "form": {
+        "add-header": "Pridėti",
+        "edit-header": "Redaguoti"
+      },
+      "summary": {
+        "activate": "Aktyvuoti",
+        "edit-version": "Redaguoti versiją",
+        "last-modified": "Paskutiniai pakeitimai",
+        "make-draft": "Paskelbti juodraščiu",
+        "none": "Nėra",
+        "retire": "Paskelbti nebegaliojančiu",
+        "version-metadata": "Version metadata"
+      }
+    },
+    "integration": {
+      "example": "Example",
+      "example-conceptMap": "First you need import CodeSystem resources used for concept map",
+      "example-valueSet": "First you need import CodeSystem resources used for value set",
+      "fhir": {
+        "code-system": {
+          "find-matches": {
+            "exact": "Tikslus atitikmuo",
+            "exact-tooltip": "Whether the operation is being used by a human ('false'), or a machine ('true'). If the operation is being used by a human, the terminology server can return a list of complete or partial matches. For a machine, the server returns complete matches. The default value is 'false'",
+            "properties": "Savybės",
+            "properties-tooltip": "One or more properties that contain information to be composed into the code",
+            "property-name": "Pavadinimas",
+            "property-value": "Reikšmė",
+            "system": "Sistema",
+            "system-tooltip": "The system in which composition is to be performed. This must be provided unless the operation is invoked on a code system instance",
+            "version": "Versija",
+            "version-tooltip": "The version of the system for the inferencing to be performed"
+          },
+          "lookup": {
+            "code": "Kodas",
+            "code-tooltip": "The code that is to be located. If a code is provided, a system must be provided",
+            "date": "Data",
+            "date-tooltip": "The date for which the information should be returned. Normally, this is the current conditions (which is the default value) but under some circumstances,<br> systems need to acccess this information as it would have been in the past.<br> A typical example of this would be where code selection is constrained to the set of codes that were available when the patient was treated,<br> not when the record is being edited. Note that which date is appropriate is a matter for implementation policy.",
+            "properties": "Savybės",
+            "properties-tooltip": "A property that the client wishes to be returned in the output. If no properties are specified, the server chooses what to return.<br> The following properties are defined for all code systems: url, name, version (code system info) and code information:<br> display, definition, designation, parent and child, and for designations, lang.X where X is a designation language code.<br> Some of the properties are returned explicit in named parameters (when the names match), and the rest (except for lang.X) in the property parameter group",
+            "system": "Sistema",
+            "system-tooltip": "The system for the code that is to be located",
+            "version": "Versija",
+            "version-tooltip": "The version of the system, if one was provided in the source data"
+          },
+          "subsumes": {
+            "code-a": "Kodas A",
+            "code-a-tooltip": "The 'A' code that is to be tested. If a code is provided, a system must be provided",
+            "code-b": "Kodas B",
+            "code-b-tooltip": "The 'B' code that is to be tested. If a code is provided, a system must be provided",
+            "system": "Sistema",
+            "system-tooltip": "The code system in which subsumption testing is to be performed. This must be provided unless the operation is invoked on a code system instance",
+            "version": "Versija",
+            "version-tooltip": "The version of the code system, if one was provided in the source data"
+          },
+          "validate-code": {
+            "code": "Kodas",
+            "code-tooltip": "The code that is to be validated",
+            "display": "Naudojamas pavadinimas",
+            "display-tooltip": "The display associated with the code, if provided. If a display is provided a code must be provided. <br> If no display is provided, the server cannot validate the display value, but may choose to return a recommended display name in an extension in the outcome. <br> Whether displays are case sensitive is code system dependent",
+            "url": "URL",
+            "url-tooltip": "CodeSystem URL. The server must know the code system (e.g. it is defined explicitly in the servers code systems, or it is known implicitly by theserver)",
+            "version": "Versija",
+            "version-tooltip": "The version of the code system, if one was provided in the source data"
+          }
+        },
+        "concept-map": {
+          "closure": {
+            "code": "Kodas",
+            "concepts": "Terminai",
+            "concepts-tooltip": "Concepts to add to the closure table",
+            "name": "Pavadinimas",
+            "name-tooltip": "The name that defines the particular context for the subsumption based closure table",
+            "system": "Sistema",
+            "version": "Versija",
+            "version-tooltip": "A request to resynchronise - request to send all new entries since the nominated version was sent by the server"
+          },
+          "translate": {
+            "code": "Kodas",
+            "code-tooltip": "The code that is to be translated. If a code is provided, a system must be provided",
+            "concept-map-version": "Terminų žemėlapio (concept map) versija",
+            "concept-map-version-tooltip": "The identifier that is used to identify a specific version of the concept map to be used for the translation.<br> This is an arbitrary value managed by the concept map author and is not expected to be globally unique.<br> For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available.",
+            "system": "Sistema (URL)",
+            "system-tooltip": "The system for the code that is to be translated",
+            "target-system": "Paskirties sistema",
+            "target-system-tooltip": "identifies a target code system in which a mapping is sought. This parameter is an alternative to the target parameter - only one is required.<br> Searching for any translation to a target code system irrespective of the context (e.g. target valueset) may lead to unsafe results,<br> and it is at the discretion of the server to decide when to support this",
+            "uri": "URL",
+            "uri-tooltip": " A canonical URL for a concept map. The server must know the concept map (e.g. it is defined explicitly in the server's concept maps,<br> or it is defined implicitly by some code system known to the server.",
+            "version": "Versija",
+            "version-tooltip": "The version of the system, if one was provided in the source data"
+          }
+        },
+        "value-set": {
+          "expand": {
+            "url": "URL",
+            "url-tooltip": " A canonical reference to a value set. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined implicitly by some code system known to the server",
+            "value-set-version": "Reikšmių rinkinio versija",
+            "value-set-version-tooltip": " The identifier that is used to identify a specific version of the value set to be used when generating the expansion. This is an arbitrary value managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available."
+          },
+          "validate-code": {
+            "code": "Kodas",
+            "code-tooltip": " The code that is to be validated. If a code is provided, a system or a context must be provided (if a context is provided, then the server SHALL ensure that the code is not ambiguous without a system)",
+            "display": "Naudojamas pavadinimas",
+            "display-tooltip": "The display associated with the code, if provided. If a display is provided a code must be provided. If no display is provided, the server cannot validate the display value, but may choose to return a recommended display name using the display parameter in the outcome. Whether displays are case sensitive is code system dependent",
+            "system": "Sistema",
+            "system-tooltip": "The system for the code that is to be validated",
+            "system-version": "Sistemos versija",
+            "system-version-tooltip": "The version of the system, if one was provided in the source data",
+            "url": "URL",
+            "url-tooltip": "Value set Canonical URL. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined implicitly by some code system known to the server",
+            "value-set-version": "Reikšmių rinkinio (value set) versija",
+            "value-set-version-tooltip": "The identifier that is used to identify a specific version of the value set to be used when validating the code. This is an arbitrary value managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available."
+          }
+        }
+      },
+      "file-import": {
+        "association": {
+          "association-type": "Sąryšio tipas",
+          "code-system": "Kodų sistema (code system)",
+          "code-system-version": "Kodų sistemos versija",
+          "column-value-separator": "Reikšmės stulpelyje atskirtos simboliu",
+          "download-template": "Šablono atsisiuntimas",
+          "file": "Ryšių duomenys CSV formatu",
+          "file-column": "Importuojamų duomenų stulpelis",
+          "import": "Ryšių duomenų importavimas",
+          "mapped-column": "Paskirties stulpelis",
+          "order": "Eilės tvarka",
+          "source": "Išeitis",
+          "target": "Paskirtis"
+        },
+        "code-system": {
+          "general": {
+            "delete-concepts": "Pašalinti visus kodų sistemos terminus prieš importuojant?",
+            "generate-valueset": "Kurti reikšmių rinkinį (value set)",
+            "hold": "Palikti",
+            "merge": "Sulieti senus ir naujus duomenis",
+            "overlap-of-concepts": "Veiksmas, jeigu terminai sutampa",
+            "replace": "Pakeisti seną terminą nauju",
+            "resource-id": "Ištekliaus ID"
+          },
+          "import": "Kodų sistemos failo importavimas",
+          "properties": {
+            "delimiter": "Skirtuko simbolis",
+            "download-diff": "Atsisiųsti skirtumų palyginimą",
+            "download-log": "Atsisiųsti auditą",
+            "format": "Formatas",
+            "header": "Savybės",
+            "import": "Importuoti",
+            "import-data": "Importuoti duomenis",
+            "kts-property": "TermX savybė",
+            "lang": "Kalba",
+            "preferred": "Pageidaujama",
+            "type": "Tipas",
+            "type-column": "{{type}} stulpelis",
+            "validate-data": "Patikrinti duomenis neimportuojant"
+          },
+          "source": {
+            "analyze": "Analizuoti",
+            "file": "Duomenys",
+            "header": "Importuojamas failas",
+            "link": "Nuoroda",
+            "types": {
+              "csv": "CSV",
+              "tsv": "TSV",
+              "xlsx": "XLSX"
+            }
+          }
+        },
+        "concept-map": {
+          "delete-associations": "Pašalinti visus ryšius prieš importuojant?",
+          "download-template": "Parsisiųsti šabloną",
+          "file": "Duomenys",
+          "hold": "Palikti",
+          "ignore": "Praleisti besidubliuojančius duomenis",
+          "import": "Terminijos ryšių failo importavimas",
+          "keep-both": "Palikti abu",
+          "map-id": "Terminijos ryšių ID",
+          "map-name": "Terminijos ryšių pavadinimas",
+          "map-version": "Terminijos ryšių versija",
+          "overlap-of-associations": "Veiksmas aptikus ryšių pasikartojimą",
+          "source-value-set": "Šaltinis (reikšmių sistema)",
+          "target-value-set": "Paskirtis (reikšmių sistema)"
+        },
+        "create-new": "Sukurti naują",
+        "not-found": "Nerasta?",
+        "process": "Apdoroti",
+        "success-message": "Duomenų apdorojimas baigtas",
+        "title": "Duomenų importavimas",
+        "value-set": {
+          "analyze": "Analizuoti",
+          "file": "Duomenys",
+          "import": "Reikšmių sistemos duomenų importavimas",
+          "import-data": "Importuoti duomenis",
+          "source": "Šaltinis",
+          "validate-data": "Patikrinti duomenis neįkeliant"
+        }
+      },
+      "import": {
+        "atc": "ATC {{edition}} importavimas",
+        "base-code-system": "Pirminė kodų sistema (code system)",
+        "code-system": "Kodų sistema",
+        "code-system-description": "Kodų sistemos aprašas",
+        "code-system-name": "Kodų sistemos pavadinimas",
+        "code-system-version-description": "Kodų sistemos versijos aprašas",
+        "icd-10": "ICD-10 {{edition}} importavimas",
+        "ichi": "ICHI {{edition}} importavimas",
+        "loinc": "LOINC importavimas",
+        "orphanet": "Retų ligų importavimas",
+        "publisher": "Leidėjas",
+        "source-url": "Pirminis URL",
+        "ucum": "UCUM essence XML importavimas",
+        "uri": "URI",
+        "valid-from": "Galioja nuo",
+        "valid-to": "Galioja iki",
+        "version": "Versija"
+      },
+      "loinc-import": {
+        "answer-list": "Atsakymų sąrašas (answer list)",
+        "answer-list-link": "Atsakymų sąrašo sąsajos (answer list link)",
+        "import": "Importuoti",
+        "language": "Kalba",
+        "loinc": "LOINC",
+        "loinc-import": "LOINC importavimas",
+        "loinc-import-warning": "Dėmesio! LOINC importavimas užtrunka. Priklausomai nuo duomenų kiekio, jis gali užimti 10-60 min. Tęsti?",
+        "loinc-terminology": "LOINC terminologija",
+        "order-observation": "Stebėjimas (order observation)",
+        "panels": "Panelės (panels)",
+        "parts": "Dalys (parts)",
+        "supplementary-properties": "Papildomos savybės",
+        "translations": "Vertimai"
+      },
+      "resource-json": " resource JSON url",
+      "response": "Atsakymas",
+      "send-request": "Siųsti užklausą",
+      "set-default-data": "Nustatyti numatytuosius duomenis",
+      "systems": {
+        "atc": "ATC",
+        "fhir": "FHIR",
+        "icd-10": "ICD-10",
+        "ichi": "ICHI",
+        "loinc": "LOINC",
+        "orphanet": "Orphanet",
+        "ucum": "UCUM"
+      }
+    },
+    "landing": {
+      "resources": {
+        "title": "Ištekliai",
+        "types": {
+          "code-system": "Kodų sistemos (code systems)",
+          "map-set": "Terminijos ryšių rinkiniai (map sets)",
+          "value-set": "Reikšmių rinkiniai (value sets)"
+        }
+      },
+      "summary": {
+        "open-tasks": "Aktyvios užduotys",
+        "pages": "Puslapiai",
+        "spaces": "Darbalaukiai",
+        "title": "Naudotojas"
+      },
+      "tasks": {
+        "actions": {
+          "create": "Kurti užduotį"
+        },
+        "assigned-to-me": "Jums priskirtos užduotys",
+        "created-by-me": "Jūsų sukurtos užduotys",
+        "title": "Užduotys"
+      }
+    },
+    "loinc": {
+      "answer-list": {
+        "answers": "Atsakymai",
+        "code": "Atsakymų sąrašo kodas",
+        "name": "Atsakymų sąrašo pavadinimas",
+        "oid": "OID",
+        "used-by": "Naudojama"
+      },
+      "loinc": {
+        "class": "Klasė",
+        "code": "LOINC",
+        "component": "Komponentas",
+        "filter": {
+          "both": "Abu",
+          "class": "Klasė",
+          "clinical": "Klinikinis",
+          "contains": "Apima",
+          "eq": "Tiksliai atitinka",
+          "lab": "Labor",
+          "method": "Metodas",
+          "observation": "Stebėjimas",
+          "ord-obs": "Ord/Obs",
+          "order": "Eilės tvarka",
+          "property": "Savybė",
+          "recent-searches": "Naujausios paieškos",
+          "scale": "Atsakymo tipas",
+          "survey": "Apžvalga",
+          "system": "Sistema",
+          "timing": "Laikas",
+          "type": "Tipas"
+        },
+        "method": "Metodas",
+        "name": "Ilgas bendrinis pavadinimas",
+        "ord-obs": "Ord/Obs",
+        "property": "Savybė",
+        "scale": "Atsakymo tipas",
+        "system": "Sistema",
+        "timing": "Laikas",
+        "type": "Tipas",
+        "values": "Reikšmės"
+      },
+      "part": {
+        "code": "Dalies kodas",
+        "name": "Dalies pavadinimas",
+        "used-by": "Naudojama"
+      }
+    },
+    "map-set": {
+      "form": {
+        "add-header": "Kurti naują Terminijos ryšių rinkinį (map set)",
+        "details-header": "Map set details",
+        "edit-header": "Redaguoti Terminijos ryšių rinkinį (map set)",
+        "header": "Terminijos ryšių rinkiniai (map sets)",
+        "properties": {
+          "delete-property-usages": "Pašalinti ryšius su nurodytomis savybėmis",
+          "often-used": "Dažnai naudojamos savybės"
+        },
+        "scope": {
+          "code-system": "Kodų sistema",
+          "code-system-version": "Kodų sistemos versija",
+          "source": "Išeitis",
+          "target": "Paskirtis",
+          "title": "Sritis",
+          "type": {
+            "code-system": "Kodų sistema",
+            "external-canonical-uri": "Išorinis kanoninis URI",
+            "value-set": "Reikšmių rinkinys (value set)"
+          },
+          "uri": "URI",
+          "value-set": "Reikšmių rinkinys (value set)",
+          "value-set-version": "Reikšmių rinkinio versija"
+        },
+        "view-header": "Peržiūra"
+      },
+      "list": {
+        "add-map-set": "Pridėti Terminijos ryšių rinkinį (map set)",
+        "add-version": "Pridėti versiją",
+        "import-fhir": "Importuoti išorinę FHIR struktūrą",
+        "last-version": "Naujausia versija",
+        "manual": "Rankiniu būdu",
+        "open-fhir": "Atidaryti FHIR URL",
+        "operations": "Veiksmai",
+        "status": "Statusas",
+        "title": "Pavadinimas",
+        "versions": "Versijos",
+        "versions-expiration-date": "Galiojimo pabaigos data",
+        "versions-release-date": "Paskelbimo data",
+        "versions-version": "Versija"
+      },
+      "summary": {
+        "add-task": "Add task",
+        "add-version": "Pridėti versiją",
+        "all-tasks": "Visos užduotys",
+        "duplicate-version-modal": {
+          "header": "Duplicate map set version",
+          "version": "New version"
+        },
+        "map-set": "Terminijos ryšių rinkiniai",
+        "opened-tasks": "Aktyvios užduotys",
+        "related-artifacts": "Susiję artefaktai",
+        "versions": "Versijos"
+      }
+    },
+    "map-set-association": {
+      "form": {
+        "add-header": "Pridėti",
+        "edit-header": "Redaguoti",
+        "source-concept": "Šaltinis (terminas)",
+        "source-system": "Šaltinis (sistema)",
+        "status": "Statusas",
+        "target-concept": "Paskirtis (terminas)",
+        "target-system": "Paskirtis (sistema)",
+        "type": "Tipas",
+        "view-header": "Peržiūra"
+      },
+      "list": {
+        "add-association": "Pridėti ryšį",
+        "associations": "Rušiai",
+        "code-system": "Kodų sistema",
+        "operations": "Veiksmai"
+      }
+    },
+    "map-set-entity-version": {
+      "modal": {
+        "add-header": "Pridėti",
+        "edit-header": "Redaguoti",
+        "entity-version": "Versija",
+        "link-header": "Susieti"
+      },
+      "table": {
+        "activate": "Aktyvuoti",
+        "add-version": "Pridėti versiją",
+        "header": "",
+        "link-version": "Susieti versiją",
+        "retire": "Paskelbti nebegaliojančiu"
+      }
+    },
+    "map-set-version": {
+      "form": {
+        "add-header": "Pridėti versiją",
+        "details-header": "Versijos detalės",
+        "edit-header": "Redaguoti versiją",
+        "view-header": "Peržiūrėti versiją"
+      },
+      "summary": {
+        "associations": {
+          "add-property-value": "Pridėti savybės reikšmę",
+          "add-target": "Pridėti paskirties ryšius",
+          "bulk-copy": "Kopijuoti viską",
+          "code": "Kodas",
+          "content": "Turinys",
+          "display": "Pavadinimai",
+          "external-mapping": "Išoriniai ryšiai",
+          "mappings": "Terminų ryšiai",
+          "mark-as-verified": "Žymėti kaip patvirtintą",
+          "properties": "Savybės",
+          "relationship": "Ryšys",
+          "set-as-no-map": "Nustatyti, kad ryšių nėra",
+          "source-code": "Išeities kodas",
+          "source-concepts": "Išeities terminai",
+          "source-cs": "Išeities kodų sistema",
+          "source-display": "Išeities pavadinimas",
+          "target-code": "Paskirties kodas",
+          "target-concepts": "Paskirties terminai",
+          "target-cs": "Paskirties kodų sistema",
+          "target-display": "Paskirties pavadinimas",
+          "target-mapping": "Paskirties ryšiai",
+          "unmap": "Panaikinti ryšius",
+          "unmapped-concepts": "Nepriskirti terminai",
+          "unverified": "Nepatikrintas",
+          "verify": "Patikrinti"
+        },
+        "edit-version": "Redaguoti versiją",
+        "info": {
+          "activate": "Aktyvuoti",
+          "add-to-release": "Add to release",
+          "create-approve": "Kurti patvirtinimo užduotį",
+          "create-review": "Kurti peržiūros užduotį",
+          "definition": "Apibrėžtis",
+          "download": "Parsisiuntimas",
+          "last-approved": "Paskutinio patvirtinimo data",
+          "last-modified": "Paskutinio pakeitimo data",
+          "last-reviewed": "Paskutinės peržiūros data",
+          "load-from-github": "Įkelti iš Github",
+          "make-draft": "Paskelbti juodraščiu",
+          "none": "Nėra",
+          "push-to-github": "Įkelti į „Github“",
+          "release-unspecified": "Release is unspecified",
+          "retire": "Paskelbti nebegaliojančiu"
+        },
+        "map-set-version": "Terminijos ryšių rinkinio versija",
+        "statistics": {
+          "automap-code": "Automatiškai nustatyti pagal kodą",
+          "automap-code-designation": "Automatiškai nustatyti pagal kodą ir pavadinimą",
+          "automap-designation": "Automatiškai nustatyti pagal pavadinimą",
+          "broader": "Platesnis",
+          "equivalent": "Tikslus atitikmuo",
+          "inactive-sources": "Neaktyvūs išeities šaltiniai",
+          "inactive-targets": "Neaktyvios paskirtys",
+          "narrower": "Siauresnis",
+          "no-map": "Nėra terminologijų ryšio",
+          "source-concepts": "Išeities terminai",
+          "title": "Statistika",
+          "unmapped": "Nepriskirtas ryšys"
+        },
+        "statistics-warning": "Kad būtų galima perskaičiuoti statistiką, Terminijos ryšių rinkinio būsena turi būti juodraštis.",
+        "task-modal": {
+          "assignee": "Priskirtas naudotojas",
+          "header": "Kurti {{type}} užduotį",
+          "success-msg": "Užduotis sukurta"
+        },
+        "version-metadata": "Version metadata"
+      }
+    },
+    "measurement-unit": {
+      "form": {
+        "add-header": "Pridėti matavimo vienetą",
+        "add-kind": "Pridėti rūšį",
+        "edit-header": "Redaguoti matavimo vienetą",
+        "from": "Laikotarpis nuo",
+        "select-kind": "Pasirinkti rūšį",
+        "to": "Laikotarpis iki",
+        "view-header": "Peržiūrėti matavimo vienetą"
+      },
+      "list": {
+        "title": "Pavadinimas"
+      },
+      "mapping": {
+        "list": {
+          "add-mapping": "Pridėti terminologijų ryšius"
+        },
+        "modal": {
+          "add-header": "Pridėti terminologijų ryšius",
+          "edit-header": "Redaguoti terminologijų ryšius"
+        }
+      }
+    },
+    "naming-system": {
+      "form": {
+        "add-header": "Kurti naują pavadinimų sistemą",
+        "edit-header": "Redaguoti pavadinimų sistemą",
+        "view-header": "Peržiūrėti pavadinimų sistemą"
+      },
+      "list": {
+        "add-naming-system": "Pridėti pavadinimų sistemą",
+        "naming-system": "Pavadinimų sistema",
+        "title": "Pavadinimas",
+        "type": "Tipas"
+      }
+    },
+    "observation-definition": {
+      "behaviour": {
+        "computable": "Apskaičiuojamas",
+        "editable": "Redaguojamas",
+        "read-only": "Tik peržiūrėti"
+      },
+      "cardinality": {
+        "max": "maks.",
+        "min": "min."
+      },
+      "divider": {
+        "components": "Komponentai",
+        "data": "Data",
+        "description": "Aprašas",
+        "identification": "Identifikavimas",
+        "interpretation": "Interpretavimas",
+        "mappings": "Terminologijų ryšiai",
+        "members": "Priskirti terminai",
+        "protocol": "Protokolas",
+        "state": "Būsena",
+        "value": "Reikšmė"
+      },
+      "filter": {
+        "category": "Kategorija",
+        "structure": "Struktūra",
+        "value-type": "Reikšmės tipas"
+      },
+      "header-add": "Pridėti stebėjimo apibrėžimą",
+      "header-edit": "Stebėjimo apibrėžimas {{code}}",
+      "import": "Pradėti importą",
+      "import-from-loinc": "Importuoti iš LOINC",
+      "import-success-message": "Stebėjimo apibrėžimo importavimas pavyko",
+      "info": {
+        "data": "Duomenų struktūros aprašas",
+        "mappings": "Sąvokų atvaizdis nuo stebėjimo apibrėžimo iki kitų kodų sistemų",
+        "protocol": "Stebėjimo matavimo metodologija",
+        "state": "Gebėjimas apibūdinti objekto būseną stebėjimo proceso metu."
+      },
+      "interpretation-category": {
+        "absolute": "Absoliutus",
+        "critical": "Kritinis",
+        "reference": "Nuoroda"
+      },
+      "protocol-usage": {
+        "not-in-use": "Nenaudojamas",
+        "value-set": "Naudojamas (reikšmių rinkinys)",
+        "values": "Naudojamos (reikšmės)"
+      },
+      "select-snomed": "Pasirinkti iš SNOMED",
+      "structure": {
+        "component": "Komponentas",
+        "panel": "Panelė",
+        "value": "Reikšmė"
+      },
+      "time-precision": {
+        "period": "Laikotarpis",
+        "timestamp": "Tikslus laikas"
+      }
+    },
+    "package": {
+      "add-header": "Pridėti paketą",
+      "edit-header": "Redaguoti paketą"
+    },
+    "privileges": {
+      "add-header": "Pridėti privilegiją",
+      "edit-header": "Redaguoti privilegiją",
+      "privileges": "Privilegijos",
+      "resources": {
+        "modal": {
+          "actions": {
+            "edit": "Redaguoti",
+            "publish": "Publikuoti",
+            "view": "Peržiūrėti"
+          },
+          "add-header": "Pridėti išteklių",
+          "edit-header": "Redaguoti išteklių",
+          "resource-id": "Išteklius",
+          "resource-type": "Tipas",
+          "type": {
+            "Admin": "Administratorius",
+            "Any": "Bet kuris",
+            "AssociationType": "Ryšių tipai",
+            "Checklist": "Kontrollide nimekiri",
+            "ChecklistRule": "ChecklistRule",
+            "CodeSystem": "Kodų sistema",
+            "DefinedProperty": "Defined property",
+            "MapSet": "Terminijos ryšių rinkinys",
+            "NamingSystem": "Pavadinimų sistema",
+            "ObservationDefinition": "Stebėjimų apibrėžimai",
+            "Privilege": "Privilegija",
+            "Release": "Release",
+            "Sequence": "Sequence",
+            "Space": "Darbalaukis",
+            "StructureDefinition": "Struktūros apibrėžimai",
+            "Task": "Užduotis",
+            "TerminologyServer": "Terminologijų serveris",
+            "TransformationDefinition": "Transformacijos apibrėžimas",
+            "Users": "Users",
+            "ValueSet": "Reikšmių sistema",
+            "Wiki": "Wiki"
+          }
+        },
+        "table": {
+          "add-resource": "Pridėti išteklių",
+          "delete-resource": "Šalinti išteklių",
+          "head": "Ištekliai"
+        }
+      },
+      "table": {
+        "add-privilege": "Pridėti privilegiją",
+        "delete-privilege": "Panaikinti privilegiją"
+      }
+    },
+    "publication-status": {
+      "operations": {
+        "activate": "Aktyvuoti",
+        "retire": "Paskelbti nebegaliojančiu",
+        "save-as-draft": "Išsaugoti juodraštį"
+      }
+    },
+    "release": {
+      "activate": "Activate",
+      "add-author": "Add author",
+      "add-btn": "Add release",
+      "add-header": "Add release",
+      "add-resource": "Add resource",
+      "edit-header": "Edit release",
+      "edit-resource": "Edit resource",
+      "generate-records": "Generate notes",
+      "make-draft": "Make draft",
+      "records": "Notes",
+      "retire": "Retire",
+      "run-checks": "Run all checks",
+      "server-sync": "Sync with server",
+      "sync-error": "Sync error",
+      "sync-success": "Sync was successful",
+      "sync-validation-error": "Sync validation error",
+      "unaccomplished-checks": "Unaccomplished checks"
+    },
+    "resource-context": {
+      "all-versions": "Visos versijos",
+      "checklist": "Checklist",
+      "concepts": "Terminai",
+      "details": "Išsami informacija",
+      "metadata": "Metadata",
+      "properties": "Savybės",
+      "provenance": "Auditas",
+      "summary": "Santrauka"
+    },
+    "resource-form": {
+      "add-other-title": "Add other title",
+      "add-use-context": "Add use context",
+      "id-change-modal": {
+        "header": "Keisti ID",
+        "id": "Naujas ID"
+      },
+      "open-uri": "Atidaryti URI"
+    },
+    "resource-import-modal": {
+      "file": "Duomenys",
+      "header": "Importuoti išorinę FHIR struktūrą",
+      "id": "ID",
+      "source": "Šaltinis",
+      "type": "Tipas",
+      "url": "URL"
+    },
+    "resource-release-modal": {
+      "header": "Add resource {{resource}} to release",
+      "navigate-to-release-management": "Navigate to release management",
+      "release": "Release"
+    },
+    "resource-task-modal": {
+      "assignee": "Assignee",
+      "comment": "Comment",
+      "header": "Create task",
+      "version": "Version"
+    },
+    "resources": {
+      "tabset": {
+        "association-types": "Ryšių tipai",
+        "code-systems": "Kodų sistemos",
+        "map-sets": "Terminijos ryšių rinkiniai",
+        "naming-systems": "Pavadinimų sistemos",
+        "value-sets": "Reikšmių rinkiniai"
+      }
+    },
+    "sequence": {
+      "form": {
+        "add-header": "Pridėti seką",
+        "edit-header": "Redaguoti seką"
+      },
+      "list": {
+        "add-sequence": "Pridėti seką"
+      }
+    },
+    "snomed": {
+      "branch": {
+        "form": {
+          "add-header": "Pridėti atšaką",
+          "based-on": "Bazinė versija",
+          "edit-header": "Atšaka {{path}} ",
+          "name": "Pavadinimas",
+          "parent-branch": "Tėvinė atšaka",
+          "release-date": "Paskelbimo data"
+        },
+        "list": {
+          "add-branch": "Pridėti atšaką",
+          "codesystem": {
+            "add-edition": "Pridėti leidimą",
+            "header": "Leidimai",
+            "imported": "Suimportuota"
+          },
+          "daily-build": "Kasdien atnaujinamos atšakos",
+          "edition-modal": {
+            "country-code": "Dviženklis valstybės kodas",
+            "header": "Pridėti leidimą",
+            "name": "Pavadinimas"
+          },
+          "header": "",
+          "working": "Redaguojamos atšakos"
+        },
+        "management": {
+          "add-to-branch": "Pridėti prie atšakos",
+          "authoring-stats": "Pakeitimų statistika",
+          "changed-fsn": "Pakeista pilnas pavadinimas (FSN)",
+          "create-cs-version": "Versijos pakeitimai",
+          "cs-version-modal": {
+            "header": "Sukurti naują kodų sistemos versiją"
+          },
+          "export-modal": {
+            "header": "Eksportuoti į RF2 zip archyvą",
+            "type": "Tipas"
+          },
+          "export-to-rf2": "Eksportuoti į RF2",
+          "header": "Atšaka {{path}}",
+          "import-failed": "Importavimas iš RF2 zip archyvo nesėkmingas",
+          "import-from-rf2": "Importuoti iš RF2",
+          "import-modal": {
+            "create-version": "Kurti kodų sistemos versiją",
+            "file": "Duomenys",
+            "header": "Importuoti iš RF2 zip archyvo",
+            "type": "Tipas"
+          },
+          "import-succeeded": "Importavimas iš RF2 zip archyvo sėkmingas",
+          "import-warning": "Importavimo metu bus sukurta redagavimui skirta nomenklatūros atšaka. Kodų sistema sukurta nebus. Priklausomai nuo naudojamo SNOMED paketo dydžio, įkėlimas gali užtrukti virš 30-60 min.",
+          "inactivate-synonym": "Deaktyvuoti sinonimą",
+          "inactivated-synonyms": "Deaktyvuoti sinonimai",
+          "integrity-check": "Vientisumo patikrinimas",
+          "lock": "Užrakinti",
+          "lock-modal": {
+            "header": "Užrakinti atšaką",
+            "message": "Pranešimas"
+          },
+          "new-descriptions": "Nauji aprašymai",
+          "new-synonyms": "Nauji sinonimai",
+          "reactivate-synonym": "Iš naujo aktyvuoti sinonimą",
+          "reactivated-synonyms": "Iš naujo aktyvuoti sinonimai",
+          "synonym-deactivation-modal": {
+            "description": "Aprašymo id",
+            "header": "Deaktyvuoti sinonimą"
+          },
+          "synonym-reactivation-modal": {
+            "description": "Aprašymo id",
+            "header": "Iš naujo aktyvuoti sinonimą"
+          },
+          "total-descriptions": "Viso aprašų atšakoje: {{total}}",
+          "unlinked-translations": "Viso nesusietų vertimų: {{count}}",
+          "unlock": "Atrakinti"
+        }
+      },
+      "codesystem": {
+        "form": {
+          "export-to-rf2": "Eksportuoti į RF2 archyvą",
+          "header": "Kodų sistema {{name}}",
+          "import-from-rf2": "Importuoti iš RF2 archyvo",
+          "import-warning": "Importavimo metu bus sukurta atšaka ir ją atitinkanti kodų sistemos versija. Ši funkcija turi būti naudojama importuojant paskelbtą nomenklatūros versiją arba kuriant galutinę versiją iš redaguojamos atšakos. Priklausomai nuo naudojamo SNOMED paketo, įkėlimas gali užtrukti virš 30-60 min.",
+          "upgrade": "Atnaujinti versiją",
+          "upgrade-modal": {
+            "dependant-version": "Nauja išvestinė versija",
+            "header": "Atnaujinti kodų sistemą pagal kitą nomenklatūros versiją"
+          }
+        }
+      },
+      "rf2-export": "RF2 eksportas",
+      "search": {
+        "ecl": "ECL",
+        "ecl-placeholder": "ECL išraiška",
+        "import-refset-concepts": "Importuoti terminų rinkinį (refset)",
+        "refsets": "Papildomų terminų rinkiniai (refsets)",
+        "taxonomy": "Taksonomija"
+      },
+      "task": {
+        "card-header": "Tasks",
+        "comment": "Comment",
+        "modal-header": "Create concept task"
+      }
+    },
+    "space": {
+      "add-btn": "Pridėti darbalaukį",
+      "add-header": "Pridėti darbalaukį",
+      "all-packages": "Visi paketai",
+      "change-source-server": "Change resource source server",
+      "clear-sync-resources": "Delete and sync all resources (from current installation to target server)",
+      "diff": {
+        "not-render": "Large resources are not rendered by default",
+        "sync-tooltip": "Source: {{source}}\n Target: {{target}}"
+      },
+      "edit-header": "Redaguoti darbalaukį",
+      "github-clean": "Viskas atnaujinta!",
+      "github-commit-message": "Pranešimas apie pakeitimus",
+      "github-empty": "Nėra pakeitimų",
+      "github-integration": "Github integravimas",
+      "github-pull": "Įkelti pakeitimus iš",
+      "github-pull-confirm": "Tikrai norite pakeisti esamus duomenis duomenimis iš kodo saugyklos?",
+      "github-pull-confirm-achtung": "DĖMESIO. Šio veiksmo neįmanoma atšaukti. Galite prarasti duomenis.",
+      "github-push": "Įkelti pakeitimus į",
+      "github-sync": "Sinchronizuoti su Github",
+      "import-btn": "Importuoti darbalaukį",
+      "import-error-message": "Darbalaukio importavimas nesėkmingas",
+      "import-success-message": "Darbalaukio importavimas sėkmingas",
+      "new-version": "Nauja versija",
+      "open-in-new-tab": "Atidaryti naujame skyrelyje",
+      "reload-diff-matrix": "Reload diff matrix",
+      "resource-import-error-message": "Ištekliaus importavimas nesėkmingas",
+      "resource-import-success-message": "Ištekliaus importavimas sėkmingas",
+      "resources": "Ištekliai",
+      "select-context": "Pasirinkite kontekstą",
+      "sync-resources": "Sync all resources (from current installation to target server)"
+    },
+    "structure-definition": {
+      "form": {
+        "add-element": "Pridėti elementą",
+        "add-header": "Pridėti struktūros apibrėžimą",
+        "binding": "Saitas",
+        "cardinality": "Kardinalumas",
+        "code": "Kodas",
+        "definition": "Apibrėžimas",
+        "definition-header": "Apibrėžimas",
+        "display": "Pavadinimai",
+        "edit-header": "Redaguoti struktūrą",
+        "element-header": "Elementai",
+        "error-modal": {
+          "delete-content": "Šalinti turinį ir tęsti",
+          "fhir-to-fsh": "Iš FHIR į FSH",
+          "fsh-to-fhir": "Iš FSH į FHIR",
+          "no-save-proceed": "Tęsti be pakeitimų"
+        },
+        "fixed-coding": "Fiksuotasis kodavimas",
+        "fixed-uri": "Fiksuotasis URI",
+        "fsh-header": "FSH",
+        "json-header": "JSON",
+        "modal": {
+          "content": "Turite neišsaugotų pakeitimų!",
+          "no-save-proceed": "Tęsti",
+          "save-proceed": "Išsaugoti ir tęsti"
+        },
+        "name": "Pavadinimas",
+        "path": "Kelias",
+        "primary-source": "Išeities šaltinis",
+        "short-description": "Trumpas aprašas",
+        "strength": "Stiprumas",
+        "system": "Sistema",
+        "value-set": "Reikšmių rinkinys",
+        "view-header": "Peržiūra"
+      },
+      "list": {
+        "add-structure-definition": "Pridėti struktūros apibrėžimą",
+        "delete-confirm": "Ar tikrai norite šalinti duomenis? Peržiūrėkite išteklius, kurie gali naudoti šį apibrėžimą.",
+        "import": "Importuoti",
+        "import-fhir": "Importuoti iš FHIR",
+        "import-url": "URL",
+        "manual": "Kurti rankiniu būdu",
+        "open-fhir": "Atidaryti FHIR",
+        "title": "Struktūros apibrėžtys"
+      },
+      "view": {
+        "binding": "Saitas",
+        "fixed": "Fiksuotasis"
+      }
+    },
+    "structure-definition-constraint": {
+      "list": {
+        "add-constraint": "Pridėti ribojimą",
+        "header": "Ribojimai"
+      },
+      "modal": {
+        "add-header": "Pridėti ribojimą",
+        "edit-header": "Redaguoti ribojimą",
+        "error": "Klaida",
+        "expression": "Išraiška",
+        "human": "Žmogaus",
+        "key": "Raktas",
+        "requirements": "Reikalavimai",
+        "severity": "Klaidos reikšmingumas",
+        "source": "Šaltinis",
+        "warning": "Įspėjimas"
+      }
+    },
+    "structure-definition-type": {
+      "list": {
+        "add-type": "Pridėti tipą",
+        "header": "Tipai"
+      },
+      "modal": {
+        "add-header": "Pridėti tipą",
+        "code": "Kodas",
+        "edit-header": "Redaguoti tipą",
+        "target-profile": "Paskirties profilis"
+      }
+    },
+    "task": {
+      "activity": "Veikla",
+      "add-btn": "Pridėti užduotį",
+      "add-comment": "Pridėti naują komentarą",
+      "context": "Kontekstas",
+      "context-resource": "Resource",
+      "context-type": "Resource type",
+      "filter": {
+        "assignee": "Priskirtas naudotojas",
+        "author": "Autorius",
+        "created": "Sukurta",
+        "finished": "Baigta",
+        "presets": {
+          "header": "Išankstinės parinktys",
+          "mine": "Jūsų sukurtos",
+          "to-me": "Jums priskirtos"
+        },
+        "priority": "Prioritetas",
+        "project": "Projektas",
+        "requested-performer": "Atsakingas asmuo",
+        "status": "Statusas",
+        "type": "Tipas",
+        "unseen-changes": "Updates",
+        "unseen-changes-only": "Show only tasks with unseen changes"
+      },
+      "select-project": "Rinktis projektą",
+      "unseen-changes": "Unseen changes"
+    },
+    "template": {
+      "form": {
+        "add-content": "Pridėti turinį",
+        "add-header": "Pridėti šabloną",
+        "edit-header": "Redaguoti šabloną"
+      },
+      "list": {
+        "add-template": "Pridėti šabloną"
+      }
+    },
+    "terminology-server": {
+      "add-btn": "Pridėti serverį",
+      "add-header": "Pridėti serverį",
+      "auth-config": {
+        "access-token-url": "Prieigos duomenų URL (Access Token URL)",
+        "client-id": "Kliento ID",
+        "client-secret": "Kliento raktas (client secret)"
+      },
+      "edit-header": "Redaguoti serverį",
+      "export-ecosystem": "Export to FHIR Ecosystem format",
+      "fhir-ecosystem": "FHIR Ecosystem",
+      "headers": {
+        "key": "Raktas",
+        "value": "Reikšmė"
+      },
+      "import-ecosystem": "Import from FHIR Ecosystem file",
+      "kind": {
+        "fhir": "FHIR serveris",
+        "snomed": "SNOMED serveris",
+        "terminology": "Terminologijos serveris"
+      },
+      "test": "Test"
+    },
+    "tools": {
+      "terminology-service-api": {
+        "button": "Mygtukas",
+        "content": "Terminologijos paslaugų API leidžia automatizuotai keistis klinikinės terminologijos turiniu ir ištekliais.",
+        "header": "Terminologijos paslaugos API"
+      },
+      "termx-service-api": {
+        "content": "Turinys",
+        "header": "TermX Service API",
+        "no-data": "The tools for viewing APIs are not configured."
+      }
+    },
+    "transformation-definition": {
+      "edit": {
+        "created": "Sukurta {{date}}",
+        "updated": "Atnaujinta {{date}}"
+      },
+      "execution": {
+        "generate": "Kurti",
+        "input": "Įvedimas",
+        "output": "Išvedimas",
+        "transform": "Transformuoti"
+      },
+      "import": {
+        "import-map": {
+          "description": "If you need to make changes, you can either delete and recreate it manually, or save the Transformation Definition!",
+          "title": "This resource was imported from ImportMap!"
+        }
+      },
+      "list": {
+        "add-btn": "Pridėti transformaciją",
+        "created-by": "Sukūrė: {{user}}",
+        "last-modified": "Paskutinis pakeitimas"
+      },
+      "resource-form": {
+        "compile": "Kompiliuoti",
+        "content": "Turinys",
+        "definition": "Struktūros apibrėžimas",
+        "download-fml": "FML",
+        "download-json": "JSON",
+        "download-xml": "XML",
+        "fhir-resource": "Išteklius",
+        "fhir-server": "FHIR serveris",
+        "fml-generation-failed": "Nepavyko sukurti FML",
+        "generate": "Kurti",
+        "invalid-resource-url": "Nepavyko įkelti struktūros apibrėžimo",
+        "map-set": "Terminijos ryšių rinkinys",
+        "mapping": "Struktūros atvaizdavimas",
+        "preview-hide": "Slėpti",
+        "preview-show": "Rodyti",
+        "resource-url": "Ištekliaus atsisiuntimo adresas",
+        "save-as": "Išsaugoti kaip",
+        "switch-to-text-editor": {
+          "cancel": "Atšaukti",
+          "confirm": "Tęsti",
+          "title": "Perjungti į teksto redagavimo režimą",
+          "warning": "DĖMESIO! Šio veiksmo neįmanoma atšaukti!"
+        },
+        "url": "URL",
+        "visual-editor": "Vizualinis redagavimas",
+        "visual-editor-disabled": "Užpildykite pavadinimo lauką"
+      },
+      "resources": {
+        "new": "-- naujas --",
+        "type.conceptmap": "Terminų ryšių vaizdavimas",
+        "type.definition": "Apibrėžimai",
+        "type.mapping": "Importavimas",
+        "type.mapping-main": "Terminologijų ryšiai"
+      }
+    },
+    "ucum": {
+      "base-unit": {
+        "list": {
+          "title": "Base units"
+        },
+        "view": {
+          "title": "Base unit details"
+        }
+      },
+      "defined-unit": {
+        "list": {
+          "title": "Defined units"
+        },
+        "view": {
+          "title": "Unit details"
+        }
+      },
+      "export-modal": {
+        "header": "Eksportuoti UCUM vienetus",
+        "hint": "Jei papildiniai nepasirinkti, bus eksportuoti visi UCUM papildiniai.",
+        "supplements": "Papildiniai"
+      },
+      "import-modal": {
+        "file": "Failas",
+        "header": "Importuoti UCUM essence XML"
+      },
+      "menu": {
+        "analyse": "Analyse",
+        "base-units": "Base units",
+        "canonicalise": "Canonicalise",
+        "components": "Components",
+        "convert": "Convert",
+        "defined-units": "Defined units",
+        "export": "Eksportuoti",
+        "operations": "Operations",
+        "prefixes": "Prefixes",
+        "title": "UCUM",
+        "validate": "Validate"
+      },
+      "operations": {
+        "analyse": {
+          "btn": "Analyse",
+          "code": "Code",
+          "error": "Error",
+          "result": "Result",
+          "title": "Analyse UCUM code"
+        },
+        "canonicalise": {
+          "btn": "Canonicalise",
+          "code": "Code",
+          "error": "Error",
+          "result": "Result",
+          "title": "Canonicalise UCUM code"
+        },
+        "convert": {
+          "btn": "Convert",
+          "error": "Error",
+          "result": "Result",
+          "sourceCode": "Source code",
+          "targetCode": "Target code",
+          "title": "Convert UCUM code",
+          "value": "Value"
+        },
+        "validate": {
+          "btn": "Validate",
+          "code": "Code",
+          "result": "Result",
+          "title": "Validate UCUM code"
+        }
+      },
+      "prefix": {
+        "list": {
+          "title": "Prefixes"
+        },
+        "view": {
+          "title": "Prefix details"
+        }
+      }
+    },
+    "value-set": {
+      "concepts": {
+        "no-version": "Nepasirinkote versijos",
+        "select-version": "Pasirinkite versiją terminų peržiūrai"
+      },
+      "form": {
+        "add-header": "Kurti naują reikšmių rinkinį",
+        "details-header": "Value set details",
+        "edit-header": "Redaguoti reikšmių rinkinį",
+        "versions": {
+          "add-version": "Pridėti versiją",
+          "export-fhir-expansion": "Eksportuoti FHIR JSON su išskleidimu",
+          "export-fhir-json": "Eksportuoti FHIR JSON",
+          "export-fhir-xml": "Eksportuoti FHIR XML",
+          "open-fhir": "Atidaryti FHIR URL"
+        },
+        "view-header": "Peržiūrėti reikšmių rinkinį"
+      },
+      "list": {
+        "add-value-set": "Pridėti reikšmių rinkinį",
+        "expansion": "Išskleistos savybės",
+        "import-fhir": "Importuoti išorinę FHIR struktūrą",
+        "last-version": "Naujausia versija",
+        "manual": "Rankiniu būdu",
+        "open-fhir": "Atidaryti FHIR URL",
+        "status": "Statusas",
+        "title": "Reikšmių rinkiniai (value sets)",
+        "versions-expiration-date": "iki {{expirationDate}}",
+        "versions-release-date": "Nuo {{releaseDate}}",
+        "versions-version": "Versijos pavadinimas: {{version}}"
+      },
+      "summary": {
+        "add-task": "Add task",
+        "add-version": "Pridėti versiją",
+        "all-tasks": "Visos užduotys",
+        "duplicate-version-modal": {
+          "header": "Dubliuoti reikšmių rinkinio  versiją",
+          "version": "Nauja versija"
+        },
+        "expansions": "Išplėtimai",
+        "opened-tasks": "Aktyvios užduotys",
+        "related-artifacts": "Susiję artefaktai",
+        "total-concepts": "Visi terminai",
+        "value-set": "Reikšmių rinkinys (value set)",
+        "versions": "Versijos"
+      }
+    },
+    "value-set-version": {
+      "form": {
+        "add-concept": "Pridėti terminą",
+        "add-header": "Pridėti versiją",
+        "concepts": {
+          "warning": "Terminas neturi aktyvuotos versijos"
+        },
+        "details-header": "Versijos detalės",
+        "download": "Atsisiuntimas",
+        "edit-header": "Redaguoti versiją",
+        "rule-set": {
+          "rule": {
+            "add-designation": "Pridėti pavadinimą",
+            "all": "Visi terminai",
+            "bulk-copy": "Kopijuoti visus duomenis",
+            "code-system": "Kodų sistema",
+            "content": "Turinys",
+            "exact": "Tikslus atitikimas",
+            "exclude": "Neįtraukti",
+            "filter": "Filtravimas pagal savybes",
+            "include": "Įtraukti",
+            "value-set": "Reikšmių rinkinys (value set)"
+          }
+        },
+        "view-header": "Peržiūra"
+      },
+      "summary": {
+        "edit-version": "Redaguoti versiją",
+        "expansion": "Išplėtimas",
+        "expansion-limit-info": "Rodoma 20 savybių.  Serveryje yra dar savybių: {{count}}.",
+        "expansion-see-all": "Žiūrėti visą terminų sąrašą.",
+        "expansion-warning": "Kad būtų galima perskaičiuoti išplėtimus, reikšmių rinkinys turi turėti juodraščio statusą.",
+        "info": {
+          "activate": "Aktyvuoti",
+          "add-to-release": "Add to release",
+          "create-approve": "Kurti patvirtinimo užduotį",
+          "create-review": "Kurti peržiūros užduotį",
+          "definition": "Apibrėžimas",
+          "download": "Atsisiuntimas",
+          "expansion": "Išplėtimas",
+          "last-approved": "Paskutinio patvirtinimo data",
+          "last-modified": "Paskutinių pakeitimų data",
+          "last-reviewed": "Paskutinės peržiūros data",
+          "make-draft": "Paskelbti juodraščiu",
+          "none": "Nėra",
+          "release-unspecified": "Release is unspecified",
+          "retire": "Paskelbti nebegaliojančiu",
+          "show-changes": "Rodyti pakeitimus",
+          "sync-with-github": "Sinchronizuoti su Githubu"
+        },
+        "preview-expansion": "Preview expansion",
+        "rule": "Taisyklė",
+        "rule-expansion-preview": "Rule expansion preview",
+        "rule-expansion-preview-info": "Run the preview to see the concepts generated by this include rule.",
+        "rule-set": "Taisyklių rinkinys",
+        "task-modal": {
+          "assignee": "Paskirtas asmuo",
+          "header": "Kurti užduotį: {{type}} ",
+          "success-msg": "Užduotis sukurta"
+        },
+        "value-set-version": "Reikšmių rinkinio (value set) versija",
+        "version-metadata": "Version metadata"
+      }
+    },
+    "value-set-version-concept": {
+      "form": {
+        "add-header": "Pridėti",
+        "designation-language": "Kalba",
+        "designation-name": "Pavadinimas",
+        "edit-header": "Redaguoti"
+      }
+    },
+    "value-set-version-modal": {
+      "header": "Create value set version"
+    },
+    "value-set-version-rule": {
+      "form": {
+        "add-header": "Pridėti",
+        "concept": {
+          "add-concept": "Pridėti terminą",
+          "modal-header": ""
+        },
+        "edit-header": "Redaguoti",
+        "filter": {
+          "add-filter": "Pridėti filtrą",
+          "modal-header": ""
+        }
+      }
+    },
+    "wiki-page": {
+      "comments": {
+        "created-at": "Sukurta {{date}}",
+        "modified-at": "Pakeista {{date}}",
+        "read-more": "Skaityti daugiau",
+        "reply": "Atsakyti",
+        "resolve": "Uždaryti"
+      },
+      "details": {
+        "add-content": "Pridėti turinį",
+        "concept": "Terminas",
+        "contents": "Turinys",
+        "cs": "Kodų sistema (code system)",
+        "csc": "",
+        "def": "Struktūros apibrėžimas",
+        "ms": "Terminijos ryšių rinkiniai (map set)",
+        "none": "Nėra",
+        "page": "Puslapis",
+        "relations": "Ryšiai",
+        "tags": "Gairės",
+        "usages": "Rodyklės",
+        "vs": "Reikšmių rinkinys (value set)",
+        "vsc": ""
+      },
+      "edit": {
+        "header": {
+          "version": "Versija: {{version}}"
+        },
+        "image-modal": {
+          "choose-file": "Pasirinkite paveiksliuką įkėlimui",
+          "header": "Duomenys"
+        },
+        "menu": {
+          "comments": {
+            "title": "Pavadinimas"
+          },
+          "diagrams": "Diagramos",
+          "files": "Duomenys",
+          "line-wrap": {
+            "off": "Rodyti vientisai",
+            "on": "Perkelti eilutes"
+          },
+          "preview": {
+            "hide": "Slėpti peržiūrą",
+            "show": "Rodyti peržiūrą"
+          },
+          "structure-definition": {
+            "add": "Pridėti struktūros apibrėžimą",
+            "copy": "Kopijuoti nuorodą",
+            "title": "Struktūros apibrėžimas"
+          }
+        },
+        "structure-definition-modal": {
+          "description": "Ar norite išsaugoti esamo puslapio turinį prieš pereidami prie struktūros apibrėžimo?",
+          "header": "Neišsaugoti pakeitimai bus pašalinti!",
+          "proceed-without-saving": "Tęsti neišsaugant",
+          "save-and-proceed": "Išsaugoti ir tęsti"
+        }
+      },
+      "header": {
+        "add-subpage": "Pridėti priklausantį puslapį",
+        "copy-raw": "Kopijuoti neapdorotus duomenis",
+        "modified": "Šį puslapį {{date}} redagavo <b>{{user}}</b>."
+      },
+      "history": {
+        "header": {
+          "tooltips": {
+            "copy-raw": "Kopijuoti duomenis tiesiogiai",
+            "edit": "Naudoti kaip redagavimo šabloną",
+            "line-by-line": "Eilučių palyginimas",
+            "preview": "Peržiūra",
+            "side-by-side": "Versijų palyginimas",
+            "view-diff": "Skirtumai"
+          }
+        },
+        "timeline": {
+          "header": "Redagavimo chronologija",
+          "load-more": "Daugiau",
+          "source-item": "A",
+          "target-item": "B"
+        }
+      },
+      "no-space": {
+        "desc": "Norėdami tęsti, pasirinkite darbalaukį",
+        "title": "Nepasirinktas darbalaukis"
+      },
+      "overview": {
+        "pages": "Puslapiai",
+        "recently-modified": {
+          "created": "Sukurta {{date}}",
+          "header": "Neseniai pakeista",
+          "updated": "Atnaujinta {{date}}"
+        }
+      },
+      "setup": {
+        "add-header": "Pridėti puslapį",
+        "add-structure-definition": "Pridėti struktūros apibrėžimą",
+        "content-header": "Turinys",
+        "content-type-tooltip": "Keičiant turinio tipą gali pasikeisti turinio reikšmės",
+        "copy-to-clipboard": "Kopijuoti",
+        "edit-header": "Keisti nustatymus",
+        "relation-header": "Ryšiai",
+        "usages": "Panaudojimai"
+      },
+      "sidebar": {
+        "delete-confirm": "Tikrai šalinti? Visi priklausantys puslapiai taip pat bus pašalinti!",
+        "pages": "Puslapiai"
+      },
+      "spaces": "Darbalaukiai",
+      "texteditor": {
+        "quick-actions": {
+          "link-modal": {
+            "code-system": "Kodų sistema",
+            "concept": "Terminas",
+            "concept-code-system": "Terminas priklauso kodų sistemai",
+            "header": "Kurti nuorodą",
+            "link-name": "Nuorodos pavadinimas",
+            "map-set": "Terminijos ryšių rinkinys",
+            "page": "Puslapis",
+            "resource": "Išteklius",
+            "resource-type": "Ištekliaus tipas",
+            "search-externally": "Ieškoti kitame darbalaukyje",
+            "space": "Darbalaukis",
+            "url": "URL",
+            "value-set": "Reikšmių rinkinys"
+          },
+          "structure-definition-modal": {
+            "base-definition-url": "Bazinis apibrėžimo adresas",
+            "header": "Pasirinkti struktūros apibrėžimą",
+            "simplifier": "Supaprastintas variantas",
+            "structure-definition": "Struktūros apibrėžimas",
+            "url": "Adresas"
+          },
+          "template-modal": {
+            "header": "Pasirinkite šabloną",
+            "template": "Šablonas"
+          }
+        }
+      }
+    }
+  }
 }
