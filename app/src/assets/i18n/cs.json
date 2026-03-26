@@ -998,6 +998,7 @@
           "contains": "Obsahuje",
           "designation-languages": "Jazyky označení",
           "eq": "Rovná se",
+          "filter-root-concepts": "Filtrovat kořenové koncepty",
           "filter-disabled": "Přepněte na zploštěný seznam, abyste aktivovali funkci filtru",
           "properties": "Vlastnosti",
           "validate": "Ověřit kódový systém"

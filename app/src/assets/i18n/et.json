@@ -886,6 +886,7 @@
 					"concept": "Mõiste",
 					"contains": "Sisaldab",
 					"eq": "Võrdub",
+					"filter-root-concepts": "Filtreeri juurmõisteid",
 					"validate": "Valideeri koodisüsteemi"
 				},
 				"delete-property-usages": "Eemalda tunnus mõistetelt",

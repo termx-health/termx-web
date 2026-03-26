@@ -174,6 +174,12 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     this.groupOpened = !this.groupOpened;
     this.filter.open = false;
     this.selectedConcept = undefined;
+
+    if (this.groupOpened && this.codeSystem?.hierarchyMeaning) {
+      this.expandTree();
+    } else {
+      this.loadData();
+    }
   }
 
   private expandTree(): void {
@@ -193,12 +199,11 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   private loadRootConceptsPage(groupParam: string, offset: number, limit: number): Observable<SearchResult<CodeSystemConcept>> {
     const params = new ConceptSearchParams();
     params.associationRoot = groupParam;
-    params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
     params.offset = offset;
     params.limit = limit;
 
-    return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params));
+    return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, this.buildSearchParams(params)));
   }
 
   protected loadMoreRootConcepts(): void {
@@ -269,18 +274,29 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   // searches
 
   protected loadData(): void {
+    if (this.groupOpened && this.codeSystem?.hierarchyMeaning) {
+      this.groupConcepts(this.codeSystem.hierarchyMeaning);
+      return;
+    }
+
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
-    const q = copyDeep(this.query);
+    return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystem.id, this.buildSearchParams(copyDeep(this.query))));
+  }
+
+  private buildSearchParams(params: ConceptSearchParams = new ConceptSearchParams()): ConceptSearchParams {
     if (this.filter.inputType === 'eq') {
-      q.textEq = this.filter.searchInput;
+      params.textEq = this.filter.searchInput;
+      params.textContains = undefined;
+      params.textContainsSep = undefined;
     } else if (this.filter.inputType === 'contains') {
-      q.textContains = this.filter.searchInput;
-      q.textContainsSep = ' ';
+      params.textContains = this.filter.searchInput;
+      params.textContainsSep = ' ';
+      params.textEq = undefined;
     }
-    q.codeSystemVersion = this.version?.version;
+    params.codeSystemVersion = this.version?.version;
 
     const collected = collect(this.filter.properties ?? [],
       p => p.property.name,
@@ -294,9 +310,8 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
         return p.value;
       });
 
-    q.propertyValues = Object.entries(collected).map(([k, v]) => `${k}|${v.join(',')}`).join(';');
-
-    return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystem.id, q));
+    params.propertyValues = Object.entries(collected).map(([k, v]) => `${k}|${v.join(',')}`).join(';');
+    return params;
   }
 
 

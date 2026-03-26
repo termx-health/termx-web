@@ -11,7 +11,7 @@
     [class.tw-table-container-filter--open-full]="filterOpen && isFilterFullyOpened"
     (transitionend)="onFilterTransitionEnd($event)">
     <div *m-card-header class="m-justify-between">
-      <span>{{'core.filter' | translate}}</span>
+      <span>{{filterTitle || ('core.filter' | translate)}}</span>
 
       <div>
         @if (filter?.twReset.observed) {

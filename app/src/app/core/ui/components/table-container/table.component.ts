@@ -12,6 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class TableComponent {
   @Input() public filterOpen: boolean;
+  @Input() public filterTitle?: string;
   @Output() public filterOpenChange = new EventEmitter<boolean>();
 
   @ContentChild(TableFilterComponent) protected filter: TableFilterComponent;

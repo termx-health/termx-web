@@ -953,6 +953,7 @@
 					"concept": "Concept",
 					"contains": "Contains",
 					"eq": "Equals",
+					"filter-root-concepts": "Filter root concepts",
 					"validate": "Validate code system",
 					"filter-disabled": "Switch to the flattened list mode to enable the filter functionality"
 				},

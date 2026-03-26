@@ -21,6 +21,11 @@ export const environment: Environment = {
   oauthClientId: 'term-client',
   oauthScope: 'openid profile offline_access',
 
+  // For local keycloak
+  // oauthIssuer: 'http://localhost:8080/realms/termx',
+  // oauthClientId: 'termx-client',
+
+
   swaggerUrl: 'https://demo.termx.org/swagger/',
   chefUrl: 'https://demo.termx.org/chef',
   chefFhirVersion: '5.0.0',

@@ -913,6 +913,7 @@
           "contains": "Apima",
           "designation-languages": "Designation languages",
           "eq": "Lygu",
+          "filter-root-concepts": "Filtruoti šaknines sąvokas",
           "filter-disabled": "Switch to the flattened list mode to enable the filter functionality",
           "properties": "Properties",
           "validate": "Tikrinti kodų sistemą"

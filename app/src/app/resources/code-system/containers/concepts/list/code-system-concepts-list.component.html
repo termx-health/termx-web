@@ -1,4 +1,4 @@
-<tw-table [(filterOpen)]="filter.open">
+<tw-table [(filterOpen)]="filter.open" [filterTitle]="groupOpened ? ('web.code-system.form.concepts.filter-root-concepts' | translate) : undefined">
   <div header class="m-items-middle" style="flex: 1">
     @if (codeSystem.hierarchyMeaning && !codeSystem.settings?.disableHierarchyGrouping) {
       <m-button (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
@@ -51,8 +51,6 @@
     @if (!filter.open) {
       <m-button
         [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'"
-        [disabled]="groupOpened"
-        [mTooltip]="groupOpened" mTitle="web.code-system.form.concepts.filter-disabled"
         (mClick)="onFilterOpen()"
         >
         <m-icon mCode="filter"></m-icon>
@@ -62,7 +60,6 @@
 
 
   <!-- Filter -->
-  @if (!groupOpened) {
     <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
       <m-form-item>
         <m-textarea placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="_filter.searchInput"/>
@@ -111,7 +108,6 @@
         }
       }
     </tw-table-filter>
-  }
 
 
   <div class="m-justify-between m-items-top">
