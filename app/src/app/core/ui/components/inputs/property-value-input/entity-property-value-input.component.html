@@ -22,6 +22,7 @@
               valueType="code"
               [(ngModel)]="value"
               [codeSystem]="codeSystem"
+              [showStatus]="showStatus"
               [propertyValues]="property | apply:getFilterPropertyValues"
               (ngModelChange)="fireOnChange()"
               [required]="required"></tw-term-concept-search>
@@ -45,6 +46,7 @@
                         [(ngModel)]="value.code"
                         (ngModelChange)="fireOnChange()"
                         [codeSystem]="value.codeSystem"
+                        [showStatus]="showStatus"
                         [required]="required"></tw-term-concept-search>
                   }
                   @case ('code-system') {
@@ -68,6 +70,7 @@
                         [(ngModel)]="value.code"
                         (ngModelChange)="fireOnChange()"
                         [codeSystem]="value.codeSystem"
+                        [showStatus]="showStatus"
                         [required]="required"></tw-term-concept-search>
                   }
                   @case ('value-set') {

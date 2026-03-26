@@ -86,12 +86,20 @@
         <m-editable-column mTitle="entities.value-set-rule-filter.value" mName="value">
           <ng-template #viewTemplate let-f let-ngModelName="ngModelName">
             @if (f.operator !== 'exists') {
-              <tw-property-value-input
-                  viewMode
-                  [name]="ngModelName"
-                  [ngModel]="f.value"
-                  [property]="f.property"
-                  [codeSystem]="codeSystem"></tw-property-value-input>
+              <div class="m-items-middle" style="gap: 0.5rem; flex-wrap: wrap">
+                <tw-property-value-input
+                    viewMode
+                    [name]="ngModelName"
+                    [ngModel]="f.value"
+                    [property]="f.property"
+                    [showCodingReference]="true"
+                    [showStatus]="true"
+                    [compact]="true"
+                    [codeSystem]="codeSystem"></tw-property-value-input>
+                @if (f.property?.type === 'Coding') {
+                  <tw-code-system-coding-reference [property]="f.property" [value]="f.value" [compact]="true"/>
+                }
+              </div>
             }
             @if (f.operator === 'exists') {
               <label>{{f.value}}</label>
@@ -99,11 +107,19 @@
           </ng-template>
           <ng-template #editTemplate let-f let-ngModelName="ngModelName">
             @if (f.operator !== 'exists') {
-              <tw-property-value-input
-                  [name]="ngModelName"
-                  [(ngModel)]="f.value"
-                  [property]="f.property"
-                  [codeSystem]="codeSystem"></tw-property-value-input>
+              <div class="m-items-middle" style="gap: 0.5rem; flex-wrap: wrap">
+                <tw-property-value-input
+                    [name]="ngModelName"
+                    [(ngModel)]="f.value"
+                    [property]="f.property"
+                    [showCodingReference]="true"
+                    [compact]="true"
+                    [showStatus]="true"
+                    [codeSystem]="codeSystem"></tw-property-value-input>
+                @if (f.property?.type === 'Coding') {
+                  <tw-code-system-coding-reference [property]="f.property" [value]="f.value" [compact]="true"/>
+                }
+              </div>
             }
             @if (f.operator === 'exists') {
               <m-select [name]="ngModelName" [(ngModel)]="f.value">

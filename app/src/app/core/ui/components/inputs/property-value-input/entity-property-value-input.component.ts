@@ -36,6 +36,7 @@ export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, Co
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() @BooleanInput() public required: boolean | string = false;
   @Input() @BooleanInput() public showCodingReference: boolean | string = false;
+  @Input() @BooleanInput() public showStatus: boolean | string = false;
   @Input() @BooleanInput() public compact: boolean | string = false;
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;

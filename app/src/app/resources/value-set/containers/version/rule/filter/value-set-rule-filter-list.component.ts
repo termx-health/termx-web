@@ -5,6 +5,7 @@ import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueS
 import { MuiCardModule, MarinPageLayoutModule, MuiEditableTableModule, MuiSelectModule } from '@kodality-web/marina-ui';
 import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { TranslatePipe } from '@ngx-translate/core';
         MuiEditableTableModule,
         MuiSelectModule,
         EntityPropertyValueInputComponent,
+        CodeSystemCodingReferenceComponent,
         TranslatePipe,
     ],
 })
