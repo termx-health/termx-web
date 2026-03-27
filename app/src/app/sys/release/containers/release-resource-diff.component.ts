@@ -4,7 +4,7 @@ import { DestroyService, group, isNil, LoadingManager, ApplyPipe } from '@kodali
 import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiTooltipModule, MuiIconModule } from '@kodality-web/marina-ui';
 import {map, Observable, of, forkJoin} from 'rxjs';
 import {FhirCodeSystemLibService, FhirValueSetLibService} from 'term-web/fhir/_lib';
-import {TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
+import {Server, ServerLibService} from 'term-web/sys/_lib/space';
 import {ReleaseResource, Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
@@ -22,7 +22,7 @@ import { MarinaUtilModule } from '@kodality-web/marina-util';
 export class ReleaseResourceDiffComponent implements OnInit {
   private fhirCSService = inject(FhirCodeSystemLibService);
   private fhirVSService = inject(FhirValueSetLibService);
-  private terminologyServerService = inject(TerminologyServerLibService);
+  private serverService = inject(ServerLibService);
   private releaseService = inject(ReleaseService);
   private notificationService = inject(MuiNotificationService);
   private destroy$ = inject(DestroyService);
@@ -34,13 +34,13 @@ export class ReleaseResourceDiffComponent implements OnInit {
   public release: Release;
   public resource: ReleaseResource;
 
-  public terminologyServers: {[key: string]: TerminologyServer};
+  public terminologyServers: {[key: string]: Server};
 
   public loader = new LoadingManager();
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.loader.wrap('load-data', forkJoin([this.releaseService.load(Number(id)), this.terminologyServerService.search({limit: -1})]))
+    this.loader.wrap('load-data', forkJoin([this.releaseService.load(Number(id)), this.serverService.search({limit: -1})]))
       .subscribe(([release, servers]) => {
         this.release = release;
         this.terminologyServers = group(servers.data, s => s.code);
@@ -70,7 +70,7 @@ export class ReleaseResourceDiffComponent implements OnInit {
       return of(null);
     }
     const request = {serverCode: code, resourceId: id, resourceType: this.resource.resourceType};
-    return this.terminologyServerService.loadResource(request).pipe(map(r => r.resource));
+    return this.serverService.loadResource(request).pipe(map(r => r.resource));
   }
 
   public loadFhirResources(): void {

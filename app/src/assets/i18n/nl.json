@@ -514,7 +514,7 @@
       },
       "single": "Release",
       "status": "Status",
-      "terminology-server": "Terminology server"
+      "server": "Terminology server"
     },
     "resource": {
       "conf-attribute": {
@@ -687,7 +687,7 @@
       "plural": "Spaces",
       "shared": "Shared",
       "singular": "Space",
-      "terminology-servers": "Servers",
+      "servers": "Servers",
       "viewers": "Viewers"
     },
     "structure-definition": {
@@ -724,7 +724,7 @@
       "content-type": "Content type",
       "names": "Names"
     },
-    "terminology-server": {
+    "server": {
       "access-info": "Access info",
       "active": "Active",
       "auth-config": "OAuth 2.0",
@@ -1904,7 +1904,7 @@
             "Space": "Space",
             "StructureDefinition": "Structure definition",
             "Task": "Task",
-            "TerminologyServer": "TerminologyServer",
+            "Server": "TerminologyServer",
             "TransformationDefinition": "Transformation definition",
             "Users": "Users",
             "ValueSet": "ValueSet",
@@ -2257,7 +2257,7 @@
         "add-template": "Add template"
       }
     },
-    "terminology-server": {
+    "server": {
       "add-btn": "Add server",
       "add-header": "Add server",
       "auth-config": {

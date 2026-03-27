@@ -1,0 +1,44 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [mTitle]="mode === 'edit' ? 'web.ecosystem.edit-header' : 'web.ecosystem.add-header'" [mShowSkeleton]="loader.state['load']">
+      @if (ecosystem) {
+        <form #form="ngForm">
+          <m-form-item mName="code" mLabel="entities.ecosystem.code" required>
+            <m-input name="code" [(ngModel)]="ecosystem.code" required [disabled]="mode === 'edit'"/>
+          </m-form-item>
+
+          <m-form-item mName="names" mLabel="entities.ecosystem.name" required>
+            <m-multi-language-input name="names" [(ngModel)]="ecosystem.names" required/>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ecosystem.format-version">
+            <m-input name="formatVersion" [ngModel]="ecosystem.formatVersion" disabled/>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ecosystem.description">
+            <m-input name="description" [(ngModel)]="ecosystem.description" mType="textarea"/>
+          </m-form-item>
+
+          <m-form-item>
+            <m-checkbox name="active" [(ngModel)]="ecosystem.active">
+              {{'entities.ecosystem.active' | translate}}
+            </m-checkbox>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ecosystem.servers">
+            <m-select name="serverIds" [(ngModel)]="ecosystem.serverIds" multiple
+                      placeholder="web.ecosystem.select-servers" [compareWith]="compareIds">
+              @for (server of servers; track server.id) {
+                <m-option [mValue]="server.id" [mLabel]="server.code"/>
+              }
+            </m-select>
+          </m-form-item>
+        </form>
+      }
+
+      <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading || !canEdit" (mClick)="save()">
+        {{'core.btn.save' | translate}}
+      </m-button>
+    </m-card>
+  </div>
+</m-form-row>

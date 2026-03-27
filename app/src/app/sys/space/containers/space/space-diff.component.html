@@ -45,7 +45,7 @@
               @if (!serverEditable) {
                 <div class="m-items-middle">
                   @if (!diffItem?.resource?.terminologyServer) {
-                    <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+                    <label>{{'entities.server.current-installation' | translate}}</label>
                   }
                   <label>{{terminologyServers[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
                   <m-button mDisplay="text" mShape="circle" (mClick)="serverEditable = true">
@@ -75,10 +75,10 @@
   <div style="display: flex; gap: 1rem">
     <m-card style="max-width: 33%">
       <div *m-card-header class="m-justify-between">
-        <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+        <label>{{'entities.server.current-installation' | translate}}</label>
           <m-button m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
               source: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'),
-              target: ('entities.terminology-server.current-installation' | translate)}" mDisplay="primary" (mClick)="sync('local')">
+              target: ('entities.server.current-installation' | translate)}" mDisplay="primary" (mClick)="sync('local')">
           <div class="m-items-middle"><label>{{'Sync'}}</label>
           <m-icon mCode="sync"></m-icon>
         </div>
@@ -100,7 +100,7 @@
     <div *m-card-header class="m-justify-between">
       <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'}}</label>
           <m-button m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
-              source: ('entities.terminology-server.current-installation' | translate),
+              source: ('entities.server.current-installation' | translate),
               target: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync('external')">
         <div class="m-items-middle"><label>{{'Sync'}}</label>
         <m-icon mCode="sync"></m-icon>

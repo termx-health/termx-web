@@ -1,0 +1,98 @@
+@if (server) {
+  <tw-resource-context resourceType="TerminologyServer" [resource]="resourceAdapter" mode="summary"/>
+}
+
+<m-form-row>
+  <div *mFormCol>
+    <m-card [mShowSkeleton]="loader.state['load']">
+      <div *m-card-header class="m-justify-between">
+        <span>{{headerLabelMap[type] | translate}}</span>
+        <div class="m-items-middle" style="gap: 0.5rem;">
+          <m-button mDisplay="default" mSize="small" [mLoading]="loader.state['preview']" (mClick)="preview()">
+            {{'web.server.authoritative-preview-btn' | translate}}
+          </m-button>
+          <m-button mDisplay="primary" mSize="small" [mLoading]="loader.state['save']" (mClick)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </div>
+      </div>
+
+      @if (server) {
+        <!-- Static description -->
+        <p class="m-text-secondary" style="margin-bottom: 1rem;">{{descriptionLabelMap[type] | translate}}</p>
+
+        <!-- Autoselect from resource list -->
+        <div class="m-items-middle" style="gap: 0.5rem; margin-bottom: 1rem;">
+          @switch (type) {
+            @case ('code-systems') {
+              <tw-code-system-search style="flex: 1" (twSelect)="addFromSearch($event)"/>
+            }
+            @case ('value-sets') {
+              <tw-value-set-search style="flex: 1" (twSelect)="addFromSearch($event)"/>
+            }
+            @default {
+              <m-input style="flex: 1" [(ngModel)]="manualUrl" [ngModelOptions]="{standalone: true}" placeholder="https://..."/>
+            }
+          }
+          <m-button mSize="small" (mClick)="addManual()"><m-icon mCode="plus"/></m-button>
+        </div>
+
+        <!-- Table with include/exclude, url, version, status -->
+        <div ngForm>
+          <m-editable-table [mData]="resources">
+            <m-editable-column mName="inclusive" mTitle="Include" mWidth="10%">
+              <ng-template #editTemplate let-ar let-n="ngModelName">
+                <m-select [name]="n" [(ngModel)]="ar._inclusive">
+                  <m-option mLabel="+" [mValue]="true"/>
+                  <m-option mLabel="−" [mValue]="false"/>
+                </m-select>
+              </ng-template>
+              <ng-template #viewTemplate let-ar>
+                <m-icon [mCode]="ar._inclusive !== false ? 'plus-circle' : 'minus-circle'"/>
+              </ng-template>
+            </m-editable-column>
+            <m-editable-column mName="url" mTitle="URL" mWidth="40%">
+              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" [(ngModel)]="ar.url"/></ng-template>
+              <ng-template #viewTemplate let-ar>{{ar.url}}</ng-template>
+            </m-editable-column>
+            <m-editable-column mName="version" mTitle="Version" mWidth="15%">
+              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" [(ngModel)]="ar.version"/></ng-template>
+              <ng-template #viewTemplate let-ar>{{ar.version}}</ng-template>
+            </m-editable-column>
+            <m-editable-column mName="status" mTitle="Status" mWidth="20%">
+              <ng-template #editTemplate let-ar let-n="ngModelName">
+                <m-select [name]="n" [(ngModel)]="ar.status" [autoUnselect]="true">
+                  <m-option mLabel="draft" mValue="draft"/>
+                  <m-option mLabel="active" mValue="active"/>
+                </m-select>
+              </ng-template>
+              <ng-template #viewTemplate let-ar>{{ar.status}}</ng-template>
+            </m-editable-column>
+          </m-editable-table>
+        </div>
+
+        <!-- Preview section -->
+        @if (previewResources) {
+          <div style="margin-top: 1rem;">
+            <div class="m-bold" style="margin-bottom: 0.5rem;">{{'web.server.authoritative-preview' | translate}}</div>
+            <table class="m-table">
+              <thead>
+                <tr><th>URL</th><th>Version</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                @for (r of previewResources; track r.url) {
+                  <tr>
+                    <td>{{r.url}}</td>
+                    <td>{{r.version}}</td>
+                    <td><tw-status-tag [status]="r.status"/></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+
+      }
+    </m-card>
+  </div>
+</m-form-row>

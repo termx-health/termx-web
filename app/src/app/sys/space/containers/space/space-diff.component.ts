@@ -4,7 +4,7 @@ import { DestroyService, group, isNil, ApplyPipe, KeysPipe } from '@kodality-web
 import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiTooltipModule } from '@kodality-web/marina-ui';
 import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
-import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
+import {PackageResource, Server, ServerLibService} from 'term-web/sys/_lib/space';
 import {JobLibService} from 'term-web/sys/_lib';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {PackageResourceService} from 'term-web/sys/space/services/package-resource.service';
@@ -31,7 +31,7 @@ export class SpaceDiffComponent implements OnInit {
   private fhirCSService = inject(FhirCodeSystemLibService);
   private fhirVSService = inject(FhirValueSetLibService);
   private fhirCMService = inject(FhirConceptMapLibService);
-  private terminologyServerService = inject(TerminologyServerLibService);
+  private serverService = inject(ServerLibService);
   private packageResourceService = inject(PackageResourceService);
   private jobService = inject(JobLibService);
   private notificationService = inject(MuiNotificationService);
@@ -43,7 +43,7 @@ export class SpaceDiffComponent implements OnInit {
   public current: string;
   public comparable: string;
   public diffItem: SpaceDiffItem = {};
-  public terminologyServers: {[key: string]: TerminologyServer};
+  public terminologyServers: {[key: string]: Server};
   public serverEditable: boolean;
   public resources: PackageResource[];
 
@@ -72,7 +72,7 @@ export class SpaceDiffComponent implements OnInit {
       return of(null);
     }
     const request = {serverCode: code, resourceId: id, resourceType: this.diffItem?.resource?.resourceType};
-    return this.terminologyServerService.loadResource(request).pipe(map(r => r.resource));
+    return this.serverService.loadResource(request).pipe(map(r => r.resource));
   }
 
   public loadFhirResources(): void {
@@ -102,7 +102,7 @@ export class SpaceDiffComponent implements OnInit {
       this.route.queryParamMap
     ]).subscribe(([s, p, v, params]) => {
       forkJoin([
-        this.terminologyServerService.search({spaceId: s?.id, limit: -1}),
+        this.serverService.search({spaceId: s?.id, limit: -1}),
         this.packageResourceService.loadAll(s?.id, p?.code, v?.version)
       ]).subscribe(([servers, resources]) => {
         this.terminologyServers = group(servers.data, s => s.code);

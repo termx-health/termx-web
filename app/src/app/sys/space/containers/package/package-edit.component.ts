@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import { collect, copyDeep, group, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
 import {saveAs} from 'file-saver';
 import {forkJoin} from 'rxjs';
-import {Package, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/sys/_lib/space';
+import {Package, PackageResource, PackageVersion, ServerLibService} from 'term-web/sys/_lib/space';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
 import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiTooltipModule, MuiPopconfirmModule, MuiInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
@@ -40,7 +40,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class PackageEditComponent implements OnInit {
   private spaceService = inject(SpaceService);
   private packageService = inject(PackageService);
-  private terminologyServerService = inject(TerminologyServerLibService);
+  private serverService = inject(ServerLibService);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 

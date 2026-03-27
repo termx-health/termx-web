@@ -1,0 +1,53 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'entities.ecosystem.plural' | translate}}</span>
+
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch"
+               placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <tw-add-button *twPrivileged="'*.Space.edit'" [routerLink]="['./add']">
+        {{'web.ecosystem.add-btn' | translate}}
+      </tw-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.ecosystem.code' | translate}}</th>
+      <th>{{'entities.ecosystem.name' | translate}}</th>
+      <th>{{'entities.ecosystem.servers' | translate}}</th>
+      <th>{{'entities.ecosystem.active' | translate}}</th>
+      <th style="width: 80px;"></th>
+    </tr>
+
+    <tr *mTableRow="let ecosystem">
+      <td>
+        <a [routerLink]="['./', ecosystem.id, 'edit']">{{ecosystem.code}}</a>
+      </td>
+      <td>{{ecosystem.names | localName}}</td>
+      <td>
+        <div class="m-items-middle" style="gap: 4px; flex-wrap: wrap;">
+          @for (sid of ecosystem.serverIds; track sid) {
+            <m-tag>{{serverNames[sid] || sid}}</m-tag>
+          }
+        </div>
+      </td>
+      <td><m-checkbox [mChecked]="ecosystem.active" readOnly/></td>
+      <td>
+        <div class="m-items-middle" style="gap: 4px;">
+          <a [href]="getEcosystemJsonUrl(ecosystem)" target="_blank" title="View ecosystem.json">
+            <m-icon mCode="file-text"/>
+          </a>
+          <a (click)="downloadEcosystemJson(ecosystem)" style="cursor: pointer;" title="Download ecosystem.json">
+            <m-icon mCode="download"/>
+          </a>
+        </div>
+      </td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="5">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

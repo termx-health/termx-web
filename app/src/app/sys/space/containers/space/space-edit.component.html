@@ -18,7 +18,7 @@
             <m-form-item mName="active" mLabel="entities.space.active">
               <m-checkbox name="active" [(ngModel)]="space.active"></m-checkbox>
             </m-form-item>
-            <m-form-item mName="servers" mLabel="entities.space.terminology-servers">
+            <m-form-item mName="servers" mLabel="entities.space.servers">
               <m-select name="servers" [(ngModel)]="space.terminologyServers" multiple>
                 @for (ts of terminologyServers; track ts) {
                   <m-option [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>

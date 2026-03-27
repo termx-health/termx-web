@@ -15,8 +15,8 @@
           <m-form-item mName="release-date" mLabel="entities.release.release-date">
             <m-date-picker name="release-date" [(ngModel)]="release.releaseDate"></m-date-picker>
           </m-form-item>
-          <m-form-item mName="terminology-server" mLabel="entities.release.terminology-server">
-            <m-select name="terminology-server" [(ngModel)]="release.terminologyServer">
+          <m-form-item mName="server" mLabel="entities.release.server">
+            <m-select name="server" [(ngModel)]="release.terminologyServer">
               @for (ts of terminologyServers; track ts) {
                 <m-option [mLabel]="ts.names | localName" [mValue]="ts.code"/>
               }

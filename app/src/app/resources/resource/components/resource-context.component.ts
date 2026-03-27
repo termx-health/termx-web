@@ -32,52 +32,58 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 export class ResourceContextComponent {
   private router = inject(Router);
 
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide' | 'TerminologyServer';
   @Input() public resource: Resource;
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' = 'summary';
+  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' | 'resources' = 'summary';
 
-  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides'};
+  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides', 'TerminologyServer': 'servers'};
+  protected routePrefix = (type: string): string => type === 'TerminologyServer' ? '/' : '/resources';
 
   public unselectResourceOrVersion(): void {
+    const prefix = this.routePrefix(this.resourceType);
     if (this.version) {
+      const base = [prefix, this.typeMap[this.resourceType], this.resource.id].filter(s => s !== '');
       const commands = {
-        'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'summary'],
-        'details': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'details'],
-        'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts'],
-        'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'edit'],
-        'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view'],
-        'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'properties'],
-        'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'provenances'],
-        'checklist': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'checklists']
+        'summary': [...base, 'summary'],
+        'details': [...base, 'details'],
+        'concept-list': [...base, 'concepts'],
+        'concept-edit': [...base, 'concepts', this.conceptCode, 'edit'],
+        'concept-view': [...base, 'concepts', this.conceptCode, 'view'],
+        'properties': [...base, 'properties'],
+        'provenance': [...base, 'provenances'],
+        'checklist': [...base, 'checklists']
       };
       this.router.navigate(commands[this.mode], {replaceUrl: true});
     } else {
-      this.router.navigate(['/resources', this.typeMap[this.resourceType]]);
+      this.router.navigate([prefix, this.typeMap[this.resourceType]].filter(s => s !== ''));
     }
   }
 
   public selectVersion(version: string): void {
+    const prefix = this.routePrefix(this.resourceType);
+    const base = [prefix, this.typeMap[this.resourceType], this.resource.id, 'versions', version].filter(s => s !== '');
     const commands = {
-      'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'summary'],
-      'details': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'details'],
-      'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
-      'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'edit'],
-      'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view'],
-      'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'properties'],
-      'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'provenances'],
-      'checklist': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'checklists'],
+      'summary': [...base, 'summary'],
+      'details': [...base, 'details'],
+      'concept-list': [...base, 'concepts'],
+      'concept-edit': [...base, 'concepts', this.conceptCode, 'edit'],
+      'concept-view': [...base, 'concepts', this.conceptCode, 'view'],
+      'properties': [...base, 'properties'],
+      'provenance': [...base, 'provenances'],
+      'checklist': [...base, 'checklists'],
     };
     this.router.navigate(commands[this.mode], {replaceUrl: true});
   }
 
   public navigate(mode: string): any[] {
+    const prefix = this.routePrefix(this.resourceType);
     if (this.version?.version) {
-      return ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', this.version.version, mode];
+      return [prefix, this.typeMap[this.resourceType], this.resource.id, 'versions', this.version.version, mode].filter(s => s !== '');
     } else {
-      return ['/resources', this.typeMap[this.resourceType], this.resource.id, mode];
+      return [prefix, this.typeMap[this.resourceType], this.resource.id, mode].filter(s => s !== '');
     }
   }
 
@@ -86,7 +92,10 @@ export class ResourceContextComponent {
   };
 
 
+  private displayNames = {'TerminologyServer': 'Server'};
+
   protected capitalz = (n: string): string => {
+    if (this.displayNames[n]) { return this.displayNames[n]; }
     return n.split('').filter(l => l === l.toUpperCase()).join('');
   };
 

@@ -528,7 +528,7 @@
       },
       "single": "Distribuce",
       "status": "Stav",
-      "terminology-server": "Terminologický server"
+      "server": "Terminologický server"
     },
     "resource": {
       "conf-attribute": {
@@ -701,7 +701,7 @@
       "plural": "Prostory",
       "shared": "Sdílené",
       "singular": "Prostor",
-      "terminology-servers": "Servery",
+      "servers": "Servery",
       "viewers": "Prohlížeči"
     },
     "structure-definition": {
@@ -738,7 +738,7 @@
       "content-type": "Typ obsahu",
       "names": "Názvy"
     },
-    "terminology-server": {
+    "server": {
       "access-info": "Access info",
       "active": "Aktivní",
       "auth-config": "OAuth 2.0",
@@ -1988,7 +1988,7 @@
             "Space": "Prostor",
             "StructureDefinition": "Definice struktury",
             "Task": "Úkol",
-            "TerminologyServer": "TerminologieServer",
+            "Server": "TerminologieServer",
             "TransformationDefinition": "Definice transformace",
             "Users": "Users",
             "ValueSet": "Sada hodnot",
@@ -2359,7 +2359,7 @@
         "add-template": "Přidat šablonu"
       }
     },
-    "terminology-server": {
+    "server": {
       "add-btn": "Přidat server",
       "add-header": "Přidat server",
       "auth-config": {

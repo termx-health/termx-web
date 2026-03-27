@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ComponentStateStore, copyDeep, QueryParams, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
-import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'term-web/sys/_lib/space';
+import {Server, ServerLibService, ServerSearchParams} from 'term-web/sys/_lib/space';
 import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiNoDataModule, MuiDropdownModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
@@ -11,10 +11,10 @@ import { RouterLink } from '@angular/router';
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@kodality-web/marina-util';
-import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+
 
 @Component({
-    templateUrl: './terminology-server-list.component.html',
+    templateUrl: './server-list.component.html',
     imports: [
     MuiCardModule,
     MuiInputModule,
@@ -31,22 +31,21 @@ import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privi
     MuiNoDataModule,
     TranslatePipe,
     MarinaUtilModule,
-    HasAnyPrivilegePipe,
     MuiDropdownModule,
     MuiButtonModule,
     MuiIconModule
 ],
 })
-export class TerminologyServerListComponent implements OnInit {
-  private terminologyServerService = inject(TerminologyServerLibService);
+export class ServerListComponent implements OnInit {
+  private serverService = inject(ServerLibService);
   private stateStore = inject(ComponentStateStore);
 
-  public query = new TerminologyServerSearchParams();
-  public searchResult: SearchResult<TerminologyServer> = SearchResult.empty();
+  public query = new ServerSearchParams();
+  public searchResult: SearchResult<Server> = SearchResult.empty();
   public searchInput: string;
   public loading: boolean;
 
-  protected readonly STORE_KEY = 'terminology-server-list';
+  protected readonly STORE_KEY = 'server-list';
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -69,22 +68,22 @@ export class TerminologyServerListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  private search(): Observable<SearchResult<TerminologyServer>> {
+  private search(): Observable<SearchResult<Server>> {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
     this.stateStore.put(this.STORE_KEY, {query: q});
 
     this.loading = true;
-    return this.terminologyServerService.search(q).pipe(finalize(() => this.loading = false));
+    return this.serverService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public onSearch = (): Observable<SearchResult<TerminologyServer>> => {
+  public onSearch = (): Observable<SearchResult<Server>> => {
     this.query.offset = 0;
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
 
   public exportEcosystem(): void {
-    this.terminologyServerService.exportEcosystem().subscribe(blob => {
+    this.serverService.exportEcosystem().subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -102,7 +101,7 @@ export class TerminologyServerListComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       const json = reader.result as string;
-      this.terminologyServerService.importEcosystem(json).subscribe(() => {
+      this.serverService.importEcosystem(json).subscribe(() => {
         this.loadData();
       });
     };

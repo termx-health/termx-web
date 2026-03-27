@@ -437,9 +437,25 @@
                     "cs": "Servery"
                 },
                 "icon": "cloud-server",
-                "link": "terminology-servers",
+                "link": "servers",
                 "privileges": [
-                    "*.TerminologyServer.view"
+                    "*.Server.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Ecosystems",
+                    "et": "Ökosüsteemid",
+                    "lt": "Ekosistemos",
+                    "de": "Ökosysteme",
+                    "fr": "Écosystèmes",
+                    "nl": "Ecosystemen",
+                    "cs": "Ekosystémy"
+                },
+                "icon": "cluster",
+                "link": "ecosystems",
+                "privileges": [
+                    "*.Space.view"
                 ]
             },
             {
