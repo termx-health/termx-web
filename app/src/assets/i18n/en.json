@@ -4,6 +4,7 @@
 		"btn": {
 			"add": "Add",
 			"cancel": "Cancel",
+			"change": "Change",
 			"clear-all": "Clear all",
 			"close": "Close",
 			"confirm": "Confirm",
@@ -20,7 +21,9 @@
 			"save": "Save",
 			"search": "Search",
 			"select": "Select",
-			"send": "Send"
+			"send": "Send",
+			"yes": "Yes",
+			"no": "No"
 		},
 		"error": {
 			"403": {
@@ -83,7 +86,7 @@
 			"status": "Status",
 			"plural": "Releases",
 			"single": "Release",
-			"terminology-server": "Terminology server",
+			"server": "Server",
 			"resource": {
 				"plural": "Resources",
 				"type": "Type",
@@ -715,8 +718,18 @@
 			"plural": "Spaces",
 			"shared": "Shared",
 			"singular": "Space",
-			"terminology-servers": "Servers",
+			"servers": "Servers",
 			"viewers": "Viewers"
+		},
+		"ecosystem": {
+			"active": "Active",
+			"code": "Code",
+			"description": "Description",
+			"format-version": "Format version",
+			"name": "Name",
+			"plural": "Ecosystems",
+			"servers": "Servers",
+			"singular": "Ecosystem"
 		},
 		"structure-definition": {
 			"code": "Code",
@@ -752,17 +765,24 @@
 			"content-type": "Content type",
 			"names": "Names"
 		},
-		"terminology-server": {
+		"server": {
 			"active": "Active",
 			"auth-config": "OAuth 2.0",
+			"cache-period": "Cache period (hours)",
+			"cert": "Certificate auth",
 			"code": "Code",
 			"current-installation": "Current installation",
 			"headers": "HTTP headers",
 			"kind": "Kind",
 			"name": "Name",
+			"oauth": "OAuth",
+			"open": "Open access",
 			"plural": "Servers",
 			"root-url": "Root URL",
 			"singular": "Server",
+			"smart": "SMART on FHIR",
+			"strategy": "Strategy",
+			"token": "Token auth",
 			"access-info": "Access info",
 			"usage": "Usage",
 			"supported-operations": "Supported operations",
@@ -771,6 +791,9 @@
 			"fhir-version-url": "URL",
 			"authoritative": "Authoritative CodeSystems",
 			"authoritative-valuesets": "Authoritative ValueSets",
+			"authoritative-conceptmaps": "Authoritative ConceptMaps",
+			"authoritative-structuredefinitions": "Authoritative StructureDefinitions",
+			"authoritative-structuremaps": "Authoritative StructureMaps",
 			"exclusions": "Exclusions",
 			"auth-url": "URL",
 			"auth-name": "Name",
@@ -1996,7 +2019,7 @@
 						"TransformationDefinition": "Transformation definition",
 						"Task": "Task",
 						"Privilege": "Privilege",
-						"TerminologyServer": "TerminologyServer",
+						"Server": "Server",
 						"Release": "Release",
 						"ChecklistRule": "ChecklistRule",
 						"Sequence": "Sequence",
@@ -2027,6 +2050,7 @@
 			"details": "Details",
 			"properties": "Properties",
 			"provenance": "Provenance",
+			"resources": "Resources",
 			"summary": "Summary",
 			"checklist": "Checklist",
 			"metadata": "Metadata"
@@ -2214,6 +2238,12 @@
 				"sync-tooltip": "Source: {{source}}\n Target: {{target}}"
 			}
 		},
+		"ecosystem": {
+			"add-btn": "Add ecosystem",
+			"add-header": "Add ecosystem",
+			"edit-header": "Edit ecosystem",
+			"select-servers": "Select servers..."
+		},
 		"structure-definition": {
 			"form": {
 				"add-element": "",
@@ -2333,9 +2363,10 @@
 				"add-template": "Add template"
 			}
 		},
-		"terminology-server": {
+		"server": {
 			"add-btn": "Add server",
 			"add-header": "Add server",
+			"authoritative": "Authoritative Resources",
 			"auth-config": {
 				"access-token-url": "Access Token URL",
 				"client-id": "Client ID",
@@ -2354,7 +2385,26 @@
 				"snomed": "SNOMED server",
 				"terminology": "Terminology server"
 			},
-			"test": "Test"
+			"tab": {
+				"summary": "Summary",
+				"metadata": "Metadata",
+				"resources": "Resources"
+			},
+			"test": "Test",
+			"view-header": "Server details",
+			"authoritative-code-systems": "Authoritative Code Systems",
+			"authoritative-value-sets": "Authoritative Value Sets",
+			"authoritative-concept-maps": "Authoritative Concept Maps",
+			"authoritative-structure-definitions": "Authoritative Structure Definitions",
+			"authoritative-structure-maps": "Authoritative Structure Maps",
+			"authoritative-description-code-systems": "Define which Code Systems this server is authoritative for.",
+			"authoritative-description-value-sets": "Define which Value Sets this server is authoritative for.",
+			"authoritative-description-concept-maps": "Define which Concept Maps this server is authoritative for.",
+			"authoritative-description-structure-definitions": "Define which Structure Definitions this server is authoritative for.",
+			"authoritative-description-structure-maps": "Define which Structure Maps this server is authoritative for.",
+			"authoritative-preview-btn": "Preview",
+			"authoritative-preview": "Matching Resources",
+			"structure-maps": "Structure Maps"
 		},
 		"tools": {
 			"terminology-service-api": {

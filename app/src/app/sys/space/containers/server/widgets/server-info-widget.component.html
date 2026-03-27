@@ -1,0 +1,72 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'entities.server.singular' | translate}}</span>
+    <a [routerLink]="['/servers', server.id, 'edit']" *twPrivileged="server.id + '.Space.edit'">
+      <m-button mSize="small"><m-icon mCode="edit"/> {{'core.btn.edit' | translate}}</m-button>
+    </a>
+  </div>
+
+  <div>
+    <!-- Code -->
+    <div class="m-items-middle m-bold">
+      <m-icon mCode="key"/>
+      <span>{{server.code}}</span>
+    </div>
+
+    <!-- Status -->
+    <div class="m-items-middle">
+      <m-icon mCode="check-circle"/>
+      @if (server.active) {
+        <m-tag mColor="green">{{'entities.server.active' | translate}}</m-tag>
+      }
+      @if (!server.active) {
+        <m-tag>{{'core.btn.no' | translate}}</m-tag>
+      }
+      @if (server.currentInstallation) {
+        <m-tag mColor="blue">{{'entities.server.current-installation' | translate}}</m-tag>
+      }
+    </div>
+
+    <!-- Kind -->
+    @if (server.kind?.length) {
+      <div class="m-items-middle">
+        <m-icon mCode="appstore"/>
+        @for (k of server.kind; track k; let last = $last) {
+          <span>{{'web.server.kind.' + k | translate}}</span>
+          @if (!last) { <m-divider mVertical/> }
+        }
+      </div>
+    }
+
+    <!-- Security flags -->
+    @if (server.open || server.token || server.oauthFlag || server.smartFlag || server.certFlag) {
+      <div class="m-items-middle">
+        <m-icon mCode="lock"/>
+        @if (server.open) { <span>{{'entities.server.open' | translate}}</span> }
+        @if (server.token) { <span>{{'entities.server.token' | translate}}</span> }
+        @if (server.oauthFlag) { <span>OAuth</span> }
+        @if (server.smartFlag) { <span>SMART</span> }
+        @if (server.certFlag) { <span>Cert</span> }
+      </div>
+    }
+
+    <!-- Strategy + Cache period -->
+    @if (server.strategy || server.cachePeriodHours) {
+      <div class="m-items-middle">
+        <m-icon mCode="thunderbolt"/>
+        @if (server.strategy) { <span>{{server.strategy}}</span> }
+        @if (server.strategy && server.cachePeriodHours) { <m-divider mVertical/> }
+        @if (server.cachePeriodHours) { <span>Cache: {{server.cachePeriodHours}}h</span> }
+      </div>
+    }
+
+    <!-- Access info -->
+    @if (server.accessInfo) {
+      <div class="m-items-middle">
+        <m-icon mCode="environment"/>
+        <span>{{server.accessInfo}}</span>
+      </div>
+    }
+
+  </div>
+</m-card>

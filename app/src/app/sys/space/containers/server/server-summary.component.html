@@ -1,0 +1,80 @@
+@if (!server) {
+  <m-spinner/>
+} @else {
+  <tw-resource-context resourceType="TerminologyServer" [resource]="resourceAdapter" mode="summary"/>
+
+  <m-form-row mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <tw-server-info-widget [server]="server"/>
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <m-card>
+        <span *m-card-header>{{'web.server.fhir-ecosystem' | translate}}</span>
+
+        <!-- Kind -->
+        @if (server.kind?.length) {
+          <div class="m-items-middle">
+            <m-icon mCode="appstore"/>
+            @for (k of server.kind; track k; let last = $last) {
+              <span>{{k}}</span>
+              @if (!last) { <m-divider mVertical/> }
+            }
+          </div>
+        }
+
+        <!-- FHIR versions + URLs -->
+        @if (server.fhirVersions?.length) {
+          @for (fv of server.fhirVersions; track $index) {
+            <div class="m-items-middle">
+              <m-icon mCode="link"/>
+              @if (fv.version) { <strong>{{fv.version}}</strong> <m-divider mVertical/> }
+              <a [href]="fv.url" target="_blank">{{fv.url}}</a>
+            </div>
+          }
+        }
+
+        <!-- Supported operations -->
+        @if (server.supportedOperations?.length) {
+          <div class="m-items-middle">
+            <m-icon mCode="setting"/>
+            <span>{{server.supportedOperations.join(', ')}}</span>
+          </div>
+        }
+
+        <!-- Usage -->
+        @if (server.usage?.length) {
+          <div class="m-items-middle">
+            <m-icon mCode="info-circle"/>
+            @for (u of server.usage; track u; let last = $last) {
+              <span>{{u}}</span>
+              @if (!last) { <m-divider mVertical/> }
+            }
+          </div>
+        }
+      </m-card>
+    </div>
+  </m-form-row>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+    <tw-server-authoritative-list-widget
+      [serverId]="server.id" [resources]="server.authoritative"
+      resourceTypeLabel="entities.code-system.plural" resourceType="code-systems"
+      [canEdit]="canEdit" (resourceDeleted)="deleteAuthoritative('authoritative', $event)"/>
+    <tw-server-authoritative-list-widget
+      [serverId]="server.id" [resources]="server.authoritativeValuesets"
+      resourceTypeLabel="entities.value-set.plural" resourceType="value-sets"
+      [canEdit]="canEdit" (resourceDeleted)="deleteAuthoritative('authoritativeValuesets', $event)"/>
+    <tw-server-authoritative-list-widget
+      [serverId]="server.id" [resources]="server.authoritativeConceptmaps"
+      resourceTypeLabel="entities.map-set.plural" resourceType="concept-maps"
+      [canEdit]="canEdit" (resourceDeleted)="deleteAuthoritative('authoritativeConceptmaps', $event)"/>
+    <tw-server-authoritative-list-widget
+      [serverId]="server.id" [resources]="server.authoritativeStructuredefinitions"
+      resourceTypeLabel="entities.structure-definition.plural" resourceType="structure-definitions"
+      [canEdit]="canEdit" (resourceDeleted)="deleteAuthoritative('authoritativeStructuredefinitions', $event)"/>
+    <tw-server-authoritative-list-widget
+      [serverId]="server.id" [resources]="server.authoritativeStructuremaps"
+      resourceTypeLabel="web.server.structure-maps" resourceType="structure-maps"
+      [canEdit]="canEdit" (resourceDeleted)="deleteAuthoritative('authoritativeStructuremaps', $event)"/>
+  </div>
+}

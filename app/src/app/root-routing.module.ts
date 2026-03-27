@@ -18,7 +18,10 @@ import {MEASUREMENT_UNIT_ROUTES} from 'term-web/measurement-unit/measurement-uni
 import {UCUM_ROUTES} from 'term-web/ucum/ucum.module';
 import {PRIVILEGES_ROUTES} from 'term-web/privileges/privileges.module';
 import {RESOURCES_ROUTES} from 'term-web/resources/resources.module';
-import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from 'term-web/sys/space/space.module';
+import {SPACE_CTX_ROUTES, SPACE_ROUTES, SERVER_ROUTES} from 'term-web/sys/space/space.module';
+import {ECOSYSTEM_ROUTES} from 'term-web/sys/ecosystem/ecosystem.module';
+import {EcosystemService} from 'term-web/sys/ecosystem/services/ecosystem.service';
+import {ServerLibService} from 'term-web/sys/_lib/space';
 import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from 'term-web/wiki/wiki.module';
 
 
@@ -36,7 +39,7 @@ const APP_ROUTES: Routes = [
   {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.view', '*.TransformationDefinition.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'ucum', children: UCUM_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
-  {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
+  {path: 'servers', children: SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
   {path: 'fhir', children: FHIR_ROUTES},
@@ -49,6 +52,7 @@ const APP_ROUTES: Routes = [
     ],
     data: {privilege: ['*.Space.view']}
   },
+  {path: 'ecosystems', children: ECOSYSTEM_ROUTES, data: {privilege: ['*.Space.view']}, providers: [EcosystemService, ServerLibService]},
   {path: 'info', loadComponent: () => import('./core/info/info.component')}
 ];
 

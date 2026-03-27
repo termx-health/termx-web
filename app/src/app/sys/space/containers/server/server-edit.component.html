@@ -1,0 +1,286 @@
+@if (server) {
+  <tw-resource-context resourceType="TerminologyServer" [resource]="resourceAdapter" mode="details"/>
+}
+
+<m-form-row>
+  <div *mFormCol>
+    <m-card [mTitle]="mode === 'edit' ? 'web.server.edit-header' : (mode === 'add' ? 'web.server.add-header' : 'web.server.view-header')" [mShowSkeleton]="loader.state['load']">
+      @if (server) {
+
+        @if (viewMode) {
+          <!-- VIEW MODE: plain text labels -->
+          <m-form-item mName="code" mLabel="entities.server.code">
+            <span>{{server.code}}</span>
+          </m-form-item>
+
+          <m-form-item mName="name" mLabel="entities.server.name">
+            <span>{{server.names | localName}}</span>
+          </m-form-item>
+
+          <m-form-item mName="kind" mLabel="entities.server.kind">
+            <span>{{server.kind?.join(', ')}}</span>
+          </m-form-item>
+
+          <m-form-item mName="fhirVersions" mLabel="entities.server.fhir-versions">
+            @for (fv of server.fhirVersions; track fv.url) {
+              <div class="m-items-middle" style="gap: 0.5rem;">
+                @if (fv.version) {
+                  <strong>{{fv.version}}</strong>
+                  <m-divider mVertical/>
+                }
+                <span>{{fv.url}}</span>
+              </div>
+            }
+          </m-form-item>
+
+          @if (server.headers?.length) {
+            <m-form-item mLabel="entities.server.headers">
+              @for (h of server.headers; track h.key) {
+                <div class="m-items-middle" style="gap: 0.5rem;">
+                  <strong>{{h.key}}</strong>:
+                  <span>{{h['_masked'] ? '●●●●●●●●' : h.value}}</span>
+                </div>
+              }
+            </m-form-item>
+          }
+
+          <m-form-item mLabel="entities.server.auth-config">
+            <div class="m-items-middle" style="gap: 1rem;">
+              @if (server.open) { <span>{{'entities.server.open' | translate}}</span> }
+              @if (server.token) { <span>{{'entities.server.token' | translate}}</span> }
+              @if (server.oauthFlag) { <span>OAuth</span> }
+              @if (server.smartFlag) { <span>SMART</span> }
+              @if (server.certFlag) { <span>Cert</span> }
+              @if (!server.open && !server.token && !server.oauthFlag && !server.smartFlag && !server.certFlag) {
+                <span class="m-text-secondary">—</span>
+              }
+            </div>
+            @if (server.authConfig; as conf) {
+              <div style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem; margin-top: 0.5rem;">
+                <div><strong>{{'web.server.auth-config.access-token-url' | translate}}:</strong> {{conf.accessTokenUrl}}</div>
+                <div><strong>{{'web.server.auth-config.client-id' | translate}}:</strong> {{conf.clientId}}</div>
+                <div><strong>{{'web.server.auth-config.client-secret' | translate}}:</strong> ●●●●●●●●</div>
+              </div>
+            }
+          </m-form-item>
+
+          @if (server.accessInfo) {
+            <m-form-item mLabel="entities.server.access-info">
+              <span>{{server.accessInfo}}</span>
+            </m-form-item>
+          }
+
+          <m-form-item mLabel="entities.server.active">
+            <span>{{server.active ? ('core.btn.yes' | translate) : ('core.btn.no' | translate)}}</span>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.server.current-installation">
+            <span>{{server.currentInstallation ? ('core.btn.yes' | translate) : ('core.btn.no' | translate)}}</span>
+          </m-form-item>
+
+          <!-- FHIR Ecosystem fields -->
+          <div style="border: 1px solid var(--color-borders); border-radius: 4px; padding: 1rem; margin-top: 1rem;">
+            <h4 style="margin-top: 0">{{'web.server.fhir-ecosystem' | translate}}</h4>
+
+            @if (server.usage?.length) {
+              <m-form-item mLabel="entities.server.usage">
+                <span>{{server.usage.join(', ')}}</span>
+              </m-form-item>
+            }
+
+            @if (server.supportedOperations?.length) {
+              <m-form-item mLabel="entities.server.supported-operations">
+                <span>{{server.supportedOperations.join(', ')}}</span>
+              </m-form-item>
+            }
+
+            @if (server.strategy) {
+              <m-form-item mLabel="entities.server.strategy">
+                <span>{{server.strategy}}</span>
+              </m-form-item>
+            }
+
+            @if (server.cachePeriodHours) {
+              <m-form-item mLabel="entities.server.cache-period">
+                <span>{{server.cachePeriodHours}}</span>
+              </m-form-item>
+            }
+          </div>
+        }
+
+        @if (!viewMode) {
+          <!-- EDIT/ADD MODE: form inputs -->
+          <form #form="ngForm">
+            <m-form-item mName="code" mLabel="entities.server.code" required>
+              <m-input name="code" [(ngModel)]="server.code" required/>
+            </m-form-item>
+
+            <m-form-item mName="name" mLabel="entities.server.name" required>
+              <m-multi-language-input name="name" [(ngModel)]="server.names" required mInputType="textarea"/>
+            </m-form-item>
+
+            <m-form-item mName="kind" mLabel="entities.server.kind" required>
+              <m-select name="kind" [(ngModel)]="server.kind" required multiple>
+                @for (kind of serverKinds; track kind) {
+                  <m-option [mLabel]="'web.server.kind.' + kind" [mValue]="kind"/>
+                }
+              </m-select>
+            </m-form-item>
+
+            <m-form-item mName="fhirVersions" mLabel="entities.server.fhir-versions" required>
+              <m-editable-table [mData]="server.fhirVersions">
+                <m-editable-column mName="fv-version" mTitle="entities.server.fhir-version" mWidth="30%">
+                  <ng-template #editTemplate let-fv let-ngModelName="ngModelName">
+                    <m-select [name]="ngModelName" [(ngModel)]="fv.version">
+                      @for (v of fhirVersionOptions; track v) {
+                        <m-option [mLabel]="v" [mValue]="v"/>
+                      }
+                    </m-select>
+                  </ng-template>
+                  <ng-template #viewTemplate let-fv>{{fv.version}}</ng-template>
+                </m-editable-column>
+                <m-editable-column mName="fv-url" mTitle="entities.server.fhir-version-url" mWidth="70%">
+                  <ng-template #editTemplate let-fv let-ngModelName="ngModelName">
+                    <m-input [name]="ngModelName" [(ngModel)]="fv.url" required/>
+                  </ng-template>
+                  <ng-template #viewTemplate let-fv>{{fv.url}}</ng-template>
+                </m-editable-column>
+              </m-editable-table>
+            </m-form-item>
+
+            <m-form-item [mLabel]="headers">
+              <ng-template #headers>
+                <div class="m-items-middle">
+                  <span>{{'entities.server.headers' | translate}}</span>
+                  @if (server.headers) {
+                    <m-checkbox mChecked (mCheckedChange)="server.headers = undefined"/>
+                  }
+                </div>
+              </ng-template>
+
+              @if (!server.headers) {
+                <m-checkbox (mCheckedChange)="server.headers = []"/>
+              }
+
+              @if (server.headers) {
+                <m-editable-table [mData]="server.headers">
+                  <m-editable-column mName="key" mTitle="web.server.headers.key" mWidth="30%">
+                    <ng-template #editTemplate let-h let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="h.key"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-h>{{h.key}}</ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="value" mTitle="web.server.headers.value" [mCellEditable]="keyDefined" mWidth="70%">
+                    <ng-template #editTemplate let-h let-ngModelName="ngModelName">
+                      @if (keyDefined(h)) {
+                        <m-input [name]="ngModelName" [(ngModel)]="h.value" (ngModelChange)="h['_masked'] = false"/>
+                      }
+                    </ng-template>
+                    <ng-template #viewTemplate let-h>
+                      <div style="word-break: break-word">{{h['_masked'] ? '●●●●●●●●' : h.value}}</div>
+                    </ng-template>
+                  </m-editable-column>
+                </m-editable-table>
+              }
+            </m-form-item>
+
+            <m-form-item [mLabel]="oauth">
+              <ng-template #oauth>
+                <div class="m-items-middle" style="gap: 1rem;">
+                  <span>{{'entities.server.auth-config' | translate}}</span>
+                  @if (server.authConfig) {
+                    <m-checkbox mChecked (mCheckedChange)="server.authConfig = undefined"/>
+                  } @else {
+                    <m-checkbox (mCheckedChange)="server.authConfig = {}"/>
+                  }
+                  <m-divider mVertical/>
+                  <m-checkbox name="open" [(ngModel)]="server.open">{{'entities.server.open' | translate}}</m-checkbox>
+                  <m-checkbox name="token" [(ngModel)]="server.token">{{'entities.server.token' | translate}}</m-checkbox>
+                  <m-checkbox name="oauthFlag" [(ngModel)]="server.oauthFlag">OAuth</m-checkbox>
+                  <m-checkbox name="smartFlag" [(ngModel)]="server.smartFlag">SMART</m-checkbox>
+                  <m-checkbox name="certFlag" [(ngModel)]="server.certFlag">Cert</m-checkbox>
+                </div>
+              </ng-template>
+
+              @if (server.authConfig; as conf) {
+                <div style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem">
+                  <m-form-item mName="oauth-url" mLabel="web.server.auth-config.access-token-url" required>
+                    <m-input name="oauth-url" [(ngModel)]="conf.accessTokenUrl" required/>
+                  </m-form-item>
+                  <m-form-item mName="oauth-client-id" mLabel="web.server.auth-config.client-id" required>
+                    <m-input name="oauth-client-id" [(ngModel)]="conf.clientId" required/>
+                  </m-form-item>
+                  <m-form-item mName="oauth-client-secret" mLabel="web.server.auth-config.client-secret"
+                               class="tw-input-group" [required]="!conf['_masked']">
+                    @if (conf['_masked']) {
+                      <span>●●●●●●●● <m-icon class="m-clickable" mCode="edit" (click)="conf['_masked'] = false"/></span>
+                    }
+                    @if (!conf['_masked']) {
+                      <m-input name="oauth-client-secret" [(ngModel)]="conf.clientSecret" required/>
+                    }
+                  </m-form-item>
+                </div>
+              }
+            </m-form-item>
+
+            <m-form-item mName="accessInfo" mLabel="entities.server.access-info">
+              <m-textarea name="accessInfo" [(ngModel)]="server.accessInfo"/>
+            </m-form-item>
+
+            <m-form-item mName="active" mLabel="entities.server.active">
+              <m-checkbox name="active" [(ngModel)]="server.active"/>
+            </m-form-item>
+
+            <m-form-item mName="currentInstallation" mLabel="entities.server.current-installation">
+              <m-checkbox name="currentInstallation" [(ngModel)]="server.currentInstallation"/>
+            </m-form-item>
+
+            <!-- FHIR Ecosystem fields -->
+            <div style="border: 1px solid var(--color-borders); border-radius: 4px; padding: 1rem; margin-top: 1rem;">
+              <h4 style="margin-top: 0">{{'web.server.fhir-ecosystem' | translate}}</h4>
+
+              <m-form-item mName="usage" mLabel="entities.server.usage">
+                <m-select name="usage" [(ngModel)]="server.usage" multiple>
+                  @for (u of usageOptions; track u) {
+                    <m-option [mLabel]="u" [mValue]="u"/>
+                  }
+                </m-select>
+              </m-form-item>
+
+              <m-form-item mName="supportedOperations" mLabel="entities.server.supported-operations">
+                <m-select name="supportedOperations" [(ngModel)]="server.supportedOperations" multiple>
+                  @for (op of operationOptions; track op) {
+                    <m-option [mLabel]="op" [mValue]="op"/>
+                  }
+                </m-select>
+              </m-form-item>
+
+              <m-form-item mName="strategy" mLabel="entities.server.strategy">
+                <m-select name="strategy" [(ngModel)]="server.strategy" mAllowClear>
+                  @for (s of strategyOptions; track s) {
+                    <m-option [mLabel]="s" [mValue]="s"/>
+                  }
+                </m-select>
+              </m-form-item>
+
+              <m-form-item mName="cachePeriodHours" mLabel="entities.server.cache-period">
+                <m-input name="cachePeriodHours" [(ngModel)]="server.cachePeriodHours" type="number"/>
+              </m-form-item>
+            </div>
+          </form>
+        }
+
+        @if (viewMode) {
+          <m-button *m-card-footer mDisplay="primary" [routerLink]="['/servers', server.id, 'edit']">
+            <m-icon mCode="edit"/>&nbsp;{{'core.btn.edit' | translate}}
+          </m-button>
+        }
+        @if (!viewMode) {
+          <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        }
+      }
+    </m-card>
+  </div>
+</m-form-row>

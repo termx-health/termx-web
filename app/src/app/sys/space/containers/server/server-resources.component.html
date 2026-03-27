@@ -1,0 +1,56 @@
+@if (!server) {
+  <m-spinner/>
+} @else {
+  <tw-resource-context resourceType="TerminologyServer" [resource]="resourceAdapter" mode="resources"/>
+
+  <div style="display: flex; gap: 1rem">
+    <m-card style="flex: 0 0 220px; height: min-content; position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding) + 3.5rem);">
+      <m-form-item mLabel="web.server.tab.resources">
+        <m-list [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
+          @for (rt of resourceTypes; track rt.value) {
+            <m-list-item [mValue]="rt.value" mClickable>
+              {{rt.label | translate}}
+            </m-list-item>
+          }
+        </m-list>
+      </m-form-item>
+    </m-card>
+
+    <m-card style="flex: 1" [mShowSkeleton]="loader.state['resources']">
+      @for (rt of resourceTypes; track rt.value) {
+        @if (selectedResourceType === rt.value) {
+          <label *m-card-header>{{rt.label | translate}}</label>
+        }
+      }
+
+      @if (matchedResources.length === 0 && !loader.state['resources']) {
+        <m-no-data/>
+      }
+
+      @if (matchedResources.length > 0) {
+        <m-list mSeparated>
+          @for (ar of matchedResources; track ar.url) {
+            <m-list-item mClickable>
+              <a [routerLink]="getResourceLink(ar)" class="m-justify-between" style="text-decoration: none; color: inherit; display: flex; width: 100%;">
+                <div class="m-items-middle">
+                  <m-icon mCode="link"/>
+                  <span>{{ar.url}}</span>
+                  @if (ar.version) {
+                    <m-tag>{{ar.version}}</m-tag>
+                  }
+                </div>
+                <div class="m-items-middle">
+                  @if (ar.status) {
+                    <m-tag [style.color]="ar.status === 'active' ? 'var(--color-green-7)' : ar.status === 'draft' ? 'var(--color-amber-7)' : 'inherit'">
+                      {{ar.status}}
+                    </m-tag>
+                  }
+                </div>
+              </a>
+            </m-list-item>
+          }
+        </m-list>
+      }
+    </m-card>
+  </div>
+}

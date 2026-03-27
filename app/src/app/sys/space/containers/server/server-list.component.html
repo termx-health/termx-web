@@ -1,23 +1,23 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <span>{{'entities.terminology-server.plural' | translate}}</span>
+    <span>{{'entities.server.plural' | translate}}</span>
 
     <div class="m-items-middle">
       <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
-      <tw-add-button *twPrivileged="'*.TerminologyServer.edit'" [routerLink]="['./add']">
-        {{'web.terminology-server.add-btn' | translate}}
+      <tw-add-button *twPrivileged="'*.Server.edit'" [routerLink]="['./add']">
+        {{'web.server.add-btn' | translate}}
       </tw-add-button>
 
-      <m-dropdown *twPrivileged="'*.TerminologyServer.view'">
+      <m-dropdown *twPrivileged="'*.Server.view'">
         <m-button *m-dropdown-container mDisplay="text">
           <m-icon mCode="more"/>
         </m-button>
         <a *m-dropdown-item (mClick)="exportEcosystem()">
-          {{'web.terminology-server.export-ecosystem' | translate}}
+          {{'web.server.export-ecosystem' | translate}}
         </a>
-        <ng-container *twPrivileged="'*.TerminologyServer.edit'">
+        <ng-container *twPrivileged="'*.Server.edit'">
           <a *m-dropdown-item (mClick)="fileInput.click()">
-            {{'web.terminology-server.import-ecosystem' | translate}}
+            {{'web.server.import-ecosystem' | translate}}
           </a>
         </ng-container>
       </m-dropdown>
@@ -27,27 +27,23 @@
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
-      <th mColumnKey="code">{{'entities.terminology-server.code' | translate}}</th>
-      <th>{{'entities.terminology-server.name' | translate}}</th>
-      <th>{{'entities.terminology-server.kind' | translate}}</th>
-      <th>{{'entities.terminology-server.active' | translate}}</th>
-      <th>{{'entities.terminology-server.current-installation' | translate}}</th>
+      <th mColumnKey="code">{{'entities.server.code' | translate}}</th>
+      <th>{{'entities.server.name' | translate}}</th>
+      <th>{{'entities.server.kind' | translate}}</th>
+      <th>{{'entities.server.active' | translate}}</th>
+      <th>{{'entities.server.current-installation' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let ts">
       <td>
-        @if ('*.Space.edit' | twHasAnyPrivilege) {
-          <a [routerLink]="[ts.id, 'edit']">
-            {{ts.code}}
-          </a>
-        } @else {
+        <a [routerLink]="[ts.id, 'summary']">
           {{ts.code}}
-        }
+        </a>
       </td>
       <td>{{ts.names | localName}}</td>
       <td>
         @for (k of ts.kind; track k) {
-          <div>{{'web.terminology-server.kind.' + k | translate}}</div>
+          <div>{{'web.server.kind.' + k | translate}}</div>
         }
       </td>
       <td><m-checkbox [(ngModel)]="ts.active" readOnly></m-checkbox></td>

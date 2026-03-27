@@ -4,7 +4,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { validateForm, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
-import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
+import {Package, Space, Server, ServerLibService} from 'term-web/sys/_lib/space';
 import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
@@ -29,14 +29,14 @@ export class SpaceEditComponent implements OnInit {
   private spaceService = inject(SpaceService);
   private spaceGithubService = inject(SpaceGithubService);
   private packageService = inject(PackageService);
-  private terminologyServerService = inject(TerminologyServerLibService);
+  private serverService = inject(ServerLibService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private location = inject(Location);
 
   public space?: Space;
   public packages?: Package[];
-  public terminologyServers?: TerminologyServer[];
+  public terminologyServers?: Server[];
   public githubProviders: {[k: string]: string};
   public githubEnabled: boolean;
 
@@ -104,7 +104,7 @@ export class SpaceEditComponent implements OnInit {
   }
 
   private loadTerminologyServers(): void {
-    this.terminologyServerService.search({limit: -1}).subscribe(r => this.terminologyServers = r.data);
+    this.serverService.search({limit: -1}).subscribe(r => this.terminologyServers = r.data);
   }
 
   protected sort(arr: any[]): any[] {

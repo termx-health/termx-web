@@ -10,7 +10,7 @@ import {SpaceSelectComponent} from './containers/space-select.component';
 import {PackageLibService} from './services/package-lib-service';
 import {PackageResourceLibService} from './services/package-resource-lib-service';
 import {SpaceLibService} from './services/space-lib-service';
-import {TerminologyServerLibService} from './services/terminology-server-lib-service';
+import {ServerLibService} from './services/server-lib-service';
 
 @NgModule({
     imports: [
@@ -31,7 +31,7 @@ import {TerminologyServerLibService} from './services/terminology-server-lib-ser
         SpaceLibService,
         PackageLibService,
         PackageResourceLibService,
-        TerminologyServerLibService
+        ServerLibService
     ]
 })
 export class SpaceLibModule {

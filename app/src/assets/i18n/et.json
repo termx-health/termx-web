@@ -75,7 +75,7 @@
 			"status": "Staatus",
 			"plural": "Väljalasked",
 			"single": "Väljalase",
-			"terminology-server": "Terminoloogiaserver",
+			"server": "Terminoloogiaserver",
 			"resource": {
 				"plural": "Ressursid",
 				"type": "Tüüp",
@@ -666,7 +666,7 @@
 			"plural": "Ruumid",
 			"shared": "Jagatud",
 			"singular": "Ruum",
-			"terminology-servers": "Terminoloogiaserver",
+			"servers": "Terminoloogiaserver",
 			"viewers": "Vaatajad"
 		},
 		"structure-definition": {
@@ -703,7 +703,7 @@
 			"content-type": "Sisu tüüp",
 			"names": "Nimed"
 		},
-		"terminology-server": {
+		"server": {
 			"active": "Aktiivne",
 			"auth-config": "OAuth 2.0",
 			"code": "Kood",
@@ -1798,7 +1798,7 @@
 						"Task": "Ülesanne",
 						"Privilege": "Õigus",
 						"Sequence": "Numeratsioon",
-						"TerminologyServer": "Terminoloogiaserver",
+						"Server": "Terminoloogiaserver",
                         "Release": "Väljalase",
                         "Checklist": "Kontrollide nimekiri",
                         "Users": "Kasutajad"
@@ -2122,7 +2122,7 @@
 				"add-template": "Lisa mall"
 			}
 		},
-		"terminology-server": {
+		"server": {
 			"add-btn": "Lisa server",
 			"add-header": "Lisa server",
 			"auth-config": {

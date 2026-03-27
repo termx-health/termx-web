@@ -20,7 +20,7 @@
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
 
-              @if (['CodeSystem', 'ValueSet', 'MapSet'] | includes: resourceType) {
+              @if (['CodeSystem', 'ValueSet', 'MapSet', 'TerminologyServer'] | includes: resourceType) {
                 <a class="submenu__item" [routerLink]="navigate('details')" routerLinkActive="active">
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.metadata', icon: 'form'}"/>
                 </a>
@@ -35,13 +35,22 @@
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
                 </a>
               }
-              <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
-              </a>
-              @if (resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged) {
-                <a class="submenu__item" [routerLink]="navigate('checklists')" routerLinkActive="active">
-                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+              @if (resourceType !== 'TerminologyServer') {
+                <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
                 </a>
+              }
+              @if (resourceType === 'TerminologyServer') {
+                <a class="submenu__item" [routerLink]="navigate('resources')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.resources', icon: 'database'}"/>
+                </a>
+              }
+              @if (resourceType === 'CodeSystem') {
+                @if ('*.Checklist.view' | twPrivileged) {
+                  <a class="submenu__item" [routerLink]="navigate('checklists')" routerLinkActive="active">
+                    <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+                  </a>
+                }
               }
               <ng-template #tabTpl let-title="title" let-icon="icon">
                 <div class="m-items-middle">

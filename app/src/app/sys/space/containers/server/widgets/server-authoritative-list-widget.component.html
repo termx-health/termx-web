@@ -1,0 +1,50 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{resourceTypeLabel | translate}}</span>
+    @if (canEdit) {
+      <m-button mDisplay="text" [routerLink]="['/servers', serverId, 'authoritative', resourceType]">
+        {{'core.btn.add' | translate}}&nbsp;<m-icon mCode="plus"/>
+      </m-button>
+    }
+  </div>
+
+  @if (!(resources?.length > 0)) {
+    <m-no-data/>
+  }
+
+  @if (resources?.length > 0) {
+    <m-list mSeparated>
+      @for (ar of resources; track ar.url) {
+        <m-list-item mClickable [routerLink]="['/servers', serverId, 'authoritative', resourceType]">
+          <div class="m-justify-between">
+            <div class="m-items-middle">
+              <m-icon mCode="plus-circle"/>
+              <span>{{ar.url}}</span>
+              @if (ar.version) {
+                <m-divider mVertical/>
+                <span>{{ar.version}}</span>
+              }
+            </div>
+            <div class="m-items-middle">
+              @if (ar.status) {
+                <tw-status-tag [status]="ar.status"/>
+              }
+              @if (canEdit) {
+                <m-divider mVertical/>
+                <m-dropdown>
+                  <a *m-dropdown-item [routerLink]="['/servers', serverId, 'authoritative', resourceType]">
+                    <m-icon mCode="edit"/>&nbsp;{{'core.btn.change' | translate}}
+                  </a>
+                  <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm"
+                     (mOnConfirm)="deleteResource(ar)">
+                    <m-icon mCode="delete"/>&nbsp;{{'core.btn.delete' | translate}}
+                  </a>
+                </m-dropdown>
+              }
+            </div>
+          </div>
+        </m-list-item>
+      }
+    </m-list>
+  }
+</m-card>

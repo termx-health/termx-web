@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { isDefined, LoadingManager, validateForm, IncludesPipe } from '@kodality-web/core-util';
-import {TerminologyServerLibService, TerminologyServer} from 'term-web/sys/_lib/space';
+import {ServerLibService, Server} from 'term-web/sys/_lib/space';
 import {Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiSelectModule, MuiTagModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
@@ -18,13 +18,13 @@ import { MarinaUtilModule } from '@kodality-web/marina-util';
 })
 export class ReleaseEditComponent implements OnInit {
   private releaseService = inject(ReleaseService);
-  private terminologyServerService = inject(TerminologyServerLibService);
+  private serverService = inject(ServerLibService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   protected release?: Release;
   protected newAuthor?: string;
-  protected terminologyServers?: TerminologyServer[];
+  protected terminologyServers?: Server[];
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
 
@@ -74,7 +74,7 @@ export class ReleaseEditComponent implements OnInit {
   }
 
   private loadData(): void {
-    this.loader.wrap('data', this.terminologyServerService.search({limit: -1}))
+    this.loader.wrap('data', this.serverService.search({limit: -1}))
       .subscribe(r => this.terminologyServers = r.data);
   }
 }

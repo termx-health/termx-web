@@ -1,13 +1,13 @@
 import {LocalizedName} from '@kodality-web/marina-util';
 
-export class TerminologyServer {
+export class Server {
   public id?: number;
   public code?: string;
   public names?: LocalizedName;
   public kind?: string[];
   public rootUrl?: string;
-  public headers?: TerminologyServerHeader[];
-  public authConfig?: TerminologyServerAuthConfig;
+  public headers?: ServerHeader[];
+  public authConfig?: ServerAuthConfig;
   public active?: boolean;
   public currentInstallation?: boolean;
 
@@ -15,17 +15,27 @@ export class TerminologyServer {
   public usage?: string[];
   public authoritative?: AuthoritativeResource[];
   public authoritativeValuesets?: AuthoritativeResource[];
+  public authoritativeConceptmaps?: AuthoritativeResource[];
+  public authoritativeStructuredefinitions?: AuthoritativeResource[];
+  public authoritativeStructuremaps?: AuthoritativeResource[];
   public exclusions?: string[];
-  public fhirVersions?: TerminologyServerFhirVersion[];
+  public fhirVersions?: ServerFhirVersion[];
   public supportedOperations?: string[];
+  public cachePeriodHours?: number;
+  public strategy?: string;
+  public open?: boolean;
+  public token?: boolean;
+  public oauthFlag?: boolean;
+  public smartFlag?: boolean;
+  public certFlag?: boolean;
 }
 
-export class TerminologyServerHeader {
+export class ServerHeader {
   public key?: string;
   public value?: string;
 }
 
-export class TerminologyServerAuthConfig {
+export class ServerAuthConfig {
   public accessTokenUrl?: string;
   public clientId?: string;
   public clientSecret?: string;
@@ -38,7 +48,7 @@ export class AuthoritativeResource {
   public name?: string;
 }
 
-export class TerminologyServerFhirVersion {
+export class ServerFhirVersion {
   public version?: string;
   public url?: string;
 }

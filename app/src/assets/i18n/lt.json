@@ -510,7 +510,7 @@
       },
       "single": "Release",
       "status": "Status",
-      "terminology-server": "Terminology server"
+      "server": "Terminology server"
     },
     "resource": {
       "conf-attribute": {
@@ -683,7 +683,7 @@
       "plural": "Erdvės",
       "shared": "Bendrasis",
       "singular": "Erdvė",
-      "terminology-servers": "Terminologijos serveriai",
+      "servers": "Terminologijos serveriai",
       "viewers": "Turintys peržiūros teisę"
     },
     "structure-definition": {
@@ -720,7 +720,7 @@
       "content-type": "Turinio tipas",
       "names": "Pavadinimai"
     },
-    "terminology-server": {
+    "server": {
       "access-info": "Access info",
       "active": "Aktyvus",
       "auth-config": "OAuth 2.0",
@@ -1902,7 +1902,7 @@
             "Space": "Darbalaukis",
             "StructureDefinition": "Struktūros apibrėžimai",
             "Task": "Užduotis",
-            "TerminologyServer": "Terminologijų serveris",
+            "Server": "Terminologijų serveris",
             "TransformationDefinition": "Transformacijos apibrėžimas",
             "Users": "Users",
             "ValueSet": "Reikšmių sistema",
@@ -2255,7 +2255,7 @@
         "add-template": "Pridėti šabloną"
       }
     },
-    "terminology-server": {
+    "server": {
       "add-btn": "Pridėti serverį",
       "add-header": "Pridėti serverį",
       "auth-config": {

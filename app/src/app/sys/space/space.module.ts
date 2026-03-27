@@ -12,12 +12,15 @@ import {SpaceDiffMatrixComponent} from 'term-web/sys/space/containers/space/spac
 import {SpaceDiffComponent} from 'term-web/sys/space/containers/space/space-diff.component';
 import {SpaceEditComponent} from 'term-web/sys/space/containers/space/space-edit.component';
 import {SpaceListComponent} from 'term-web/sys/space/containers/space/space-list.component';
-import {TerminologyServerEditComponent} from 'term-web/sys/space/containers/terminology-server/terminology-server-edit.component';
-import {TerminologyServerListComponent} from 'term-web/sys/space/containers/terminology-server/terminology-server-list.component';
+import {ServerEditComponent} from 'term-web/sys/space/containers/server/server-edit.component';
+import {ServerListComponent} from 'term-web/sys/space/containers/server/server-list.component';
+import {ServerSummaryComponent} from 'term-web/sys/space/containers/server/server-summary.component';
+import {ServerResourcesComponent} from 'term-web/sys/space/containers/server/server-resources.component';
+import {ServerAuthoritativeEditComponent} from 'term-web/sys/space/containers/server/server-authoritative-edit.component';
 import {PackageResourceService} from 'term-web/sys/space/services/package-resource.service';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
-import {TerminologyServerService} from 'term-web/sys/space/services/terminology-server.service';
+import {ServerService} from 'term-web/sys/space/services/server.service';
 
 export const SPACE_CTX_ROUTES: Routes = [
   {path: '', component: SpaceDashboardComponent},
@@ -34,10 +37,14 @@ export const SPACE_ROUTES: Routes = [
   {path: ':spaceId/packages/:id/edit', data: {privilege: ['{id}.Space.edit']}, component: PackageEditComponent}
 ];
 
-export const TERMINOLOGY_SERVER_ROUTES: Routes = [
-  {path: '', component: TerminologyServerListComponent},
-  {path: 'add', data: {privilege: ['*.Space.edit']}, component: TerminologyServerEditComponent},
-  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: TerminologyServerEditComponent},
+export const SERVER_ROUTES: Routes = [
+  {path: '', component: ServerListComponent},
+  {path: 'add', data: {privilege: ['*.Space.edit']}, component: ServerEditComponent},
+  {path: ':id/summary', data: {privilege: ['{id}.Space.view']}, component: ServerSummaryComponent},
+  {path: ':id/details', data: {privilege: ['{id}.Space.view']}, component: ServerEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: ServerEditComponent},
+  {path: ':id/resources', data: {privilege: ['{id}.Space.view']}, component: ServerResourcesComponent},
+  {path: ':id/authoritative/:type', data: {privilege: ['{id}.Space.edit']}, component: ServerAuthoritativeEditComponent},
 ];
 
 @NgModule({
@@ -57,15 +64,15 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
         SpaceDiffMatrixComponent,
         SpaceGithubComponent,
         PackageEditComponent,
-        TerminologyServerListComponent,
-        TerminologyServerEditComponent
+        ServerListComponent,
+        ServerEditComponent
     ],
     providers: [
         SpaceService,
         SpaceGithubService,
         PackageService,
         PackageResourceService,
-        TerminologyServerService
+        ServerService
     ]
 })
 export class SpaceModule {
