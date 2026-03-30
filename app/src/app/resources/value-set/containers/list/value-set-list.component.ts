@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
+import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {ValueSet, ValueSetSearchParams, ValueSetVersion} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
@@ -7,7 +8,7 @@ import {finalize, Observable, tap} from 'rxjs';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
 import { AsyncPipe } from '@angular/common';
-import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -17,7 +18,7 @@ import { TableFilterComponent } from 'term-web/core/ui/components/table-containe
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { ResourceFhirImportModalComponent } from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 interface Filter {
@@ -31,8 +32,7 @@ interface Filter {
 @Component({
     selector: 'tw-value-set-list',
     templateUrl: 'value-set-list.component.html',
-    imports: [
-    TableComponent,
+    imports: [SpaceSelectComponent, TableComponent,
     MuiInputModule,
     InputDebounceDirective,
     AutofocusDirective,

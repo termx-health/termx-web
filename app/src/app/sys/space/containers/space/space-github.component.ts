@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { LoadingManager, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
+import { LoadingManager, ApplyPipe, FilterPipe } from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
 import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
 import {Space} from 'term-web/sys/_lib/space';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
-import { MuiFormModule, MuiCardModule, MuiIconModule, MuiCheckboxModule, MuiCoreModule, MuiAlertModule, MuiButtonModule, MuiPopconfirmModule, MuiModalModule, MuiInputModule, MuiSkeletonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiCardModule, MuiIconModule, MuiCheckboxModule, MuiCoreModule, MuiAlertModule, MuiButtonModule, MuiPopconfirmModule, MuiModalModule, MuiInputModule, MuiSkeletonModule } from '@termx-health/ui';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';

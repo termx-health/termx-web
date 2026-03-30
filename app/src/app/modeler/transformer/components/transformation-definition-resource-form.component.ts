@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { group, HttpCacheService, isNil, LoadingManager, BooleanInput, ApplyPipe, ToBooleanPipe, ToNumberPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiFormModule, MuiRadioModule, MuiSelectModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiIconModule, MuiTooltipModule, MuiPopconfirmModule, MuiDropdownModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { group, HttpCacheService, isNil, LoadingManager, BooleanInput, ApplyPipe, ToBooleanPipe, ToNumberPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiFormModule, MuiRadioModule, MuiSelectModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiIconModule, MuiTooltipModule, MuiPopconfirmModule, MuiDropdownModule, MuiTextareaModule } from '@termx-health/ui';
 import {Fhir} from 'fhir/fhir';
 import {Bundle} from 'fhir/model/bundle';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
@@ -20,7 +20,7 @@ import { StructureDefinitionTreeComponent } from 'term-web/modeler/_lib/structur
 import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
 import { TransformationDefinitionSelectComponent } from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

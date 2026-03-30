@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, Output, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
-import {DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService, MuiModalModule, MuiFormModule, MuiButtonModule} from '@kodality-web/marina-ui';
+import {DestroyService, LoadingManager, validateForm} from '@termx-health/core-util';
+import {MuiNotificationService, MuiModalModule, MuiFormModule, MuiButtonModule} from '@termx-health/ui';
 import {UcumLibService} from 'term-web/ucum/_lib';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import { TranslatePipe } from '@ngx-translate/core';

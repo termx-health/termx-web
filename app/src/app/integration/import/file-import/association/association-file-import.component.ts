@@ -1,8 +1,8 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, ElementRef, Injectable, ViewChild, inject} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { copyDeep, DestroyService, LoadingManager, validateForm, AutofocusDirective } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiTooltipModule, MuiIconModule, MuiTableModule, MuiSelectModule, MuiInputModule, MuiNoDataModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { copyDeep, DestroyService, LoadingManager, validateForm, AutofocusDirective } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiTooltipModule, MuiIconModule, MuiTableModule, MuiSelectModule, MuiInputModule, MuiNoDataModule, MuiButtonModule } from '@termx-health/ui';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
 import {mergeMap, Observable} from 'rxjs';

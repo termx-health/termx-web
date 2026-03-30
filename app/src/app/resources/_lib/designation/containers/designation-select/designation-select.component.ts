@@ -1,11 +1,11 @@
 import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isNil, KeysPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isNil, KeysPipe } from '@termx-health/core-util';
 import {takeUntil} from 'rxjs';
 import {Designation} from 'term-web/resources/_lib/designation/model/designation';
 import {DesignationSearchParams} from 'term-web/resources/_lib/designation/model/designation-search-params';
 import {DesignationLibService} from 'term-web/resources/_lib/designation/services/designation-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   ObservationDefinition,
@@ -11,7 +11,7 @@ import {
   ObservationDefinitionInterpretationTarget,
   ObservationDefinitionLibService
 } from 'term-web/observation-definition/_lib';
-import { MuiEditableTableModule, MuiTableModule, MuiFormModule, MuiSelectModule, MuiNumberInputModule, MuiCoreModule, MuiTextareaModule, MuiModalModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiEditableTableModule, MuiTableModule, MuiFormModule, MuiSelectModule, MuiNumberInputModule, MuiCoreModule, MuiTextareaModule, MuiModalModule, MuiButtonModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { SnomedDrawerSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';

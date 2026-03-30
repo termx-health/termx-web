@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {isDefined, LoadingManager} from '@kodality-web/core-util';
-import {MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule} from '@kodality-web/marina-ui';
+import {isDefined, LoadingManager} from '@termx-health/core-util';
+import {MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule} from '@termx-health/ui';
 import {RelatedArtifact, RelatedArtifactLibService} from 'term-web/resources/_lib/related-artifacts';
 import {RelatedArtifactUtil} from 'term-web/resources/_lib/related-artifacts/util/related-artifact-util';
 

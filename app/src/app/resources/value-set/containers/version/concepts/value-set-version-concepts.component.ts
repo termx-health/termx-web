@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiInputModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiInputModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule } from '@termx-health/ui';
 import {ValueSet, ValueSetVersion, ValueSetVersionConcept} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {JobLibService} from 'term-web/sys/_lib';

@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DestroyService, isDefined, LoadingManager, AutofocusDirective, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiFormModule, MuiCardModule, MuiCheckboxModule, MuiButtonModule, MuiListModule, MuiTagModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { DestroyService, isDefined, LoadingManager, AutofocusDirective, ApplyPipe, KeysPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiFormModule, MuiCardModule, MuiCheckboxModule, MuiButtonModule, MuiListModule, MuiTagModule, MuiCoreModule } from '@termx-health/ui';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {CodeSystemConcept, ConceptUtil} from 'term-web/resources/_lib';

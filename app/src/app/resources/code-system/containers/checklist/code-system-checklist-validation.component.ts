@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, inject, OnChanges } from '@angular/core';
 import {Router} from '@angular/router';
-import { collect, isDefined, LoadingManager, DestroyService, ApplyPipe, FilterPipe, KeysPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiSpinnerModule, MuiAlertModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiListModule, MuiTagModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { collect, isDefined, LoadingManager, DestroyService, ApplyPipe, FilterPipe, KeysPipe, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiAlertModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiListModule, MuiTagModule, MuiDividerModule } from '@termx-health/ui';
 import {AuthService} from 'term-web/core/auth';
 import {Checklist, LorqueLibService} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     selector: 'tw-cs-checklist-validation',

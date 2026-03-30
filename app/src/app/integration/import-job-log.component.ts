@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {JobLog} from 'term-web/sys/_lib';
 
-import { MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiAlertModule } from '@termx-health/ui';
 
 
 @Component({

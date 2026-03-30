@@ -1,4 +1,4 @@
-import {QueryParams} from '@kodality-web/core-util';
+import {QueryParams} from '@termx-health/core-util';
 
 export class PageLinkSearchParams extends QueryParams {
   public root?: boolean;

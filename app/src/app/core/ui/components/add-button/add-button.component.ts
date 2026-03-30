@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
-import { MuiBreakpointService, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import {BooleanInput} from '@termx-health/core-util';
+import { MuiBreakpointService, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 @Component({
     selector: 'tw-add-button',

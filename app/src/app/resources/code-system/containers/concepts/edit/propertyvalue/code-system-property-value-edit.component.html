@@ -54,7 +54,7 @@
           </div>
           <div class="prop-cell prop-cell--value">
             <tw-property-value-input
-              [ngModel]="pv.value"
+              name="value" [ngModel]="pv.value"
               [property]="pv.entityPropertyId | apply: getProperty: properties"
               [codeSystem]="codeSystemId"
               [showCodingReference]="showCodingReference"

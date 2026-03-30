@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
 import {mergeMap, Observable, timer} from 'rxjs';

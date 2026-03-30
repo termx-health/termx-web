@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { compareDates, DestroyService, isDefined, LoadingManager, ApplyPipe, JoinPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiNoDataModule, MuiDividerModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@kodality-web/marina-ui';
+import { compareDates, DestroyService, isDefined, LoadingManager, ApplyPipe, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiNoDataModule, MuiDividerModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@termx-health/ui';
 import {FhirCodeSystemLibService, SEPARATOR} from 'term-web/fhir/_lib';
 import {ChefService} from 'term-web/integration/_lib';
 import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
@@ -20,7 +20,7 @@ import { ResourceTaskModalComponent } from 'term-web/resources/resource/componen
 import { ResourceReleaseModalComponent } from 'term-web/resources/resource/components/resource-release-modal-component';
 import { ValueSetVersionSaveModalComponent } from 'term-web/resources/value-set/components/value-set-version-save-modal-component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({

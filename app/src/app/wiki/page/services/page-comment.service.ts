@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {Observable} from 'rxjs';
 import {PageComment} from 'term-web/wiki/_lib';
 import {PageCommentLibService} from 'term-web/wiki/_lib';

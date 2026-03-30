@@ -24,7 +24,7 @@
     <div header class="m-justify-between">
       <!-- Quick Search -->
       <m-input
-        [(ngModel)]="filter.searchInput"
+        name="searchInput" [(ngModel)]="filter.searchInput"
         twDebounce [debounced]="onDebounced"
         placeholder="marina.ui.inputs.search.placeholder"
         autofocus
@@ -54,14 +54,14 @@
       @if (filter.open) {
         <m-form-item>
           <m-input
-            [(ngModel)]="_filter.searchInput"
+            name="searchInput" [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
           ></m-input>
         </m-form-item>
       }
       <m-form-item mLabel="web.observation-definition.filter.category">
-        <tw-obs-def-value-select [(ngModel)]="_filter.categories"/>
+        <tw-obs-def-value-select name="categories" [(ngModel)]="_filter.categories"/>
       </m-form-item>
       <m-form-item mLabel="web.observation-definition.filter.structure">
         <m-select name="structure" [(ngModel)]="_filter.structure" multiple>
@@ -71,7 +71,7 @@
         </m-select>
       </m-form-item>
       <m-form-item mLabel="web.observation-definition.filter.value-type">
-        <tw-value-set-concept-select [(ngModel)]="_filter.valueType" valueSet="permitted-data-type" multiple/>
+        <tw-value-set-concept-select name="valueType" [(ngModel)]="_filter.valueType" valueSet="permitted-data-type" multiple/>
       </m-form-item>
     </tw-table-filter>
 

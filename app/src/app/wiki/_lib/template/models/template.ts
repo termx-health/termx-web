@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {TemplateContent} from 'term-web/wiki/_lib/template/models/template-content';
 
 export class Template {

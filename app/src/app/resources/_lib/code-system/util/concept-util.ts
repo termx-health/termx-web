@@ -1,4 +1,4 @@
-import {compareValues, isNil} from '@kodality-web/core-util';
+import {compareValues, isNil} from '@termx-health/core-util';
 import {CodeSystemConcept, CodeSystemEntityVersion} from 'term-web/resources/_lib';
 
 export class ConceptUtil {

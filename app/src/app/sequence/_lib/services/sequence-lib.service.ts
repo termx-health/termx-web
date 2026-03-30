@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {SearchHttpParams, SearchResult} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {Sequence} from 'term-web/sequence/_lib/models/sequence';

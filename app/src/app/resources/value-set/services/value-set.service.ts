@@ -1,6 +1,6 @@
 import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {serializeDate} from '@kodality-web/core-util';
+import {serializeDate} from '@termx-health/core-util';
 import {saveAs} from 'file-saver';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';

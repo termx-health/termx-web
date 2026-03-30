@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, LocalDateTimePipe } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, LocalDateTimePipe } from '@termx-health/core-util';
 import {Observable, tap} from 'rxjs';
 import {TransformationDefinition} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionQueryParams} from 'term-web/modeler/_lib/transformer/transformation-definition-query.params';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiPopconfirmModule, MuiPopoverModule, MuiDropdownModule, MuiIconModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiPopconfirmModule, MuiPopoverModule, MuiDropdownModule, MuiIconModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

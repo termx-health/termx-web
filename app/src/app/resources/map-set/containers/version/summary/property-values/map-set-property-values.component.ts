@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, validateForm, ApplyPipe, SortPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, validateForm, ApplyPipe, SortPipe } from '@termx-health/core-util';
 import {MapSetProperty, MapSetPropertyValue} from 'term-web/resources/_lib';
 import {MapSetPropertyValueInputComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
 
-import { MuiNoDataModule, MuiFormModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiFormModule } from '@termx-health/ui';
 import { MapSetPropertyValueInputComponent as MapSetPropertyValueInputComponent_1 } from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
 
 @Component({

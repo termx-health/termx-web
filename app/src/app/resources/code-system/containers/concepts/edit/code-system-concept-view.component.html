@@ -16,7 +16,7 @@
       @if (concept?.versions) {
         <m-card>
           <m-title *m-card-header mTitle="entities.code-system-concept.versions"></m-title>
-          <m-list mSeparated [ngModel]="conceptVersion">
+          <m-list mSeparated name="conceptVersion" [ngModel]="conceptVersion">
             @for (version of concept.versions; track version) {
               <m-list-item [mValue]="version" mClickable (mClick)="selectVersion(version)">
                 <div class="m-items-middle">

@@ -8,7 +8,7 @@ import {localLink} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/
 import {sourceLinePlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/source-line.plugin';
 import {structureDefinitionCodePlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/structure-definition-code.plugin';
 import {structureDefinitionFshPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/structure-definition-fsh.plugin';
-import { MarinaMarkdownModule } from '@kodality-web/marina-markdown';
+import { MarinaMarkdownModule } from '@termx-health/markdown';
 
 
 @Component({

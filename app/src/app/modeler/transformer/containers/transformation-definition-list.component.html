@@ -1,6 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="query.nameContains" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    <m-input name="nameContains" [(ngModel)]="query.nameContains" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <tw-add-button *twPrivileged="'*.TransformationDefinition.edit'" [routerLink]="['./add']">
       {{'web.transformation-definition.list.add-btn' | translate}}
     </tw-add-button>

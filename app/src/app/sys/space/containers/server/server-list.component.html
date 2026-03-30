@@ -3,7 +3,7 @@
     <span>{{'entities.server.plural' | translate}}</span>
 
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <m-input name="searchInput" [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
       <tw-add-button *twPrivileged="'*.Server.edit'" [routerLink]="['./add']">
         {{'web.server.add-btn' | translate}}
       </tw-add-button>
@@ -46,8 +46,8 @@
           <div>{{'web.server.kind.' + k | translate}}</div>
         }
       </td>
-      <td><m-checkbox [(ngModel)]="ts.active" readOnly></m-checkbox></td>
-      <td><m-checkbox [(ngModel)]="ts.currentInstallation" readOnly></m-checkbox></td>
+      <td><m-checkbox name="active" [(ngModel)]="ts.active" readOnly></m-checkbox></td>
+      <td><m-checkbox name="currentInstallation" [(ngModel)]="ts.currentInstallation" readOnly></m-checkbox></td>
     </tr>
     <tr *mTableNoData>
       <td colspan="5">

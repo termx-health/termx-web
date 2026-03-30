@@ -35,7 +35,7 @@
             <td>{{p.name}}</td>
             <td>{{p.uri}}</td>
             <td>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
-            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td><m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox></td>
             <td>{{p.description | localName}}</td>
             <td>{{p.orderNumber}}</td>
           </tr>
@@ -61,7 +61,7 @@
                     {{p.orderNumber}}
                   </m-form-item>
                   <m-form-item *mFormCol mLabel="entities.entity-property.required">
-                    <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                    <m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox>
                   </m-form-item>
                 </m-form-row>
 
@@ -92,7 +92,7 @@
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="required" [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'">

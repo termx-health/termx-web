@@ -1,4 +1,4 @@
-import {compareValues} from '@kodality-web/core-util';
+import {compareValues} from '@termx-health/core-util';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 
 export class CodeSystemUtil {

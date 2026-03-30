@@ -1,12 +1,12 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, KeysPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, LocalDatePipe } from '@termx-health/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService, CodeSystemEntityVersionSearchParams, CodeSystemLibService} from 'term-web/resources/_lib/code-system';
 import { AsyncPipe } from '@angular/common';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

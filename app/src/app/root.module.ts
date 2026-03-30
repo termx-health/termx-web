@@ -1,6 +1,6 @@
 import {HttpBackend, HttpClient} from '@angular/common/http';
 import {NgModule, inject} from '@angular/core';
-import {group} from '@kodality-web/core-util';
+import {group} from '@termx-health/core-util';
 import {TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {environment as env} from 'environments/environment';
 import {catchError, map, Observable, of} from 'rxjs';

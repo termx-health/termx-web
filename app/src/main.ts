@@ -11,7 +11,7 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RootRoutingModule } from 'term-web/root-routing.module';
 import { MarinaUiConfigModule } from 'term-web/core/marina';
-import { CoreUtilModule } from '@kodality-web/core-util';
+import { CoreUtilModule } from '@termx-health/core-util';
 import { CoreUiModule } from 'term-web/core/ui/core-ui.module';
 import { ResourcesModule } from 'term-web/resources/resources.module';
 import { IntegrationModule } from 'term-web/integration/integration.module';

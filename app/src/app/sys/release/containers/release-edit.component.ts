@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { isDefined, LoadingManager, validateForm, IncludesPipe } from '@kodality-web/core-util';
+import { isDefined, LoadingManager, validateForm, IncludesPipe } from '@termx-health/core-util';
 import {ServerLibService, Server} from 'term-web/sys/_lib/space';
 import {Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
-import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiSelectModule, MuiTagModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiSelectModule, MuiTagModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@termx-health/ui';
 
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

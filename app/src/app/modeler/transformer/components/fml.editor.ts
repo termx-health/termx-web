@@ -1,4 +1,4 @@
-import {isNil} from '@kodality-web/core-util';
+import {isNil} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Bundle} from 'fhir/model/bundle';
 import {Observable} from 'rxjs';

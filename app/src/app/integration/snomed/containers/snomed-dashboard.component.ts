@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ComponentStateStore} from '@kodality-web/core-util';
+import {ComponentStateStore} from '@termx-health/core-util';
 import {SnomedBranch, SnomedLibService, SnomedSearchComponent} from 'term-web/integration/_lib';
-import { MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule } from '@termx-health/ui';
 
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
 import { SnomedSearchComponent as SnomedSearchComponent_1 } from 'term-web/integration/_lib/snomed/containers/snomed-search.component';

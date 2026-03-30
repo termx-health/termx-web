@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective } from '@termx-health/core-util';
 import {MeasurementUnitMapping} from 'term-web/measurement-unit/_lib';
-import { MuiCardModule, MuiTableModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiNoDataModule, MuiModalModule, MuiFormModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiTableModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiNoDataModule, MuiModalModule, MuiFormModule, MuiInputModule } from '@termx-health/ui';
 
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { TranslatePipe } from '@ngx-translate/core';

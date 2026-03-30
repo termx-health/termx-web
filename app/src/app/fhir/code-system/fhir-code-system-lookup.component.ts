@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {ParamMap} from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import { MuiTableModule } from '@kodality-web/marina-ui';
-import { ApplyPipe } from '@kodality-web/core-util';
+import { MuiTableModule } from '@termx-health/ui';
+import { ApplyPipe } from '@termx-health/core-util';
 
 @Component({
     selector: 'tw-fhir-code-system-lookup',

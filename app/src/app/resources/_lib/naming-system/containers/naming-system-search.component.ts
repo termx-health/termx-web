@@ -1,13 +1,13 @@
 import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe } from '@termx-health/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {NamingSystem} from 'term-web/resources/_lib/naming-system/model/naming-system';
 import {NamingSystemSearchParams} from 'term-web/resources/_lib/naming-system/model/naming-system-search-params';
 import {NamingSystemLibService} from 'term-web/resources/_lib/naming-system/services/naming-system-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

@@ -1,6 +1,6 @@
 import {HttpContext} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
+import {MuiSkipErrorHandler} from '@termx-health/ui';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
 import {map, Observable} from 'rxjs';
 import {TransformationDefinitionLibService} from 'term-web/modeler/_lib';

@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 
 export class Server {
   public id?: number;

@@ -5,12 +5,12 @@
       <div class="m-justify-between">
         <div class="m-items-middle" style="white-space: nowrap">
           <m-input
-            [(ngModel)]="filter.searchInput"
+            name="searchInput" [(ngModel)]="filter.searchInput"
             twDebounce [debounced]="onDebounced"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
           ></m-input>
-          <m-radio-group [(ngModel)]="filter.type" (ngModelChange)="onDebounced().subscribe()">
+          <m-radio-group name="type" [(ngModel)]="filter.type" (ngModelChange)="onDebounced().subscribe()">
             <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
             <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
           </m-radio-group>
@@ -30,11 +30,11 @@
       <m-form-item>
         <div class="tw-flex-container tw-flex-container--default">
           <m-input
-            [(ngModel)]="_filter.searchInput"
+            name="searchInput" [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
           ></m-input>
-          <m-radio-group [(ngModel)]="_filter.type">
+          <m-radio-group name="type" [(ngModel)]="_filter.type">
             <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
             <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
           </m-radio-group>
@@ -44,17 +44,17 @@
     }
 
     <m-form-item mLabel="web.loinc.loinc.filter.type">
-      <m-checkbox [(ngModel)]="_filter.clinicalType">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
-      <m-checkbox [(ngModel)]="_filter.labType">{{'web.loinc.loinc.filter.lab' | translate}}</m-checkbox>
-      <m-checkbox [(ngModel)]="_filter.surveyType">{{'web.loinc.loinc.filter.survey' | translate}}</m-checkbox>
+      <m-checkbox name="clinicalType" [(ngModel)]="_filter.clinicalType">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
+      <m-checkbox name="labType" [(ngModel)]="_filter.labType">{{'web.loinc.loinc.filter.lab' | translate}}</m-checkbox>
+      <m-checkbox name="surveyType" [(ngModel)]="_filter.surveyType">{{'web.loinc.loinc.filter.survey' | translate}}</m-checkbox>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.class">
-      <tw-loinc-part-search [(ngModel)]="_filter.class" type="CLASS" multiple/>
+      <tw-loinc-part-search name="class" [(ngModel)]="_filter.class" type="CLASS" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.ord-obs">
-      <m-radio-group [(ngModel)]="_filter.orderObs">
+      <m-radio-group name="orderObs" [(ngModel)]="_filter.orderObs">
         <label m-radio-button [mValue]="'Order'">{{'web.loinc.loinc.filter.order' | translate}}</label>
         <label m-radio-button [mValue]="'Observation'">{{'web.loinc.loinc.filter.observation' | translate}}</label>
         <label m-radio-button [mValue]="'Both'">{{'web.loinc.loinc.filter.both' | translate}}</label>
@@ -62,23 +62,23 @@
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.property">
-      <tw-loinc-part-search [(ngModel)]="_filter.property" type="PROPERTY" mode="select" multiple/>
+      <tw-loinc-part-search name="property" [(ngModel)]="_filter.property" type="PROPERTY" mode="select" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.timing">
-      <tw-loinc-part-search [(ngModel)]="_filter.time" type="TIME" mode="select" multiple/>
+      <tw-loinc-part-search name="time" [(ngModel)]="_filter.time" type="TIME" mode="select" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.system">
-      <tw-loinc-part-search [(ngModel)]="_filter.system" type="SYSTEM" multiple/>
+      <tw-loinc-part-search name="system" [(ngModel)]="_filter.system" type="SYSTEM" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.scale">
-      <tw-loinc-part-search [(ngModel)]="_filter.scale" type="SCALE" mode="select" multiple/>
+      <tw-loinc-part-search name="scale" [(ngModel)]="_filter.scale" type="SCALE" mode="select" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.loinc.loinc.filter.method">
-      <tw-loinc-part-search [(ngModel)]="_filter.method" type="METHOD" multiple/>
+      <tw-loinc-part-search name="method" [(ngModel)]="_filter.method" type="METHOD" multiple/>
     </m-form-item>
   </tw-table-filter>
 

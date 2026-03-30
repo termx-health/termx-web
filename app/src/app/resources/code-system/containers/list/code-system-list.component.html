@@ -7,7 +7,7 @@
       <!-- Quick Search -->
       @if (!filter.open) {
         <m-input
-          [(ngModel)]="filter.searchInput"
+          name="searchInput" [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
@@ -52,20 +52,20 @@
       @if (filter.open) {
         <m-form-item>
           <m-input
-            [(ngModel)]="_filter.searchInput"
+            name="searchInput" [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
           ></m-input>
         </m-form-item>
       }
       <m-form-item mLabel="entities.code-system.publisher">
-        <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
+        <tw-value-set-concept-select name="publisher" [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
       </m-form-item>
       <m-form-item mLabel="web.code-system.list.status">
-        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
+        <tw-value-set-concept-select name="status" [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
       </m-form-item>
       <m-form-item mLabel="web.code-system.list.space">
-        <tw-space-select [(ngModel)]="_filter.spaceId" valuePrimitive/>
+        <tw-space-select name="spaceId" [(ngModel)]="_filter.spaceId" valuePrimitive/>
       </m-form-item>
     </m-form-item>
   </tw-table-filter>

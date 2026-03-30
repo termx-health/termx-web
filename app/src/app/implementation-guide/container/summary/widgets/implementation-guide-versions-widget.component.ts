@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import { isDefined, JoinPipe, MapPipe } from '@kodality-web/core-util';
+import { isDefined, JoinPipe, MapPipe } from '@termx-health/core-util';
 import {ImplementationGuideVersion, ImplementationGuideVersionDependsOn} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
-import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiDropdownModule, MuiCoreModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';

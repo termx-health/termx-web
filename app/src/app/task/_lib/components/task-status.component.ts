@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput} from '@termx-health/core-util';
 import { AsyncPipe } from '@angular/common';
-import { MuiTagModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiTagModule, MuiIconModule } from '@termx-health/ui';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

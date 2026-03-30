@@ -6,7 +6,7 @@ import {indentWithTab} from "@codemirror/commands";
 import {markdown} from '@codemirror/lang-markdown';
 import {Compartment, EditorState} from '@codemirror/state';
 import {keymap} from '@codemirror/view';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput} from '@termx-health/core-util';
 import {basicSetup, EditorView} from 'codemirror';
 import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';
 

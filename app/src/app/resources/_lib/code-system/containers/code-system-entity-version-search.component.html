@@ -2,7 +2,7 @@
   <m-select
     icon="search"
     [placeholder]="placeholder"
-    [(ngModel)]="value"
+    name="value" [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
@@ -21,7 +21,7 @@
   <m-select
     icon="search"
     [placeholder]="placeholder"
-    [(ngModel)]="value"
+    name="value" [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [filterOption]="filterOption"

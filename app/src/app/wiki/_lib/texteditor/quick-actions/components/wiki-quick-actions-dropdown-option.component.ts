@@ -1,7 +1,7 @@
 import {Highlightable} from '@angular/cdk/a11y';
 import {Component, HostBinding, Input} from '@angular/core';
 import { NzListItemMetaComponent, NzListItemMetaAvatarComponent, NzListItemMetaTitleComponent, NzListItemMetaDescriptionComponent } from 'ng-zorro-antd/list';
-import { MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiIconModule } from '@termx-health/ui';
 
 
 @Component({

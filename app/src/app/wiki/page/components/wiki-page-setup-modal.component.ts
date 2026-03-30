@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { LoadingManager, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { LoadingManager, validateForm, AutofocusDirective } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/wiki/_lib';
 import {PageService} from 'term-web/wiki/page/services/page.service';
-import { MuiModalModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiIconModule, MuiTooltipModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiIconModule, MuiTooltipModule, MuiButtonModule } from '@termx-health/ui';
 
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     selector: 'tw-wiki-page-setup',

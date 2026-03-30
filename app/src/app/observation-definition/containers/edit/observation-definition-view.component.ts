@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {ObservationDefinition} from 'term-web/observation-definition/_lib';
 import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule } from '@termx-health/ui';
 
 import { FormsModule } from '@angular/forms';
 

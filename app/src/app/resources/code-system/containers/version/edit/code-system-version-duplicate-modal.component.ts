@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { validateForm, AutofocusDirective } from '@termx-health/core-util';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
-import { MuiModalModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MuiFormModule, MuiButtonModule } from '@termx-health/ui';
 
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';

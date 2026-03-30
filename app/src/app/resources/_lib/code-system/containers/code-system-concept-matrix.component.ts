@@ -1,13 +1,13 @@
 import { Component, Injectable, Input, OnChanges, inject } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import { collect, group, HttpCacheService, isNil, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { collect, group, HttpCacheService, isNil, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import {interval, map, mergeMap, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
-import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiTableModule, MuiNoDataModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 type ConceptView = {
   [propertyCode: string]: {

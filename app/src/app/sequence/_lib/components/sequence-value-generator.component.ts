@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {map, of} from 'rxjs';
 import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
-import { MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 @Component({
     selector: 'tw-sequence-value-generator',

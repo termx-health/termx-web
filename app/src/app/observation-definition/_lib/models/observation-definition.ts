@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {ObservationDefinitionComponent} from 'term-web/observation-definition/_lib/models/observation-definition-component';
 import {ObservationDefinitionInterpretation} from 'term-web/observation-definition/_lib/models/observation-definition-interpretation';
 import {ObservationDefinitionMapping} from 'term-web/observation-definition/_lib/models/observation-definition-mapping';

@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, IncludesPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { CodeName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, IncludesPipe, LocalDatePipe } from '@termx-health/core-util';
+import { CodeName, MarinaUtilModule } from '@termx-health/util';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {Task, TaskContextItem, TaskLibService, TaskSearchParams} from 'term-web/task/_lib';
 import {User, UserLibService} from 'term-web/user/_lib';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
 
-import { MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiCoreModule, MuiSelectModule, MuiDatePickerModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiCoreModule, MuiSelectModule, MuiDatePickerModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

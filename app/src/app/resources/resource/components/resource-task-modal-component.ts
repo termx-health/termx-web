@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { DestroyService, isNil, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { DestroyService, isNil, LoadingManager, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
 import {Task, TaskContextItem} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
-import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@termx-health/ui';
 
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';

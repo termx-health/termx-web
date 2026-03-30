@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {saveAs} from 'file-saver';
 import {distinctUntilChanged, map, Observable} from 'rxjs';
 import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/sys/_lib/space';
 import {SpaceContextParams, SpaceContextService} from 'term-web/core/context/space-context.service';
-import { MarinPageLayoutModule, MuiButtonModule, MuiIconModule, MuiCoreModule, MuiIconButtonModule, MuiDropdownModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiButtonModule, MuiIconModule, MuiCoreModule, MuiIconButtonModule, MuiDropdownModule } from '@termx-health/ui';
 
 import { SpaceDrawerSearchComponent } from 'term-web/sys/_lib/space/containers/space-drawer-search.component';
 import { TranslatePipe } from '@ngx-translate/core';

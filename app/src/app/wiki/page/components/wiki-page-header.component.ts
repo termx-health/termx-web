@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {PageContent} from 'term-web/wiki/_lib';
 
-import { MuiIconButtonModule } from '@kodality-web/marina-ui';
+import { MuiIconButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { ApplyPipe, LocalDateTimePipe } from '@termx-health/core-util';
 
 @Component({
     selector: 'tw-wiki-page-header',

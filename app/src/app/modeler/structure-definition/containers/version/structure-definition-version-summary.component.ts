@@ -1,8 +1,8 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {LoadingManager, LocalDatePipe} from '@kodality-web/core-util';
-import {MuiCardModule, MuiFormModule, MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, MarinPageLayoutModule} from '@kodality-web/marina-ui';
-import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {LoadingManager, LocalDatePipe} from '@termx-health/core-util';
+import {MuiCardModule, MuiFormModule, MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, MarinPageLayoutModule} from '@termx-health/ui';
+import {MarinaUtilModule} from '@termx-health/util';
 import {forkJoin} from 'rxjs';
 import {StructureDefinition, StructureDefinitionVersion} from 'term-web/modeler/_lib';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';

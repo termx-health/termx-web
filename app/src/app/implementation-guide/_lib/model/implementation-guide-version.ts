@@ -1,4 +1,4 @@
-import {CodeName, LocalizedName} from '@kodality-web/marina-util';
+import {CodeName, LocalizedName} from '@termx-health/util';
 
 export class ImplementationGuideVersion {
   public id?: number;

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ComponentStateStore } from '@kodality-web/core-util';
+import { ComponentStateStore } from '@termx-health/core-util';
 import { NgForm } from "@angular/forms";
 import { UcumLibService, BaseUnit } from 'term-web/ucum/_lib';
 

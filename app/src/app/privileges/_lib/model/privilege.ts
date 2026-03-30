@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {PrivilegeResource} from 'term-web/privileges/_lib/model/privilege-resource';
 
 export class Privilege {

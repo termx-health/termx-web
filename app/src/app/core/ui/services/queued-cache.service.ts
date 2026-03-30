@@ -1,4 +1,4 @@
-import {HttpCacheService, remove} from '@kodality-web/core-util';
+import {HttpCacheService, remove} from '@termx-health/core-util';
 import {finalize, map, mergeMap, Observable, Subject, take, timer} from 'rxjs';
 
 export class QueuedCacheService {

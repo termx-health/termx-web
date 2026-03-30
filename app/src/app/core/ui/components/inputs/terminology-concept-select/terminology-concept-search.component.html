@@ -2,7 +2,7 @@
   @switch (codeSystem) {
     @case ('ucum') {
       <tw-measurement-unit-search
-        [(ngModel)]="value"
+        name="value" [(ngModel)]="value"
         (ngModelChange)="fromUcum($event)"
         [valuePrimitive]="valueType | apply:valuePrimitive"
       [multiple]="multiple"></tw-measurement-unit-search>
@@ -17,7 +17,7 @@
     }
     @default {
       <tw-concept-search
-        [(ngModel)]="value"
+        name="value" [(ngModel)]="value"
         (ngModelChange)="onChange($event)"
         [valueType]="valueType"
         [displayType]="displayType"

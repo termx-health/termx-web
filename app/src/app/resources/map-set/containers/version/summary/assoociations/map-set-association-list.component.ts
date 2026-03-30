@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { copyDeep, isDefined, SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { copyDeep, isDefined, SearchResult, ApplyPipe } from '@termx-health/core-util';
 import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams, MapSetProperty} from 'term-web/resources/_lib';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiCheckboxModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiDropdownModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiCheckboxModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiDropdownModule, MuiCoreModule, MuiNoDataModule } from '@termx-health/ui';
 
 import { FormsModule } from '@angular/forms';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';

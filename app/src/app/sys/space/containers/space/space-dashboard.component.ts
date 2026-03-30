@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {ComponentStateStore} from '@kodality-web/core-util';
+import {ComponentStateStore} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {EMPTY, Observable} from 'rxjs';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
-import { MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiInputModule, MuiIconButtonModule, MuiListModule, MuiTooltipModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiInputModule, MuiIconButtonModule, MuiListModule, MuiTooltipModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 

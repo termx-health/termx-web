@@ -1,6 +1,6 @@
 import {Component, forwardRef, ViewChild} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { MuiQuillComponent, MarinaQuillModule } from '@kodality-web/marina-quill';
+import { MuiQuillComponent, MarinaQuillModule } from '@termx-health/quill';
 import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';
 
 

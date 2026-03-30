@@ -1,7 +1,7 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {compareStrings, DestroyService, LoadingManager} from '@kodality-web/core-util';
+import {compareStrings, DestroyService, LoadingManager} from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {map, takeUntil} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
@@ -11,13 +11,13 @@ import {Space} from 'term-web/sys/_lib/space';
 import {Page} from 'term-web/wiki/_lib';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {PageService} from 'term-web/wiki/page/services/page.service';
-import { MarinPageLayoutModule, MuiDropdownModule, MuiIconModule, MuiCollapsePanelModule, MuiSkeletonModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiDropdownModule, MuiIconModule, MuiCollapsePanelModule, MuiSkeletonModule, MuiAlertModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 
 import { WikiPageTreeComponent } from 'term-web/wiki/page/components/wiki-page-tree.component';
 import { WikiSpaceOverviewComponent } from 'term-web/wiki/page/components/wiki-space-overview.component';
 import { WikiPageDetailsComponent } from 'term-web/wiki/page/containers/wiki-page-details.component';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './wiki-page.component.html',

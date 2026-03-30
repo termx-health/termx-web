@@ -2,11 +2,11 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Template, TemplateContent} from 'term-web/wiki/_lib';
 import {TemplateService} from 'term-web/wiki/template/template.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiDropdownModule, MuiButtonModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiDropdownModule, MuiButtonModule, MuiCoreModule } from '@termx-health/ui';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 

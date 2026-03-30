@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import {AuthService} from 'term-web/core/auth';
 
-import { MuiIconButtonModule, MuiCardModule, MuiTextareaModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiIconButtonModule, MuiCardModule, MuiTextareaModule, MuiButtonModule } from '@termx-health/ui';
 import { FormsModule } from '@angular/forms';
 
 @Component({

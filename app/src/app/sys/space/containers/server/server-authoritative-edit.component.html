@@ -31,7 +31,7 @@
               <tw-value-set-search style="flex: 1" (twSelect)="addFromSearch($event)"/>
             }
             @default {
-              <m-input style="flex: 1" [(ngModel)]="manualUrl" [ngModelOptions]="{standalone: true}" placeholder="https://..."/>
+              <m-input style="flex: 1" name="manualUrl" [(ngModel)]="manualUrl" [ngModelOptions]="{standalone: true}" placeholder="https://..."/>
             }
           }
           <m-button mSize="small" (mClick)="addManual()"><m-icon mCode="plus"/></m-button>
@@ -42,7 +42,7 @@
           <m-editable-table [mData]="resources">
             <m-editable-column mName="inclusive" mTitle="Include" mWidth="10%">
               <ng-template #editTemplate let-ar let-n="ngModelName">
-                <m-select [name]="n" [(ngModel)]="ar._inclusive">
+                <m-select [name]="n" name="_inclusive" [(ngModel)]="ar._inclusive">
                   <m-option mLabel="+" [mValue]="true"/>
                   <m-option mLabel="−" [mValue]="false"/>
                 </m-select>
@@ -52,16 +52,16 @@
               </ng-template>
             </m-editable-column>
             <m-editable-column mName="url" mTitle="URL" mWidth="40%">
-              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" [(ngModel)]="ar.url"/></ng-template>
+              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" name="url" [(ngModel)]="ar.url"/></ng-template>
               <ng-template #viewTemplate let-ar>{{ar.url}}</ng-template>
             </m-editable-column>
             <m-editable-column mName="version" mTitle="Version" mWidth="15%">
-              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" [(ngModel)]="ar.version"/></ng-template>
+              <ng-template #editTemplate let-ar let-n="ngModelName"><m-input [name]="n" name="version" [(ngModel)]="ar.version"/></ng-template>
               <ng-template #viewTemplate let-ar>{{ar.version}}</ng-template>
             </m-editable-column>
             <m-editable-column mName="status" mTitle="Status" mWidth="20%">
               <ng-template #editTemplate let-ar let-n="ngModelName">
-                <m-select [name]="n" [(ngModel)]="ar.status" [autoUnselect]="true">
+                <m-select [name]="n" name="status" [(ngModel)]="ar.status" [autoUnselect]="true">
                   <m-option mLabel="draft" mValue="draft"/>
                   <m-option mLabel="active" mValue="active"/>
                 </m-select>

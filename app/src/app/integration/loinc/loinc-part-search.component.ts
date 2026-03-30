@@ -1,12 +1,12 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, compareValues, DestroyService, group, isDefined, LoadingManager, ApplyPipe, FirstPipe, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, compareValues, DestroyService, group, isDefined, LoadingManager, ApplyPipe, FirstPipe, KeysPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 @Component({

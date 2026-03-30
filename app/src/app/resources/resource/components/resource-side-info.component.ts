@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput} from '@termx-health/core-util';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 
-import { MuiFormModule, MuiInputModule, MuiTextareaModule, MuiCheckboxModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiInputModule, MuiTextareaModule, MuiCheckboxModule } from '@termx-health/ui';
 import { FormsModule } from '@angular/forms';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';

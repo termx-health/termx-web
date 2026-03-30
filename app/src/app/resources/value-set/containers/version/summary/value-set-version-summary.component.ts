@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiCoreModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiCoreModule, MuiPopconfirmModule } from '@termx-health/ui';
 import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {ValueSetRuleFormComponent} from 'term-web/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';

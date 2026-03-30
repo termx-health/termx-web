@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService} from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import {DestroyService} from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@termx-health/ui';
 import {Observable} from 'rxjs';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'term-web/fhir/_lib';

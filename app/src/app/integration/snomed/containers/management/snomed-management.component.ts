@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe, ValuesPipe } from '@kodality-web/core-util';
-import { MuiTableComponent, MuiCardModule, MarinPageLayoutModule, MuiTableModule, MuiIconButtonModule, MuiCoreModule, MuiNoDataModule, MuiCheckboxModule, MuiModalModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe, ValuesPipe } from '@termx-health/core-util';
+import { MuiTableComponent, MuiCardModule, MarinPageLayoutModule, MuiTableModule, MuiIconButtonModule, MuiCoreModule, MuiNoDataModule, MuiCheckboxModule, MuiModalModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@termx-health/ui';
 import {SnomedBranch, SnomedCodeSystem} from 'term-web/integration/_lib';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {forkJoin} from 'rxjs';

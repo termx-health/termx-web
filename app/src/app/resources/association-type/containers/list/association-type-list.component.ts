@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { copyDeep, SearchResult, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { copyDeep, SearchResult, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {AssociationType, AssociationTypeSearchParams} from 'term-web/resources/_lib';
 import {AssociationTypeService} from 'term-web/resources/association-type/services/association-type.service';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiIconModule, MuiDropdownModule, MuiPopconfirmModule, MuiFormModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiIconModule, MuiDropdownModule, MuiPopconfirmModule, MuiFormModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

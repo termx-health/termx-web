@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {BooleanInput, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, isDefined} from '@termx-health/core-util';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import { AsyncPipe, UpperCasePipe } from '@angular/common';
-import { MuiNoDataModule, MuiNumberInputModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiNumberInputModule, MuiIconModule, MuiPopconfirmModule } from '@termx-health/ui';
 import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
 import { FormsModule } from '@angular/forms';
 import { CodeSystemEntityVersionSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-entity-version-search.component';

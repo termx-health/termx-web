@@ -14,14 +14,14 @@
         <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.code-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.code"></m-textarea>
+      <m-textarea name="code" [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.version"></m-textarea>
+      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="url" required>
       <ng-template #url>
@@ -31,7 +31,7 @@
           {{'web.integration.fhir.code-system.validate-code.url-tooltip' | translate}}
         </ng-template>
       </ng-template>
-      <m-textarea [(ngModel)]="data.url"></m-textarea>
+      <m-textarea name="url" [(ngModel)]="data.url"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="display">
       <ng-template #display>
@@ -41,7 +41,7 @@
           <span [innerHTML]="('web.integration.fhir.code-system.validate-code.display-tooltip' | translate)"></span>
         </ng-template>
       </ng-template>
-      <m-textarea [(ngModel)]="data.display"></m-textarea>
+      <m-textarea name="display" [(ngModel)]="data.display"></m-textarea>
     </m-form-item>
 
     @if (response || error) {

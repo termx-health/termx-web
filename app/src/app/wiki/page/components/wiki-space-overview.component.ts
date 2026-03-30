@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { LoadingManager, AbbreviatePipe, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { LoadingManager, AbbreviatePipe, ApplyPipe, LocalDateTimePipe } from '@termx-health/core-util';
 import {Space} from 'term-web/sys/_lib/space';
 import {PageContent} from 'term-web/wiki/_lib';
 import {PageService} from 'term-web/wiki/page/services/page.service';
 
-import { MuiSkeletonModule, MuiCoreModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSkeletonModule, MuiCoreModule, MuiIconModule } from '@termx-health/ui';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     selector: 'tw-wiki-space-overview',

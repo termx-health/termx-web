@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { DestroyService, isNil, SearchResult, LocalDatePipe } from '@kodality-web/core-util';
+import { DestroyService, isNil, SearchResult, LocalDatePipe } from '@termx-health/core-util';
 import {takeUntil} from 'rxjs';
 import {CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent, FinderLoadMoreItemComponent } from 'term-web/core/components/finder/finder.component';
-import { MuiFormModule } from '@kodality-web/marina-ui';
+import { MuiFormModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: 'code-system-version-view.component.html',

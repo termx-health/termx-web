@@ -1,10 +1,10 @@
 import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, group, LoadingManager, KeysPipe } from '@kodality-web/core-util';
+import { BooleanInput, group, LoadingManager, KeysPipe } from '@termx-health/core-util';
 import {AuthService} from 'term-web/core/auth';
 import {User} from 'term-web/user/_lib/model/user';
 import {UserLibService} from 'term-web/user/_lib/services/user-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

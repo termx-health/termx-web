@@ -54,7 +54,7 @@
                 </div>
               }
               @if (serverEditable) {
-                <m-select [(ngModel)]="diffItem.resource.terminologyServer" (ngModelChange)="serverSelected($event)">
+                <m-select name="terminologyServer" [(ngModel)]="diffItem.resource.terminologyServer" (ngModelChange)="serverSelected($event)">
                   @for (server of terminologyServers | keys; track server) {
                     <m-option [mLabel]="terminologyServers[server]?.names | localName" [mValue]="server"></m-option>
                   }

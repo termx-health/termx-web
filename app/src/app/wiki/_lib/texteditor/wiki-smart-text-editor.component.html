@@ -13,7 +13,7 @@
           @case ('markdown') {
             <tw-wiki-markdown-editor
               #editor
-              [(ngModel)]="value"
+              name="value" [(ngModel)]="value"
               (ngModelChange)="fireOnChange($event)"
               (keydown)="optionMenu.proxyKeyDown($event)"
               (keyup)="optionMenu.proxyKeyUp($event)"
@@ -25,7 +25,7 @@
           @case ('html') {
             <tw-wiki-quill-editor
               #editor
-              [(ngModel)]="value"
+              name="value" [(ngModel)]="value"
               (ngModelChange)="fireOnChange($event)"
               (keydown)="optionMenu.proxyKeyDown($event)"
               (keyup)="optionMenu.proxyKeyUp($event)"

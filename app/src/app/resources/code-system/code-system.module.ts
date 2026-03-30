@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {MarinaQuillModule} from '@kodality-web/marina-quill';
+import {MarinaQuillModule} from '@termx-health/quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
 import {CodeSystemChecklistValidationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-validation.component';

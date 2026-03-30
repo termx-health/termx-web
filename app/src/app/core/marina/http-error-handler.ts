@@ -5,9 +5,9 @@ import {
   MuiNotificationService,
   MuiConfigService,
   MuiHttpErrorHandlerConfig, DEFAULT_HTTP_ERROR_HANDLER_CONFIG
-} from '@kodality-web/marina-ui';
+} from '@termx-health/ui';
 import {catchError, Observable, throwError} from 'rxjs';
-import {CoreI18nService} from '@kodality-web/core-util';
+import {CoreI18nService} from '@termx-health/core-util';
 
 export const MuiSkipErrorHandler = new HttpContextToken<boolean>(() => false);
 

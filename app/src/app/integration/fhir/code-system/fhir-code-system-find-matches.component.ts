@@ -1,7 +1,7 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Component, inject } from '@angular/core';
 import {FhirCodeSystemLibService, FhirParameters} from 'term-web/fhir/_lib';
-import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiCheckboxModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiCheckboxModule, MuiAlertModule } from '@termx-health/ui';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';

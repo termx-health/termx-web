@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm, ApplyPipe} from '@kodality-web/core-util';
+import {isDefined, LoadingManager, validateForm, ApplyPipe} from '@termx-health/core-util';
 import {AsyncPipe} from '@angular/common';
-import {MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiMultiLanguageInputModule} from '@kodality-web/marina-ui';
+import {MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiMultiLanguageInputModule} from '@termx-health/ui';
 import {SemanticVersionSelectComponent} from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 import {forkJoin, map, Observable} from 'rxjs';
 import {StructureDefinition, StructureDefinitionVersion} from 'term-web/modeler/_lib';

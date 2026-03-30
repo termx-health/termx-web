@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@termx-health/core-util';
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';

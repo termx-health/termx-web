@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {forkJoin} from 'rxjs';
 import {ImplementationGuide, ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { ImplementationGuideInfoWidgetComponent } from 'term-web/implementation-guide/container/summary/widgets/implementation-guide-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

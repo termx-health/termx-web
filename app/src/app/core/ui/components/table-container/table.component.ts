@@ -1,6 +1,6 @@
 import {Component, ContentChild, EventEmitter, Input, Output} from '@angular/core';
 import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
-import { MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

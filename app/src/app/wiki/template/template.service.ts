@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {Observable} from 'rxjs';
 import {Template, TemplateLibService} from 'term-web/wiki/_lib';
 

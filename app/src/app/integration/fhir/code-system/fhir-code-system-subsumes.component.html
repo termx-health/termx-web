@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.code-a' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-a-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.codeA"></m-textarea>
+      <m-textarea name="codeA" [(ngModel)]="data.codeA"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="codeB" required>
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.code-b' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-b-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.codeB"></m-textarea>
+      <m-textarea name="codeB" [(ngModel)]="data.codeB"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="system" required>
@@ -30,7 +30,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.system-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.system"></m-textarea>
+      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -38,7 +38,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.version"></m-textarea>
+      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     @if (response || error) {

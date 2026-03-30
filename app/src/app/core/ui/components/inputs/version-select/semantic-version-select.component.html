@@ -2,7 +2,7 @@
   <m-spinner [mLoading]="!versions" mSize="small">
     @if (!customVersion) {
       <div class="m-justify-left">
-        <m-radio-group [(ngModel)]="version" (ngModelChange)="fireOnChange()">
+        <m-radio-group name="version" [(ngModel)]="version" (ngModelChange)="fireOnChange()">
           @if (semver | apply: composeVersion: 'patch'; as v) {
             <label m-radio-button [mValue]="v">{{v}}</label>
           }
@@ -20,5 +20,5 @@
 }
 
 @if (customVersion) {
-  <m-input [(ngModel)]="version" (ngModelChange)="fireOnChange()" autofocus></m-input>
+  <m-input name="version" [(ngModel)]="version" (ngModelChange)="fireOnChange()" autofocus></m-input>
 }

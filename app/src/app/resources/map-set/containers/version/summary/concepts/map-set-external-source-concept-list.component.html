@@ -20,29 +20,29 @@
       <m-editable-table #rowsTable [mData]="associations" [mLoading]="loading" [mRowInstance]="rowInstance" [mEditAllowed]="editMode" [mDeleteAllowed]="editMode">
         <m-editable-column mName="verified">
           <ng-template #viewTemplate let-a let-ngModelName="ngModelName">
-            <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+            <m-checkbox name="verified" [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
           </ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-            <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+            <m-checkbox name="verified" [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
           </ng-template>
         </m-editable-column>
         <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-code'" mName="sCode">
           <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-            <m-input [(ngModel)]="a.source.code" [name]="ngModelName" required></m-input>
+            <m-input name="code" [(ngModel)]="a.source.code" [name]="ngModelName" required></m-input>
           </ng-template>
         </m-editable-column>
         <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-display'" mName="sDisplay">
           <ng-template #viewTemplate let-a>{{a.source.display}}</ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-            <m-input [(ngModel)]="a.source.display" [name]="ngModelName"></m-input>
+            <m-input name="display" [(ngModel)]="a.source.display" [name]="ngModelName"></m-input>
           </ng-template>
         </m-editable-column>
         <m-editable-column [mTitle]="'web.map-set-version.summary.associations.target-code'" mName="tCode">
           <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
             @if (targetExternal) {
-              <m-input [(ngModel)]="a.target.code" [name]="ngModelName"></m-input>
+              <m-input name="code" [(ngModel)]="a.target.code" [name]="ngModelName"></m-input>
             }
             @if (!targetExternal && a.source.code && !a.target.code) {
               <a (mClick)="drawerComponent.openDrawerFromAssociation(a.source)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
@@ -56,7 +56,7 @@
           <ng-template #viewTemplate let-a>{{a.target.display}}</ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
             @if (targetExternal) {
-              <m-input [(ngModel)]="a.target.display" [name]="ngModelName"></m-input>
+              <m-input name="display" [(ngModel)]="a.target.display" [name]="ngModelName"></m-input>
             }
             @if (!targetExternal && a.target.code) {
               <label>{{a.target.display}}</label>
@@ -67,7 +67,7 @@
           <ng-template #viewTemplate let-a>{{a.relationship | apply: getRelationName: associationTypes}}</ng-template>
           <ng-template #editTemplate let-a let-ngModelName="ngModelName">
             @if (targetExternal) {
-              <m-select [(ngModel)]="a.relationship" [name]="ngModelName" [required]="!!a.target?.code">
+              <m-select name="relationship" [(ngModel)]="a.relationship" [name]="ngModelName" [required]="!!a.target?.code">
                 @for (r of associationTypes; track r.code) {
                   <m-option [mLabel]="r.forwardName" [mValue]="r.code"></m-option>
                 }

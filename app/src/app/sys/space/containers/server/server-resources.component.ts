@@ -1,7 +1,7 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
-import {MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule} from '@kodality-web/marina-ui';
+import {LoadingManager} from '@termx-health/core-util';
+import {MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule} from '@termx-health/ui';
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthoritativeResource, Server} from 'term-web/sys/_lib/space';

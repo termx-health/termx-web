@@ -1,9 +1,9 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult, AutofocusDirective} from '@kodality-web/core-util';
-import {MuiCardModule, MuiInputModule, MuiButtonModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiNoDataModule, MuiIconModule, MuiTagModule} from '@kodality-web/marina-ui';
-import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult, AutofocusDirective} from '@termx-health/core-util';
+import {MuiCardModule, MuiInputModule, MuiButtonModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiNoDataModule, MuiIconModule, MuiTagModule} from '@termx-health/ui';
+import {MarinaUtilModule} from '@termx-health/util';
 import {finalize, Observable, tap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
 import {InputDebounceDirective} from 'term-web/core/ui/directives/input-debounce.directive';

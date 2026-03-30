@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { LoadingManager, KeysPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { LoadingManager, KeysPipe, LocalDateTimePipe } from '@termx-health/core-util';
 import {Provenance} from 'term-web/sys/_lib/provenance/model/provenance';
 import {ProvenanceLibService} from 'term-web/sys/_lib/provenance/services/provenance-lib.service';
 import { AuthService } from 'term-web/core/auth';
 import {map} from "rxjs";
-import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiTableModule, MuiNoDataModule } from '@termx-health/ui';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 

@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {HttpCacheService, SearchHttpParams, SearchResult} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {map, mergeMap, Observable, timer} from 'rxjs';
 import {SpaceSearchParams} from 'term-web/sys/_lib/space/model/space-search-params';

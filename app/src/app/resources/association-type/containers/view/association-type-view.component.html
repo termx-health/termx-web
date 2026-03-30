@@ -21,7 +21,7 @@
             </m-form-item>
             <m-form-item [mLabel]="checkBox"></m-form-item>
             <ng-template #checkBox>
-              <m-checkbox [(ngModel)]="association.directed" disabled>{{'entities.association-type.directed' | translate}}</m-checkbox>
+              <m-checkbox name="directed" [(ngModel)]="association.directed" disabled>{{'entities.association-type.directed' | translate}}</m-checkbox>
             </ng-template>
           </div>
         }

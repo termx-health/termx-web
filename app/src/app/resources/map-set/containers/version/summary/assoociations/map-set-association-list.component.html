@@ -7,8 +7,8 @@
       }
     </div>
     <div class="m-items-middle">
-      <m-checkbox [(ngModel)]="unverified" (ngModelChange)="loadData()">{{'web.map-set-version.summary.associations.unverified' | translate}}</m-checkbox>
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+      <m-checkbox name="unverified" [(ngModel)]="unverified" (ngModelChange)="loadData()">{{'web.map-set-version.summary.associations.unverified' | translate}}</m-checkbox>
+      <m-input name="searchInput" [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     </div>
   </div>
 
@@ -16,7 +16,7 @@
     <tr *mTableHead>
       <th class="tw-table-min-width">
         @if (editMode) {
-          <m-checkbox [(ngModel)]="searchResult['_checked']" (ngModelChange)="checkAll($event)"></m-checkbox>
+          <m-checkbox name="searchResult_checked" [(ngModel)]="searchResult['_checked']" (ngModelChange)="checkAll($event)"></m-checkbox>
         }
       </th>
       <th>{{'web.map-set-version.summary.associations.source-code' | translate}}</th>
@@ -33,7 +33,7 @@
 
     <tr *mTableRow="let a">
       <td>
-        <m-checkbox [(ngModel)]="a.verified" [readOnly]="!editMode"></m-checkbox>
+        <m-checkbox name="verified" [(ngModel)]="a.verified" [readOnly]="!editMode"></m-checkbox>
       </td>
       <td>{{a.source.code}}</td>
       <td>{{a.source.display}}</td>
@@ -44,7 +44,7 @@
           @for (p of a.propertyValues; track p) {
             <div class="m-items-middle">
               <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
-              <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+              <tw-map-set-property-value-input name="value" [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
             </div>
           }
         </td>

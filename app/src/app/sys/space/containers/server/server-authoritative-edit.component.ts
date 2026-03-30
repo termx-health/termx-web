@@ -2,11 +2,11 @@ import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {LoadingManager, copyDeep} from '@kodality-web/core-util';
+import {LoadingManager, copyDeep} from '@termx-health/core-util';
 import {
   MuiButtonModule, MuiCardModule, MuiEditableTableModule, MuiFormModule,
   MuiIconModule, MuiInputModule, MuiSelectModule
-} from '@kodality-web/marina-ui';
+} from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthoritativeResource, Server} from 'term-web/sys/_lib/space';
 import {ServerService} from 'term-web/sys/space/services/server.service';

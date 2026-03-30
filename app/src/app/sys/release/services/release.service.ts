@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {Observable, of, timer, mergeMap} from 'rxjs';
 import {Release, ReleaseLibService, ReleaseResource, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 

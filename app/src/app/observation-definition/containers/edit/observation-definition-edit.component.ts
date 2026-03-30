@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { DestroyService, isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { DestroyService, isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import {forkJoin, takeUntil} from 'rxjs';
 import {
   ObservationDefinition,
@@ -24,7 +24,7 @@ import {ObservationDefinitionProtocolComponent} from 'term-web/observation-defin
 import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
 import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
 import {CodeSystemLibService} from 'term-web/resources/_lib';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiDividerModule, MuiInputModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiAlertModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiDividerModule, MuiInputModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiAlertModule, MuiButtonModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { ObservationDefinitionValueSelectComponent } from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
 import { ObservationDefinitionValueComponent as ObservationDefinitionValueComponent_1 } from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';

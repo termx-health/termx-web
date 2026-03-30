@@ -1,5 +1,5 @@
 // https://gitlab.com/gitlab-org/gitlab/-/blob/master/app/assets/javascripts/drawio/drawio_editor.js
-import {isNil} from '@kodality-web/core-util';
+import {isNil} from '@termx-health/core-util';
 
 interface EditorFacade {
   getDiagram: () => {markdown?: string, svg: string},

@@ -6,7 +6,7 @@
     <div class="m-items-middle">
       @if (!filter.open) {
         <m-input
-          [(ngModel)]="filter.searchInput"
+          name="searchInput" [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
@@ -39,26 +39,26 @@
       @if (filter.open) {
         <m-form-item>
           <m-input
-            [(ngModel)]="_filter.searchInput"
+            name="searchInput" [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
           ></m-input>
         </m-form-item>
       }
       <m-form-item mLabel="entities.structure-definition.name">
-        <m-input [(ngModel)]="_filter.name" placeholder="entities.structure-definition.name"/>
+        <m-input name="name" [(ngModel)]="_filter.name" placeholder="entities.structure-definition.name"/>
       </m-form-item>
       <m-form-item mLabel="entities.structure-definition.url">
-        <m-input [(ngModel)]="_filter.url" placeholder="entities.structure-definition.url"/>
+        <m-input name="url" [(ngModel)]="_filter.url" placeholder="entities.structure-definition.url"/>
       </m-form-item>
       <m-form-item mLabel="entities.structure-definition.status">
-        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
+        <tw-value-set-concept-select name="status" [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
       </m-form-item>
       <m-form-item mLabel="entities.structure-definition.publisher">
-        <m-input [(ngModel)]="_filter.publisher" placeholder="entities.structure-definition.publisher"/>
+        <m-input name="publisher" [(ngModel)]="_filter.publisher" placeholder="entities.structure-definition.publisher"/>
       </m-form-item>
       <m-form-item mLabel="web.code-system.list.space">
-        <tw-space-select [(ngModel)]="_filter.spaceId" valuePrimitive/>
+        <tw-space-select name="spaceId" [(ngModel)]="_filter.spaceId" valuePrimitive/>
       </m-form-item>
     </m-form-item>
   </tw-table-filter>

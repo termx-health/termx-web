@@ -59,7 +59,7 @@
                   <tr *mTableRow="let item; let i = index">
                     <td>{{item.columnName}}</td>
                     <td>
-                      <m-select [name]="i + item.columnName" [(ngModel)]="item.mappedColumn" (ngModelChange)="item.columnSeparator = ','">
+                      <m-select [name]="i + item.columnName" name="mappedColumn" [(ngModel)]="item.mappedColumn" (ngModelChange)="item.columnSeparator = ','">
                         @for (v of filterUnused(['target', 'source', 'order'], item.mappedColumn); track v) {
                           <m-option
                             [mLabel]="'web.integration.file-import.association.' + v"
@@ -70,7 +70,7 @@
                     @if (isSourceSelected) {
                       <td>
                         @if (item.mappedColumn === 'source') {
-                          <m-input [name]="i + item.columnName + '-sep'" [(ngModel)]="item.columnSeparator"></m-input>
+                          <m-input [name]="i + item.columnName + '-sep'" name="columnSeparator" [(ngModel)]="item.columnSeparator"></m-input>
                         }
                       </td>
                     }

@@ -1,11 +1,11 @@
 import { Component, forwardRef, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { validateForm, AutofocusDirective } from '@termx-health/core-util';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {Space} from 'term-web/sys/_lib/space';
 import {PageContent} from 'term-web/wiki/_lib/page/models/page-content';
 import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions.base';
-import { MuiModalModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiCoreModule, MuiSelectModule, MuiIconModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiCoreModule, MuiSelectModule, MuiIconModule, MuiButtonModule } from '@termx-health/ui';
 
 import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 import { PageContentSelectComponent } from 'term-web/wiki/_lib/page/components/page-content-select.component';

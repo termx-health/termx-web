@@ -1,4 +1,4 @@
-import {Identifier} from '@kodality-web/core-util';
+import {Identifier} from '@termx-health/core-util';
 import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
 import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
 

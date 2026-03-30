@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { BooleanInput, JoinPipe, MapPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, JoinPipe, MapPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 
-import { MuiNoDataModule, MuiFormModule, MuiCheckboxModule, MuiListModule, MuiIconModule, MuiDividerModule, MuiAbbreviateModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiFormModule, MuiCheckboxModule, MuiListModule, MuiIconModule, MuiDividerModule, MuiAbbreviateModule } from '@termx-health/ui';
 import { FormsModule } from '@angular/forms';
 import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { TranslatePipe } from '@ngx-translate/core';

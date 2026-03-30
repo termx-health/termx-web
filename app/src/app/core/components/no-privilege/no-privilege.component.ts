@@ -1,8 +1,8 @@
 
 import {Component, inject, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MarinaUiModule} from '@kodality-web/marina-ui';
+import {CoreUtilModule} from '@termx-health/core-util';
+import {MarinaUiModule} from '@termx-health/ui';
 import {TranslateModule} from '@ngx-translate/core';
 
 @Component({

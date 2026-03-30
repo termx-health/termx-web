@@ -1,7 +1,7 @@
 import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
-import { MuiTableComponent, MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTagModule, MuiNoDataModule, MuiListModule } from '@kodality-web/marina-ui';
+import { compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
+import { MuiTableComponent, MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTagModule, MuiNoDataModule, MuiListModule } from '@termx-health/ui';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';

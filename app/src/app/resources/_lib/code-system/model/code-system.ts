@@ -1,5 +1,5 @@
-import {Identifier} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {Identifier} from '@termx-health/core-util';
+import {LocalizedName} from '@termx-health/util';
 import {ContactDetail} from 'term-web/resources/_lib/contact/model/contact-detail';
 import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
 import {CodeSystemVersion} from 'term-web/resources/_lib/code-system/model/code-system-version';

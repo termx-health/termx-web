@@ -1,8 +1,8 @@
 import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe, JoinPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiDatePickerModule, MuiDividerModule, MuiRadioModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe, JoinPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiDatePickerModule, MuiDividerModule, MuiRadioModule, MuiInputModule, MuiButtonModule } from '@termx-health/ui';
 import {of} from 'rxjs';
 import {FileAnalysisRequest, FileAnalysisResponse, FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {ValueSetFileImportService, FileProcessingRequest} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
@@ -17,7 +17,7 @@ import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/c
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 import { ImportJobLogComponent } from 'term-web/integration/import-job-log.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: 'value-set-file-import.component.html',

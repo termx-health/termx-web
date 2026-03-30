@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { copyDeep, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
+import { copyDeep, SearchResult, AutofocusDirective } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
 import {NamingSystem, NamingSystemSearchParams} from 'term-web/resources/_lib';
 import {NamingSystemService} from 'term-web/resources/naming-system/services/naming-system-service';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiPopconfirmModule, MuiIconModule, MuiFormModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiPopconfirmModule, MuiIconModule, MuiFormModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -12,7 +12,7 @@ import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-b
 import { RouterLink } from '@angular/router';
 
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 

@@ -1,12 +1,12 @@
 import { Component, forwardRef, OnInit, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { DestroyService, group, LoadingManager, KeysPipe } from '@kodality-web/core-util';
+import { DestroyService, group, LoadingManager, KeysPipe } from '@termx-health/core-util';
 import {catchError, EMPTY, map, Observable, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
 import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
 import {Sequence} from 'term-web/sequence/_lib/models/sequence';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 @Component({

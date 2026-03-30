@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { compareNumbers, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { compareNumbers, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
 
-import { MuiSpinnerModule, MuiRadioModule, MuiButtonModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiRadioModule, MuiButtonModule, MuiInputModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 interface Semver {

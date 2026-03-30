@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {BooleanInput, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, validateForm} from '@termx-health/core-util';
 import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'term-web/resources/_lib';
-import { MuiCardModule, MarinPageLayoutModule, MuiEditableTableModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MarinPageLayoutModule, MuiEditableTableModule, MuiSelectModule } from '@termx-health/ui';
 import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';

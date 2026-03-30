@@ -1,11 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {isDefined, LoadingManager, validateForm} from '@termx-health/core-util';
 import {ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { ImplementationGuideVersionFormComponent as ImplementationGuideVersionFormComponent_1 } from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 import { TranslatePipe } from '@ngx-translate/core';

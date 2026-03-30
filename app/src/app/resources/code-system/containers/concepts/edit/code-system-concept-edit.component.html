@@ -52,7 +52,7 @@ mode="concept-edit"></tw-resource-context>
               </tw-add-button>
             }
           </div>
-          <m-list mSeparated [ngModel]="conceptVersion">
+          <m-list mSeparated name="conceptVersion" [ngModel]="conceptVersion">
             @for (version of concept.versions; track version) {
               <m-list-item mClickable [mValue]="version" (mClick)="selectVersion(version)">
                 <div class="m-justify-between">

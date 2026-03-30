@@ -1,4 +1,4 @@
-import {QueryParams} from '@kodality-web/core-util';
+import {QueryParams} from '@termx-health/core-util';
 
 export class MapSetAssociationSearchParams extends QueryParams {
   public mapSet?: string;

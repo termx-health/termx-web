@@ -39,7 +39,7 @@
   <div class="container">
     <!-- Editable comment content -->
     <m-textarea
-      [(ngModel)]="_editState[com.id]"
+      name="id" [(ngModel)]="_editState[com.id]"
       placeholder="web.wiki-page.comments.reply"
       autofocus
       [autosize]="{minRows: 2}"
@@ -125,7 +125,7 @@
       <m-list-item class="comment-reply-section">
         @if ({msg: ''}; as d) {
           <div class="m-items-top">
-            <m-textarea style="flex: 1" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply"/>
+            <m-textarea style="flex: 1" name="msg" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply"/>
             <m-button [mDisplay]="d.msg ? 'primary' : 'default'" (mClick)="d.msg ? reply(pageComment, d.msg) : undefined; d.msg = undefined">
               {{'core.btn.send' | translate}}
             </m-button>

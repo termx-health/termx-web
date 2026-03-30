@@ -1,8 +1,8 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MarinaUiModule} from '@kodality-web/marina-ui';
+import {CoreUtilModule} from '@termx-health/core-util';
+import {MarinaUiModule} from '@termx-health/ui';
 import {TranslateModule} from '@ngx-translate/core';
 import {FinderLoadMoreItemComponent, FinderMenuComponent, FinderMenuItemComponent, FinderWrapperComponent} from 'term-web/core/components/finder/finder.component';
 

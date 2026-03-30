@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LoadingManager, ToStringPipe } from '@kodality-web/core-util';
+import { LoadingManager, ToStringPipe } from '@termx-health/core-util';
 import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 
 import { CodeSystemVersionInfoWidgetComponent } from 'term-web/resources/code-system/containers/version/summary/widgets/code-system-version-info-widget.component';

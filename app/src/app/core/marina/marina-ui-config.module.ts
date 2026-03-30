@@ -1,9 +1,9 @@
 import {registerLocaleData} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
 import { ModuleWithProviders, NgModule, inject } from '@angular/core';
-import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
-import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService} from '@kodality-web/marina-ui';
+import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@termx-health/core-util';
+import {MarinaMarkdownModule} from '@termx-health/markdown';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService} from '@termx-health/ui';
 import {TranslateService} from '@ngx-translate/core';
 import {environment as env} from 'environments/environment';
 import {HttpErrorHandler} from 'term-web/core/marina/http-error-handler';

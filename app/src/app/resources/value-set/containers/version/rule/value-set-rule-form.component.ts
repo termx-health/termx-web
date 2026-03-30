@@ -1,8 +1,8 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { ApplyPipe, BooleanInput, JoinPipe, LoadingManager, validateForm } from '@kodality-web/core-util';
-import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiFormModule, MuiIconModule, MuiNoDataModule, MuiRadioModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { ApplyPipe, BooleanInput, JoinPipe, LoadingManager, validateForm } from '@termx-health/core-util';
+import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiFormModule, MuiIconModule, MuiNoDataModule, MuiRadioModule, MuiSelectModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
 import { CodeSystemLibService, EntityProperty, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule } from 'term-web/resources/_lib';

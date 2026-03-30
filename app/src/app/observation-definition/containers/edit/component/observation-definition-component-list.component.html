@@ -26,26 +26,26 @@
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.components.code" [mName]="prefix + '-code'" required>
-                  <m-input [(ngModel)]="c.code" [name]="prefix + '-code'" required></m-input>
+                  <m-input name="code" [(ngModel)]="c.code" [name]="prefix + '-code'" required></m-input>
                 </m-form-item>
               </div>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.components.order-number" [mName]="prefix + '-order-number'">
-                  <m-number-input [min]="1" [(ngModel)]="c.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
+                  <m-number-input [min]="1" name="orderNumber" [(ngModel)]="c.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
                 </m-form-item>
               </div>
             </m-form-row>
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.components.names" [mName]="prefix + '-names'">
-                  <m-multi-language-input [(ngModel)]="c.names" [name]="prefix + '-names'"></m-multi-language-input>
+                  <m-multi-language-input name="names" [(ngModel)]="c.names" [name]="prefix + '-names'"></m-multi-language-input>
                 </m-form-item>
               </div>
             </m-form-row>
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.components.type" [mName]="prefix + '-type'" required>
-                  <tw-value-set-concept-select [(ngModel)]="c.type"
+                  <tw-value-set-concept-select name="type" [(ngModel)]="c.type"
                       (ngModelChange)="clearBinding(c, $event)"
                       [name]="prefix + '-type'"
                       valueSet="permitted-data-type"
@@ -56,10 +56,10 @@
                 <m-form-item mLabel="entities.observation-definition.components.cardinality" [mName]="prefix + '-cardinality'">
                   <div class="m-items-middle">
                     <m-number-input [name]="prefix + '-min'"
-                        [(ngModel)]="c.cardinality.min"
+                        name="min" [(ngModel)]="c.cardinality.min"
                         placeholder="web.observation-definition.cardinality.min"></m-number-input>
                     <m-number-input [name]="prefix + '-max'"
-                        [(ngModel)]="c.cardinality.max"
+                        name="max" [(ngModel)]="c.cardinality.max"
                         placeholder="web.observation-definition.cardinality.max"></m-number-input>
                   </div>
                 </m-form-item>
@@ -70,14 +70,14 @@
                 <m-form-item mLabel="entities.observation-definition.value.unit.singular">
                   <div class="m-items-middle">
                     <m-form-control [mName]="prefix + '-system'">
-                      <tw-code-system-search [(ngModel)]="c.unit.system"
+                      <tw-code-system-search name="system" [(ngModel)]="c.unit.system"
                           [name]="prefix + '-system'"
                           valuePrimitive
                           placeholder="entities.observation-definition.value.unit.system"></tw-code-system-search>
                     </m-form-control>
                     <m-form-control [mName]="prefix + '-unit'">
                       <tw-term-concept-search [codeSystem]="c.unit.system"
-                          [(ngModel)]="c.unit.unit"
+                          name="unit" [(ngModel)]="c.unit.unit"
                           [name]="prefix + '-unit'"
                           valueType="code"></tw-term-concept-search>
                     </m-form-control>

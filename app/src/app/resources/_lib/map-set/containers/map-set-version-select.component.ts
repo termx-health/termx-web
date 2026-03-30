@@ -1,13 +1,13 @@
 import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
+import { DestroyService, group, isDefined, KeysPipe } from '@termx-health/core-util';
 import {takeUntil} from 'rxjs';
 import {MapSetVersion} from 'term-web/resources/_lib/map-set/model/map-set-version';
 import {MapSetVersionSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-version-search-params';
 import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { DestroyService, group, isDefined, LoadingManager, BooleanInput, KeysPipe } from '@kodality-web/core-util';
+import { DestroyService, group, isDefined, LoadingManager, BooleanInput, KeysPipe } from '@termx-health/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {StructureDefinition} from 'term-web/modeler/_lib/structure-definition/structure-definition';
 import {StructureDefinitionLibService} from 'term-web/modeler/_lib/structure-definition/structure-definition-lib.service';
 import {StructureDefinitionSearchParams} from 'term-web/modeler/_lib/structure-definition/structure-definition-search-params';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

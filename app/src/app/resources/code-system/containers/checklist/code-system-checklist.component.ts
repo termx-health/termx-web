@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {forkJoin, of} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiRadioModule, MuiCoreModule, MuiDividerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiRadioModule, MuiCoreModule, MuiDividerModule, MuiButtonModule } from '@termx-health/ui';
 import { FormsModule } from '@angular/forms';
 
 import { CodeSystemChecklistValidationComponent } from 'term-web/resources/code-system/containers/checklist/code-system-checklist-validation.component';

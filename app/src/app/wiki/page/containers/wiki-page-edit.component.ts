@@ -1,8 +1,8 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { isNil, LoadingManager, remove, sort, AutofocusDirective, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
-import { MuiModalContainerComponent, MarinPageLayoutModule, MuiDividerModule, MuiButtonModule, MuiIconModule, MuiIconButtonModule, MuiMenuModule, MuiTooltipModule, MuiCollapsePanelModule, MuiModalModule, MuiListModule } from '@kodality-web/marina-ui';
+import { isNil, LoadingManager, remove, sort, AutofocusDirective, ApplyPipe, LocalDateTimePipe } from '@termx-health/core-util';
+import { MuiModalContainerComponent, MarinPageLayoutModule, MuiDividerModule, MuiButtonModule, MuiIconModule, MuiIconButtonModule, MuiMenuModule, MuiTooltipModule, MuiCollapsePanelModule, MuiModalModule, MuiListModule } from '@termx-health/ui';
 import {combineLatest, mergeMap} from 'rxjs';
 import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
 import {SeoService} from 'term-web/core/ui/services/seo.service';

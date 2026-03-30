@@ -1,4 +1,4 @@
-import {CodeName} from '@kodality-web/marina-util';
+import {CodeName} from '@termx-health/util';
 import {TaskActivity} from 'term-web/task/_lib/model/task-activity';
 
 export class Task {

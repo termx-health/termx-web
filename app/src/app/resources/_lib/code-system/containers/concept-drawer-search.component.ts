@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
-import { BooleanInput, isDefined, SearchResult, isNil, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, SearchResult, isNil, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
-import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiAlertModule, MuiFormModule, MuiInputModule, MuiListModule, MuiCheckboxModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiAlertModule, MuiFormModule, MuiInputModule, MuiListModule, MuiCheckboxModule, MuiCoreModule } from '@termx-health/ui';
 
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { FormsModule } from '@angular/forms';

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule } from '@termx-health/ui';
 import {Observable} from 'rxjs';
 import {IntegrationAtcLibService, IntegrationImportConfiguration} from 'term-web/integration/_lib';
 import {JobLogResponse} from 'term-web/sys/_lib';

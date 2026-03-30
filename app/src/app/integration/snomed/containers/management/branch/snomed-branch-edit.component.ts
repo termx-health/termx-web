@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { isDefined, LoadingManager, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {SnomedBranch} from 'term-web/integration/_lib';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiSelectModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiSelectModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

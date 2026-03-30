@@ -1,4 +1,4 @@
-import {matchSection} from '@kodality-web/marina-markdown-parser';
+import {matchSection} from '@termx-health/markdown-parser';
 
 
 export function valueSetConceptMatrixPlugin(md): void {

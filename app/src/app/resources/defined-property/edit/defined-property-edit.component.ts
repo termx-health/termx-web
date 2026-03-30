@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {LoadingManager, validateForm} from '@termx-health/core-util';
 import {DefinedProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyService} from 'term-web/resources/defined-property/services/defined-property.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiButtonModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
 

@@ -3,7 +3,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {AssociationType} from 'term-web/resources/_lib';
 import {AssociationTypeService} from 'term-web/resources/association-type/services/association-type.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiCheckboxModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiCheckboxModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

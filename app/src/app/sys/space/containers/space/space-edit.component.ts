@@ -2,15 +2,15 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { validateForm, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
+import { validateForm, ApplyPipe, KeysPipe } from '@termx-health/core-util';
 import {forkJoin} from 'rxjs';
 import {Package, Space, Server, ServerLibService} from 'term-web/sys/_lib/space';
 import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './space-edit.component.html',

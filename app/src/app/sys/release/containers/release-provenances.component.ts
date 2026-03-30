@@ -1,16 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {forkJoin} from 'rxjs';
 import {Provenance, Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
-import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule } from '@termx-health/ui';
 
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { ProvenanceListComponent } from 'term-web/sys/_lib/provenance/components/provenance-list.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: 'release-provenances.component.html',

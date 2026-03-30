@@ -3,7 +3,7 @@
     <m-card style="flex: 1; height: min-content; position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding) + 3.5rem);">
       <m-form-item mLabel="core.filter">
         <div class="m-items-middle">
-          <m-input style="flex: 1" placeholder="marina.ui.inputs.search.placeholder" [ngModel]="searchText" twDebounce [debounced]="textSearch"/>
+          <m-input style="flex: 1" placeholder="marina.ui.inputs.search.placeholder" name="searchText" [ngModel]="searchText" twDebounce [debounced]="textSearch"/>
           @if (searchText?.length) {
             <m-icon-button mIcon="close" (mClick)="searchText = undefined"/>
           }
@@ -11,7 +11,7 @@
       </m-form-item>
 
       <m-form-item mLabel="web.space.resources">
-        <m-list [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
+        <m-list name="selectedResourceType" [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
           <m-list-item mValue="code-system" mClickable>
             {{'entities.code-system.plural' | translate}}
           </m-list-item>

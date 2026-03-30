@@ -4,7 +4,7 @@
   @if (space) {
     <div class="m-justify-between">
       <m-icon-button mIcon="sync" (mClick)="reload()"/>
-      <m-input style="flex: 1" twDebounce [debounced]="search" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
+      <m-input style="flex: 1" twDebounce [debounced]="search" name="searchText" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
     </div>
     <m-skeleton [mLoading]="loader.isLoading">
       <a class="initial space-item m-justify-between" [class.space-item--selected]="!selectedKey" [routerLink]="'' | apply: viewRootRoute">

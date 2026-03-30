@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, remove, validateForm, ApplyPipe, FilterPipe, SortPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, remove, validateForm, ApplyPipe, FilterPipe, SortPipe } from '@termx-health/core-util';
 import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import {EntityProperty, EntityPropertyValue} from 'term-web/resources/_lib';
 import {v4 as uuid} from "uuid";
 
-import { MuiNoDataModule, MuiFormModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiFormModule, MuiIconModule, MuiPopconfirmModule } from '@termx-health/ui';
 import { EntityPropertyValueInputComponent as EntityPropertyValueInputComponent_1 } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 

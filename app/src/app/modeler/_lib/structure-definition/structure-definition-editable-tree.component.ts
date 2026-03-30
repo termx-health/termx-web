@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {isDefined, LoadingManager} from '@kodality-web/core-util';
+import {isDefined, LoadingManager} from '@termx-health/core-util';
 import {DropListComponent, DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
-import { MuiSkeletonModule, MuiNoDataModule, MuiRadioModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSkeletonModule, MuiNoDataModule, MuiRadioModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 import { FormsModule } from '@angular/forms';
 import { DropListComponent as DropListComponent_1 } from 'term-web/core/ui/components/drop-list/drop-list.component';

@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@termx-health/ui';
 import {of} from 'rxjs';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {
@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 const DEF_PROP_WEIGHT = {

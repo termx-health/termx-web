@@ -1,5 +1,5 @@
 import {Injectable, InjectionToken, inject} from '@angular/core';
-import {isDefined, toNumber} from '@kodality-web/core-util';
+import {isDefined, toNumber} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rxjs';
 

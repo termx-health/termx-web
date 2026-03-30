@@ -1,6 +1,6 @@
 import { Component, DoCheck, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { MuiDividerModule } from '@kodality-web/marina-ui';
-import { BooleanInput } from '@kodality-web/core-util';
+import { MuiDividerModule } from '@termx-health/ui';
+import { BooleanInput } from '@termx-health/core-util';
 import { environment } from 'environments/environment';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { EntityProperty } from 'term-web/resources/_lib';

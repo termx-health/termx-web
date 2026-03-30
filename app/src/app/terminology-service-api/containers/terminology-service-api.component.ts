@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {environment} from 'environments/environment';
-import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiAlertModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

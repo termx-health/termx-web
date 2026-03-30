@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { compareStrings, compareValues, isDefined, LoadingManager, SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { compareStrings, compareValues, isDefined, LoadingManager, SearchResult, ApplyPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { MuiListModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiListModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';

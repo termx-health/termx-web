@@ -1,9 +1,9 @@
 import { Component, Input, inject } from '@angular/core';
-import { isDefined, LoadingManager, JoinPipe, LocalDatePipe, MapPipe } from '@kodality-web/core-util';
+import { isDefined, LoadingManager, JoinPipe, LocalDatePipe, MapPipe } from '@termx-health/core-util';
 import {ImplementationGuide, ImplementationGuideVersion, ImplementationGuideVersionDependsOn} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
-import { MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule, MuiButtonModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { RouterLink } from '@angular/router';

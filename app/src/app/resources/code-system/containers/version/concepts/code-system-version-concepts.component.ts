@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';

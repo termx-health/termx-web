@@ -1,9 +1,9 @@
 import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, LoadingManager, ApplyPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, LoadingManager, ApplyPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
 import {PageLibService} from 'term-web/wiki/_lib/page/services/page-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

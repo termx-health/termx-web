@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
-import {DestroyService, isDefined, SearchResult} from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiCoreModule, MuiSpinnerModule, MuiTextareaModule, MuiIconModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import {DestroyService, isDefined, SearchResult} from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiCoreModule, MuiSpinnerModule, MuiTextareaModule, MuiIconModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@termx-health/ui';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {LorqueLibService} from 'term-web/sys/_lib';
 import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';

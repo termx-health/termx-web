@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm, ApplyPipe} from '@kodality-web/core-util';
-import {MuiNotificationService, MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiSpinnerModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiIconModule} from '@kodality-web/marina-ui';
+import {isDefined, LoadingManager, validateForm, ApplyPipe} from '@termx-health/core-util';
+import {MuiNotificationService, MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiSpinnerModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiIconModule} from '@termx-health/ui';
 import {catchError, of, throwError} from 'rxjs';
 import {TranslateService, TranslatePipe} from '@ngx-translate/core';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import slugify from 'slugify';
 import {StructureDefinition} from 'term-web/modeler/_lib';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';

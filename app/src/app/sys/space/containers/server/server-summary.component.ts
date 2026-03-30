@@ -1,7 +1,7 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
-import {MuiSpinnerModule, MuiFormModule, MuiCardModule, MuiIconModule, MuiDividerModule} from '@kodality-web/marina-ui';
+import {LoadingManager} from '@termx-health/core-util';
+import {MuiSpinnerModule, MuiFormModule, MuiCardModule, MuiIconModule, MuiDividerModule} from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthoritativeResource, Server} from 'term-web/sys/_lib/space';
 import {ServerService} from 'term-web/sys/space/services/server.service';
@@ -9,7 +9,7 @@ import {ResourceContextComponent} from 'term-web/resources/resource/components/r
 import {ServerInfoWidgetComponent} from './widgets/server-info-widget.component';
 import {ServerAuthoritativeListWidgetComponent} from './widgets/server-authoritative-list-widget.component';
 import {AuthService} from 'term-web/core/auth';
-import {copyDeep} from '@kodality-web/core-util';
+import {copyDeep} from '@termx-health/core-util';
 
 @Component({
   templateUrl: './server-summary.component.html',

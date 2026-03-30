@@ -6,13 +6,13 @@
       </m-button>
     }
 
-    <m-select [(ngModel)]="tableSummary.langs" multiple placeholder="web.code-system.form.concepts.designation-languages" style="flex: 1">
+    <m-select name="langs" [(ngModel)]="tableSummary.langs" multiple placeholder="web.code-system.form.concepts.designation-languages" style="flex: 1">
       @for (lang of version | apply: getSupportedLangs: versions; track lang) {
         <m-option [mValue]="lang" [mLabel]="lang"/>
       }
     </m-select>
 
-    <m-select [(ngModel)]="tableSummary.properties" multiple placeholder="web.code-system.form.concepts.properties" style="flex: 1">
+    <m-select name="properties" [(ngModel)]="tableSummary.properties" multiple placeholder="web.code-system.form.concepts.properties" style="flex: 1">
       @for (prop of codeSystem?.properties; track prop) {
         <m-option [mValue]="prop.name" [mLabel]="prop | entityPropertyName"/>
       }
@@ -62,10 +62,10 @@
   <!-- Filter -->
     <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
       <m-form-item>
-        <m-textarea placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="_filter.searchInput"/>
+        <m-textarea placeholder="marina.ui.inputs.search.placeholder" name="searchInput" [(ngModel)]="_filter.searchInput"/>
       </m-form-item>
       <m-form-item>
-        <m-radio-group [(ngModel)]="_filter.inputType">
+        <m-radio-group name="inputType" [(ngModel)]="_filter.inputType">
           <label m-radio-button mValue="contains">{{'web.code-system.form.concepts.contains' | translate}}</label>
           <label m-radio-button mValue="eq">{{'web.code-system.form.concepts.eq' | translate}}</label>
         </m-radio-group>
@@ -81,7 +81,7 @@
                 <div class="m-items-middle">
                   <tw-property-value-input
                     style="flex: 1"
-                    [(ngModel)]="pv.value"
+                    name="value" [(ngModel)]="pv.value"
                     [property]="pv.property"
                     [codeSystem]="codeSystem.id"
                     autofocus
@@ -285,7 +285,7 @@
                 <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
                 <tw-property-value-input style="flex: 1; text-align: right"
                   viewMode
-                  [ngModel]="property.value"
+                  name="value" [ngModel]="property.value"
                   [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
                   [codeSystem]="codeSystem.id"
                 ></tw-property-value-input>

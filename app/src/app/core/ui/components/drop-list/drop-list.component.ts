@@ -1,8 +1,8 @@
 import { CdkDragDrop, CdkDragMove, CdkDropList, CdkDrag, CdkDragPreview, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput} from '@termx-health/core-util';
 import { NgTemplateOutlet } from '@angular/common';
-import { MuiCoreModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiCoreModule, MuiIconModule } from '@termx-health/ui';
 
 
 export interface DropListNode {

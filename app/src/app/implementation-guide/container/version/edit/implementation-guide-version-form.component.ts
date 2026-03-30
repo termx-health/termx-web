@@ -1,8 +1,8 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { isDefined, LoadingManager, validateForm, JoinPipe, MapPipe, SplitPipe } from '@kodality-web/core-util';
+import { isDefined, LoadingManager, validateForm, JoinPipe, MapPipe, SplitPipe } from '@termx-health/core-util';
 import {ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
-import { MuiFormModule, MuiInputModule, MuiSelectModule, MuiDividerModule, MuiEditableTableModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiInputModule, MuiSelectModule, MuiDividerModule, MuiEditableTableModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 

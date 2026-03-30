@@ -2,9 +2,9 @@ import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/cor
 import {Router} from '@angular/router';
 import {environment} from 'environments/environment';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
-import { MuiTableModule, MuiTagModule, MuiCoreModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { MuiTableModule, MuiTagModule, MuiCoreModule, MuiDividerModule } from '@termx-health/ui';
 
-import { LocalDatePipe } from '@kodality-web/core-util';
+import { LocalDatePipe } from '@termx-health/core-util';
 
 @Component({
     selector: 'tw-fhir-value-set',

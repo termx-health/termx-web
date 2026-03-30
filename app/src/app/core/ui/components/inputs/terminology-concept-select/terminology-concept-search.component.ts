@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, ApplyPipe } from '@termx-health/core-util';
 import {Observable, map} from 'rxjs';
 import {SnomedLibService} from 'term-web/integration/_lib';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';

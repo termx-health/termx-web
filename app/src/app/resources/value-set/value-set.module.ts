@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {MarinaQuillModule} from '@kodality-web/marina-quill';
+import {MarinaQuillModule} from '@termx-health/quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {ValueSetVersionSaveModalComponent} from 'term-web/resources/value-set/components/value-set-version-save-modal-component';

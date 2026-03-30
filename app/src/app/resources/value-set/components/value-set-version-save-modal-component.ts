@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { DestroyService, LoadingManager, isDefined, ApplyPipe } from '@kodality-web/core-util';
+import { DestroyService, LoadingManager, isDefined, ApplyPipe } from '@termx-health/core-util';
 import {Observable, map, switchMap} from 'rxjs';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ValueSetVersion, ValueSetVersionRule, CodeSystemVersion} from 'term-web/resources/_lib';
-import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiDatePickerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiDatePickerModule, MuiButtonModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 import { TranslatePipe } from '@ngx-translate/core';

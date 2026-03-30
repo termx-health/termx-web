@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, collect, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, remove, SearchResult, serializeDate, unique, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe, ToStringPipe } from '@kodality-web/core-util';
+import { BooleanInput, collect, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, remove, SearchResult, serializeDate, unique, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe, ToStringPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   CodeSystem,
@@ -21,7 +21,7 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
 import { NgTemplateOutlet } from '@angular/common';
-import { MuiButtonModule, MuiIconModule, MuiSelectModule, MuiPopconfirmModule, MuiTooltipModule, MuiFormModule, MuiTextareaModule, MuiRadioModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule, MuiCardModule, MuiIconButtonModule, MuiCoreModule, MuiDropdownModule, MuiModalModule, MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { MuiButtonModule, MuiIconModule, MuiSelectModule, MuiPopconfirmModule, MuiTooltipModule, MuiFormModule, MuiTextareaModule, MuiRadioModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule, MuiCardModule, MuiIconButtonModule, MuiCoreModule, MuiDropdownModule, MuiModalModule, MarinPageLayoutModule } from '@termx-health/ui';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { RouterLink } from '@angular/router';
 import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
@@ -31,7 +31,7 @@ import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.di
 import { ResourceTasksWidgetComponent as ResourceTasksWidgetComponent_1 } from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
 import { ConceptDrawerSearchComponent as ConceptDrawerSearchComponent_1 } from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { HasAllPrivilegesPipe } from 'term-web/core/auth/privileges/has-all-privileges.pipe';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 import { EntityPropertyNamePipe } from 'term-web/resources/_lib/code-system/pipe/entity-propertye-name-pipe';
@@ -69,7 +69,7 @@ const ROOT_CONCEPT_PAGE_SIZE = 100;
     selector: 'tw-code-system-concepts-list',
     templateUrl: './code-system-concepts-list.component.html',
     styles: [`
-    @import "@kodality-web/marina-ui/src/components/card/style/card.style.less";
+    @import "@termx-health/ui/src/components/card/style/card.style.less";
 
     ::ng-deep .initial:not(:last-of-type) .ant-form-item {
       margin-bottom: 0;

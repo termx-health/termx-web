@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {Package} from 'term-web/sys/_lib/space/model/package';
 
 export class Space {

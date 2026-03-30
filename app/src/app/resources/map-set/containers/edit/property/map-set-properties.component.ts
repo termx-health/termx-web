@@ -1,20 +1,20 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {HttpContext} from '@angular/common/http';
-import { ApplyPipe, BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@kodality-web/core-util';
+import { ApplyPipe, BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@termx-health/core-util';
 import {catchError, of, throwError} from 'rxjs';
 import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, PropertyRule, MapSetProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiCardModule, MuiDropdownModule, MuiEditableTableModule, MuiCheckboxModule, MuiCoreModule, MuiTableModule, MuiFormModule, MuiInputModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDropdownModule, MuiEditableTableModule, MuiCheckboxModule, MuiCoreModule, MuiTableModule, MuiFormModule, MuiInputModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiIconModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

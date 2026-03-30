@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output, ViewChild, OnInit, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { DestroyService, LoadingManager, validateForm, format, getDateFormat, JoinPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { DestroyService, LoadingManager, validateForm, format, getDateFormat, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
+import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 import {AuthService} from 'term-web/core/auth';
-import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiSelectModule, MuiCoreModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiSelectModule, MuiCoreModule, MuiButtonModule } from '@termx-health/ui';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Component, Input, inject } from '@angular/core';
-import { MuiPopconfirmModule, MuiPopoverModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiPopconfirmModule, MuiPopoverModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

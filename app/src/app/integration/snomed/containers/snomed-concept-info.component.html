@@ -95,7 +95,7 @@
         <td>{{relationship.type.fsn.term}}</td>
         <td><a (mClick)="conceptSelected.emit(relationship.target.conceptId)">{{relationship.target.fsn.term}}</a></td>
         <td>
-          <m-checkbox [ngModel]="relationship.active" readOnly></m-checkbox>
+          <m-checkbox name="active" [ngModel]="relationship.active" readOnly></m-checkbox>
         </td>
       </tr>
       <tr *mTableNoData>

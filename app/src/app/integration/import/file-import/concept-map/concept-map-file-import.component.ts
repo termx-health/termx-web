@@ -1,8 +1,8 @@
 import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule, MuiIconModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule, MuiIconModule, MuiButtonModule } from '@termx-health/ui';
 import {of} from 'rxjs';
 import {FileProcessingRequest} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
 import {JobLog} from 'term-web/sys/_lib';
@@ -15,7 +15,7 @@ import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-se
 import { MapSetScopeFormComponent } from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
 import { ImportJobLogComponent } from 'term-web/integration/import-job-log.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: 'concept-map-file-import.component.html',

@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {CodeName} from '@kodality-web/marina-util';
+import {SearchHttpParams, SearchResult} from '@termx-health/core-util';
+import {CodeName} from '@termx-health/util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {Task, TaskSearchParams, Workflow} from 'term-web/task/_lib';

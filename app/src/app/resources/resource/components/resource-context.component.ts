@@ -2,11 +2,11 @@ import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
-import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@termx-health/ui';
 import { NgTemplateOutlet, UpperCasePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
-import { ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { MarinaUtilModule } from '@termx-health/util';
+import { ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({

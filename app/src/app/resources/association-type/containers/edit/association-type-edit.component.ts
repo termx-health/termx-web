@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {validateForm} from '@kodality-web/core-util';
+import {validateForm} from '@termx-health/core-util';
 import {AssociationType} from 'term-web/resources/_lib';
 import {AssociationTypeService} from 'term-web/resources/association-type/services/association-type.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiSelectModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiSelectModule, MuiCheckboxModule, MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({

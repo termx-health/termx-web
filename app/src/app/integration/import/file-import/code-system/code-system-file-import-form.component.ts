@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@termx-health/core-util';
 import {of} from 'rxjs';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'term-web/resources/_lib';
-import { MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule } from '@termx-health/ui';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
@@ -12,7 +12,7 @@ import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-s
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

@@ -2,7 +2,7 @@
   <m-select
     icon="search"
     [placeholder]="placeholder"
-    [(ngModel)]="value"
+    name="value" [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="loader.isLoading"
@@ -20,7 +20,7 @@
 @if (mode === 'select') {
   <m-select
     [placeholder]="placeholder"
-    [(ngModel)]="value"
+    name="value" [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="loader.isLoading"
     [autoUnselect]="false"

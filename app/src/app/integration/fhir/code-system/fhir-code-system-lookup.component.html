@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.code-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.code"></m-textarea>
+      <m-textarea name="code" [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="system" required>
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.system-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.system"></m-textarea>
+      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -30,7 +30,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.version"></m-textarea>
+      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="date">
@@ -41,7 +41,7 @@
           <span [innerHTML]="('web.integration.fhir.code-system.lookup.date-tooltip'| translate)"></span>
         </ng-template>
       </ng-template>
-      <m-date-picker [(ngModel)]="data.date"></m-date-picker>
+      <m-date-picker name="date" [(ngModel)]="data.date"></m-date-picker>
     </m-form-item>
 
     <m-form-item [mLabel]="properties">
@@ -53,7 +53,7 @@
         </ng-template>
       </ng-template>
       <div class="m-items-middle">
-        <m-textarea [(ngModel)]="data.propertyInput"></m-textarea>
+        <m-textarea name="propertyInput" [(ngModel)]="data.propertyInput"></m-textarea>
         <m-button (click)="addProperty()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>

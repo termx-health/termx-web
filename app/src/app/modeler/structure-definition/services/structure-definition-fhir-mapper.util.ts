@@ -1,4 +1,4 @@
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {ElementDefinition} from 'fhir/model/element-definition';
 
 export class StructureDefinitionFhirMapperUtil {

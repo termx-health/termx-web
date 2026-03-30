@@ -1,9 +1,9 @@
 import {PortalModule} from '@angular/cdk/portal';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MarinaQuillModule} from '@kodality-web/marina-quill';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
+import {CoreUtilModule} from '@termx-health/core-util';
+import {MarinaQuillModule} from '@termx-health/quill';
+import {MarinaComponentsModule} from '@termx-health/ui';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
 import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';

@@ -1,6 +1,6 @@
 import {Directive, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {MuiNotificationService} from '@termx-health/ui';
 import {filter, Observable} from 'rxjs';
 import {IntegrationImportConfiguration} from 'term-web/integration/_lib';
 import {JobLibService, JobLogResponse} from 'term-web/sys/_lib';

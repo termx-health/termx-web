@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoadingManager, FilterPipe } from '@kodality-web/core-util';
+import { LoadingManager, FilterPipe } from '@termx-health/core-util';
 import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { CodeSystemInfoWidgetComponent } from 'term-web/resources/code-system/containers/summary/widgets/code-system-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

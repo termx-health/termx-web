@@ -6,7 +6,7 @@
   <div style="display: flex; gap: 1rem">
     <m-card style="flex: 0 0 220px; height: min-content; position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding) + 3.5rem);">
       <m-form-item mLabel="web.server.tab.resources">
-        <m-list [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
+        <m-list name="selectedResourceType" [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
           @for (rt of resourceTypes; track rt.value) {
             <m-list-item [mValue]="rt.value" mClickable>
               {{rt.label | translate}}
