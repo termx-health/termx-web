@@ -1,14 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {isDefined, LoadingManager} from '@termx-health/core-util';
-import {MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule} from '@termx-health/ui';
+import {MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule} from '@termx-health/ui';
 import {RelatedArtifact, RelatedArtifactLibService} from 'term-web/resources/_lib/related-artifacts';
 import {RelatedArtifactUtil} from 'term-web/resources/_lib/related-artifacts/util/related-artifact-util';
 
 @Component({
     selector: 'tw-resource-related-artifact-widget',
     templateUrl: 'resource-related-artifact-widget.component.html',
-    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule]
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule]
 })
 export class ResourceRelatedArtifactWidgetComponent implements OnChanges {
   private relatedArtifactService = inject(RelatedArtifactLibService);

@@ -17,7 +17,10 @@
           <div class="m-items-middle">
             <span class="m-bold">{{artifact.type}}</span>
             <m-divider mVertical></m-divider>
-            <span>{{artifact.id}}</span>
+            <span>{{artifact.name || artifact.id}}</span>
+            @if (artifact.url) {
+              <m-icon mCode="info-circle" m-tooltip [mTitle]="artifact.url" style="color: var(--color-primary-6); cursor: help;"></m-icon>
+            }
           </div>
         </m-list-item>
       }

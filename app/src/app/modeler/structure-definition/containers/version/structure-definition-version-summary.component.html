@@ -47,8 +47,16 @@
 
       <!-- Related artifacts -->
       <m-card>
-        <m-title *m-card-header mTitle="web.structure-definition.summary.related-artifacts"></m-title>
-        <tw-resource-related-artifact-widget [resourceId]="'' + structureDefinition?.id" resourceType="StructureDefinition"></tw-resource-related-artifact-widget>
+        <div *m-card-header class="m-justify-between">
+          <m-title mTitle="web.structure-definition.summary.related-artifacts"></m-title>
+          <a (mClick)="recalculateReferences()" *twPrivileged>
+            {{'web.structure-definition.summary.recalculate-references' | translate}}
+          </a>
+        </div>
+        <tw-resource-related-artifact-widget #relatedArtifactsWidget
+          [resourceId]="'' + structureDefinition?.id"
+          resourceType="StructureDefinition">
+        </tw-resource-related-artifact-widget>
       </m-card>
 
     </div>
