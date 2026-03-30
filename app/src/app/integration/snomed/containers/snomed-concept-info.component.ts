@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { DestroyService, isDefined, LoadingManager, validateForm, KeysPipe, SortPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiTableModule, MuiNoDataModule, MuiCheckboxModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { DestroyService, isDefined, LoadingManager, validateForm, KeysPipe, SortPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiTableModule, MuiNoDataModule, MuiCheckboxModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@termx-health/ui';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'term-web/integration/_lib';

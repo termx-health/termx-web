@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {HttpContext} from '@angular/common/http';
-import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe } from '@kodality-web/core-util';
+import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe } from '@termx-health/core-util';
 import {catchError, of, throwError} from 'rxjs';
 import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
-import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiSelectModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiSelectModule, MuiIconModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
@@ -17,7 +17,7 @@ import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/associat
 import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {CodeSystemAssociation, CodeSystemLibService} from 'term-web/resources/_lib';
 import { AsyncPipe, UpperCasePipe } from '@angular/common';
-import { MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule } from '@termx-health/ui';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

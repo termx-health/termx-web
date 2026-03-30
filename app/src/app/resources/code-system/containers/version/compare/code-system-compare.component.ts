@@ -4,9 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import {environment} from 'environments/environment';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
-import { MuiFormModule, MuiButtonModule, MuiCardModule, MuiNoDataModule, MuiTableModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiButtonModule, MuiCardModule, MuiNoDataModule, MuiTableModule } from '@termx-health/ui';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
-import { AutofocusDirective, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { AutofocusDirective, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { FormsModule } from '@angular/forms';
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 

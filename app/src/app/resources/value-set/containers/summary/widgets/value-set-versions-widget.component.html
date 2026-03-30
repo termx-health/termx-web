@@ -61,7 +61,7 @@
               <div class="m-items-middle">(@for (f of rule.filters; track f) {
 <span class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
         @if (f.operator !== 'exists') {
-                    <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input>
+                    <tw-property-value-input viewMode name="value" [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input>
                   }
                   @if (f.operator === 'exists') {
                     <label>{{f.value}}</label>

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({

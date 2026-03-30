@@ -1,9 +1,9 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {CoreUtilModule} from '@termx-health/core-util';
+import {MarinaComponentsModule} from '@termx-health/ui';
+import {MarinaUtilModule} from '@termx-health/util';
 import {UcumLibService} from './services/ucum-lib.service';
 
 @NgModule({

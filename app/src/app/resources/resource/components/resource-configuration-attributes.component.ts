@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
-import { MuiEditableTableComponent, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiTooltipModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@termx-health/core-util';
+import { MuiEditableTableComponent, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiTooltipModule, MuiTextareaModule } from '@termx-health/ui';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import {ChecklistRule} from 'term-web/sys/_lib';

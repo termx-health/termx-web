@@ -1,7 +1,7 @@
 <m-select
   icon="search"
   placeholder="marina.ui.inputs.search.placeholder"
-  [(ngModel)]="value"
+  name="value" [(ngModel)]="value"
   (mInputChange)="onSearch($event)"
   (mChange)="fireOnChange()"
   [loading]="isLoading"

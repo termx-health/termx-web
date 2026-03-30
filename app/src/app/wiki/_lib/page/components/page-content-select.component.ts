@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { DestroyService, group, isDefined, LoadingManager, KeysPipe } from '@kodality-web/core-util';
-import { NgChanges, MuiSelectModule } from '@kodality-web/marina-ui';
+import { DestroyService, group, isDefined, LoadingManager, KeysPipe } from '@termx-health/core-util';
+import { NgChanges, MuiSelectModule } from '@termx-health/ui';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {PageContent} from 'term-web/wiki/_lib/page/models/page-content';

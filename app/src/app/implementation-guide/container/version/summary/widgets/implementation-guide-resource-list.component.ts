@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, LoadingManager, validateForm} from '@termx-health/core-util';
 import {ImplementationGuideLibService, ImplementationGuideVersion, ImplementationGuideVersionResource} from 'term-web/implementation-guide/_lib';
-import { MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@termx-health/ui';
 import { TransformationDefinitionSelectComponent } from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
 import { StructureDefinitionSelectComponent } from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';

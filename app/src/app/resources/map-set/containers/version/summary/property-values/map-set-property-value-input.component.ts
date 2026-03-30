@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, isDefined, validateForm, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, isDefined, validateForm, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe } from '@termx-health/core-util';
 import {EntityProperty, MapSetProperty} from 'term-web/resources/_lib';
-import { MuiFormModule, MuiInputModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiInputModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, MuiSelectModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';

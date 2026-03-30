@@ -1,11 +1,11 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, ApplyPipe, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, ApplyPipe, KeysPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from 'term-web/resources/_lib/code-system';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
 

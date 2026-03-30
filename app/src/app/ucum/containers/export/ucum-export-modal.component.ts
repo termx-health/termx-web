@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {LoadingManager} from '@termx-health/core-util';
+import {MuiNotificationService} from '@termx-health/ui';
 import {saveAs} from 'file-saver';
 import {CodeSystem, CodeSystemLibService} from 'term-web/resources/_lib';
 import {UcumExportRequest, UcumLibService} from 'term-web/ucum/_lib';

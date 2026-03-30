@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Component, inject} from '@angular/core';
-import {CorePipesModule} from '@kodality-web/core-util';
-import {MuiFormModule, MuiListModule} from '@kodality-web/marina-ui';
+import {CorePipesModule} from '@termx-health/core-util';
+import {MuiFormModule, MuiListModule} from '@termx-health/ui';
 import {environment} from 'environments/environment';
 import {InfoService} from 'term-web/core/info/info.service';
 

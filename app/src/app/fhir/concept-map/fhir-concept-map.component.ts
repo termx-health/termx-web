@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import { MuiTagModule, MuiTableModule } from '@kodality-web/marina-ui';
+import { MuiTagModule, MuiTableModule } from '@termx-health/ui';
 
 @Component({
     selector: 'tw-fhir-concept-map',

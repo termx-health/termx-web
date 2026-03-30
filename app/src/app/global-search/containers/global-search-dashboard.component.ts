@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@termx-health/core-util';
 import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';

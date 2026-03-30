@@ -85,7 +85,7 @@
                   <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
                   <tw-property-value-input style="flex: 1; text-align: right"
                     viewMode
-                    [ngModel]="property.value"
+                    name="value" [ngModel]="property.value"
                     [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
                   [codeSystem]="codeSystem.id"></tw-property-value-input>
                 }

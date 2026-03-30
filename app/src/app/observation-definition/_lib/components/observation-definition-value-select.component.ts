@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { MuiTagModule, MuiTooltipModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiTagModule, MuiTooltipModule, MuiIconModule } from '@termx-health/ui';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';

@@ -1,4 +1,4 @@
-<m-select icon="search" [placeholder]="placeholder" [(ngModel)]="value" (mChange)="fireOnChange()" [loading]="loader.isLoading" [autoUnselect]="false">
+<m-select icon="search" [placeholder]="placeholder" name="value" [(ngModel)]="value" (mChange)="fireOnChange()" [loading]="loader.isLoading" [autoUnselect]="false">
   @for (key of data | keys; track key) {
     <m-option [mValue]="data[key]?.sub" [mLabel]="data[key].name"></m-option>
   }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
-import { MuiNotificationService, MuiModalModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {DestroyService, LoadingManager, validateForm} from '@termx-health/core-util';
+import { MuiNotificationService, MuiModalModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiButtonModule } from '@termx-health/ui';
 import {Observable} from 'rxjs';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {MapSetFileImportService} from 'term-web/resources/_lib';

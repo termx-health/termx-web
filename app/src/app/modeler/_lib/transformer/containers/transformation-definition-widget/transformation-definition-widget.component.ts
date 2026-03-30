@@ -7,14 +7,14 @@ import {
     SimpleChanges,
     TemplateRef
 } from "@angular/core";
-import {SearchResult} from "@kodality-web/core-util";
+import {SearchResult} from "@termx-health/core-util";
 import {
     TransformationDefinition,
     TransformationDefinitionLibService,
     TransformationDefinitionQueryParams
 } from "term-web/modeler/_lib";
 import {Subscription} from "rxjs";
-import { MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule } from '@termx-health/ui';
 import { RouterLink } from '@angular/router';
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';

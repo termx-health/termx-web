@@ -1,12 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {SearchResult} from '@kodality-web/core-util';
+import {SearchResult} from '@termx-health/core-util';
 import {ValueSet} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
-import { MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule } from '@termx-health/ui';
 import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent, FinderLoadMoreItemComponent } from 'term-web/core/components/finder/finder.component';
 
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

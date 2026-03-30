@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
-import {LoadingManager, validateForm, ApplyPipe, LocalDatePipe, SortPipe} from '@kodality-web/core-util';
-import {MuiNoDataModule, MuiListModule, MuiDropdownModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiButtonModule, MuiDividerModule, MarinPageLayoutModule} from '@kodality-web/marina-ui';
-import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {LoadingManager, validateForm, ApplyPipe, LocalDatePipe, SortPipe} from '@termx-health/core-util';
+import {MuiNoDataModule, MuiListModule, MuiDropdownModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiButtonModule, MuiDividerModule, MarinPageLayoutModule} from '@termx-health/ui';
+import {MarinaUtilModule} from '@termx-health/util';
 import {TranslatePipe} from '@ngx-translate/core';
 import {StructureDefinitionVersion} from 'term-web/modeler/_lib';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';

@@ -1,8 +1,8 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Component, inject } from '@angular/core';
-import {serializeDate} from '@kodality-web/core-util';
+import {serializeDate} from '@termx-health/core-util';
 import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'term-web/fhir/_lib';
-import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiDatePickerModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiDatePickerModule, MuiAlertModule } from '@termx-health/ui';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';

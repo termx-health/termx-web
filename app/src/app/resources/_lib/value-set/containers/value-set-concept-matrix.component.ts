@@ -1,10 +1,10 @@
 import { Component, Injectable, Input, OnChanges, inject } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import { HttpCacheService, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { HttpCacheService, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import {interval, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
-import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiTableModule, MuiNoDataModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

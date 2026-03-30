@@ -2,8 +2,8 @@ import {BreakpointState} from '@angular/cdk/layout';
 import { Location, NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, forwardRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterOutlet, RouterLinkActive, RouterLink } from '@angular/router';
-import { BooleanInput, NumberInput, StringTemplateOutletDirective, ToStringPipe } from '@kodality-web/core-util';
-import { MuiBreakpointService, MuiCardModule, MuiCoreModule, MuiIconModule, MuiSpinnerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { BooleanInput, NumberInput, StringTemplateOutletDirective, ToStringPipe } from '@termx-health/core-util';
+import { MuiBreakpointService, MuiCardModule, MuiCoreModule, MuiIconModule, MuiSpinnerModule, MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 

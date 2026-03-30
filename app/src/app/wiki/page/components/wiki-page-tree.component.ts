@@ -1,6 +1,6 @@
 import { Component, Injectable, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique, ApplyPipe, ToStringPipe } from '@kodality-web/core-util';
+import { compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique, ApplyPipe, ToStringPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
@@ -9,7 +9,7 @@ import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
 import {PageLinkService} from 'term-web/wiki/page/services/page-link.service';
 import {PageService} from 'term-web/wiki/page/services/page.service';
 import {WikiPageSetupModalComponent} from 'term-web/wiki/page/components/wiki-page-setup-modal.component';
-import { MuiNoDataModule, MuiIconButtonModule, MuiInputModule, MuiSkeletonModule, MuiCoreModule, MuiIconModule, MuiButtonModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiIconButtonModule, MuiInputModule, MuiSkeletonModule, MuiCoreModule, MuiIconModule, MuiButtonModule, MuiPopconfirmModule } from '@termx-health/ui';
 
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';

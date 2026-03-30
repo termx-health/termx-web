@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UcumLibService, Prefix, SearchParams} from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
-import { ComponentStateStore, SearchResult } from '@kodality-web/core-util';
+import { ComponentStateStore, SearchResult } from '@termx-health/core-util';
 import {applyPagination, applySort} from "term-web/ucum/utils/table-util";
 
 @Component({

@@ -1,4 +1,4 @@
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined} from '@termx-health/core-util';
 import {Element} from 'term-web/modeler/_lib';
 
 export class StructureDefinitionUtil {

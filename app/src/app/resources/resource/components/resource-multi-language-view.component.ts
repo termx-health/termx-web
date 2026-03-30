@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {CoreI18nService, ApplyPipe} from '@kodality-web/core-util';
-import {MuiConfigService} from '@kodality-web/marina-ui';
+import {CoreI18nService, ApplyPipe} from '@termx-health/core-util';
+import {MuiConfigService} from '@termx-health/ui';
 
 @Component({
   selector: 'tw-resource-multi-language-view',

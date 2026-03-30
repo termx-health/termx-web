@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import {DestroyService, LoadingManager} from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiCoreModule } from '@termx-health/ui';
 import {IntegrationImportConfiguration, IntegrationOrphanetLibService} from 'term-web/integration/_lib';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';

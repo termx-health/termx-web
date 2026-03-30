@@ -1,4 +1,4 @@
-import {QueryParams} from '@kodality-web/core-util';
+import {QueryParams} from '@termx-health/core-util';
 
 export class ChecklistSearchParams extends QueryParams {
   public resourceType?: string;

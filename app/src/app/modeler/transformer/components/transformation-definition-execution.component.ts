@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
-import { MuiNotificationService, MuiButtonModule, MuiFormModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiButtonModule, MuiFormModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@termx-health/ui';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {TransformationDefinition} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import { FormsModule } from '@angular/forms';

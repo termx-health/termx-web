@@ -31,10 +31,19 @@
             "polyfills": ["zone.js"],
             "tsConfig": "app/tsconfig.app.json",
             "allowedCommonJsDependencies": [
-              "slugify",
-              "file-saver",
-              "fhir",
+              "@braintree/sanitize-url",
+              "@profoundlogic/hogan",
+              "cytoscape-cose-bilkent",
+              "cytoscape-fcose",
+              "dayjs",
+              "dayjs/plugin/advancedFormat.js",
+              "dayjs/plugin/customParseFormat.js",
+              "dayjs/plugin/duration.js",
+              "dayjs/plugin/isoWeek.js",
               "escape-html",
+              "exceljs",
+              "fhir",
+              "file-saver",
               "markdown-it",
               "markdown-it-abbr",
               "markdown-it-attrs",
@@ -46,7 +55,12 @@
               "markdown-it-multimd-table",
               "markdown-it-sub",
               "markdown-it-sup",
-              "markdown-it-task-lists"
+              "markdown-it-task-lists",
+              "slugify",
+              "text-mask-core",
+              "vscode-jsonrpc/lib/common/cancellation.js",
+              "vscode-jsonrpc/lib/common/events.js",
+              "vscode-languageserver-protocol"
             ],
             "assets": [
               "app/src/favicon.ico",
@@ -68,7 +82,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "./node_modules/@kodality-web/marina-ui/src/icons",
+                "input": "./node_modules/@termx-health/ui/src/icons",
                 "output": "/assets/"
               },
               {
@@ -98,7 +112,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
+                  "maximumWarning": "12mb",
                   "maximumError": "14mb"
                 },
                 {

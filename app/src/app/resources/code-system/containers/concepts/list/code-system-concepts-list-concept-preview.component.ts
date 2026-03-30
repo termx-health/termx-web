@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { collect, SearchResult, ApplyPipe, KeysPipe, LocalDateTimePipe, SortPipe } from '@kodality-web/core-util';
+import { collect, SearchResult, ApplyPipe, KeysPipe, LocalDateTimePipe, SortPipe } from '@termx-health/core-util';
 import {CodeSystemEntityVersion, Designation, EntityProperty} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {of} from 'rxjs';
 import { AsyncPipe, UpperCasePipe } from '@angular/common';
-import { MuiCardModule, MuiDividerModule, MuiIconButtonModule, MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDividerModule, MuiIconButtonModule, MuiFormModule, MuiIconModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';

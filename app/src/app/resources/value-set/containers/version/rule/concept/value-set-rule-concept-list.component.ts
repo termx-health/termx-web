@@ -1,8 +1,8 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ApplyPipe, AutofocusDirective, BooleanInput, isDefined, validateForm } from '@kodality-web/core-util';
-import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiCoreModule, MuiEditableTableModule, MuiFormModule, MuiIconModule, MuiInputModule, MuiModalModule, MuiNumberInputModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { ApplyPipe, AutofocusDirective, BooleanInput, isDefined, validateForm } from '@termx-health/core-util';
+import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiCoreModule, MuiEditableTableModule, MuiFormModule, MuiIconModule, MuiInputModule, MuiModalModule, MuiNumberInputModule, MuiTextareaModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';

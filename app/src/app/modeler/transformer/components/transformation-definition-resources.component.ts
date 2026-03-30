@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { remove, unique, uniqueBy, group, LoadingManager, ApplyPipe, FilterPipe, SortPipe } from '@kodality-web/core-util';
+import { remove, unique, uniqueBy, group, LoadingManager, ApplyPipe, FilterPipe, SortPipe } from '@termx-health/core-util';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
-import { MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule } from '@termx-health/ui';
 
 import { TransformationDefinitionResourceFormComponent } from 'term-web/modeler/transformer/components/transformation-definition-resource-form.component';
 import { TranslatePipe } from '@ngx-translate/core';

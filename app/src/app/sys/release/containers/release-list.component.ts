@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, AutofocusDirective, LocalDatePipe } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, AutofocusDirective, LocalDatePipe } from '@termx-health/core-util';
 import {Observable, tap} from 'rxjs';
 import {Release, ReleaseLibService, ReleaseSearchParams} from 'term-web/sys/_lib';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './release-list.component.html',

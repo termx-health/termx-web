@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { compareValues, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { compareValues, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {map, Observable} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiDividerModule, MuiCheckboxModule, MarinPageLayoutModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiDividerModule, MuiCheckboxModule, MarinPageLayoutModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { AsyncPipe } from '@angular/common';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';

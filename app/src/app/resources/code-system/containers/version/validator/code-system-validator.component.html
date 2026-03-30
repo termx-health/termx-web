@@ -26,14 +26,14 @@
     <div class="m-items-top">
       <m-card [mTitle]="'web.code-system-validator.uniqueness-validator.title'">
         <m-form-item [mLabel]="'web.code-system-validator.uniqueness-validator.designations'">
-          <m-checkbox [(ngModel)]="uniquenessRequest.designations"></m-checkbox>
+          <m-checkbox name="designations" [(ngModel)]="uniquenessRequest.designations"></m-checkbox>
         </m-form-item>
         <m-form-item [mLabel]="'web.code-system-validator.uniqueness-validator.properties'">
-          <m-checkbox [(ngModel)]="uniquenessRequest.properties"></m-checkbox>
+          <m-checkbox name="properties" [(ngModel)]="uniquenessRequest.properties"></m-checkbox>
         </m-form-item>
         @if (uniquenessRequest.properties) {
           <m-form-item [mLabel]="'web.code-system-validator.uniqueness-validator.ignore-empty-properties'">
-            <m-checkbox [(ngModel)]="uniquenessRequest.ignoreEmptyProperties"></m-checkbox>
+            <m-checkbox name="ignoreEmptyProperties" [(ngModel)]="uniquenessRequest.ignoreEmptyProperties"></m-checkbox>
           </m-form-item>
         }
         <m-button *m-card-footer

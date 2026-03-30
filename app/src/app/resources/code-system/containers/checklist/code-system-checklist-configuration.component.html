@@ -3,7 +3,7 @@
     <m-editable-table #rowsTable [mData]="rules | apply: mergerChecklist:checklist" [mAddAllowed]="false" [mDeleteAllowed]="false" [mEditAllowed]="false" [mLoading]="loader.isLoading">
       <m-editable-column mName="checked">
         <ng-template #viewTemplate let-r let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="r['_checked']" [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="r_checked" [(ngModel)]="r['_checked']" [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column mName="code" mTitle="entities.checklist-rule.code">

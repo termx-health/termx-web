@@ -26,7 +26,7 @@
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.target" [mName]="prefix + '-target'" required>
-                  <m-select [(ngModel)]="m.target" [name]="prefix + '-target'" required [compareWith]="compareTargets">
+                  <m-select name="target" [(ngModel)]="m.target" [name]="prefix + '-target'" required [compareWith]="compareTargets">
                     @for (target of targets; track $index) {
                       <m-option [mValue]="target" [mLabel]="target | apply:getTargetDisplay:observationDefinition:components"></m-option>
                     }
@@ -35,31 +35,31 @@
               </div>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.order-number" [mName]="prefix + '-order-number'">
-                  <m-number-input [min]="1" [(ngModel)]="m.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
+                  <m-number-input [min]="1" name="orderNumber" [(ngModel)]="m.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
                 </m-form-item>
               </div>
             </m-form-row>
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.map-set" [mName]="prefix + '-map-set'">
-                  <tw-map-set-search [(ngModel)]="m.mapSet" [name]="prefix + '-map-set'" valuePrimitive></tw-map-set-search>
+                  <tw-map-set-search name="mapSet" [(ngModel)]="m.mapSet" [name]="prefix + '-map-set'" valuePrimitive></tw-map-set-search>
                 </m-form-item>
               </div>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.code-system" [mName]="prefix + 'code-system'" required>
-                  <tw-code-system-search [(ngModel)]="m.codeSystem" [name]="prefix + 'code-system'" valuePrimitive required></tw-code-system-search>
+                  <tw-code-system-search name="codeSystem" [(ngModel)]="m.codeSystem" [name]="prefix + 'code-system'" valuePrimitive required></tw-code-system-search>
                 </m-form-item>
               </div>
             </m-form-row>
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.concept" [mName]="prefix + '-concept'" required>
-                  <tw-term-concept-search [(ngModel)]="m.concept" [codeSystem]="m.codeSystem" [name]="prefix + '-concept'" valueType="code" required></tw-term-concept-search>
+                  <tw-term-concept-search name="concept" [(ngModel)]="m.concept" [codeSystem]="m.codeSystem" [name]="prefix + '-concept'" valueType="code" required></tw-term-concept-search>
                 </m-form-item>
               </div>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.mappings.relation" [mName]="prefix + '-relation'">
-                  <tw-association-type-search [(ngModel)]="m.relation" [name]="prefix + '-relation'" valuePrimitive></tw-association-type-search>
+                  <tw-association-type-search name="relation" [(ngModel)]="m.relation" [name]="prefix + '-relation'" valuePrimitive></tw-association-type-search>
                 </m-form-item>
               </div>
             </m-form-row>
@@ -67,7 +67,7 @@
               <m-form-row>
                 <div *mFormCol>
                   <m-form-item mLabel="entities.observation-definition.mappings.condition" [mName]="prefix + '-condition'">
-                    <m-textarea [(ngModel)]="m.condition" [name]="prefix + '-condition'"></m-textarea>
+                    <m-textarea name="condition" [(ngModel)]="m.condition" [name]="prefix + '-condition'"></m-textarea>
                   </m-form-item>
                 </div>
               </m-form-row>

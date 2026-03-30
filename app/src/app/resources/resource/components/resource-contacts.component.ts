@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, copyDeep, isDefined, AutofocusDirective } from '@kodality-web/core-util';
+import { BooleanInput, copyDeep, isDefined, AutofocusDirective } from '@termx-health/core-util';
 import {ContactDetail} from 'term-web/resources/_lib';
-import { MuiCardModule, MuiTableModule, MuiNoDataModule, MuiIconModule, MuiButtonModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiTableModule, MuiNoDataModule, MuiIconModule, MuiButtonModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';

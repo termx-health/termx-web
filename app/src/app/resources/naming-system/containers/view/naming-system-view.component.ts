@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NamingSystem} from 'term-web/resources/_lib';
 import {NamingSystemService} from 'term-web/resources/naming-system/services/naming-system-service';
-import { MuiFormModule, MuiCardModule, MuiMultiLanguageInputModule, MuiTableModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiCardModule, MuiMultiLanguageInputModule, MuiTableModule, MuiIconModule } from '@termx-health/ui';
 
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { FormsModule } from '@angular/forms';

@@ -1,8 +1,8 @@
 import { Component, Injectable, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { copyDeep, isDefined, isNil, LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe } from '@kodality-web/core-util';
-import { CodeName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { copyDeep, isDefined, isNil, LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe } from '@termx-health/core-util';
+import { CodeName, MarinaUtilModule } from '@termx-health/util';
 import {forkJoin, map, mergeMap, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
@@ -11,7 +11,7 @@ import {CodeSystemVersionLibService} from 'term-web/resources/_lib/code-system/s
 import {Task, TaskActivity, TaskContextItem, Workflow} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {PageCommentLibService, PageLibService} from 'term-web/wiki/_lib';
-import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, MuiCoreModule } from '@termx-health/ui';
 import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { TaskTypeComponent } from 'term-web/task/_lib/components/task-type.component';
 import { TaskStatusComponent } from 'term-web/task/_lib/components/task-status.component';

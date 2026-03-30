@@ -1,11 +1,11 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe, ToStringPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe, ToStringPipe } from '@termx-health/core-util';
 import { StructureDefinition, StructureDefinitionLibService, StructureDefinitionSearchParams } from 'term-web/modeler/_lib';
 import { catchError, finalize, forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ArrayUtil } from 'term-web/core/utils/array-util';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 @Component({
 	selector: 'tw-structure-definition-search',

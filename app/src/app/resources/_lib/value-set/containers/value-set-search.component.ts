@@ -1,6 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil, forkJoin} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
@@ -8,7 +8,7 @@ import {ArrayUtil} from 'term-web/core/utils/array-util';
 import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
 import {ValueSetSearchParams} from 'term-web/resources/_lib/value-set/model/value-set-search-params';
 import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

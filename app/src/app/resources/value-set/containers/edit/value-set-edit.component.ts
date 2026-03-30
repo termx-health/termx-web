@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@termx-health/core-util';
 import {ValueSet, ValueSetTransactionRequest} from 'term-web/resources/_lib';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
@@ -10,7 +10,7 @@ import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 import {AuthService} from 'term-web/core/auth';
-import { MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
 import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';

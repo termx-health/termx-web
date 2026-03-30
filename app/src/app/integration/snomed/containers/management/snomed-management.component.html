@@ -102,7 +102,7 @@
           <td>{{branch.creation | localDate}}</td>
           <td>{{branch.base | localDate}}</td>
           <td>
-            <m-checkbox [ngModel]="branch.deleted" readOnly></m-checkbox>
+            <m-checkbox name="deleted" [ngModel]="branch.deleted" readOnly></m-checkbox>
           </td>
         </tr>
         <tr *mTableNoData>

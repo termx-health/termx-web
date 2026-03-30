@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { LoadingManager, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@kodality-web/core-util';
+import { LoadingManager, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@termx-health/core-util';
 import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin, of} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiCardModule, MuiListModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiCardModule, MuiListModule, MuiDividerModule } from '@termx-health/ui';
 
 import { FormsModule } from '@angular/forms';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
@@ -14,7 +14,7 @@ import { CodeSystemDesignationEditComponent } from 'term-web/resources/code-syst
 import { CodeSystemPropertyValueEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
 import { CodeSystemAssociationEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './code-system-concept-view.component.html',

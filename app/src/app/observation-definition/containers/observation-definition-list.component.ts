@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiTableComponent, MarinPageLayoutModule, MuiAlertModule, MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTooltipModule, MuiTagModule, MuiNoDataModule, MuiModalModule } from '@kodality-web/marina-ui';
-import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiTableComponent, MarinPageLayoutModule, MuiAlertModule, MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTooltipModule, MuiTagModule, MuiNoDataModule, MuiModalModule } from '@termx-health/ui';
+import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionSearchParams} from 'term-web/observation-definition/_lib';
 import {Observable, tap} from 'rxjs';
 import {CodeSystemConcept} from 'term-web/resources/_lib';

@@ -35,9 +35,9 @@
             </td>
             <td>{{p.name}}</td>
             <td>{{p.uri}}</td>
-            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
-            <td><m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox></td>
-            <td><m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox></td>
+            <td><m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td><m-checkbox name="preferred" [ngModel]="p.preferred" readOnly></m-checkbox></td>
+            <td><m-checkbox name="showInList" [ngModel]="p.showInList" readOnly></m-checkbox></td>
             <td>{{p.description | localName}}</td>
             <td>{{p.orderNumber}}</td>
           </tr>
@@ -60,13 +60,13 @@
                     {{p.orderNumber}}
                   </m-form-item>
                   <m-form-item *mFormCol mLabel="entities.entity-property.required">
-                    <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                    <m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox>
                   </m-form-item>
                   <m-form-item *mFormCol mLabel="entities.entity-property.preferred">
-                    <m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox>
+                    <m-checkbox name="preferred" [ngModel]="p.preferred" readOnly></m-checkbox>
                   </m-form-item>
                   <m-form-item *mFormCol mLabel="entities.entity-property.show-in-list">
-                    <m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox>
+                    <m-checkbox name="showInList" [ngModel]="p.showInList" readOnly></m-checkbox>
                   </m-form-item>
                 </m-form-row>
               </td>
@@ -84,17 +84,17 @@
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="required" [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.preferred'" mName="preferred">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.preferred" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="preferred" [(ngModel)]="p.preferred" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.show-in-list'" mName="showInList">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="showInList" [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'" mName="description">
@@ -207,8 +207,8 @@
             <td>{{p.name}}</td>
             <td>{{p.uri}}</td>
             <td>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
-            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
-            <td><m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox></td>
+            <td><m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td><m-checkbox name="showInList" [ngModel]="p.showInList" readOnly></m-checkbox></td>
             <td>{{p.description | localName}}</td>
             <td>{{p.orderNumber}}</td>
             <td></td>
@@ -235,13 +235,13 @@
                   {{p.orderNumber}}
                 </m-form-item>
                 <m-form-item *mFormCol mLabel="entities.entity-property.required">
-                  <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                  <m-checkbox name="required" [ngModel]="p.required" readOnly></m-checkbox>
                 </m-form-item>
                 <m-form-item *mFormCol mLabel="entities.entity-property.preferred">
-                  <m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox>
+                  <m-checkbox name="preferred" [ngModel]="p.preferred" readOnly></m-checkbox>
                 </m-form-item>
                 <m-form-item *mFormCol mLabel="entities.entity-property.show-in-list">
-                  <m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox>
+                  <m-checkbox name="showInList" [ngModel]="p.showInList" readOnly></m-checkbox>
                 </m-form-item>
               </m-form-row>
 
@@ -272,7 +272,7 @@
                           @if (f.type === 'property') {
                             <tw-property-value-input
                                 viewMode
-                                [ngModel]="f.value"
+                                name="value" [ngModel]="f.value"
                                 [property]="f.property"
                                 [codeSystem]="codeSystemId"
                             ></tw-property-value-input>
@@ -303,12 +303,12 @@
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="required" [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.show-in-list'" mName="showInList">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
+          <m-checkbox name="showInList" [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'">
@@ -446,7 +446,7 @@
                       <ng-template #viewTemplate let-f>{{f.value}}</ng-template>
                       <ng-template #editTemplate let-f let-ngModelName="ngModelName">
                         @if (f.type === 'property') {
-                          <tw-property-value-input [(ngModel)]="f.value"
+                          <tw-property-value-input name="value" [(ngModel)]="f.value"
                               [name]="ngModelName"
                               [codeSystem]="codeSystemId"
                               [property]="f.property"

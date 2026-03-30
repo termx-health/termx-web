@@ -1,7 +1,7 @@
 import {HttpClient, HttpContext} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
-import {HttpCacheService} from '@kodality-web/core-util';
-import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
+import {HttpCacheService} from '@termx-health/core-util';
+import {MuiSkipErrorHandler} from '@termx-health/ui';
 import {environment} from 'environments/environment';
 import {catchError, map, Observable, of} from 'rxjs';
 

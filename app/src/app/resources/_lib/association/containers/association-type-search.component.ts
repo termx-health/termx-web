@@ -1,10 +1,10 @@
 import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, KeysPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, KeysPipe } from '@termx-health/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, of, takeUntil} from 'rxjs';
 import {AssociationType, AssociationTypeLibService, AssociationTypeSearchParams} from 'term-web/resources/_lib/association';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 @Component({

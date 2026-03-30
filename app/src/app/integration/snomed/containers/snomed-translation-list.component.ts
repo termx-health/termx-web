@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {SnomedBranch, SnomedLibService, SnomedTranslation, SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
-import { MuiEditableTableModule, MuiSelectModule, MuiTextareaModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiEditableTableModule, MuiSelectModule, MuiTextareaModule, MuiCoreModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

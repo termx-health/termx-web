@@ -36,7 +36,7 @@
 
   <m-card mTitle="web.integration.file-import.code-system.properties.header">
     <div *m-card-content class="tw-flex-container">
-      <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
+      <m-select name="template" [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
         <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"/>
         <m-option [mValue]="'icf'" [mLabel]="'icf'"/>
         <m-option [mValue]="'loinc-lt'" [mLabel]="'loinc-lt'"/>
@@ -62,7 +62,7 @@
           <td>
             <!-- Mapped KTS property -->
             @if (!item['_newProp']) {
-              <m-select [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
+              <m-select name="propertyName" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
                 @for (prop of form?.sourceCodeSystem?.properties | apply: combineWithDefaults; track prop) {
                   <m-option
                     [mValue]="prop.name"
@@ -79,7 +79,7 @@
 
             @if (item['_newProp']) {
               <div class="m-items-middle">
-                <m-textarea [(ngModel)]="item.propertyName"/>
+                <m-textarea name="propertyName" [(ngModel)]="item.propertyName"/>
                 <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
               </div>
             }
@@ -88,7 +88,7 @@
           @if (hasDuplicateIdentifiers) {
             <td>
               @if (['concept-code', 'hierarchical-concept'] | includes:item.propertyName) {
-                <m-checkbox [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
+                <m-checkbox name="preferred" [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
               }
             </td>
           }
@@ -100,21 +100,21 @@
 
             <div class="m-items-middle">
               @if (item['_newProp'] || !item.propertyName) {
-                <m-select style="width: 100%" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
+                <m-select style="width: 100%" name="propertyType" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
                   @for (t of dataTypes; track t) {
                     <m-option [mLabel]="t" [mValue]="t"/>
                   }
                 </m-select>
               }
               @if (item.propertyType === 'Coding') {
-                <tw-code-system-search style="width: 100%" valuePrimitive [(ngModel)]="item.propertyCodeSystem"/>
+                <tw-code-system-search style="width: 100%" valuePrimitive name="propertyCodeSystem" [(ngModel)]="item.propertyCodeSystem"/>
               }
             </div>
           </td>
 
           <td>
             @if (item.propertyType === 'dateTime') {
-              <m-select [(ngModel)]="item.propertyTypeFormat">
+              <m-select name="propertyTypeFormat" [(ngModel)]="item.propertyTypeFormat">
                 <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"/>
                 <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"/>
                 <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"/>
@@ -126,20 +126,20 @@
 
           <td>
             @if ((['designation', 'string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)) {
-              <m-input [(ngModel)]="item.propertyDelimiter"></m-input>
+              <m-input name="propertyDelimiter" [(ngModel)]="item.propertyDelimiter"></m-input>
             }
           </td>
 
           <td>
             @if (item.propertyType === 'designation' && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)) {
               <tw-value-set-concept-select
-                [(ngModel)]="item.language"
+                name="language" [(ngModel)]="item.language"
                 valueSet="languages"/>
             }
           </td>
 
           <td>
-            <m-checkbox [(ngModel)]="item.import"/>
+            <m-checkbox name="import" [(ngModel)]="item.import"/>
           </td>
         </tr>
 

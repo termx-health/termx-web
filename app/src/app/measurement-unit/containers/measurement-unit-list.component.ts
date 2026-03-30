@@ -1,16 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, QueryParams, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, QueryParams, SearchResult, AutofocusDirective } from '@termx-health/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {MeasurementUnit, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {MeasurementUnitService} from 'term-web/measurement-unit/services/measurement-unit.service';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 @Component({

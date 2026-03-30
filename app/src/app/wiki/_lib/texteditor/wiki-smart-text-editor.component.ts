@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input, ViewChild} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, isNil} from '@termx-health/core-util';
 import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
 import {launchDrawioEditor} from 'term-web/wiki/_lib/texteditor/editor-external/drawio.editor';
 import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';

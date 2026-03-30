@@ -1,12 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {forkJoin, of} from 'rxjs';
 import {MapSet, MapSetVersion} from 'term-web/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {Provenance} from 'term-web/sys/_lib';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule } from '@termx-health/ui';
 import { ProvenanceListComponent } from 'term-web/sys/_lib/provenance/components/provenance-list.component';
 
 @Component({

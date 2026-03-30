@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {SearchHttpParams} from '@kodality-web/core-util';
+import {SearchHttpParams} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {FhirParameters, SEPARATOR} from 'term-web/fhir/_lib/model/fhir-parameters';

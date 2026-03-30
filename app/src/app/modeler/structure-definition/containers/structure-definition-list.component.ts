@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
 import { catchError, finalize, Observable, of, tap } from 'rxjs';
 import { StructureDefinition, StructureDefinitionSearchParams } from 'term-web/modeler/_lib';
 import { StructureDefinitionService } from 'term-web/modeler/structure-definition/services/structure-definition.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
-import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiNoDataModule, MuiModalModule, MuiRadioModule } from '@kodality-web/marina-ui';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiNoDataModule, MuiModalModule, MuiRadioModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -17,7 +17,7 @@ import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-s
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
-import { MuiNotificationService } from '@kodality-web/marina-ui';
+import { MuiNotificationService } from '@termx-health/ui';
 
 interface Filter {
   open: boolean;

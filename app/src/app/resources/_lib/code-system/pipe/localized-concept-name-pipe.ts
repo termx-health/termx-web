@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform, inject } from '@angular/core';
-import {isDefined, sortFn, unique} from '@kodality-web/core-util';
+import {isDefined, sortFn, unique} from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {EMPTY, Observable, of} from 'rxjs';

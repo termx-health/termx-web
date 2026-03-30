@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { copyDeep, LocalDateTimePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiSpinnerModule, MuiFormModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiCardModule } from '@kodality-web/marina-ui';
+import { copyDeep, LocalDateTimePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiFormModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiCardModule } from '@termx-health/ui';
 import {Observable, of} from 'rxjs';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';

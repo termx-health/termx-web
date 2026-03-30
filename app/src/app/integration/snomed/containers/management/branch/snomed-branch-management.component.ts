@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DestroyService, format, isDefined, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiCheckboxModule, MuiDividerModule, MuiIconModule, MuiTagModule, MuiTableModule, MuiNoDataModule, MuiModalModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiAlertModule, MuiNumberInputModule } from '@kodality-web/marina-ui';
+import { DestroyService, format, isDefined, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiCheckboxModule, MuiDividerModule, MuiIconModule, MuiTagModule, MuiTableModule, MuiNoDataModule, MuiModalModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiAlertModule, MuiNumberInputModule } from '@termx-health/ui';
 import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'term-web/integration/_lib';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {filter, forkJoin} from 'rxjs';

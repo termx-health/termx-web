@@ -1,12 +1,12 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {initializeWebComponent} from '@termx-health/structure-definition-viewer';
 import {Fhir} from 'fhir/fhir';
 import {map, Observable, tap} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinition} from 'term-web/modeler/_lib';
 import {StructureDefinitionLibService} from 'term-web/modeler/_lib/structure-definition/structure-definition-lib.service';
-import { MuiSkeletonModule } from '@kodality-web/marina-ui';
+import { MuiSkeletonModule } from '@termx-health/ui';
 import { JsonPipe } from '@angular/common';
 
 @Component({

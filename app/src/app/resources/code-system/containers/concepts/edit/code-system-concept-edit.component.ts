@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@termx-health/core-util';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -23,7 +23,7 @@ import {CodeSystemAssociationEditComponent} from 'term-web/resources/code-system
 import {CodeSystemDesignationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/designation/code-system-designation-edit.component';
 import {CodeSystemPropertyValueEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
 import { ResourceContextComponent as ResourceContextComponent_1 } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule } from '@termx-health/ui';
 import { SequenceValueGeneratorComponent } from 'term-web/sequence/_lib/components/sequence-value-generator.component';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
@@ -33,7 +33,7 @@ import { ResourceTasksWidgetComponent as ResourceTasksWidgetComponent_1 } from '
 import { CodeSystemConceptReferenceComponent } from 'term-web/resources/code-system/containers/concepts/edit/reference/code-system-concept-reference.component';
 import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({

@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
-import { group, collect, ApplyPipe, JoinPipe, MapPipe } from '@kodality-web/core-util';
+import { group, collect, ApplyPipe, JoinPipe, MapPipe } from '@termx-health/core-util';
 import {CodeSystem, Telecom} from 'term-web/resources/_lib';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
-import { MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiIconModule, MuiDividerModule, MuiCoreModule } from '@termx-health/ui';
 import { CopyContainerComponent } from 'term-web/core/ui/components/copy-container/copy-container.component';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({

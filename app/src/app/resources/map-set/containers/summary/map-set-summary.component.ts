@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {MapSet, MapSetVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { MapSetInfoWidgetComponent } from 'term-web/resources/map-set/containers/summary/widgets/map-set-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';

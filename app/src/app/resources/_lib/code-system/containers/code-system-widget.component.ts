@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, inject } from '@angular/core';
-import { SearchResult, ApplyPipe } from '@kodality-web/core-util';
-import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { SearchResult, ApplyPipe } from '@termx-health/core-util';
+import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {Subscription} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from 'term-web/resources/_lib/code-system';
-import { MuiSkeletonModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSkeletonModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@termx-health/ui';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';

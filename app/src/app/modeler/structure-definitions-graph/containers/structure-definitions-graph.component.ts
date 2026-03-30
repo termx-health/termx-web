@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { SearchResult } from '@kodality-web/core-util';
+import { SearchResult } from '@termx-health/core-util';
 import { finalize, Observable } from 'rxjs';
 import cytoscape, { Core, EdgeDefinition, ElementsDefinition, NodeDefinition } from 'cytoscape';
 import klay from 'cytoscape-klay';

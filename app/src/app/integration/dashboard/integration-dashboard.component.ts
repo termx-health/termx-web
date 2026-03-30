@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
-import { MuiCardModule, MuiDividerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDividerModule, MuiButtonModule } from '@termx-health/ui';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';

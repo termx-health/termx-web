@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, NzTabLinkDirective } from 'ng-zorro-antd/tabs';
-import { MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiCoreModule } from '@termx-health/ui';
 import { LoincListComponent } from 'term-web/integration/loinc/loinc-list.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { LoincPartListComponent } from 'term-web/integration/loinc/loinc-part-list.component';

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective, IncludesPipe } from '@kodality-web/core-util';
-import { MuiTreeSelectNodeOptions, MuiCardModule, MuiNoDataModule, MuiButtonModule, MuiIconModule, MuiTableModule, MuiModalModule, MuiFormModule, MuiRadioModule, MuiTreeSelectModule, MuiSelectModule, MuiInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective, IncludesPipe } from '@termx-health/core-util';
+import { MuiTreeSelectNodeOptions, MuiCardModule, MuiNoDataModule, MuiButtonModule, MuiIconModule, MuiTableModule, MuiModalModule, MuiFormModule, MuiRadioModule, MuiTreeSelectModule, MuiSelectModule, MuiInputModule, MuiDividerModule } from '@termx-health/ui';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {CodeSystemEntityVersion, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import { NgTemplateOutlet } from '@angular/common';

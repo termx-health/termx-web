@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiCheckboxModule, MuiMultiLanguageInputModule, MuiSelectModule} from '@kodality-web/marina-ui';
+import {isDefined, LoadingManager, validateForm} from '@termx-health/core-util';
+import {MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiCheckboxModule, MuiMultiLanguageInputModule, MuiSelectModule} from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
 import {Ecosystem} from 'term-web/sys/_lib/ecosystem';

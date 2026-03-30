@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import { DestroyService, isDefined, ApplyPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiTableModule, MuiCheckboxModule, MuiButtonModule, MuiPopoverModule, MuiIconModule, MuiDividerModule, MuiPopconfirmModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { DestroyService, isDefined, ApplyPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MuiTableModule, MuiCheckboxModule, MuiButtonModule, MuiPopoverModule, MuiIconModule, MuiDividerModule, MuiPopconfirmModule, MuiNoDataModule } from '@termx-health/ui';
 import {combineLatest, takeUntil} from 'rxjs';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {SpaceDiffItem} from 'term-web/sys/_lib/space';

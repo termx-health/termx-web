@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {
   ObservationDefinition,
@@ -8,7 +8,7 @@ import {
   ObservationDefinitionMapping,
   ObservationDefinitionMappingTarget
 } from 'term-web/observation-definition/_lib';
-import { MuiEditableTableModule, MuiTableModule, MuiFormModule, MuiSelectModule, MuiNumberInputModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { MuiEditableTableModule, MuiTableModule, MuiFormModule, MuiSelectModule, MuiNumberInputModule, MuiTextareaModule } from '@termx-health/ui';
 import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';

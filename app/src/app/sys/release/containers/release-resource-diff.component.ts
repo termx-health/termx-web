@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { DestroyService, group, isNil, LoadingManager, ApplyPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiTooltipModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { DestroyService, group, isNil, LoadingManager, ApplyPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiTooltipModule, MuiIconModule } from '@termx-health/ui';
 import {map, Observable, of, forkJoin} from 'rxjs';
 import {FhirCodeSystemLibService, FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {Server, ServerLibService} from 'term-web/sys/_lib/space';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './release-resource-diff.component.html',

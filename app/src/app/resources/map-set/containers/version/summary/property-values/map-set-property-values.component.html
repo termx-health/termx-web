@@ -6,7 +6,7 @@
   @if (viewMode) {
     <div class="m-items-middle">
       <span style="white-space: nowrap" class="m-subtitle">{{pv.mapSetPropertyName}}</span>
-      <tw-map-set-property-value-input [ngModel]="pv.value" [property]="pv.mapSetPropertyId | apply: getProperty: properties" viewMode/>
+      <tw-map-set-property-value-input name="value" [ngModel]="pv.value" [property]="pv.mapSetPropertyId | apply: getProperty: properties" viewMode/>
     </div>
   }
   @if (!viewMode) {

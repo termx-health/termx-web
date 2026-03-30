@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import {LoadingManager} from '@termx-health/core-util';
 import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {forkJoin} from 'rxjs';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiAlertModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({

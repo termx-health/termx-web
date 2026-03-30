@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {finalize, Observable, tap} from 'rxjs';
@@ -7,7 +7,7 @@ import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/re
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
 import { AsyncPipe } from '@angular/common';
-import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -15,11 +15,12 @@ import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-b
 import { RouterLink } from '@angular/router';
 import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { CodeSystemDuplicateModalComponent } from 'term-web/resources/code-system/containers/edit/code-system-duplicate-modal.component';
 import { CodeSystemSupplementModalComponent } from 'term-web/resources/code-system/containers/edit/code-system-supplement-modal.component';
 import { ResourceFhirImportModalComponent } from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 
@@ -34,7 +35,7 @@ interface Filter {
 @Component({
     templateUrl: 'code-system-list.component.html',
     providers: [DestroyService],
-    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, MuiDropdownModule, AddButtonComponent, MuiCoreModule, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, ValueSetConceptSelectComponent, MuiBackendTableModule, MuiTableModule, StatusTagComponent, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule, CodeSystemDuplicateModalComponent, CodeSystemSupplementModalComponent, ResourceFhirImportModalComponent, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
+    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, MuiDropdownModule, AddButtonComponent, MuiCoreModule, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, ValueSetConceptSelectComponent, SpaceSelectComponent, MuiBackendTableModule, MuiTableModule, StatusTagComponent, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule, CodeSystemDuplicateModalComponent, CodeSystemSupplementModalComponent, ResourceFhirImportModalComponent, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
 })
 export class CodeSystemListComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);

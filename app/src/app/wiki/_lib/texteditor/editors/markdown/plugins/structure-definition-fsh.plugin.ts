@@ -1,4 +1,4 @@
-import {matchSection} from '@kodality-web/marina-markdown-parser';
+import {matchSection} from '@termx-health/markdown-parser';
 import {tokenAttrValue} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/plugin.util';
 
 

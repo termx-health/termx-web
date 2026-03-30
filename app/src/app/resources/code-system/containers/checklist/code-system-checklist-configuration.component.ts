@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { isDefined, isNil, LoadingManager, ApplyPipe } from '@kodality-web/core-util';
-import { MuiEditableTableComponent, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { isDefined, isNil, LoadingManager, ApplyPipe } from '@termx-health/core-util';
+import { MuiEditableTableComponent, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiIconModule } from '@termx-health/ui';
 import {Checklist, ChecklistRule} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     selector: 'tw-cs-checklist-configuration',

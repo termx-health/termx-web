@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@termx-health/core-util';
 import {ObservationDefinitionMember} from 'term-web/observation-definition/_lib';
-import { MuiEditableTableModule, MuiNumberInputModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiEditableTableModule, MuiNumberInputModule, MuiCoreModule } from '@termx-health/ui';
 import { ObservationDefinitionSearchComponent } from 'term-web/observation-definition/_lib/components/observation-definition-search.component';
 import { RouterLink } from '@angular/router';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     selector: 'tw-obs-def-member-list',

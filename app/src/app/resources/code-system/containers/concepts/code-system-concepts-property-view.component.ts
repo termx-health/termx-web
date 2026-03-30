@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { copyDeep, isDefined, LoadingManager, SearchResult, ApplyPipe, IncludesPipe, SortPipe } from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, SearchResult, ApplyPipe, IncludesPipe, SortPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   CodeSystem,
@@ -17,7 +17,7 @@ import {environment} from 'environments/environment';
 import {forkJoin, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiTagModule, MuiIconModule, MuiListModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiTagModule, MuiIconModule, MuiListModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { FormsModule } from '@angular/forms';

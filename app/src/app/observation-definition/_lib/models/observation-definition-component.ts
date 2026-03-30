@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {ObservationDefinitionCardinality} from 'term-web/observation-definition/_lib/models/observation-definition-cardinality';
 import {ObservationDefinitionUnit} from 'term-web/observation-definition/_lib/models/observation-definition-unit';
 

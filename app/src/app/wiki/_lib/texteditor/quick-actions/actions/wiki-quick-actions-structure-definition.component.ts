@@ -1,9 +1,9 @@
 import { Component, forwardRef, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {validateForm} from '@kodality-web/core-util';
+import {validateForm} from '@termx-health/core-util';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions.base';
-import { MuiModalModule, MuiFormModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiModalModule, MuiFormModule, MuiSelectModule, MuiButtonModule } from '@termx-health/ui';
 
 import { TranslatePipe } from '@ngx-translate/core';
 

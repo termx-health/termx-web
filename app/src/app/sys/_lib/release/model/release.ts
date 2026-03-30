@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {ReleaseResource} from 'term-web/sys/_lib/release/model/release-resource';
 
 export class Release {

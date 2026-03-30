@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {MuiCardModule, MuiButtonModule, MuiIconModule, MuiListModule, MuiDividerModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule} from '@kodality-web/marina-ui';
+import {MuiCardModule, MuiButtonModule, MuiIconModule, MuiListModule, MuiDividerModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule} from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthoritativeResource} from 'term-web/sys/_lib/space';
 import {StatusTagComponent} from 'term-web/core/ui/components/publication-status-tag/status-tag.component';

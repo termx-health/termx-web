@@ -7,7 +7,7 @@
       <!-- Quick Search -->
       @if (!filter.open) {
         <m-input
-          [(ngModel)]="filter.searchInput"
+          name="searchInput" [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
@@ -33,7 +33,7 @@
     @if (filter.open) {
       <m-form-item>
         <m-input
-          [(ngModel)]="_filter.searchInput"
+          name="searchInput" [(ngModel)]="_filter.searchInput"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
         ></m-input>
@@ -48,7 +48,7 @@
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.project">
-      <m-select [(ngModel)]="_filter.project" multiple>
+      <m-select name="project" [(ngModel)]="_filter.project" multiple>
         @for (p of projects; track p) {
           <m-option [mLabel]="p.names | localName" [mValue]="p.code"/>
         }
@@ -57,7 +57,7 @@
 
     <m-form-item mLabel="web.task.filter.status">
       <div class="m-items-middle">
-        <m-select style="flex: 1" [(ngModel)]="_filter.statusOption" (ngModelChange)="_filter.status = undefined">
+        <m-select style="flex: 1" name="statusOption" [(ngModel)]="_filter.statusOption" (ngModelChange)="_filter.status = undefined">
           <m-option mLabel="Open" mValue="open"/>
           <m-option mLabel="Is (Or)" mValue="is"/>
           <m-option mLabel="Close" mValue="close"/>
@@ -65,7 +65,7 @@
         </m-select>
         @if (['is', 'is-not'] | includes: _filter.statusOption) {
           <tw-value-set-concept-select style="flex: 1"
-            [(ngModel)]="_filter.status"
+            name="status" [(ngModel)]="_filter.status"
             valueSet="task-status"
             multiple
           ></tw-value-set-concept-select>
@@ -74,7 +74,7 @@
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.assignee">
-      <m-select [(ngModel)]="_filter.assignee">
+      <m-select name="assignee" [(ngModel)]="_filter.assignee">
         @for (user of users; track user) {
           <m-option [mLabel]="user.name" [mValue]="user.sub"/>
         }
@@ -82,11 +82,11 @@
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.priority">
-      <tw-value-set-concept-select [(ngModel)]="_filter.priority" valueSet="request-priority" multiple/>
+      <tw-value-set-concept-select name="priority" [(ngModel)]="_filter.priority" valueSet="request-priority" multiple/>
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.type">
-      <m-select [(ngModel)]="_filter.type">
+      <m-select name="type" [(ngModel)]="_filter.type">
         <m-option mLabel="Task" mValue="task"/>
         <m-option mLabel="Phase" mValue="phase"/>
         <m-option mLabel="Epic" mValue="epic"/>
@@ -98,7 +98,7 @@
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.author">
-      <m-select [(ngModel)]="_filter.author">
+      <m-select name="author" [(ngModel)]="_filter.author">
         @for (user of users; track user) {
           <m-option [mLabel]="user.name" [mValue]="user.sub"/>
         }
@@ -107,20 +107,20 @@
 
     <m-form-item mLabel="web.task.filter.created">
       <div class="m-items-middle">
-        <m-date-picker style="flex: 1" [(ngModel)]="_filter.createdFrom"/>
-        <m-date-picker style="flex: 1" [(ngModel)]="_filter.createdTo"/>
+        <m-date-picker style="flex: 1" name="createdFrom" [(ngModel)]="_filter.createdFrom"/>
+        <m-date-picker style="flex: 1" name="createdTo" [(ngModel)]="_filter.createdTo"/>
       </div>
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.finished">
       <div class="m-items-middle">
-        <m-date-picker style="flex: 1" [(ngModel)]="_filter.finishedFrom"/>
-        <m-date-picker style="flex: 1" [(ngModel)]="_filter.finishedTo"/>
+        <m-date-picker style="flex: 1" name="finishedFrom" [(ngModel)]="_filter.finishedFrom"/>
+        <m-date-picker style="flex: 1" name="finishedTo" [(ngModel)]="_filter.finishedTo"/>
       </div>
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.unseen-changes">
-      <m-checkbox [(ngModel)]="_filter.unseenChanges">{{'web.task.filter.unseen-changes-only' | translate}}</m-checkbox>
+      <m-checkbox name="unseenChanges" [(ngModel)]="_filter.unseenChanges">{{'web.task.filter.unseen-changes-only' | translate}}</m-checkbox>
     </m-form-item>
   </tw-table-filter>
 
@@ -159,7 +159,7 @@
         }
       </td>
       <td>{{task.title}}</td>
-      <td><tw-task-type [ngModel]="task.type" readonly/></td>
+      <td><tw-task-type name="type" [ngModel]="task.type" readonly/></td>
       <td><tw-task-status [status]="task.status"/></td>
       <td>
         @if (task.assignee) {

@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe } from '@kodality-web/core-util';
-import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe } from '@termx-health/core-util';
+import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {MapSetVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
 import {Release, ReleaseLibService} from 'term-web/sys/_lib';
 
-import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiButtonModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';

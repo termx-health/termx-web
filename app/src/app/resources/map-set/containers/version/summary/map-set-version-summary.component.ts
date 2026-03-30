@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DestroyService, LoadingManager, LocalDatePipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, LocalDatePipe } from '@termx-health/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiDropdownModule, MuiCoreModule } from '@termx-health/ui';
 import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'term-web/resources/_lib';
 import {forkJoin, map} from 'rxjs';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';

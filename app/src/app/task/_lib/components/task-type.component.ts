@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import {BooleanInput, DestroyService} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService} from '@termx-health/core-util';
 import { NgClass } from '@angular/common';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 @Component({
     selector: 'tw-task-type',

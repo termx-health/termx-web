@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
+import {CoreUtilModule} from '@termx-health/core-util';
+import {MarinaComponentsModule} from '@termx-health/ui';
 import {ChecklistLibService} from 'term-web/sys/_lib/checklist/services/checklist-lib.service';
 
 @NgModule({

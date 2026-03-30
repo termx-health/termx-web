@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, Directive, OnInit, ViewChild, inject } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, NgForm, ValidationErrors, Validator, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { LoadingManager, unique, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { LoadingManager, unique, validateForm, AutofocusDirective } from '@termx-health/core-util';
 import {Sequence} from 'term-web/sequence/_lib/models/sequence';
 import {SequenceService} from 'term-web/sequence/services/sequence.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiSelectModule, MuiNumberInputModule, MuiTableModule, MuiNoDataModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiSelectModule, MuiNumberInputModule, MuiTableModule, MuiNoDataModule, MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 
 const getInvalidCodeChars = (v: string): string[] => v?.match(/[^\w-]/gm)?.filter(unique) || [];

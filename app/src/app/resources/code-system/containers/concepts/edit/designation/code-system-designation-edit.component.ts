@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import { BooleanInput, collect, isDefined, remove, ApplyPipe, KeysPipe, SortPipe } from '@kodality-web/core-util';
+import { BooleanInput, collect, isDefined, remove, ApplyPipe, KeysPipe, SortPipe } from '@termx-health/core-util';
 import {Designation, EntityProperty} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {v4 as uuid} from "uuid";
 import { UpperCasePipe } from '@angular/common';
-import { MuiNoDataModule, MuiTextareaModule, MuiSelectModule, MuiTooltipModule, MuiButtonModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { MuiNoDataModule, MuiTextareaModule, MuiSelectModule, MuiTooltipModule, MuiButtonModule, MuiIconModule, MuiPopconfirmModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';

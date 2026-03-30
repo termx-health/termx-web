@@ -26,7 +26,7 @@
   </tr>
 
   <tr *mTableRow="let item; let i = index">
-    <td><m-checkbox [(ngModel)]="item['_checked']" [name]="'checked' + i"/></td>
+    <td><m-checkbox name="item_checked" [(ngModel)]="item['_checked']" [name]="'checked' + i"/></td>
     <td>{{item.resourceType}}</td>
     <td>{{item.resourceId}}</td>
     <td>

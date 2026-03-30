@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { BooleanInput, isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import {catchError, of, throwError} from 'rxjs';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
@@ -13,7 +13,7 @@ import {MapSetService} from 'term-web/resources/map-set/services/map-set-service
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
-import { MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';

@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {LocalizedName} from '@termx-health/util';
 import {EntityProperty} from 'term-web/resources/_lib/code-system';
 
 export class DefinedProperty {

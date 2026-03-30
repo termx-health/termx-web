@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import {ImplementationGuide, ImplementationGuideSearchParams, ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {environment} from 'environments/environment';
 import {Observable, tap} from 'rxjs';
-import { MuiCardModule, MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiBackendTableModule, MuiTableModule, MuiIconModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiBackendTableModule, MuiTableModule, MuiIconModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -12,7 +12,7 @@ import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-b
 import { RouterLink } from '@angular/router';
 
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

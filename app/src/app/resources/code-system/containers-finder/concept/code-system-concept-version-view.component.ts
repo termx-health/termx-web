@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, isNil} from '@kodality-web/core-util';
+import {DestroyService, isNil} from '@termx-health/core-util';
 import {takeUntil} from 'rxjs';
 import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'term-web/resources/_lib';
 import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent } from 'term-web/core/components/finder/finder.component';
-import { MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiIconModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
 

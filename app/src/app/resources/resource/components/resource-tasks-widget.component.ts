@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import { BooleanInput, isDefined, LoadingManager, FilterPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, LoadingManager, FilterPipe } from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {ReleaseLibService} from 'term-web/sys/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {AuthService} from 'term-web/core/auth';
-import { MuiSpinnerModule, MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { MuiSpinnerModule, MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@termx-health/ui';
 
 import { TaskStatusComponent } from 'term-web/task/_lib/components/task-status.component';
 import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';

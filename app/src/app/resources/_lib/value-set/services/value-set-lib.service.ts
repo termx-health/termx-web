@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {HttpCacheService, SearchHttpParams, SearchResult} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {JobLogResponse, Provenance} from 'term-web/sys/_lib';

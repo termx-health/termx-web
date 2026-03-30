@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
-import {MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiDividerModule, MuiFormModule, MuiIconModule, MuiSelectModule} from '@kodality-web/marina-ui';
+import {LoadingManager} from '@termx-health/core-util';
+import {MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiDividerModule, MuiFormModule, MuiIconModule, MuiSelectModule} from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
 import {forkJoin} from 'rxjs';
 import {StructureDefinition, StructureDefinitionVersion} from 'term-web/modeler/_lib';

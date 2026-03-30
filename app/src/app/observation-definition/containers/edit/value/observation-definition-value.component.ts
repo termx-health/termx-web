@@ -1,9 +1,9 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@termx-health/core-util';
 import {ObservationDefinitionValue} from 'term-web/observation-definition/_lib';
 
-import { MuiFormModule, MuiSelectModule, MuiCheckboxModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiSelectModule, MuiCheckboxModule, MuiTextareaModule } from '@termx-health/ui';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
 import { ObservationDefinitionValueSelectComponent } from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';

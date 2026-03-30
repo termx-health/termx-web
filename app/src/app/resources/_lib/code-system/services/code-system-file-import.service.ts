@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {collect, isNil} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {collect, isNil} from '@termx-health/core-util';
+import {LocalizedName} from '@termx-health/util';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {environment} from 'environments/environment';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';

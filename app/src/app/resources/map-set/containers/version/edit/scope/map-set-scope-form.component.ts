@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {CodeSystemLibService, CodeSystemVersion, MapSetResourceReference, MapSetScope, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {map, Observable, of} from 'rxjs';
-import { MuiCardModule, MuiFormModule, MuiRadioModule, MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiFormModule, MuiRadioModule, MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';

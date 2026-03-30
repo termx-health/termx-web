@@ -1,4 +1,4 @@
-import {CodeName} from '@kodality-web/marina-util';
+import {CodeName} from '@termx-health/util';
 
 export class PageRelation {
   public id?: number;

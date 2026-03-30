@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {isDefined, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {isDefined, SearchHttpParams, SearchResult} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {StructureDefinition, StructureDefinitionVersion} from 'term-web/modeler/_lib/structure-definition/structure-definition';

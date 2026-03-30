@@ -25,7 +25,7 @@
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.interpretations.target" [mName]="prefix + '-target'" required>
-                  <m-select [(ngModel)]="i.target" [name]="prefix + '-target'" required compareWith="id">
+                  <m-select name="target" [(ngModel)]="i.target" [name]="prefix + '-target'" required compareWith="id">
                     @for (target of targets; track $index) {
                       <m-option
                           [mValue]="target"
@@ -36,7 +36,7 @@
               </div>
               <div *mFormCol>
                 <m-form-item mLabel="entities.observation-definition.interpretations.order-number" [mName]="prefix + '-order-number'">
-                  <m-number-input [min]="1" [(ngModel)]="i.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
+                  <m-number-input [min]="1" name="orderNumber" [(ngModel)]="i.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
                 </m-form-item>
               </div>
             </m-form-row>
@@ -58,14 +58,14 @@
               <m-form-row>
                 <div *mFormCol>
                   <m-form-item mLabel="entities.observation-definition.interpretations.condition" [mName]="prefix + '-condition'">
-                    <m-textarea [(ngModel)]="i.condition" [name]="prefix + '-condition'"></m-textarea>
+                    <m-textarea name="condition" [(ngModel)]="i.condition" [name]="prefix + '-condition'"></m-textarea>
                   </m-form-item>
                 </div>
               </m-form-row>
               <m-form-row>
                 <div *mFormCol>
                   <m-form-item mLabel="entities.observation-definition.interpretations.category.singular" [mName]="prefix + '-category'" required>
-                    <m-select [(ngModel)]="i.rangeCategory" [name]="prefix + '-category'" required>
+                    <m-select name="rangeCategory" [(ngModel)]="i.rangeCategory" [name]="prefix + '-category'" required>
                       <m-option [mValue]="'reference'" [mLabel]="'web.observation-definition.interpretation-category.reference'"></m-option>
                       <m-option [mValue]="'critical'" [mLabel]="'web.observation-definition.interpretation-category.critical'"></m-option>
                       <m-option [mValue]="'absolute'" [mLabel]="'web.observation-definition.interpretation-category.absolute'"></m-option>
@@ -76,7 +76,7 @@
               <m-form-row>
                 <div *mFormCol>
                   <m-form-item mLabel="entities.observation-definition.interpretations.fhir-interpretation-code" [mName]="prefix + '-fhir-interpretation-code'">
-                    <tw-value-set-concept-select [(ngModel)]="i.fhirInterpretationCode"
+                    <tw-value-set-concept-select name="fhirInterpretationCode" [(ngModel)]="i.fhirInterpretationCode"
                         [name]="prefix + '-fhir-interpretation-code'"
                         valueSet="observation-interpretation"></tw-value-set-concept-select>
                   </m-form-item>

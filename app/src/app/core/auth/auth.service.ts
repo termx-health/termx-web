@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {isDefined, isNil} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {isDefined, isNil} from '@termx-health/core-util';
+import {MuiNotificationService} from '@termx-health/ui';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';

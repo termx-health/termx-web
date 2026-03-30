@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { group, ApplyPipe } from '@kodality-web/core-util';
-import { MuiPageMenuItem, MarinPageLayoutModule, MuiCoreModule, MuiFormModule } from '@kodality-web/marina-ui';
-import {LocalizedName} from '@kodality-web/marina-util';
+import { group, ApplyPipe } from '@termx-health/core-util';
+import { MuiPageMenuItem, MarinPageLayoutModule, MuiCoreModule, MuiFormModule } from '@termx-health/ui';
+import {LocalizedName} from '@termx-health/util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {delay, distinctUntilChanged, filter, map, pairwise, startWith, switchMap} from 'rxjs';

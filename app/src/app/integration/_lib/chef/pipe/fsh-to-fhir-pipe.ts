@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {MuiNotificationService} from '@termx-health/ui';
 import {EMPTY, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ChefService} from 'term-web/integration/_lib/chef/services/chef.service';

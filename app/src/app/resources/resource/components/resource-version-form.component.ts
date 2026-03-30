@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {isDefined, LoadingManager, validateForm} from '@termx-health/core-util';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
-import { MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';

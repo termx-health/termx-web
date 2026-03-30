@@ -1,13 +1,13 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@termx-health/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {MapSet} from 'term-web/resources/_lib/map-set/model/map-set';
 import {MapSetSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-search-params';
 import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
-import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { MuiSelectModule } from '@termx-health/ui';
 
 
 

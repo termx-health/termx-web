@@ -13,14 +13,25 @@
     }
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "src/main.ts"
   ],
   "include": [
     "src/**/*.d.ts",
     "src/**/*.ts"
   ],
   "exclude": [
-    "src/**/*.spec.ts"
+    "src/**/*.spec.ts",
+    "src/polyfills.ts",
+    "src/environments/environment.prod.ts",
+    "src/environments/environment.embedded.ts",
+    "src/environments/dynamic-env.ts",
+    "src/app/landing/components/landing-task.component.ts",
+    "src/app/modeler/_lib/structure-definition/containers/structure-definition-search/structure-definition-search.component.ts",
+    "src/app/modeler/_lib/structure-definition/containers/structure-definition-widget/structure-definition-widget.component.ts",
+    "src/app/modeler/_lib/transformer/containers/transformation-definition-search/transformation-definition-search.component.ts",
+    "src/app/modeler/_lib/transformer/containers/transformation-definition-widget/transformation-definition-widget.component.ts",
+    "src/app/modeler/structure-definitions-graph/containers/structure-definitions-graph.component.ts",
+    "src/app/modeler/structure-definitions-graph/structure-definitions-graph.module.ts",
+    "src/app/modeler/transformer/components/transformation-definition-resource.component.ts"
   ]
 }

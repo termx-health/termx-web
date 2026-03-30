@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {ApplyPipe, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
+import {ApplyPipe, copyDeep, SearchResult, validateForm} from '@termx-health/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
   AssociationType,
@@ -15,7 +15,7 @@ import {
 } from 'term-web/resources/_lib';
 import {MapSetPropertyValuesComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-values.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiInputModule, MuiSpinnerModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule, MuiFormModule, MuiIconModule, MuiRadioModule, MuiDropdownModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiInputModule, MuiSpinnerModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule, MuiFormModule, MuiIconModule, MuiRadioModule, MuiDropdownModule, MuiButtonModule } from '@termx-health/ui';
 
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';

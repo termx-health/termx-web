@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DestroyService, group, isNil, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiTooltipModule } from '@kodality-web/marina-ui';
+import { DestroyService, group, isNil, ApplyPipe, KeysPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiTooltipModule } from '@termx-health/ui';
 import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {PackageResource, Server, ServerLibService} from 'term-web/sys/_lib/space';
@@ -15,7 +15,7 @@ import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-se
 import { MapSetVersionSelectComponent } from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
 import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 export class SpaceDiffItem {
   public resource?: PackageResource;

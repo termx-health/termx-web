@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { isDefined, validateForm, ApplyPipe } from '@termx-health/core-util';
 import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams} from 'term-web/resources/_lib';
 import {finalize, map, Observable, of} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiCardModule, MarinPageLayoutModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, MuiEditableTableModule, MuiCheckboxModule, MuiInputModule, MuiSelectModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MarinPageLayoutModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, MuiEditableTableModule, MuiCheckboxModule, MuiInputModule, MuiSelectModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@termx-health/ui';
 import { MapSetAssociationDrawerComponent as MapSetAssociationDrawerComponent_1 } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import { TranslatePipe } from '@ngx-translate/core';
 

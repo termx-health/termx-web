@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.code-system.find-matches.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.system-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.system"></m-textarea>
+      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.code-system.find-matches.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.version"></m-textarea>
+      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="properties" required>
@@ -31,8 +31,8 @@
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.properties-tooltip' | translate}}"></m-icon>
       </ng-template>
       <div class="m-items-middle">
-        <m-textarea [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-textarea>
-        <m-textarea [(ngModel)]="propertyInput.propertyValue" placeholder="web.integration.fhir.code-system.find-matches.property-value"></m-textarea>
+        <m-textarea name="propertyName" [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-textarea>
+        <m-textarea name="propertyValue" [(ngModel)]="propertyInput.propertyValue" placeholder="web.integration.fhir.code-system.find-matches.property-value"></m-textarea>
         <m-button (click)="addProperty()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>
@@ -52,7 +52,7 @@
         <div>{{'web.integration.fhir.code-system.find-matches.exact' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.exact-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-checkbox [(ngModel)]="data.exact"></m-checkbox>
+      <m-checkbox name="exact" [(ngModel)]="data.exact"></m-checkbox>
     </m-form-item>
 
     @if (response || error) {

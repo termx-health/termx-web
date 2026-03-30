@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {BooleanInput, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, LoadingManager, validateForm} from '@termx-health/core-util';
 import {forkJoin} from 'rxjs';
 import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} from 'term-web/resources/_lib';
 
-import { MuiCardModule, MuiFormModule, MuiCheckboxModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiFormModule, MuiCheckboxModule, MuiInputModule } from '@termx-health/ui';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';

@@ -1,15 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, isNil, SearchResult} from '@kodality-web/core-util';
+import {DestroyService, isNil, SearchResult} from '@termx-health/core-util';
 import {forkJoin, takeUntil} from 'rxjs';
 import {CodeSystem, CodeSystemConcept, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent, FinderLoadMoreItemComponent } from 'term-web/core/components/finder/finder.component';
-import { MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiButtonModule } from '@termx-health/ui';
 
-import { MarinaQuillModule } from '@kodality-web/marina-quill';
+import { MarinaQuillModule } from '@termx-health/quill';
 import { FormsModule } from '@angular/forms';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 
 @Component({

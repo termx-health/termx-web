@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { compareDates, isDefined, isNil, AutofocusDirective, AbbreviatePipe, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { compareDates, isDefined, isNil, AutofocusDirective, AbbreviatePipe, ApplyPipe, LocalDateTimePipe } from '@termx-health/core-util';
 import {AuthService} from 'term-web/core/auth';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
-import { MuiTooltipModule, MuiCoreModule, MuiTextareaModule, MuiButtonModule, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule } from '@kodality-web/marina-ui';
+import { MuiTooltipModule, MuiCoreModule, MuiTextareaModule, MuiButtonModule, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule } from '@termx-health/ui';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';

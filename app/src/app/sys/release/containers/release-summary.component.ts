@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe, ToStringPipe } from '@kodality-web/core-util';
-import { MuiNotificationService, MarinPageLayoutModule, MuiIconModule, MuiCoreModule, MuiDividerModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiTableModule, MuiTagModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule, MuiListModule, MuiModalModule, MuiSelectModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
+import { isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe, ToStringPipe } from '@termx-health/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiIconModule, MuiCoreModule, MuiDividerModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiTableModule, MuiTagModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule, MuiListModule, MuiModalModule, MuiSelectModule, MuiMultiLanguageInputModule } from '@termx-health/ui';
 import {saveAs} from 'file-saver';
 import {forkJoin} from 'rxjs';
 import {Checklist, Release, ReleaseResource, JobLog} from 'term-web/sys/_lib';
@@ -22,7 +22,7 @@ import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-s
 import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
 import { MapSetVersionSelectComponent } from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({

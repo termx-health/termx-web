@@ -15,31 +15,31 @@
     </div>
 
     <m-form-item mLabel="web.integration.import.source-url" required>
-      <m-input [(ngModel)]="data.sourceUrl"></m-input>
+      <m-input name="sourceUrl" [(ngModel)]="data.sourceUrl"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.uri" required>
-      <m-input [(ngModel)]="data.uri"></m-input>
+      <m-input name="uri" [(ngModel)]="data.uri"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.publisher">
-      <m-input [(ngModel)]="data.publisher"></m-input>
+      <m-input name="publisher" [(ngModel)]="data.publisher"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.version" required>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-input name="version" [(ngModel)]="data.version"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.valid-from" required>
-      <m-date-picker [(ngModel)]="data.validFrom"></m-date-picker>
+      <m-date-picker name="validFrom" [(ngModel)]="data.validFrom"></m-date-picker>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.valid-to">
       <m-date-picker [(ngModel)]="data.validTo" name="validTo"></m-date-picker>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.code-system" required>
-      <m-input [(ngModel)]="data.codeSystem"></m-input>
+      <m-input name="codeSystem" [(ngModel)]="data.codeSystem"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.base-code-system">
-      <tw-code-system-search [(ngModel)]="data.baseCodeSystem" valuePrimitive></tw-code-system-search>
+      <tw-code-system-search name="baseCodeSystem" [(ngModel)]="data.baseCodeSystem" valuePrimitive></tw-code-system-search>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.code-system-name" required>
-      <m-multi-language-input [(ngModel)]="data.codeSystemName"></m-multi-language-input>
+      <m-multi-language-input name="codeSystemName" [(ngModel)]="data.codeSystemName"></m-multi-language-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.code-system-description">
       <m-multi-language-input [(ngModel)]="data.codeSystemDescription" name="codeSystemDescription"></m-multi-language-input>

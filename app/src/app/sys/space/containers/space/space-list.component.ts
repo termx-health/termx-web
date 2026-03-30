@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
-import { MuiNotificationService, MuiCardModule, MuiInputModule, MuiButtonModule, MuiIconModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiTagModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult, AutofocusDirective } from '@termx-health/core-util';
+import { MuiNotificationService, MuiCardModule, MuiInputModule, MuiButtonModule, MuiIconModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiTagModule, MuiNoDataModule } from '@termx-health/ui';
 import {finalize, Observable, tap} from 'rxjs';
 import {Space, SpaceSearchParams} from 'term-web/sys/_lib/space';
 import {JobLibService} from 'term-web/sys/_lib';
@@ -12,7 +12,7 @@ import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.di
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { MarinaUtilModule } from '@termx-health/util';
 
 @Component({
     templateUrl: './space-list.component.html',

@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
-import { MuiTableModule, MuiTagModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { MuiTableModule, MuiTagModule, MuiCoreModule } from '@termx-health/ui';
 
-import { LocalDatePipe } from '@kodality-web/core-util';
+import { LocalDatePipe } from '@termx-health/core-util';
 
 @Component({
     selector: 'tw-fhir-code-system',

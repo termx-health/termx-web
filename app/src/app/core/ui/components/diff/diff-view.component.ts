@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {BooleanInput, isNil} from '@kodality-web/core-util';
+import {BooleanInput, isNil} from '@termx-health/core-util';
 import {createPatch} from 'diff';
 import {html} from 'diff2html';
 import {OutputFormatType} from 'diff2html/lib/types';

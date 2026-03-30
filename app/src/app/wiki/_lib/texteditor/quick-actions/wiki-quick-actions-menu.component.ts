@@ -1,6 +1,6 @@
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import { AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import {DestroyService, isDefined} from '@kodality-web/core-util';
+import {DestroyService, isDefined} from '@termx-health/core-util';
 import {delay, filter, fromEvent, map, startWith, takeUntil} from 'rxjs';
 import {WikiQuickActionsDropdownOptionComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
 import {WikiQuickActionsDropdownComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';

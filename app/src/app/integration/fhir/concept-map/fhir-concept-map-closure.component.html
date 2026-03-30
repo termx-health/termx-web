@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.name' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.name-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.name"></m-textarea>
+      <m-textarea name="name" [(ngModel)]="data.name"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-textarea [(ngModel)]="data.version"></m-textarea>
+      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="concepts">
@@ -31,8 +31,8 @@
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.concepts-tooltip' | translate}}"></m-icon>
       </ng-template>
       <div class="m-items-middle">
-        <m-textarea [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-textarea>
-        <m-textarea [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-textarea>
+        <m-textarea name="system" [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-textarea>
+        <m-textarea name="code" [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-textarea>
         <m-button (click)="addConcept()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>

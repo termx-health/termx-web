@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {validateForm} from '@kodality-web/core-util';
+import {validateForm} from '@termx-health/core-util';
 import {NamingSystemIdentifier} from 'term-web/resources/_lib';
-import { MuiFormModule, MuiTableModule, MuiButtonModule, MuiIconModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiTableModule, MuiButtonModule, MuiIconModule, MuiInputModule } from '@termx-health/ui';
 
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';

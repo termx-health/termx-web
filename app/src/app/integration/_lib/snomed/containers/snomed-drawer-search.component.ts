@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { BooleanInput, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, ApplyPipe } from '@termx-health/core-util';
 import {map, Observable, of} from 'rxjs';
 import {SnomedLibService} from 'term-web/integration/_lib';
-import { MuiCoreModule, MuiDrawerModule } from '@kodality-web/marina-ui';
+import { MuiCoreModule, MuiDrawerModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { SnomedSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-search.component';
 import { TranslatePipe } from '@ngx-translate/core';

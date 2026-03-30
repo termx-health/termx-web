@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { isDefined, LoadingManager, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { isDefined, LoadingManager, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
 import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {AuthService} from 'term-web/core/auth';
 import {forkJoin, map} from 'rxjs';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule, MuiNoDataModule, MuiListModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiCoreModule, MuiNoDataModule, MuiListModule, MuiDividerModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { ValueSetInfoWidgetComponent } from 'term-web/resources/value-set/containers/summary/widgets/value-set-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
