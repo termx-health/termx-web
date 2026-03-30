@@ -34,10 +34,11 @@ jobs:
 #        with:
 #          node-version: ${{ matrix.node-version }}
 
-      - name: Use Node.js 20
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Resolve dependencies
         run: npm install
