@@ -1529,7 +1529,9 @@
             "import-data": "Importovat data",
             "kts-property": "Vlastnost TermX",
             "lang": "Jazyk",
+            "load-mapping": "Načíst mapování",
             "preferred": "Preferované",
+            "save-mapping": "Uložit mapování",
             "type": "Typ",
             "type-column": "Sloupec {{type}}",
             "validate-data": "Pouze ověřit data"

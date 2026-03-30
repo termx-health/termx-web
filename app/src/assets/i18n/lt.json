@@ -1444,7 +1444,9 @@
             "import-data": "Importuoti duomenis",
             "kts-property": "TermX savybė",
             "lang": "Kalba",
+            "load-mapping": "Įkelti susiejimą",
             "preferred": "Pageidaujama",
+            "save-mapping": "Išsaugoti susiejimą",
             "type": "Tipas",
             "type-column": "{{type}} stulpelis",
             "validate-data": "Patikrinti duomenis neimportuojant"

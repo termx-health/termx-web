@@ -36,11 +36,21 @@
 
   <m-card mTitle="web.integration.file-import.code-system.properties.header">
     <div *m-card-content class="tw-flex-container">
-      <m-select name="template" [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
-        <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"/>
-        <m-option [mValue]="'icf'" [mLabel]="'icf'"/>
-        <m-option [mValue]="'loinc-lt'" [mLabel]="'loinc-lt'"/>
-      </m-select>
+      <div class="m-items-middle" style="gap: 0.5rem; flex-wrap: wrap">
+        <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()" style="min-width: 12rem">
+          <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"/>
+          <m-option [mValue]="'icf'" [mLabel]="'icf'"/>
+          <m-option [mValue]="'loinc-lt'" [mLabel]="'loinc-lt'"/>
+        </m-select>
+
+        <m-button [disabled]="!analyzeResponse.parsedProperties?.length" (mClick)="saveMapping()">
+          {{'web.integration.file-import.code-system.properties.save-mapping' | translate}}
+        </m-button>
+
+        <m-button [disabled]="!hasSavedMapping || !analyzeResponse.parsedProperties?.length" (mClick)="loadMapping()">
+          {{'web.integration.file-import.code-system.properties.load-mapping' | translate}}
+        </m-button>
+      </div>
 
       <m-table [mData]="analyzeResponse.parsedProperties">
         <tr *mTableHead>

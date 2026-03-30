@@ -38,6 +38,7 @@ const DEF_PROP_WEIGHT = {
     imports: [CodeSystemFileImportFormComponent_1, MuiCardModule, MuiFormModule, MuiRadioModule, FormsModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, CodeSystemSearchComponent, ValueSetConceptSelectComponent, MuiNoDataModule, MuiAlertModule, MuiCoreModule, TranslatePipe, MarinaUtilModule, ApplyPipe, IncludesPipe]
 })
 export class CodeSystemFileImportComponent implements OnInit {
+  private readonly mappingStoragePrefix = 'termx.code-system-file-import.mapping';
   private http = inject(HttpClient);
   private notificationService = inject(MuiNotificationService);
   private valueSetLibService = inject(ValueSetLibService);
@@ -98,6 +99,7 @@ export class CodeSystemFileImportComponent implements OnInit {
   public jobLog: JobLog;
 
   public dataTypes: string[];
+  protected hasSavedMapping = false;
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
@@ -114,6 +116,7 @@ export class CodeSystemFileImportComponent implements OnInit {
       prop.definedEntityPropertyId = dp.id;
       return prop;
     }));
+    this.refreshSavedMappingState();
   }
 
   protected analyze(): void {
@@ -141,6 +144,7 @@ export class CodeSystemFileImportComponent implements OnInit {
 
       this.validations = [];
       this.data.template = undefined;
+      this.refreshSavedMappingState();
     });
   }
 
@@ -254,6 +258,57 @@ export class CodeSystemFileImportComponent implements OnInit {
 
   }
 
+  protected saveMapping(): void {
+    if (!this.analyzeResponse.parsedProperties?.length) {
+      return;
+    }
+
+    try {
+      localStorage.setItem(this.getMappingStorageKey(), JSON.stringify({
+        rows: this.analyzeResponse.parsedProperties.map(p => ({
+          columnName: p.columnName,
+          propertyName: p.propertyName,
+          propertyType: p.propertyType,
+          propertyTypeFormat: p.propertyTypeFormat,
+          propertyCodeSystem: p.propertyCodeSystem,
+          propertyDelimiter: p.propertyDelimiter,
+          preferred: p.preferred,
+          language: p.language,
+          import: p.import,
+          _newProp: p['_newProp']
+        }))
+      }));
+      this.hasSavedMapping = true;
+    } catch {
+      // Ignore browser storage errors and leave the page usable.
+    }
+  }
+
+  protected loadMapping(): void {
+    const savedMapping = this.readSavedMapping();
+    if (!savedMapping?.rows?.length) {
+      return;
+    }
+
+    const savedRows = group(savedMapping.rows, p => p.columnName);
+    this.analyzeResponse.parsedProperties.forEach(item => {
+      const saved = savedRows[item.columnName];
+      if (!saved) {
+        return;
+      }
+
+      item.propertyName = saved.propertyName;
+      item.propertyType = saved.propertyType;
+      item.propertyTypeFormat = saved.propertyTypeFormat;
+      item.propertyCodeSystem = saved.propertyCodeSystem;
+      item.propertyDelimiter = saved.propertyDelimiter;
+      item.preferred = saved.preferred;
+      item.language = saved.language;
+      item.import = saved.import;
+      item['_newProp'] = saved['_newProp'];
+    });
+  }
+
   protected onPropertyNameChange(item: FileImportPropertyRow): void {
     const entityProperties = this.combineWithDefaults(this.formComponent?.sourceCodeSystem?.properties);
     const grouped = group(entityProperties, p => p.name);
@@ -285,6 +340,23 @@ export class CodeSystemFileImportComponent implements OnInit {
 
   private getWeight(p: EntityProperty): number {
     return p.orderNumber || DEF_PROP_WEIGHT[p.name] || (p.id ? 10000 : 10001);
+  }
+
+  private getMappingStorageKey(): string {
+    return [this.mappingStoragePrefix, this.data.codeSystem?.id || 'default', this.data.source?.format || 'csv'].join(':');
+  }
+
+  private readSavedMapping(): {rows: (FileImportPropertyRow & {_newProp?: boolean})[]} | undefined {
+    try {
+      const stored = localStorage.getItem(this.getMappingStorageKey());
+      return stored ? JSON.parse(stored) : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private refreshSavedMappingState(): void {
+    this.hasSavedMapping = !!this.readSavedMapping()?.rows?.length;
   }
 
   protected get hasDuplicateIdentifiers(): boolean {
