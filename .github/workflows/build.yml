@@ -41,6 +41,8 @@ jobs:
 
       - name: Resolve dependencies
         run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #      - name: Lint
 #        run: npm run lint
