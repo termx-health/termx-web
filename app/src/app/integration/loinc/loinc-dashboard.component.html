@@ -1,4 +1,4 @@
-<nz-tabset [nzSelectedIndex]="tabIndxes[currentTab]">
+<nz-tabs [nzSelectedIndex]="tabIndxes[currentTab]">
   <nz-tab>
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" class="m-items-middle">LOINC</a>
       <tw-loinc-list></tw-loinc-list>
@@ -11,4 +11,4 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'answer-list'}" class="m-items-middle">Answer List</a>
     <tw-loinc-answer-list-list></tw-loinc-answer-list-list>
   </nz-tab>
-</nz-tabset>
+</nz-tabs>

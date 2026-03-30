@@ -32,6 +32,7 @@
     "src/app/modeler/_lib/transformer/containers/transformation-definition-widget/transformation-definition-widget.component.ts",
     "src/app/modeler/structure-definitions-graph/containers/structure-definitions-graph.component.ts",
     "src/app/modeler/structure-definitions-graph/structure-definitions-graph.module.ts",
-    "src/app/modeler/transformer/components/transformation-definition-resource.component.ts"
+    "src/app/modeler/transformer/components/transformation-definition-resource.component.ts",
+    "../node_modules/fhir/**/*.ts"
   ]
 }

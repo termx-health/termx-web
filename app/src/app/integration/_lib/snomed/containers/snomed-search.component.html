@@ -1,5 +1,5 @@
 <m-card>
-  <nz-tabset nzLinkRouter>
+  <nz-tabs nzLinkRouter>
     @if (!ecl) {
       <nz-tab>
         <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
@@ -119,5 +119,5 @@
           </m-backend-table>
         </ng-template>
       </nz-tab>
-    </nz-tabset>
+    </nz-tabs>
   </m-card>

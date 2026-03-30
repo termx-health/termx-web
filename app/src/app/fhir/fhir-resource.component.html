@@ -4,7 +4,7 @@
     <m-divider style="margin-top: 0"></m-divider>
 
     @if (result) {
-      <nz-tabset>
+      <nz-tabs>
         @if ((meta | apply:narrativeType) && !error) {
           <nz-tab nzTitle="Narrative">
             <ng-template nz-tab>
@@ -37,7 +37,7 @@
             <ng-container *ngTemplateOutlet="resultCard, context: {result: result, format: 'xml'}"/>
           </ng-template>
         </nz-tab>
-      </nz-tabset>
+      </nz-tabs>
     }
   </div>
 </div>

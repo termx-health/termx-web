@@ -71,7 +71,7 @@
       </div>
     </m-divider>
     @if (!loader.isLoading) {
-      <nz-tabset>
+      <nz-tabs>
         @for (t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']; track t) {
           <nz-tab>
             <ng-container *nzTabLink>
@@ -131,7 +131,7 @@
             }
           </nz-tab>
         }
-      </nz-tabset>
+      </nz-tabs>
     }
 
     <m-divider [mText]="'web.snomed.branch.management.unlinked-translations' | translate: {count: unlinkedTranslations?.length}"></m-divider>

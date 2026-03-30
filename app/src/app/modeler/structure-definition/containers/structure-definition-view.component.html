@@ -1,6 +1,6 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
-    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex">
+    <nz-tabs [(nzSelectedIndex)]="selectedTabIndex">
       <nz-tab [nzTitle]="'web.structure-definition.form.definition-header' | translate">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
@@ -28,7 +28,7 @@
           }
         </ng-template>
       </nz-tab>
-    </nz-tabset>
+    </nz-tabs>
   </div>
 </div>
 
