@@ -28,7 +28,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   @Input() public resourceId: string;
   @Input() public taskFilters: {statuses?: string[]};
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion' |
-    'Release' | 'SnomedConcept';
+    'Release' | 'SnomedConcept' | 'StructureDefinition';
   @Input() public displayType: 'full' | 'content' = 'full';
   @Input() @BooleanInput() public openInNewTab: boolean | string = false;
 
@@ -43,7 +43,8 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     'CodeSystemVersion': 'code-system-version',
     'ValueSetVersion': 'value-set-version',
     'MapSetVersion': 'map-set-version',
-    'CodeSystemEntityVersion': 'concept-version'
+    'CodeSystemEntityVersion': 'concept-version',
+    'StructureDefinition': 'structure-definition'
   };
 
   public ngOnChanges(changes: SimpleChanges): void {

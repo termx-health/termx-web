@@ -23,6 +23,9 @@ export class RelatedArtifactUtil {
       const s = id.split('|');
       return ['/spaces/context', {s: s[1]}];
     }
+    if (type === 'StructureDefinition') {
+      return ['/modeler/structure-definitions/' + id + '/summary'];
+    }
     return [''];
   }
 }

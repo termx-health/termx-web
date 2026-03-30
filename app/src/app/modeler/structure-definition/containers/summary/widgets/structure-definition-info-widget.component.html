@@ -1,0 +1,39 @@
+@if (!structureDefinition) {
+  <m-no-data/>
+}
+
+@if (structureDefinition; as sd) {
+  <div>
+    <div class="m-items-middle m-bold">
+      <m-icon mCode="key"/>
+      <tw-copy-container [text]="sd.code">{{sd.code}}</tw-copy-container>
+    </div>
+    <span>{{sd.description | localName}}</span>
+    @if (sd.url) {
+      <div class="m-items-middle">
+        <m-icon mCode="link"/>
+        <tw-copy-container [text]="sd.url">{{sd.url}}</tw-copy-container>
+      </div>
+    }
+    <div class="m-items-middle">
+      <m-icon mCode="setting"/>
+      <span>{{sd.contentType}}</span>
+      @if (sd.experimental) {
+        <m-divider mVertical/>
+        <span>{{'entities.structure-definition.experimental' | translate}}</span>
+      }
+    </div>
+    @if (sd.publisher) {
+      <div class="m-items-middle">
+        <m-icon mCode="environment"/>
+        <span>{{sd.publisher}}</span>
+      </div>
+    }
+    @if (sd.parent) {
+      <div class="m-items-middle">
+        <m-icon mCode="fork"/>
+        <span>{{sd.parent}}</span>
+      </div>
+    }
+  </div>
+}

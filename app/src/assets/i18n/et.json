@@ -682,6 +682,10 @@
 			"url": "URL",
 			"version": "Versioon"
 		},
+		"structure-definition-version": {
+			"content-type": "Content type",
+			"description": "Description"
+		},
 		"task": {
 			"assignee": "Teostaja",
 			"author": "Autor",
@@ -2008,6 +2012,7 @@
 			"form": {
 				"add-element": "Lisa element",
 				"add-header": "Lisa struktuuri definitsioon",
+				"details-header": "Structure definition details",
 				"binding": "Seis terminoloogiaga",
 				"cardinality": "Kordsus",
 				"code": "Kood",
@@ -2050,9 +2055,30 @@
 				"open-fhir": "Ava FHIR-is",
 				"title": "Struktuuri definitsioonid"
 			},
+			"summary": {
+				"add-task": "Add task",
+				"add-version": "Add version",
+				"all-tasks": "All tasks",
+				"definition": "Structure definition",
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"versions": "Versions",
+				"viewer": "Preview",
+				"recalculate-references": "Recalculate"
+			},
+			"version-summary": {
+				"version-info": "Version info",
+				"version-metadata": "Version metadata"
+			},
 			"view": {
 				"binding": "Seotud loendiga",
 				"fixed": "Fikseeritud"
+			}
+		},
+		"structure-definition-version": {
+			"form": {
+				"add-header": "Add version",
+				"edit-header": "Edit version"
 			}
 		},
 		"structure-definition-constraint": {

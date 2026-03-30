@@ -128,7 +128,7 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
       const correspondsToType = this.type === 'hybrid' || isDefined(object[key][this.type!]) || !isDefined(object[key][this.type === 'diff' ? 'snap' : 'diff']);
       return notElement && correspondsToType;
     }).map(key => {
-      const element = this.transformer({diff: object[key]['diff'], snap: object[key]['snap']});
+      const element = this.transformer({diff: object[key]['diff'], snap: object[key]['snap'], el: object[key]['el']});
       const children = this.mapToNodeList(object[key]);
       return ({
         key: key,
@@ -141,14 +141,14 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
     });
   }
 
-  private transformer = (node: {snap: Element, diff: Element}): Element => {
+  private transformer = (node: {snap: Element, diff: Element, el?: Element}): Element => {
     switch (this.type) {
       case 'snap':
-        return node.snap;
+        return node.snap || node.el;
       case 'diff':
-        return node.diff;
+        return node.diff || node.el;
       case 'hybrid':
-        return node.diff || node.snap;
+        return node.diff || node.snap || node.el;
     }
   };
 

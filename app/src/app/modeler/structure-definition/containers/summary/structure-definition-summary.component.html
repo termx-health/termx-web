@@ -1,0 +1,106 @@
+<tw-resource-context resourceType="StructureDefinition" [resource]="$any(structureDefinition)" [versions]="$any(versions)" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[structureDefinition?.id, 'StructureDefinition']">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- StructureDefinition info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.structure-definition.summary.definition"></m-title>
+        <tw-structure-definition-info-widget [structureDefinition]="structureDefinition"></tw-structure-definition-info-widget>
+      </m-card>
+
+      <!-- Versions -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.structure-definition.summary.versions">
+          <div mControls class="m-items-middle">
+            <ng-container *twPrivileged>
+              <m-button mDisplay="text" [routerLink]="['/modeler/structure-definitions', structureDefinition?.id, 'versions', 'add']">
+                {{'web.structure-definition.summary.add-version' | translate}}&nbsp;
+                <m-icon mCode="plus"></m-icon>
+              </m-button>
+            </ng-container>
+          </div>
+        </m-title>
+        <tw-structure-definition-versions-widget
+          [structureDefinitionId]="structureDefinition?.id"
+          [versions]="versions"
+          (versionSelected)="openVersionSummary($event)"
+          (versionsChanged)="loadData(structureDefinition.id)">
+        </tw-structure-definition-versions-widget>
+      </m-card>
+
+      <!-- Tasks -->
+      <m-card *twPrivileged="'*.Task.view'">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-items-middle">
+            @if (!showOnlyOpenedTasks) {
+              <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                <m-title mTitle="web.structure-definition.summary.opened-tasks"></m-title>
+              </a>
+            }
+            @if (showOnlyOpenedTasks) {
+              <m-title mTitle="web.structure-definition.summary.opened-tasks"></m-title>
+            }
+            <span>|</span>
+            @if (showOnlyOpenedTasks) {
+              <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                <m-title mTitle="web.structure-definition.summary.all-tasks"></m-title>
+              </a>
+            }
+            @if (!showOnlyOpenedTasks) {
+              <m-title mTitle="web.structure-definition.summary.all-tasks"></m-title>
+            }
+          </div>
+          <m-button mDisplay="text"
+            (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: '' + structureDefinition?.id}})"
+            *twPrivileged="'*.Task.edit'">
+            <m-icon mCode="plus"/>&nbsp; {{'web.structure-definition.summary.add-task' | translate}}
+          </m-button>
+        </div>
+        <tw-resource-tasks-widget [resourceId]="'' + structureDefinition?.id"
+          [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"
+          resourceType="StructureDefinition"></tw-resource-tasks-widget>
+      </m-card>
+
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Structure Definition viewer -->
+      <m-card>
+        <div *m-card-header class="m-justify-between">
+          <m-title mTitle="web.structure-definition.summary.viewer"></m-title>
+          <m-select mDisplay="text" name="viewerVersion"
+            [(ngModel)]="selectedViewerVersion"
+            (ngModelChange)="onViewerVersionChange($event)"
+            style="min-width: 120px;">
+            @for (v of versions; track v.version) {
+              <m-option [mValue]="v.version" [mLabel]="v.version"></m-option>
+            }
+          </m-select>
+        </div>
+        @if (viewerContent) {
+          <tw-structure-definition-tree [content]="viewerContent"></tw-structure-definition-tree>
+        }
+      </m-card>
+
+      <!-- Related artifacts-->
+      <m-card>
+        <div *m-card-header class="m-justify-between">
+          <m-title mTitle="web.structure-definition.summary.related-artifacts"></m-title>
+          <a (mClick)="recalculateReferences()" *twPrivileged>
+            {{'web.structure-definition.summary.recalculate-references' | translate}}
+          </a>
+        </div>
+        <tw-resource-related-artifact-widget #relatedArtifactsWidget
+          [resourceId]="'' + structureDefinition?.id"
+          resourceType="StructureDefinition">
+        </tw-resource-related-artifact-widget>
+      </m-card>
+
+    </div>
+  </m-form-row>
+
+</m-page>
+
+<tw-resource-task-modal #taskModal (taskCreated)="tasksWidgetComponent?.loadTasks()" resourceType="StructureDefinition"/>

@@ -32,15 +32,15 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 export class ResourceContextComponent {
   private router = inject(Router);
 
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide' | 'TerminologyServer';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide' | 'TerminologyServer' | 'StructureDefinition';
   @Input() public resource: Resource;
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' | 'resources' = 'summary';
+  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' | 'resources' | 'elements' | 'fsh' | 'json' = 'summary';
 
-  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides', 'TerminologyServer': 'servers'};
-  protected routePrefix = (type: string): string => type === 'TerminologyServer' ? '/' : '/resources';
+  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides', 'TerminologyServer': 'servers', 'StructureDefinition': 'structure-definitions'};
+  protected routePrefix = (type: string): string => type === 'TerminologyServer' ? '/' : type === 'StructureDefinition' ? '/modeler' : '/resources';
 
   public unselectResourceOrVersion(): void {
     const prefix = this.routePrefix(this.resourceType);
@@ -54,7 +54,10 @@ export class ResourceContextComponent {
         'concept-view': [...base, 'concepts', this.conceptCode, 'view'],
         'properties': [...base, 'properties'],
         'provenance': [...base, 'provenances'],
-        'checklist': [...base, 'checklists']
+        'checklist': [...base, 'checklists'],
+        'elements': [...base, 'summary'],
+        'fsh': [...base, 'summary'],
+        'json': [...base, 'summary']
       };
       this.router.navigate(commands[this.mode], {replaceUrl: true});
     } else {
@@ -74,12 +77,18 @@ export class ResourceContextComponent {
       'properties': [...base, 'properties'],
       'provenance': [...base, 'provenances'],
       'checklist': [...base, 'checklists'],
+      'elements': [...base, 'elements'],
+      'fsh': [...base, 'fsh'],
+      'json': [...base, 'json'],
     };
     this.router.navigate(commands[this.mode], {replaceUrl: true});
   }
 
   public navigate(mode: string): any[] {
     const prefix = this.routePrefix(this.resourceType);
+    if (this.resourceType === 'StructureDefinition' && this.version?.version && mode === 'details') {
+      return [prefix, this.typeMap[this.resourceType], this.resource.id, 'edit'].filter(s => s !== '');
+    }
     if (this.version?.version) {
       return [prefix, this.typeMap[this.resourceType], this.resource.id, 'versions', this.version.version, mode].filter(s => s !== '');
     } else {

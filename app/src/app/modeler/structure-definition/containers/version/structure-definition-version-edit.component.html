@@ -1,0 +1,66 @@
+@if (structureDefinition && version) {
+  <tw-resource-context resourceType="StructureDefinition" [resource]="$any(structureDefinition)" [versions]="$any(versions)" [version]="$any(version)" mode="details"></tw-resource-context>
+}
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loader.isLoading">
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-items-middle">
+            <div class="m-card__title">{{(mode === 'edit' ? 'web.structure-definition-version.form.edit-header' : 'web.structure-definition-version.form.add-header') | translate}}</div>
+            @if (version?.status) {
+              <tw-status-tag [status]="version.status"></tw-status-tag>
+            }
+          </div>
+        </div>
+
+        @if (version) {
+          <form #form="ngForm">
+            <m-form-row>
+              <m-form-item *mFormCol mName="version" mLabel="entities.structure-definition-version.version" required>
+                <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="sdId | apply: existingVersions | async" required></tw-semantic-version-select>
+              </m-form-item>
+              <m-form-item *mFormCol mName="status" mLabel="entities.structure-definition-version.status">
+                <m-select name="status" [(ngModel)]="version.status">
+                  @for (s of ['draft', 'active', 'retired', 'unknown']; track s) {
+                    <m-option [mLabel]="s" [mValue]="s"></m-option>
+                  }
+                </m-select>
+              </m-form-item>
+            </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="contentType" mLabel="entities.structure-definition-version.content-type" required>
+                <m-select name="contentType" [(ngModel)]="version.contentType" required>
+                  @for (t of ['logical', 'profile', 'instance']; track t) {
+                    <m-option [mLabel]="t" [mValue]="t"></m-option>
+                  }
+                </m-select>
+              </m-form-item>
+              <m-form-item *mFormCol mName="contentFormat" mLabel="entities.structure-definition-version.content-format" required>
+                <m-select name="contentFormat" [(ngModel)]="version.contentFormat" required>
+                  @for (f of ['json', 'fsh']; track f) {
+                    <m-option [mLabel]="f" [mValue]="f"></m-option>
+                  }
+                </m-select>
+              </m-form-item>
+            </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="releaseDate" mLabel="entities.structure-definition-version.release-date">
+                <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate"/>
+              </m-form-item>
+              <m-form-item *mFormCol mName="description" mLabel="entities.structure-definition-version.description">
+                <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
+              </m-form-item>
+            </m-form-row>
+          </form>
+        }
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

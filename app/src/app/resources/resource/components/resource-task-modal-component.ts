@@ -21,7 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class ResourceTaskModalComponent {
   private taskService = inject(TaskService);
 
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'StructureDefinition';
   @Output() public taskCreated: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
@@ -31,13 +31,15 @@ export class ResourceTaskModalComponent {
   protected resourceContextMap = {
     'CodeSystem': 'code-system',
     'ValueSet': 'value-set',
-    'MapSet': 'map-set'
+    'MapSet': 'map-set',
+    'StructureDefinition': 'structure-definition'
   };
 
   protected resourceLinkMap = {
     'CodeSystem': 'csv',
     'ValueSet': 'vsv',
-    'MapSet': 'msv'
+    'MapSet': 'msv',
+    'StructureDefinition': 'sdv'
   };
 
 

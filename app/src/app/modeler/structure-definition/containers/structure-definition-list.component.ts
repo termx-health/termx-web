@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
 import { catchError, finalize, Observable, of, tap } from 'rxjs';
 import { StructureDefinition, StructureDefinitionSearchParams } from 'term-web/modeler/_lib';
 import { StructureDefinitionService } from 'term-web/modeler/structure-definition/services/structure-definition.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
-import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiNoDataModule, MuiModalModule } from '@kodality-web/marina-ui';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiNoDataModule, MuiModalModule, MuiRadioModule } from '@kodality-web/marina-ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -15,7 +16,6 @@ import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-se
 import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 import { environment } from 'environments/environment';
 import { MuiNotificationService } from '@kodality-web/marina-ui';
 
@@ -54,9 +54,9 @@ interface Filter {
     MuiPopconfirmModule,
     MuiNoDataModule,
     MuiModalModule,
+    MuiRadioModule,
     TranslatePipe,
     ApplyPipe,
-    HasAnyPrivilegePipe,
   ],
 })
 export class StructureDefinitionListComponent implements OnInit {
@@ -71,9 +71,14 @@ export class StructureDefinitionListComponent implements OnInit {
   protected filter: Filter = { open: false };
   protected _filter: Omit<Filter, 'open'> = this.filter;
   public loading: boolean;
+  public importSource: 'url' | 'file' = 'url';
   public importUrl: string;
+  public importFile: any;
   public importModalVisible: boolean;
   public importLoading: boolean;
+
+  @ViewChild("importForm") public importForm?: NgForm;
+  @ViewChild("fileInput") public fileInput?: ElementRef<HTMLInputElement>;
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -138,23 +143,66 @@ export class StructureDefinitionListComponent implements OnInit {
   }
 
   public openImportModal(): void {
+    this.importSource = 'url';
     this.importUrl = '';
+    this.importFile = undefined;
     this.importModalVisible = true;
   }
 
   public doImport(): void {
-    if (!this.importUrl?.trim()) return;
+    if (!validateForm(this.importForm)) {
+      return;
+    }
+    if (this.importSource === 'url') {
+      this.importFromUrl();
+    } else {
+      this.importFromFile();
+    }
+  }
+
+  private importFromUrl(): void {
     this.importLoading = true;
     this.structureDefinitionService
       .import({ url: this.importUrl.trim() })
       .pipe(
-        finalize(() => ((this.importLoading = false), (this.importModalVisible = false))),
+        finalize(() => this.importLoading = false),
         catchError(err => {
           this.notificationService.error('Import failed', err?.error?.message || err?.message || 'Unknown error');
           return of(null);
         })
       )
-      .subscribe(res => res && this.loadData());
+      .subscribe(res => {
+        if (res) {
+          this.importModalVisible = false;
+          this.loadData();
+        }
+      });
+  }
+
+  private importFromFile(): void {
+    const file = this.fileInput?.nativeElement?.files?.[0];
+    if (!file) return;
+    this.importLoading = true;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const content = reader.result as string;
+      this.structureDefinitionService
+        .import({ content, format: 'json' })
+        .pipe(
+          finalize(() => this.importLoading = false),
+          catchError(err => {
+            this.notificationService.error('Import failed', err?.error?.message || err?.message || 'Unknown error');
+            return of(null);
+          })
+        )
+        .subscribe(res => {
+          if (res) {
+            this.importModalVisible = false;
+            this.loadData();
+          }
+        });
+    };
+    reader.readAsText(file);
   }
 
   public deleteStructureDefinition(id: number): void {

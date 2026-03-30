@@ -1,6 +1,10 @@
 {
 	"core": {
 		"back": "Back",
+		"bool": {
+			"yes": "Yes",
+			"no": "No"
+		},
 		"btn": {
 			"add": "Add",
 			"cancel": "Cancel",
@@ -12,6 +16,7 @@
 			"copy": "Copy",
 			"custom": "Custom",
 			"delete": "Delete",
+			"download": "Download",
 			"duplicate": "Duplicate",
 			"edit": "Edit",
 			"export": "Export",
@@ -736,12 +741,24 @@
 			"content": "Content",
 			"content-format": "Content format",
 			"content-type": "Content type",
+			"description": "Description",
+			"experimental": "Experimental",
 			"name": "Name",
 			"parent": "Parent",
 			"plural": "Structure Definitions",
 			"publisher": "Publisher",
+			"purpose": "Purpose",
 			"status": "Status",
+			"title": "Title",
 			"url": "URL",
+			"version": "Version"
+		},
+		"structure-definition-version": {
+			"content-format": "Content format",
+			"content-type": "Content type",
+			"description": "Description",
+			"release-date": "Release date",
+			"status": "Status",
 			"version": "Version"
 		},
 		"task": {
@@ -2249,6 +2266,7 @@
 			"form": {
 				"add-element": "",
 				"add-header": "Add structure definition",
+				"details-header": "Structure definition details",
 				"binding": "Binding",
 				"cardinality": "Cardinality",
 				"code": "Code",
@@ -2287,13 +2305,48 @@
 				"import": "Import",
 				"import-fhir": "Import from FHIR",
 				"import-url": "URL",
+				"last-version": "Last version",
 				"manual": "Create manually",
 				"open-fhir": "Open in FHIR",
 				"title": "Structure definitions"
 			},
+			"summary": {
+				"add-task": "Add task",
+				"add-version": "Add version",
+				"all-tasks": "All tasks",
+				"definition": "Structure definition",
+				"duplicate-version-modal": {
+					"header": "Duplicate structure definition version",
+					"version": "New version"
+				},
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"versions": "Versions",
+				"viewer": "Preview",
+				"recalculate-references": "Recalculate"
+			},
+			"version-summary": {
+				"version-info": "Version info",
+				"version-metadata": "Version metadata"
+			},
+			"code": "Code",
+			"url": "URL",
+			"name": "Name",
+			"title": "Title",
+			"publisher": "Publisher",
+			"content-type": "Content type",
+			"description": "Description",
+			"parent": "Parent",
+			"experimental": "Experimental",
 			"view": {
 				"binding": "Binding",
 				"fixed": "Fixed"
+			}
+		},
+		"structure-definition-version": {
+			"form": {
+				"add-header": "Add version",
+				"edit-header": "Edit version"
 			}
 		},
 		"structure-definition-constraint": {

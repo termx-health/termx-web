@@ -11,13 +11,25 @@ import {StructureDefinitionConstraintListComponent} from 'term-web/modeler/struc
 import {StructureDefinitionTypeListComponent} from 'term-web/modeler/structure-definition/components/structure-definition-type-list.component';
 import {StructureDefinitionEditComponent} from 'term-web/modeler/structure-definition/containers/structure-definition-edit.component';
 import {StructureDefinitionListComponent} from 'term-web/modeler/structure-definition/containers/structure-definition-list.component';
+import {StructureDefinitionSummaryComponent} from 'term-web/modeler/structure-definition/containers/summary/structure-definition-summary.component';
+import {StructureDefinitionVersionSummaryComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-summary.component';
+import {StructureDefinitionVersionContentComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-content.component';
+import {StructureDefinitionVersionEditComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-edit.component';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
 
 export const STRUCTURE_DEFINITION_ROUTES: Routes = [
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
   {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.StructureDefinition.edit']}},
   {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['{id}.StructureDefinition.edit']}},
-  {path: 'structure-definitions/:id/view', component: StructureDefinitionViewComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
+  {path: 'structure-definitions/:id/summary', component: StructureDefinitionSummaryComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
+  {path: 'structure-definitions/:id/details', component: StructureDefinitionEditComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
+  {path: 'structure-definitions/:id/versions/add', component: StructureDefinitionVersionEditComponent, data: {privilege: ['{id}.StructureDefinition.edit']}},
+  {path: 'structure-definitions/:id/versions/:versionCode/summary', component: StructureDefinitionVersionSummaryComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
+  {path: 'structure-definitions/:id/versions/:versionCode/edit', component: StructureDefinitionVersionEditComponent, data: {privilege: ['{id}.StructureDefinition.edit']}},
+  {path: 'structure-definitions/:id/versions/:versionCode/elements', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.view'], contentMode: 'elements'}},
+  {path: 'structure-definitions/:id/versions/:versionCode/fsh', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.view'], contentMode: 'fsh'}},
+  {path: 'structure-definitions/:id/versions/:versionCode/json', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.view'], contentMode: 'json'}},
+  // {path: 'structure-definitions/:id/view', component: StructureDefinitionViewComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
 ];
 
 @NgModule({
@@ -31,6 +43,10 @@ export const STRUCTURE_DEFINITION_ROUTES: Routes = [
         StructureDefinitionListComponent,
         StructureDefinitionEditComponent,
         StructureDefinitionViewComponent,
+        StructureDefinitionSummaryComponent,
+        StructureDefinitionVersionSummaryComponent,
+        StructureDefinitionVersionContentComponent,
+        StructureDefinitionVersionEditComponent,
         StructureDefinitionTypeListComponent,
         StructureDefinitionConstraintListComponent
     ],

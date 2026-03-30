@@ -5,13 +5,22 @@
 @if (relatedArtifacts?.length > 0) {
   <m-list mSeparated>
     @for (artifact of relatedArtifacts; track artifact) {
-      <m-list-item mClickable (mClick)="openArtifact(artifact)">
-        <div class="m-items-middle">
-          <span class="m-bold">{{artifact.type}}</span>
-          <m-divider mVertical></m-divider>
-          <span>{{artifact.id}}</span>
-        </div>
-      </m-list-item>
+      @if (artifact.resolved === false) {
+        <m-list-item>
+          <div class="m-items-middle">
+            <m-icon mCode="warning" style="color: var(--color-orange-6);"></m-icon>
+            <span class="m-text-secondary">{{artifact.url}}</span>
+          </div>
+        </m-list-item>
+      } @else {
+        <m-list-item mClickable (mClick)="openArtifact(artifact)">
+          <div class="m-items-middle">
+            <span class="m-bold">{{artifact.type}}</span>
+            <m-divider mVertical></m-divider>
+            <span>{{artifact.id}}</span>
+          </div>
+        </m-list-item>
+      }
     }
   </m-list>
 }

@@ -68,6 +68,7 @@
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="code">{{'entities.structure-definition.code' | translate}}</th>
+      <th>{{'web.structure-definition.list.last-version' | translate}}</th>
       <th>{{'entities.structure-definition.name' | translate}}</th>
       <th>{{'entities.structure-definition.url' | translate}}</th>
       <th>{{'entities.structure-definition.content-type' | translate}}</th>
@@ -78,10 +79,11 @@
     <tr *mTableRow="let def">
       <td m-table-expand [mItem]="def"></td>
       <td>
-        @if ('*.StructureDefinition.edit' | twHasAnyPrivilege) {
-          <a [routerLink]="[def.id, 'edit']">{{def.code ?? def.id}}</a>
-        } @else {
-          <a [routerLink]="[def.id, 'view']">{{def.code ?? def.id}}</a>
+        <a [routerLink]="[def.id, 'summary']">{{def.code ?? def.id}}</a>
+      </td>
+      <td>
+        @if (def.version) {
+          <a [routerLink]="[def.id, 'versions', def.version, 'summary']">{{def.version}}</a>
         }
       </td>
       <td>{{def.name}}</td>
@@ -123,15 +125,30 @@
   </m-backend-table>
 </tw-table>
 
-<m-modal [(mVisible)]="importModalVisible" (mClose)="importModalVisible = false">
+<m-modal [(mVisible)]="importModalVisible" (mClose)="importModalVisible = false" [mMaskClosable]="false">
   <ng-container *m-modal-header>{{'web.structure-definition.list.import' | translate}}</ng-container>
   <ng-container *m-modal-content>
-    <m-form-item mLabel="web.structure-definition.list.import-url">
-      <m-input [(ngModel)]="importUrl" placeholder="https://..."></m-input>
-    </m-form-item>
+    <form #importForm="ngForm">
+      <m-form-item mName="source" mLabel="web.resource-import-modal.source" required>
+        <m-radio-group name="source" [(ngModel)]="importSource" required>
+          <label m-radio-button mValue="url">{{'web.resource-import-modal.url' | translate}}</label>
+          <label m-radio-button mValue="file">{{'web.resource-import-modal.file' | translate}}</label>
+        </m-radio-group>
+      </m-form-item>
+      @if (importSource === 'url') {
+        <m-form-item mName="url" mLabel="web.resource-import-modal.url" required>
+          <m-input name="url" [(ngModel)]="importUrl" placeholder="https://..." required></m-input>
+        </m-form-item>
+      }
+      @if (importSource === 'file') {
+        <m-form-item mName="file" mLabel="web.resource-import-modal.file" required>
+          <input #fileInput type="file" name="file" accept=".json" [(ngModel)]="importFile" required>
+        </m-form-item>
+      }
+    </form>
   </ng-container>
   <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (mClick)="importModalVisible = false">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="text" (mClick)="importModalVisible = false" [disabled]="importLoading">{{'core.btn.cancel' | translate}}</m-button>
     <m-button mDisplay="primary" [mLoading]="importLoading" (mClick)="doImport()">{{'core.btn.import' | translate}}</m-button>
   </div>
 </m-modal>

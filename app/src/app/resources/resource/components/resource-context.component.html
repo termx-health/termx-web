@@ -20,7 +20,7 @@
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
 
-              @if (['CodeSystem', 'ValueSet', 'MapSet', 'TerminologyServer'] | includes: resourceType) {
+              @if (['CodeSystem', 'ValueSet', 'MapSet', 'TerminologyServer', 'StructureDefinition'] | includes: resourceType) {
                 <a class="submenu__item" [routerLink]="navigate('details')" routerLinkActive="active">
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.metadata', icon: 'form'}"/>
                 </a>
@@ -35,7 +35,18 @@
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
                 </a>
               }
-              @if (resourceType !== 'TerminologyServer') {
+              @if (resourceType === 'StructureDefinition' && version) {
+                <a class="submenu__item" [routerLink]="navigate('elements')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.structure-definition.form.element-header', icon: 'partition'}"/>
+                </a>
+                <a class="submenu__item" [routerLink]="navigate('fsh')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.structure-definition.form.fsh-header', icon: 'code'}"/>
+                </a>
+                <a class="submenu__item" [routerLink]="navigate('json')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.structure-definition.form.json-header', icon: 'file-text'}"/>
+                </a>
+              }
+              @if (!(['TerminologyServer', 'StructureDefinition'] | includes: resourceType)) {
                 <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
                 </a>

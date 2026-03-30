@@ -1,0 +1,57 @@
+<tw-resource-context resourceType="StructureDefinition" [resource]="$any(structureDefinition)" [versions]="$any(versions)" [version]="$any(version)" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[structureDefinition?.id, 'StructureDefinition']">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Version info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.structure-definition.version-summary.version-info">
+          <m-button
+              mControls
+              mDisplay="text"
+              [routerLink]="['/modeler/structure-definitions', structureDefinition?.id, 'versions', version?.version, 'edit']">
+            {{'web.structure-definition.version-summary.version-metadata' | translate}}&nbsp;
+            <m-icon mCode="form"></m-icon>
+          </m-button>
+        </m-title>
+        @if (!version) {
+          <m-no-data/>
+        }
+        @if (version) {
+          <div>
+            <div class="m-justify-between">
+              <div class="m-items-middle">
+                <span class="m-bold">{{version.version}}</span>
+                <m-divider mVertical/>
+                <span>{{(version.releaseDate | localDate) || '...'}}</span>
+              </div>
+              <tw-status-tag [status]="version.status"/>
+            </div>
+            @if (structureDefinition?.url) {
+              <div class="m-items-middle">
+                <m-icon mCode="link"/>
+                <tw-copy-container [text]="structureDefinition.url">{{structureDefinition.url}}</tw-copy-container>
+              </div>
+            }
+            <div class="m-items-middle">
+              <m-icon mCode="file-text"/>
+              <span>{{version.contentFormat}}</span>
+            </div>
+          </div>
+        }
+      </m-card>
+
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Related artifacts -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.structure-definition.summary.related-artifacts"></m-title>
+        <tw-resource-related-artifact-widget [resourceId]="'' + structureDefinition?.id" resourceType="StructureDefinition"></tw-resource-related-artifact-widget>
+      </m-card>
+
+    </div>
+  </m-form-row>
+
+</m-page>

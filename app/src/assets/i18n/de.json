@@ -699,6 +699,10 @@
       "url": "URL",
       "version": "Version"
     },
+    "structure-definition-version": {
+      "content-type": "Content type",
+      "description": "Description"
+    },
     "task": {
       "assignee": "Assignee",
       "author": "Author",
@@ -2138,6 +2142,7 @@
       "form": {
         "add-element": "",
         "add-header": "Add structure definition",
+        "details-header": "Structure definition details",
         "binding": "Binding",
         "cardinality": "Cardinality",
         "code": "Code",
@@ -2180,9 +2185,30 @@
         "open-fhir": "In FHIR öffnen",
         "title": "Strukturdefinitionen"
       },
+      "summary": {
+        "add-task": "Add task",
+        "add-version": "Add version",
+        "all-tasks": "All tasks",
+        "definition": "Structure definition",
+        "opened-tasks": "Opened tasks",
+        "related-artifacts": "Related artifacts",
+        "versions": "Versions",
+        "viewer": "Preview",
+        "recalculate-references": "Recalculate"
+      },
+      "version-summary": {
+        "version-info": "Version info",
+        "version-metadata": "Version metadata"
+      },
       "view": {
         "binding": "Binding",
         "fixed": "Fixed"
+      }
+    },
+    "structure-definition-version": {
+      "form": {
+        "add-header": "Add version",
+        "edit-header": "Edit version"
       }
     },
     "structure-definition-constraint": {
