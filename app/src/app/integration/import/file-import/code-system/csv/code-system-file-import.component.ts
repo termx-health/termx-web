@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@termx-health/ui';
@@ -31,13 +31,17 @@ const DEF_PROP_WEIGHT = {
   'is-a': -60
 };
 
+type SavedMappingRow = FileImportPropertyRow & {_newProp?: boolean};
+type SavedMappingPayload = {rows: SavedMappingRow[]};
+type SavedMappingOption = {name: string; rows: SavedMappingRow[]};
+
 
 @Component({
     templateUrl: 'code-system-file-import.component.html',
     providers: [DestroyService, CodeSystemFileImportService],
     imports: [CodeSystemFileImportFormComponent_1, MuiCardModule, MuiFormModule, MuiRadioModule, FormsModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, CodeSystemSearchComponent, ValueSetConceptSelectComponent, MuiNoDataModule, MuiAlertModule, MuiCoreModule, TranslatePipe, MarinaUtilModule, ApplyPipe, IncludesPipe]
 })
-export class CodeSystemFileImportComponent implements OnInit {
+export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   private readonly mappingStoragePrefix = 'termx.code-system-file-import.mapping';
   private http = inject(HttpClient);
   private notificationService = inject(MuiNotificationService);
@@ -99,7 +103,8 @@ export class CodeSystemFileImportComponent implements OnInit {
   public jobLog: JobLog;
 
   public dataTypes: string[];
-  protected hasSavedMapping = false;
+  protected selectedMappingName: string;
+  private selectedMappingContext: string;
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
@@ -116,7 +121,16 @@ export class CodeSystemFileImportComponent implements OnInit {
       prop.definedEntityPropertyId = dp.id;
       return prop;
     }));
-    this.refreshSavedMappingState();
+  }
+
+  public ngDoCheck(): void {
+    const mappingContext = this.getSelectedMappingContext();
+    if (mappingContext === this.selectedMappingContext) {
+      return;
+    }
+
+    this.selectedMappingContext = mappingContext;
+    this.selectedMappingName = this.getDefaultSelectedMappingName();
   }
 
   protected analyze(): void {
@@ -144,7 +158,7 @@ export class CodeSystemFileImportComponent implements OnInit {
 
       this.validations = [];
       this.data.template = undefined;
-      this.refreshSavedMappingState();
+      this.selectedMappingName = this.getDefaultSelectedMappingName();
     });
   }
 
@@ -264,7 +278,9 @@ export class CodeSystemFileImportComponent implements OnInit {
     }
 
     try {
-      localStorage.setItem(this.getMappingStorageKey(), JSON.stringify({
+      const mappingName = this.getMappingName();
+      const mappings = this.readSavedMappings();
+      mappings[mappingName] = {
         rows: this.analyzeResponse.parsedProperties.map(p => ({
           columnName: p.columnName,
           propertyName: p.propertyName,
@@ -277,15 +293,16 @@ export class CodeSystemFileImportComponent implements OnInit {
           import: p.import,
           _newProp: p['_newProp']
         }))
-      }));
-      this.hasSavedMapping = true;
+      };
+      localStorage.setItem(this.getMappingStorageKey(), JSON.stringify(mappings));
+      this.selectedMappingName = mappingName;
     } catch {
       // Ignore browser storage errors and leave the page usable.
     }
   }
 
   protected loadMapping(): void {
-    const savedMapping = this.readSavedMapping();
+    const savedMapping = this.getSavedMappings().find(mapping => mapping.name === this.selectedMappingName) ?? this.getSavedMappings()[0];
     if (!savedMapping?.rows?.length) {
       return;
     }
@@ -342,21 +359,54 @@ export class CodeSystemFileImportComponent implements OnInit {
     return p.orderNumber || DEF_PROP_WEIGHT[p.name] || (p.id ? 10000 : 10001);
   }
 
-  private getMappingStorageKey(): string {
-    return [this.mappingStoragePrefix, this.data.codeSystem?.id || 'default', this.data.source?.format || 'csv'].join(':');
+  protected get savedMappings(): SavedMappingOption[] {
+    return this.getSavedMappings();
   }
 
-  private readSavedMapping(): {rows: (FileImportPropertyRow & {_newProp?: boolean})[]} | undefined {
+  protected get hasSavedMapping(): boolean {
+    return this.savedMappings.length > 0;
+  }
+
+  private getDefaultSelectedMappingName(): string {
+    const mappingName = this.getMappingName();
+    return this.savedMappings.find(mapping => mapping.name === mappingName)?.name ?? this.savedMappings[0]?.name;
+  }
+
+  private getSelectedMappingContext(): string {
+    return [this.data.codeSystem?.id || 'default', this.data.codeSystemVersion?.version?.trim() || '', this.data.source?.format?.trim() || '']
+      .join(':');
+  }
+
+  private getMappingName(): string {
+    const codeSystemId = this.data.codeSystem?.id || 'default';
+    const version = this.data.codeSystemVersion?.version?.trim();
+    const baseName = version ? `${codeSystemId} ${version}` : codeSystemId;
+    const format = this.data.source?.format?.trim();
+    return format ? `${baseName}.${format}` : baseName;
+  }
+
+  private getMappingStorageKey(): string {
+    return [this.mappingStoragePrefix, this.data.codeSystem?.id || 'default'].join(':');
+  }
+
+  private readSavedMappings(): Record<string, SavedMappingPayload> {
     try {
       const stored = localStorage.getItem(this.getMappingStorageKey());
-      return stored ? JSON.parse(stored) : undefined;
+      if (!stored) {
+        return {};
+      }
+
+      return JSON.parse(stored) ?? {};
     } catch {
-      return undefined;
+      return {};
     }
   }
 
-  private refreshSavedMappingState(): void {
-    this.hasSavedMapping = !!this.readSavedMapping()?.rows?.length;
+  private getSavedMappings(): SavedMappingOption[] {
+    return Object.entries(this.readSavedMappings())
+      .filter(([, mapping]) => !!mapping?.rows?.length)
+      .map(([name, mapping]) => ({name, rows: mapping.rows}))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   protected get hasDuplicateIdentifiers(): boolean {

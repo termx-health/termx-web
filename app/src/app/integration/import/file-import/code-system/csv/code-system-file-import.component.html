@@ -37,7 +37,7 @@
   <m-card mTitle="web.integration.file-import.code-system.properties.header">
     <div *m-card-content class="tw-flex-container">
       <div class="m-items-middle" style="gap: 0.5rem; flex-wrap: wrap">
-        <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()" style="min-width: 12rem">
+        <m-select name="template" [(ngModel)]="data.template" (ngModelChange)="applyTemplate()" style="min-width: 12rem">
           <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"/>
           <m-option [mValue]="'icf'" [mLabel]="'icf'"/>
           <m-option [mValue]="'loinc-lt'" [mLabel]="'loinc-lt'"/>
@@ -47,7 +47,18 @@
           {{'web.integration.file-import.code-system.properties.save-mapping' | translate}}
         </m-button>
 
-        <m-button [disabled]="!hasSavedMapping || !analyzeResponse.parsedProperties?.length" (mClick)="loadMapping()">
+        <m-select
+          name="savedMapping"
+          [ngModel]="selectedMappingName || savedMappings[0]?.name"
+          (ngModelChange)="selectedMappingName = $event"
+          [disabled]="!hasSavedMapping"
+          style="min-width: 16rem">
+          @for (mapping of savedMappings; track mapping.name) {
+            <m-option [mValue]="mapping.name" [mLabel]="mapping.name"/>
+          }
+        </m-select>
+
+        <m-button [disabled]="!(selectedMappingName || savedMappings[0]?.name) || !analyzeResponse.parsedProperties?.length" (mClick)="loadMapping()">
           {{'web.integration.file-import.code-system.properties.load-mapping' | translate}}
         </m-button>
       </div>
