@@ -1442,7 +1442,9 @@
             "import-data": "Import data",
             "kts-property": "TermX property",
             "lang": "Lang",
+            "load-mapping": "Load mapping",
             "preferred": "Preferred",
+            "save-mapping": "Save mapping",
             "type": "Type",
             "type-column": "{{type}} column",
             "validate-data": "Validate data only"

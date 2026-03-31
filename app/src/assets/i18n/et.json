@@ -1330,7 +1330,9 @@
 						"import-data": "Impordi andmed",
 						"kts-property": "TermX tunnus",
 						"lang": "Keel",
+						"load-mapping": "Lae vastendus",
 						"preferred": "Eelistatud",
+						"save-mapping": "Salvesta vastendus",
 						"type": "Tüüp",
 						"type-column": "{{type}} veerg",
 						"validate-data": "Kontrolli andmeid"
