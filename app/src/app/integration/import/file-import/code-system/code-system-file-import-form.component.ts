@@ -45,8 +45,6 @@ export class CodeSystemFileImportFormComponent {
       format?: string
       file?: string,
     }
-    // properties
-    template?: string
   } = {
     codeSystem: {},
     codeSystemVersion: {},

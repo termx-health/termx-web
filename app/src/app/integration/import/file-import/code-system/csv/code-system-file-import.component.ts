@@ -1,9 +1,7 @@
-import {HttpClient} from '@angular/common/http';
 import { Component, DoCheck, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@termx-health/ui';
-import {of} from 'rxjs';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {
   CodeSystemFileImportService,
@@ -43,7 +41,6 @@ type SavedMappingOption = {name: string; rows: SavedMappingRow[]};
 })
 export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   private readonly mappingStoragePrefix = 'termx.code-system-file-import.mapping';
-  private http = inject(HttpClient);
   private notificationService = inject(MuiNotificationService);
   private valueSetLibService = inject(ValueSetLibService);
   private importService = inject(CodeSystemFileImportService);
@@ -73,8 +70,6 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       format?: string
       file?: string,
     }
-    // properties
-    template?: string
   } = {
     codeSystem: {},
     codeSystemVersion: {},
@@ -103,8 +98,8 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   public jobLog: JobLog;
 
   public dataTypes: string[];
-  protected selectedMappingName: string;
-  private selectedMappingContext: string;
+  protected selectedMappingName: string | undefined;
+  private selectedMappingContext: string | undefined;
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
@@ -157,7 +152,6 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       };
 
       this.validations = [];
-      this.data.template = undefined;
       this.selectedMappingName = this.getDefaultSelectedMappingName();
     });
   }
@@ -241,44 +235,17 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
     element.click();
     document.body.removeChild(element);
   }
-
-
-  /* Parsed properties table */
-  protected applyTemplate(): void {
-    const existingPropertyNames = this.combineWithDefaults(this.formComponent?.sourceCodeSystem?.properties).map(p => p.name);
-    const req$ = this.data.template ? this.http.get<FileImportPropertyRow[]>(`./assets/file-import-templates/${this.data.template}.json`) : of([]);
-
-    req$.subscribe(resp => {
-      const template = group(resp, p => p.columnName);
-      if (!template) {
-        return;
-      }
-
-      this.analyzeResponse.parsedProperties.forEach(pp => {
-        const prop = template[pp.columnName];
-        if (!prop) {
-          return;
-        }
-        pp['_newProp'] = !existingPropertyNames.includes(prop.propertyName);
-        pp.propertyName = prop.propertyName;
-        pp.propertyType = prop.propertyType;
-        pp.propertyTypeFormat = prop.propertyTypeFormat;
-        pp.preferred = prop.preferred;
-        pp.language = prop.language;
-        pp.import = prop.import;
-        this.onPropertyPreferredChange(pp);
-      });
-    });
-
-  }
-
   protected saveMapping(): void {
-    if (!this.analyzeResponse.parsedProperties?.length) {
+    if (!this.canManageMappings) {
       return;
     }
 
     try {
       const mappingName = this.getMappingName();
+      if (!mappingName) {
+        return;
+      }
+
       const mappings = this.readSavedMappings();
       mappings[mappingName] = {
         rows: this.analyzeResponse.parsedProperties.map(p => ({
@@ -367,31 +334,47 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
     return this.savedMappings.length > 0;
   }
 
-  private getDefaultSelectedMappingName(): string {
+  protected get canManageMappings(): boolean {
+    return !!this.data.codeSystem?.id && !!this.analyzeResponse.parsedProperties?.length;
+  }
+
+  private getDefaultSelectedMappingName(): string | undefined {
     const mappingName = this.getMappingName();
-    return this.savedMappings.find(mapping => mapping.name === mappingName)?.name ?? this.savedMappings[0]?.name;
+    return mappingName
+      ? this.savedMappings.find(mapping => mapping.name === mappingName)?.name ?? this.savedMappings[0]?.name
+      : undefined;
   }
 
   private getSelectedMappingContext(): string {
-    return [this.data.codeSystem?.id || 'default', this.data.codeSystemVersion?.version?.trim() || '', this.data.source?.format?.trim() || '']
+    return [this.data.codeSystem?.id || '', this.data.codeSystemVersion?.version?.trim() || '', this.data.source?.format?.trim() || '']
       .join(':');
   }
 
-  private getMappingName(): string {
-    const codeSystemId = this.data.codeSystem?.id || 'default';
+  private getMappingName(): string | undefined {
+    const codeSystemId = this.data.codeSystem?.id?.trim();
+    if (!codeSystemId) {
+      return undefined;
+    }
+
     const version = this.data.codeSystemVersion?.version?.trim();
     const baseName = version ? `${codeSystemId} ${version}` : codeSystemId;
     const format = this.data.source?.format?.trim();
     return format ? `${baseName}.${format}` : baseName;
   }
 
-  private getMappingStorageKey(): string {
-    return [this.mappingStoragePrefix, this.data.codeSystem?.id || 'default'].join(':');
+  private getMappingStorageKey(): string | undefined {
+    const codeSystemId = this.data.codeSystem?.id?.trim();
+    return codeSystemId ? [this.mappingStoragePrefix, codeSystemId].join(':') : undefined;
   }
 
   private readSavedMappings(): Record<string, SavedMappingPayload> {
     try {
-      const stored = localStorage.getItem(this.getMappingStorageKey());
+      const storageKey = this.getMappingStorageKey();
+      if (!storageKey) {
+        return {};
+      }
+
+      const stored = localStorage.getItem(storageKey);
       if (!stored) {
         return {};
       }
