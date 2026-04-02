@@ -18,6 +18,7 @@ var twConfig = {
   "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
+  "guestDisabled": 'json:${GUEST_DISABLED}'
 };
 
 for (const [key, val] of Object.entries(twConfig)) {

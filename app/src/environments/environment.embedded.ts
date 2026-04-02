@@ -5,9 +5,10 @@ import packageJson from '../../../package.json';
 export const environment: Environment = {
   appVersion: packageJson.version,
   production: false,
-  yupiEnabled: true,
+  yupiEnabled: false,
   embedded: true,
   baseHref: '/',
+  guestDisabled: true,
 
   defaultLanguage: 'en',
   uiLanguages: [...UI_LANGS],
@@ -17,8 +18,12 @@ export const environment: Environment = {
   //termxApi: 'https://demo.termx.org/api',
   termxApi: 'http://localhost:8200',
 
-  oauthIssuer: 'https://auth.termx.org/realms/termx',
-  oauthClientId: 'term-client',
+    // For local keycloak
+  oauthIssuer: 'http://localhost:8080/realms/termx',
+  oauthClientId: 'termx-client',
+
+  // oauthIssuer: 'https://auth.termx.org/realms/termx',
+  // oauthClientId: 'term-client',
   oauthScope: 'openid profile offline_access',
 
   swaggerUrl: 'https://demo.termx.org/swagger/',

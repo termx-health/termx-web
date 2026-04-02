@@ -8,6 +8,7 @@ export const environment: Environment = {
   yupiEnabled: true,
   embedded: false,
   baseHref: '/',
+  guestDisabled: false,
 
   defaultLanguage: 'en',
   uiLanguages: [...UI_LANGS],

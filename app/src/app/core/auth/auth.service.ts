@@ -68,7 +68,7 @@ export class AuthService {
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(
       mergeMap(lr => {
-        if (lr.isAuthenticated || !lr.accessToken) {
+        if (lr.isAuthenticated || (!environment.guestDisabled && !lr.accessToken)) {
           // 1. user is authenticated -> load valid userinfo
           // 2. no token -> load guest userinfo
           return this.loadUserInfo();

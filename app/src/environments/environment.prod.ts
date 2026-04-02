@@ -9,6 +9,7 @@ export const environment: Environment = {
   yupiEnabled: false,
   embedded: dynamicEnv.embedded ?? false,
   baseHref: dynamicEnv.baseHref || '/',
+  guestDisabled: !!dynamicEnv.guestDisabled,
 
   defaultLanguage: dynamicEnv.defaultLanguage || 'en',
   uiLanguages: dynamicEnv.uiLanguages || UI_LANGS,

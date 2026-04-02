@@ -6,6 +6,7 @@ export interface Environment {
   yupiEnabled: boolean,
   embedded: boolean,
   baseHref: string,
+  guestDisabled: boolean,
 
   defaultLanguage: string,
   uiLanguages: string[],
