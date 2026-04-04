@@ -6,6 +6,8 @@ export * from 'term-web/resources/_lib/code-system/containers/concept-search.com
 export * from 'term-web/resources/_lib/code-system/model/code-system';
 export * from 'term-web/resources/_lib/code-system/model/code-system-association';
 export * from 'term-web/resources/_lib/code-system/model/code-system-concept';
+export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-item';
+export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-search-result';
 export * from 'term-web/resources/_lib/code-system/model/code-system-entity';
 export * from 'term-web/resources/_lib/code-system/model/code-system-entity-version-search-params';
 export * from 'term-web/resources/_lib/code-system/model/code-system-search-params';

@@ -994,6 +994,11 @@
 					"contains": "Contains",
 					"eq": "Equals",
 					"filter-root-concepts": "Filter root concepts",
+					"filter-tree-concepts": "Filter tree concepts",
+					"load-more-roots": "Load more roots",
+					"load-all-roots": "Load all roots",
+					"load-more-matches": "Load more matches",
+					"load-all-matches": "Load all matches",
 					"validate": "Validate code system",
 					"filter-disabled": "Switch to the flattened list mode to enable the filter functionality"
 				},

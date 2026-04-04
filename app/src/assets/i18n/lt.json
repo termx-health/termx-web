@@ -918,6 +918,11 @@
           "designation-languages": "Designation languages",
           "eq": "Lygu",
           "filter-root-concepts": "Filtruoti šaknines sąvokas",
+          "filter-tree-concepts": "Filtruoti medžio sąvokas",
+          "load-more-roots": "Užkrauti daugiau šaknų",
+          "load-all-roots": "Užkrauti visas šaknis",
+          "load-more-matches": "Užkrauti daugiau atitikmenų",
+          "load-all-matches": "Užkrauti visus atitikmenis",
           "filter-disabled": "Switch to the flattened list mode to enable the filter functionality",
           "properties": "Properties",
           "validate": "Tikrinti kodų sistemą"
