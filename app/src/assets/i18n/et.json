@@ -891,6 +891,11 @@
 					"contains": "Sisaldab",
 					"eq": "Võrdub",
 					"filter-root-concepts": "Filtreeri juurmõisteid",
+					"filter-tree-concepts": "Filtreeri puuvaate mõisteid",
+					"load-more-roots": "Laadi veel juuri",
+					"load-all-roots": "Laadi kõik juured",
+					"load-more-matches": "Laadi veel vasteid",
+					"load-all-matches": "Laadi kõik vasted",
 					"validate": "Valideeri koodisüsteemi"
 				},
 				"delete-property-usages": "Eemalda tunnus mõistetelt",

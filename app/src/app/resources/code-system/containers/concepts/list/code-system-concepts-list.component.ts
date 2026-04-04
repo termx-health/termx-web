@@ -5,6 +5,8 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   CodeSystem,
   CodeSystemConcept,
+  CodeSystemConceptTreeSearchResult,
+  CodeSystemConceptTreeItem,
   CodeSystemEntityVersion,
   CodeSystemVersion,
   ConceptSearchParams,
@@ -133,6 +135,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
   private destroy$ = new Subject<void>();
   private codeToNodeMap = new Map<string, ConceptNode>();
+  private filteredTreeItems = new Map<string, CodeSystemConceptTreeItem>();
   protected needsPreview = false;
 
   public constructor() {
@@ -187,9 +190,22 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   }
 
   protected groupConcepts(groupParam: string): void {
+    if (this.isTreeFilterActive()) {
+      this.rootConceptLimit = ROOT_CONCEPT_PAGE_SIZE;
+      this.loadFilteredTree(groupParam, 0, this.rootConceptLimit).subscribe(resp => {
+        this.rootConceptsTotal = resp.meta.total ?? 0;
+        this.rootConceptLimit = resp.matchedCount ?? 0;
+        this.filteredTreeItems.clear();
+        this.upsertFilteredTreeItems(resp.data);
+        this.rebuildFilteredTree();
+      });
+      return;
+    }
+
     this.rootConceptLimit = ROOT_CONCEPT_PAGE_SIZE;
     this.loadRootConceptsPage(groupParam, 0, this.rootConceptLimit).subscribe(resp => {
       this.rootConceptsTotal = resp.meta.total ?? resp.data.length;
+      this.filteredTreeItems.clear();
       this.codeToNodeMap.clear();
       this.rootConcepts = resp.data.map(c => this.mapToNode(c));
       this.updatePreviewState();
@@ -207,7 +223,17 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   }
 
   protected loadMoreRootConcepts(): void {
-    if (!this.codeSystem?.hierarchyMeaning || this.rootConcepts.length >= this.rootConceptsTotal) {
+    if (!this.codeSystem?.hierarchyMeaning || this.rootConceptLimit >= this.rootConceptsTotal) {
+      return;
+    }
+
+    if (this.isTreeFilterActive()) {
+      this.loadFilteredTree(this.codeSystem.hierarchyMeaning, this.rootConceptLimit, ROOT_CONCEPT_PAGE_SIZE).subscribe(resp => {
+        this.rootConceptsTotal = resp.meta.total ?? this.rootConceptsTotal;
+        this.rootConceptLimit += resp.matchedCount ?? 0;
+        this.upsertFilteredTreeItems(resp.data);
+        this.rebuildFilteredTree();
+      });
       return;
     }
 
@@ -220,11 +246,22 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   }
 
   protected loadAllRootConcepts(): void {
-    if (!this.codeSystem?.hierarchyMeaning || this.rootConcepts.length >= this.rootConceptsTotal) {
+    if (!this.codeSystem?.hierarchyMeaning || this.rootConceptLimit >= this.rootConceptsTotal) {
       return;
     }
 
-    const remaining = this.rootConceptsTotal - this.rootConcepts.length;
+    if (this.isTreeFilterActive()) {
+      const remaining = this.rootConceptsTotal - this.rootConceptLimit;
+      this.loadFilteredTree(this.codeSystem.hierarchyMeaning, this.rootConceptLimit, remaining).subscribe(resp => {
+        this.rootConceptsTotal = resp.meta.total ?? this.rootConceptsTotal;
+        this.rootConceptLimit += resp.matchedCount ?? 0;
+        this.upsertFilteredTreeItems(resp.data);
+        this.rebuildFilteredTree();
+      });
+      return;
+    }
+
+    const remaining = this.rootConceptsTotal - this.rootConceptLimit;
     this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, this.rootConcepts.length, remaining).subscribe(resp => {
       this.rootConceptLimit += resp.data.length;
       this.rootConceptsTotal = resp.meta.total ?? this.rootConceptsTotal;
@@ -264,7 +301,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   }
 
   protected isFilterSelected(filter: Filter): boolean {
-    const exclude: (keyof Filter)[] = ['open', 'searchInput', 'inputType'];
+    const exclude: (keyof Filter)[] = ['open', 'inputType'];
     return Object.keys(filter)
       .filter((k: keyof Filter) => !exclude.includes(k))
       .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]));
@@ -318,6 +355,11 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   // tree
 
   protected expandNode(node: ConceptNode): void {
+    if (this.isTreeFilterActive()) {
+      node.expanded = !node.expanded;
+      return;
+    }
+
     if (node.expanded) {
       node.expanded = false;
       node.children = [];
@@ -346,10 +388,19 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     return this.codeSystemService.searchConcepts(this.codeSystem.id, params);
   }
 
-  private mapToNode(c: CodeSystemConcept): ConceptNode {
+  private loadFilteredTree(groupParam: string, offset: number, limit: number): Observable<CodeSystemConceptTreeSearchResult> {
+    const params = this.buildSearchParams(new ConceptSearchParams());
+    params.associationType = groupParam;
+    params.sort = 'code';
+    params.offset = offset;
+    params.limit = limit;
+    return this.loader.wrap('group', this.codeSystemService.searchConceptTree(this.codeSystem.id, params));
+  }
+
+  private mapToNode(c: CodeSystemConcept, expandable = !c.leaf): ConceptNode {
     const node = {
       code: c.code,
-      expandable: !c.leaf,
+      expandable,
       concept: c
     };
     this.codeToNodeMap.set(node.code, node);
@@ -472,6 +523,10 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     return properties?.find(p => p.id === id);
   };
 
+  protected isTreeFilterActive(): boolean {
+    return !!this.groupOpened && (!!this.filter.searchInput?.trim() || !!this.filter.properties?.length);
+  }
+
   private scheduleAutoOpen(): void {
     if (!this.groupOpened) {
       return;
@@ -496,7 +551,9 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     console.log("Visible code length: ", visibleCodes.length);
     visibleCodes.forEach(code => {
       const node = this.codeToNodeMap.get(code);
-      node.detailsExpanded = true;
+      if (node) {
+        node.detailsExpanded = true;
+      }
     });
   }
 
@@ -599,35 +656,44 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     this.rootConceptLimit = state.rootConceptLimit ?? ROOT_CONCEPT_PAGE_SIZE;
 
     const expandedNodes = state.expandedNodes ?? [];
-    const initialRootConcepts$: Observable<SearchResult<CodeSystemConcept>> = this.codeSystem?.hierarchyMeaning
-      ? this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, 0, this.rootConceptLimit)
-      : of(SearchResult.empty<CodeSystemConcept>());
+    const rootConcepts$: Observable<unknown> = this.isTreeFilterActive()
+      ? this.loadFilteredTree(this.codeSystem.hierarchyMeaning, 0, this.rootConceptLimit).pipe(
+        tap((resp: CodeSystemConceptTreeSearchResult) => {
+          this.rootConceptsTotal = resp.meta.total ?? 0;
+          this.rootConceptLimit = resp.matchedCount ?? 0;
+          this.filteredTreeItems.clear();
+          this.upsertFilteredTreeItems(resp.data);
+          this.rebuildFilteredTree();
+        })
+      )
+      : (this.codeSystem?.hierarchyMeaning
+        ? this.loadRootConceptsPage(this.codeSystem.hierarchyMeaning, 0, this.rootConceptLimit).pipe(
+          mergeMap((resp: SearchResult<CodeSystemConcept>) => {
+            this.rootConceptsTotal = resp.meta.total ?? resp.data.length;
+            this.filteredTreeItems.clear();
+            this.codeToNodeMap.clear();
+            const roots = resp.data.map(c => this.mapToNode(c));
+            const children: Observable<{code: string, data: CodeSystemConcept[]}>[] = expandedNodes.map(code => {
+              return this.loadChildren(code).pipe(map(r => ({code, data: r.data})));
+            });
+            return forkJoin([of(roots), ...children]);
+          }),
+          tap(([rootConcepts, ...resp]) => {
+            this.rootConcepts = rootConcepts;
 
-    const rootConcepts$ = initialRootConcepts$.pipe(
-      mergeMap((resp: SearchResult<CodeSystemConcept>) => {
-        this.rootConceptsTotal = resp.meta.total ?? resp.data.length;
-        this.codeToNodeMap.clear();
-        const roots = resp.data.map(c => this.mapToNode(c));
-        const children: Observable<{code: string, data: CodeSystemConcept[]}>[] = expandedNodes.map(code => {
-          return this.loadChildren(code).pipe(map(r => ({code, data: r.data})));
-        });
-        return forkJoin([of(roots), ...children]);
-      }),
-      tap(([rootConcepts, ...resp]) => {
-        this.rootConcepts = rootConcepts;
-
-        const childMap = group(resp, v => v.code, v => v.data);
-        const expand = (child: ConceptNode): void => {
-          if (childMap[child.code]) {
-            child.expanded = true;
-            child.children = childMap[child.code].map(n => this.mapToNode(n));
-            child.children.forEach(c => expand(c));
-          }
-        };
-        this.rootConcepts.forEach(c => expand(c));
-        this.updatePreviewState();
-      })
-    );
+            const childMap = group(resp, v => v.code, v => v.data);
+            const expand = (child: ConceptNode): void => {
+              if (childMap[child.code]) {
+                child.expanded = true;
+                child.children = childMap[child.code].map(n => this.mapToNode(n));
+                child.children.forEach(c => expand(c));
+              }
+            };
+            this.rootConcepts.forEach(c => expand(c));
+            this.updatePreviewState();
+          })
+        )
+        : of(SearchResult.empty<CodeSystemConcept>()));
 
     this.loader.wrap('group', forkJoin([searchResult$, rootConcepts$])).subscribe(() => {
       setTimeout(() => {
@@ -649,5 +715,51 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
   public activateConcepts(): void {
     this.codeSystemService.activateEntityVersions(this.codeSystem?.id, this.version?.version).subscribe(() => this.initConcepts());
+  }
+
+  private upsertFilteredTreeItems(concepts: CodeSystemConceptTreeItem[]): void {
+    concepts.forEach(concept => {
+      const existing = this.filteredTreeItems.get(concept.code);
+      this.filteredTreeItems.set(concept.code, {
+        ...existing,
+        ...concept,
+        matched: existing?.matched || concept.matched
+      });
+    });
+  }
+
+  private rebuildFilteredTree(): void {
+    this.codeToNodeMap.clear();
+
+    const nodes = new Map<string, ConceptNode>();
+    const sortedConcepts = [...this.filteredTreeItems.values()].sort((a, b) => a.code.localeCompare(b.code));
+    sortedConcepts.forEach(concept => nodes.set(concept.code, this.mapToNode(concept, false)));
+
+    const roots: ConceptNode[] = [];
+    sortedConcepts.forEach(concept => {
+      const node = nodes.get(concept.code);
+      const parent = concept.parentCode ? nodes.get(concept.parentCode) : undefined;
+      if (parent) {
+        parent.children ??= [];
+        parent.children.push(node);
+        parent.expandable = true;
+        parent.expanded = true;
+      } else {
+        roots.push(node);
+      }
+    });
+
+    const sortNodes = (items: ConceptNode[]): void => {
+      items.sort((a, b) => a.code.localeCompare(b.code));
+      items.forEach(node => {
+        if (node.children?.length) {
+          sortNodes(node.children);
+        }
+      });
+    };
+
+    sortNodes(roots);
+    this.rootConcepts = roots;
+    this.updatePreviewState();
   }
 }
