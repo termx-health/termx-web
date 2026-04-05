@@ -1,4 +1,4 @@
-<tw-table [(filterOpen)]="filter.open" [filterTitle]="groupOpened ? ('web.code-system.form.concepts.filter-root-concepts' | translate) : undefined">
+<tw-table [(filterOpen)]="filter.open" [filterTitle]="groupOpened ? ('web.code-system.form.concepts.filter-tree-concepts' | translate) : undefined">
   <div header class="m-items-middle" style="flex: 1">
     @if (codeSystem.hierarchyMeaning && !codeSystem.settings?.disableHierarchyGrouping) {
       <m-button (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
@@ -149,15 +149,15 @@
           @for (root of rootConcepts; track root) {
             <ng-container *ngTemplateOutlet="treeView; context: {node: root, level: 0}"/>
           }
-          @if (rootConcepts.length < rootConceptsTotal) {
+          @if (rootConceptLimit < rootConceptsTotal) {
             <tr>
               <td colspan="100%">
                 <div class="m-items-middle m-justify-center" style="gap: .5rem;">
                   <m-button (mClick)="loadMoreRootConcepts()" [mLoading]="loader.state['group']" [disabled]="loader.isLoading">
-                    {{'core.load-more' | translate}} ({{rootConcepts.length}} / {{rootConceptsTotal}})
+                    {{(isTreeFilterActive() ? 'web.code-system.form.concepts.load-more-matches' : 'web.code-system.form.concepts.load-more-roots') | translate}} ({{rootConceptLimit}} / {{rootConceptsTotal}})
                   </m-button>
                   <m-button (mClick)="loadAllRootConcepts()" [mLoading]="loader.state['group']" [disabled]="loader.isLoading">
-                    {{'core.load-all' | translate}}
+                    {{(isTreeFilterActive() ? 'web.code-system.form.concepts.load-all-matches' : 'web.code-system.form.concepts.load-all-roots') | translate}}
                   </m-button>
                 </div>
               </td>
@@ -213,8 +213,10 @@
         }
         </tr>
 
-        @for (child of node.children; track child) {
-          <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
+        @if (node.expanded !== false) {
+          @for (child of node.children; track child) {
+            <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
+          }
         }
       </ng-template>
 

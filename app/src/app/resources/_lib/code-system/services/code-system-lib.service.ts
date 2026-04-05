@@ -9,6 +9,8 @@ import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
 import {CodeSystem} from 'term-web/resources/_lib/code-system/model/code-system';
 import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
+import {CodeSystemConceptTreeSearchResult} from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-search-result';
+import {CodeSystemConceptTreeItem} from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-item';
 import {CodeSystemEntityVersion} from 'term-web/resources/_lib/code-system/model/code-system-entity';
 import {CodeSystemEntityVersionSearchParams} from 'term-web/resources/_lib/code-system/model/code-system-entity-version-search-params';
 import {CodeSystemSearchParams} from 'term-web/resources/_lib/code-system/model/code-system-search-params';
@@ -42,6 +44,10 @@ export class CodeSystemLibService {
 
   public searchConcepts(codeSystemId: string, params: ConceptSearchParams): Observable<SearchResult<CodeSystemConcept>> {
     return this.http.get<SearchResult<CodeSystemConcept>>(`${this.baseUrl}/${codeSystemId}/concepts`, {params: SearchHttpParams.build(params)});
+  }
+
+  public searchConceptTree(codeSystemId: string, params: ConceptSearchParams): Observable<CodeSystemConceptTreeSearchResult> {
+    return this.http.get<CodeSystemConceptTreeSearchResult>(`${this.baseUrl}/${codeSystemId}/concepts/tree-search`, {params: SearchHttpParams.build(params)});
   }
 
   public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
