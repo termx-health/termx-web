@@ -23,7 +23,6 @@ import { TaskModule } from 'term-web/task/task.module';
 import { FhirModule } from 'term-web/fhir/fhir.module';
 import { ObservationDefinitionModule } from 'term-web/observation-definition/observation-definition.module';
 import { TerminologyServiceApiModule } from 'term-web/terminology-service-api/terminology-service-api.module';
-import { MeasurementUnitModule } from 'term-web/measurement-unit/measurement-unit.module';
 import { UcumModule } from 'term-web/ucum/ucum.module';
 import { SysModule } from 'term-web/sys/sys.module';
 import { UserModule } from 'term-web/user/user.module';
@@ -47,7 +46,7 @@ bootstrapApplication(RootComponent, {
                 deps: [HttpBackend]
             },
             fallbackLang: environment.defaultLanguage
-        }), RootModule, AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, MeasurementUnitModule, UcumModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
+        }), RootModule, AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, UcumModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
         { provide: LOCALE_ID, useValue: environment.defaultLanguage },
         { provide: APP_INITIALIZER, useFactory: initAuth, deps: [AuthService], multi: true },
         { provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref },

@@ -3,7 +3,7 @@ import { BooleanInput, isDefined, SearchResult, isNil, AutofocusDirective, Apply
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSupplementUtil, ConceptUtil, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
 import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiAlertModule, MuiFormModule, MuiInputModule, MuiListModule, MuiCheckboxModule, MuiCoreModule } from '@termx-health/ui';
 
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
@@ -72,7 +72,12 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   }
 
   protected selectAll(): void {
-    this.conceptService.search({ codeSystem: this.codeSystem, codeSystemVersion: this.codeSystemVersion, limit: -1}).subscribe(r => {
+    this.conceptService.search({
+      codeSystem: this.codeSystem,
+      codeSystemVersion: this.codeSystemVersion,
+      ...ConceptSupplementUtil.forCodeSystem(this.codeSystem, this.translateService.currentLang),
+      limit: -1
+    }).subscribe(r => {
       this.onSelect(r.data?.flatMap(c => c.versions.map(v => v.id)));
     });
   }
@@ -110,6 +115,7 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
       codeSystem: cs,
       codeSystemVersion: csv,
       textContains: this.searchInput,
+      ...ConceptSupplementUtil.forCodeSystem(cs, this.translateService.currentLang),
       limit: (this.concepts?.data?.length || 0) + 20
     });
   }

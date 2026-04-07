@@ -3,10 +3,8 @@ import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { BooleanInput, isDefined, ApplyPipe } from '@termx-health/core-util';
 import {Observable, map} from 'rxjs';
 import {SnomedLibService} from 'term-web/integration/_lib';
-import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
 import {CodeSystemConcept, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
 
-import { MeasurementUnitSearchComponent } from 'term-web/measurement-unit/_lib/containers/measurement-unit-search.component';
 import { SnomedDrawerSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
 import { ConceptSearchComponent } from 'term-web/resources/_lib/code-system/containers/concept-search.component';
 
@@ -14,7 +12,7 @@ import { ConceptSearchComponent } from 'term-web/resources/_lib/code-system/cont
     selector: 'tw-term-concept-search',
     templateUrl: './terminology-concept-search.component.html',
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TerminologyConceptSearchComponent), multi: true }],
-    imports: [MeasurementUnitSearchComponent, FormsModule, SnomedDrawerSearchComponent, ConceptSearchComponent, ApplyPipe]
+    imports: [FormsModule, SnomedDrawerSearchComponent, ConceptSearchComponent, ApplyPipe]
 })
 export class TerminologyConceptSearchComponent implements OnChanges {
   private snomedService = inject(SnomedLibService);
@@ -62,25 +60,6 @@ export class TerminologyConceptSearchComponent implements OnChanges {
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-
-  protected fromUcum = (value: MeasurementUnit | MeasurementUnit[] | string | string[]): void => {
-    if (Array.isArray(value)) {
-      this.onChange(value.map(v => this.mapUcum(v)));
-    } else {
-      this.onChange(this.mapUcum(value));
-    }
-  };
-
-  protected mapUcum = (value: MeasurementUnit | string): CodeSystemConcept | string => {
-    if (typeof value === 'object') {
-      const designations = [
-        ...Object.keys(value.names).map(lang => ({language: lang, name: value.names[lang], designationType: 'display'})),
-        ...Object.keys(value.alias).map(lang => ({language: lang, name: value.alias[lang], designationType: 'alias'}))
-      ];
-      return {code: value.code, codeSystem: 'ucum', versions: [{designations: designations}]};
-    }
-    return value;
-  };
 
   protected fromSnomed = (value: string): void => {
     if (this.valueType === 'full') {

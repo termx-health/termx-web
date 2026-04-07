@@ -121,24 +121,6 @@
         </m-table>
       </m-card>
 
-      <m-card mTitle="web.global-search.dashboard.measurement-unit" *ngIf="measurementUnits?.length > 0">
-        <m-table [mData]="measurementUnits">
-          <tr *mTableHead>
-            <th>{{'entities.measurement-unit.code' | translate}}</th>
-            <th>{{'entities.measurement-unit.name' | translate}}</th>
-          </tr>
-          <tr *mTableRow="let unit">
-            <td><a (click)="openMeasurementUnit(unit.id)">{{unit.code}}</a></td>
-            <td>{{unit.names | localName}}</td>
-          </tr>
-          <tr *mTableNoData>
-            <td colspan="100%">
-              <m-no-data/>
-            </td>
-          </tr>
-        </m-table>
-      </m-card>
-
       <m-card mTitle="web.global-search.dashboard.snomed" *ngIf="snomedConcepts?.length > 0">
         <m-table [mData]="snomedConcepts">
           <tr *mTableHead>

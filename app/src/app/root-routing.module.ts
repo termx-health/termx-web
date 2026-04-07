@@ -14,7 +14,6 @@ import {TERMINOLOGY_SERVICE_API_ROUTES} from 'term-web/terminology-service-api/t
 import {FHIR_ROUTES} from 'term-web/fhir/fhir.module';
 import {GLOBAL_SEARCH_ROUTES} from 'term-web/global-search/global-search.module';
 import {INTEGRATION_ROUTES} from 'term-web/integration/integration.module';
-import {MEASUREMENT_UNIT_ROUTES} from 'term-web/measurement-unit/measurement-unit.module';
 import {UCUM_ROUTES} from 'term-web/ucum/ucum.module';
 import {PRIVILEGES_ROUTES} from 'term-web/privileges/privileges.module';
 import {RESOURCES_ROUTES} from 'term-web/resources/resources.module';
@@ -37,7 +36,6 @@ const APP_ROUTES: Routes = [
   {path: 'wiki', children: WIKI_ROUTES, data: {privilege: ['*.Wiki.view']}},
   {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.view']}},
   {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.view', '*.TransformationDefinition.view']}},
-  {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'ucum', children: UCUM_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'servers', children: SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},

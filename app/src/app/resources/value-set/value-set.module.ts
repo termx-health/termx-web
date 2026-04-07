@@ -20,7 +20,6 @@ import {UserLibModule} from 'term-web/user/_lib';
 import {FinderModule} from 'term-web/core/components/finder/finder.module';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
-import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
 import {FinderValueSetListComponent} from 'term-web/resources/value-set/containers-finder/value-set-list.component';
 import {FinderValueSetViewComponent} from 'term-web/resources/value-set/containers-finder/value-set-view.component';
 import {FinderValueSetVersionViewComponent} from 'term-web/resources/value-set/containers-finder/version/value-set-version-view.component';
@@ -62,7 +61,6 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
         FinderModule,
         ResourcesLibModule,
         IntegrationLibModule,
-        MeasurementUnitLibModule,
         MarinaQuillModule,
         ResourceModule,
         UserLibModule,

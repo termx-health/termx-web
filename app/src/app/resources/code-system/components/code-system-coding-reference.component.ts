@@ -63,7 +63,6 @@ export class CodeSystemCodingReferenceComponent implements OnChanges, DoCheck {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('environment', environment, this.embedded);
     if (changes['property'] || changes['value']) {
       this.refreshReference();
     }

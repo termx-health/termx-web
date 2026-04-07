@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loader.isLoading">
-      <m-card [mTitle]="'web.measurement-unit.form.view-header'" [mShowSkeleton]="loader.isLoading">
+      <m-card [mTitle]="'entities.observation-definition.observation-definition'" [mShowSkeleton]="loader.isLoading">
         @if (observationDefinition) {
           <form #form="ngForm">
             <m-form-item mLabel="entities.observation-definition.code">

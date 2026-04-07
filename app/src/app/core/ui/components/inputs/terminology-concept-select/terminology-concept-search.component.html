@@ -1,12 +1,5 @@
 @if (codeSystem) {
   @switch (codeSystem) {
-    @case ('ucum') {
-      <tw-measurement-unit-search
-        name="value" [(ngModel)]="value"
-        (ngModelChange)="fromUcum($event)"
-        [valuePrimitive]="valueType | apply:valuePrimitive"
-      [multiple]="multiple"></tw-measurement-unit-search>
-    }
     @case ('snomed-ct') {
       <tw-snomed-drawer-search
         [value]="value | apply:getCode"
