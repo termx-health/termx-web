@@ -5,9 +5,8 @@ import { ApplyPipe, BooleanInput, JoinPipe, LoadingManager, validateForm } from 
 import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiFormModule, MuiIconModule, MuiNoDataModule, MuiRadioModule, MuiSelectModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
-import { CodeSystemLibService, EntityProperty, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule } from 'term-web/resources/_lib';
+import { CodeSystemLibService, CodeSystemVersion, EntityProperty, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule } from 'term-web/resources/_lib';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
-import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
 import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
 import { ValueSetRuleConceptListComponent } from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
@@ -26,7 +25,6 @@ import { ValueSetRuleFilterListComponent } from 'term-web/resources/value-set/co
         MuiNoDataModule,
         MuiRadioModule,
         CodeSystemSearchComponent,
-        CodeSystemVersionSelectComponent,
         MuiSelectModule,
         ValueSetRuleConceptListComponent,
         ValueSetRuleFilterListComponent,
@@ -55,6 +53,7 @@ export class ValueSetRuleFormComponent implements OnChanges {
 
   protected ruleBase: 'code-system' | 'value-set';
   protected conceptsBase: 'all' | 'exact' | 'filter';
+  protected codeSystemVersions: CodeSystemVersion[] = [];
   protected expansionPreview?: ValueSetVersionConcept[];
   protected expansionPreviewLoaded = false;
   protected loader = new LoadingManager();
@@ -65,6 +64,7 @@ export class ValueSetRuleFormComponent implements OnChanges {
       this.rule.filters ??= [];
       this.ruleBase = this.rule.valueSet ? 'value-set' : 'code-system';
       this.conceptsBase = this.rule.filters.length > 0 ? 'filter' : this.rule.concepts.length > 0 ? 'exact' : 'all';
+      this.loadCodeSystemVersions(this.rule.codeSystem);
     }
     if (changes['rule'] || changes['inactiveConcepts']) {
       this.expansionPreview = undefined;
@@ -81,9 +81,6 @@ export class ValueSetRuleFormComponent implements OnChanges {
   protected conceptsBaseChanged(): void {
     this.rule.concepts = [];
     this.rule.filters = [];
-    if (this.conceptsBase === 'filter') {
-      this.rule.codeSystemVersion = {};
-    }
   }
 
   public ruleBaseChanged(base: 'code-system' | 'value-set'): void {
@@ -91,7 +88,8 @@ export class ValueSetRuleFormComponent implements OnChanges {
       this.rule.concepts = [];
       this.rule.filters = [];
       this.rule.codeSystem = undefined;
-      this.rule.codeSystemVersion = {};
+      this.rule.codeSystemVersion = undefined;
+      this.codeSystemVersions = [];
     }
 
     if (base !== 'value-set') {
@@ -106,6 +104,29 @@ export class ValueSetRuleFormComponent implements OnChanges {
     }
     return this.codeSystemService.load(cs).pipe(map(codeSystem => codeSystem.properties));
   };
+
+  protected codeSystemChanged(): void {
+    this.rule.codeSystemVersion = undefined;
+    this.loadCodeSystemVersions(this.rule.codeSystem);
+  }
+
+  private loadCodeSystemVersions(codeSystem?: string): void {
+    if (!codeSystem) {
+      this.codeSystemVersions = [];
+      return;
+    }
+    this.codeSystemService.searchVersions(codeSystem, {limit: -1}).subscribe(result => {
+      this.codeSystemVersions = result.data || [];
+      if (!this.rule?.codeSystemVersion?.id && !this.rule?.codeSystemVersion?.version) {
+        this.rule.codeSystemVersion = undefined;
+        return;
+      }
+      const matched = this.codeSystemVersions.find(v =>
+        (this.rule.codeSystemVersion?.id != null && v.id === this.rule.codeSystemVersion.id) ||
+        (this.rule.codeSystemVersion?.version != null && v.version === this.rule.codeSystemVersion.version));
+      this.rule.codeSystemVersion = matched;
+    });
+  }
 
   protected previewExpansion(): void {
     if (!this.rule || !this.canPreviewExpansion()) {

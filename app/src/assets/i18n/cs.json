@@ -1089,6 +1089,9 @@
         },
         "opened-tasks": "Otevřené úkoly",
         "related-artifacts": "Související artefakty",
+        "value-set-impacts": "Dopady na množiny hodnot",
+        "value-set-impacts.source": "Zdroj pravidla",
+        "value-set-impacts.current": "Aktuální verze systému kódů",
         "unlinked-concepts": {
           "author": "Autor",
           "concept": "Koncept",
@@ -2631,6 +2634,7 @@
             "exact": "Přesné koncepty",
             "exclude": "Vyloučit",
             "filter": "Výraz založený na vlastnosti",
+            "latest": "Nejnovější",
             "include": "Zahrnout",
             "value-set": "Sada hodnot"
           }

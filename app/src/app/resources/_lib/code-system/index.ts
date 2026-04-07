@@ -10,6 +10,7 @@ export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tre
 export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-search-result';
 export * from 'term-web/resources/_lib/code-system/model/code-system-entity';
 export * from 'term-web/resources/_lib/code-system/model/code-system-entity-version-search-params';
+export * from 'term-web/resources/_lib/code-system/model/code-system-artifact-impact';
 export * from 'term-web/resources/_lib/code-system/model/code-system-search-params';
 export * from 'term-web/resources/_lib/code-system/model/code-system-supplement';
 export * from 'term-web/resources/_lib/code-system/model/code-system-transaction-request';

@@ -18,14 +18,15 @@
       @if (ruleBase === 'code-system') {
         <m-form-row>
           <m-form-item *mFormCol mName="codeSystem" mLabel="entities.value-set-rule-set.rule.code-system" required>
-            <tw-code-system-search name="codeSystem" [(ngModel)]="rule.codeSystem" required valuePrimitive></tw-code-system-search>
+            <tw-code-system-search name="codeSystem" [(ngModel)]="rule.codeSystem" (ngModelChange)="codeSystemChanged()" required valuePrimitive></tw-code-system-search>
           </m-form-item>
-          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version" [required]="!lockedDate && conceptsBase !== 'filter'">
-            <tw-code-system-version-select name="codeSystemVersion"
-              [(ngModel)]="rule.codeSystemVersion"
-              [codeSystemId]="rule.codeSystem"
-              [required]="!lockedDate && conceptsBase !== 'filter'"
-              [autoSelectOnlyWhenSingle]="conceptsBase === 'filter'"></tw-code-system-version-select>
+          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version">
+            <m-select name="codeSystemVersion" [(ngModel)]="rule.codeSystemVersion" [autoSelect]="false" [autoUnselect]="false">
+              <m-option [mValue]="undefined" [mLabel]="'web.value-set-version.form.rule-set.rule.latest' | translate"></m-option>
+              @for (version of codeSystemVersions; track version.id || version.version) {
+                <m-option [mValue]="version" [mLabel]="version.version"></m-option>
+              }
+            </m-select>
           </m-form-item>
         </m-form-row>
         <m-form-row>
@@ -89,7 +90,7 @@
             {{rule.codeSystem}}
           </m-form-item>
           <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version">
-            {{rule.codeSystemVersion?.version || '-'}}
+            {{rule.codeSystemVersion?.version || ('web.value-set-version.form.rule-set.rule.latest' | translate)}}
           </m-form-item>
         </m-form-row>
         @if (rule.properties?.length > 0) {

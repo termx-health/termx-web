@@ -1004,6 +1004,9 @@
         },
         "opened-tasks": "Aktyvios užduotys",
         "related-artifacts": "Susiję artefaktai",
+        "value-set-impacts": "Reikšmių rinkinių poveikis",
+        "value-set-impacts.source": "Taisyklės šaltinis",
+        "value-set-impacts.current": "Dabartinė kodų sistemos versija",
         "unlinked-concepts": {
           "author": "Autorius",
           "concept": "Terminas",
@@ -2528,6 +2531,7 @@
             "exact": "Tikslus atitikimas",
             "exclude": "Neįtraukti",
             "filter": "Filtravimas pagal savybes",
+            "latest": "Naujausia",
             "include": "Įtraukti",
             "value-set": "Reikšmių rinkinys (value set)"
           }

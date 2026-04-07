@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {UriUtil} from 'term-web/core/utils/uri-util';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
+import {CodeSystemArtifactImpact} from 'term-web/resources/_lib/code-system/model/code-system-artifact-impact';
 import {CodeSystem} from 'term-web/resources/_lib/code-system/model/code-system';
 import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
 import {CodeSystemConceptTreeSearchResult} from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-search-result';
@@ -69,5 +70,9 @@ export class CodeSystemLibService {
 
   public loadProvenances(codeSystem: string, version: string): Observable<Provenance[]> {
     return this.http.get<Provenance[]>(`${this.baseUrl}/${codeSystem}/provenances`, {params: SearchHttpParams.build({version})});
+  }
+
+  public loadValueSetImpacts(codeSystemId: string): Observable<CodeSystemArtifactImpact[]> {
+    return this.http.get<CodeSystemArtifactImpact[]>(`${this.baseUrl}/${codeSystemId}/value-set-impacts`);
   }
 }

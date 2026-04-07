@@ -107,6 +107,34 @@
           <tw-resource-related-artifact-widget [resourceId]="codeSystem?.id" resourceType="CodeSystem"></tw-resource-related-artifact-widget>
         </m-card>
 
+        <m-card>
+          <m-title *m-card-header mTitle="web.code-system.summary.value-set-impacts"></m-title>
+          @if (!(valueSetImpacts?.length > 0)) {
+            <span class="m-text-secondary">-</span>
+          }
+          @if (valueSetImpacts?.length > 0) {
+            <m-list mSeparated>
+              @for (impact of valueSetImpacts; track impact.artifactId + '|' + impact.artifactVersion + '|' + impact.dynamic) {
+                <m-list-item mClickable (mClick)="reviewValueSetImpact(impact)">
+                  <div style="display: flex; flex-direction: column; gap: .25rem; width: 100%;">
+                    <div class="m-items-middle">
+                      <m-icon [mCode]="impact.affected ? 'warning' : 'check-circle'" [style.color]="impact.affected ? 'var(--color-orange-6)' : 'var(--color-green-6)'"></m-icon>
+                      <span class="m-bold">{{impact.artifactId}}</span>
+                      <m-divider mVertical></m-divider>
+                      <span>{{impact.artifactVersion}}</span>
+                      <m-divider mVertical></m-divider>
+                      <span>{{'web.code-system.summary.value-set-impacts.source' | translate}}: {{impact.dynamic ? ('web.value-set-version.form.rule-set.rule.latest' | translate) : (impact.resolvedCodeSystemVersion?.version || '-') }}</span>
+                      <m-divider mVertical></m-divider>
+                      <span>{{'web.code-system.summary.value-set-impacts.current' | translate}}: {{impact.currentCodeSystemVersion?.version || '-'}}</span>
+                    </div>
+                    <div class="m-text-secondary">{{impact.reason}}</div>
+                  </div>
+                </m-list-item>
+              }
+            </m-list>
+          }
+        </m-card>
+
       </div>
     </m-form-row>
 

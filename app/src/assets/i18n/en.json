@@ -1078,6 +1078,9 @@
 				},
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
+				"value-set-impacts": "Value set impacts",
+				"value-set-impacts.source": "Rule source",
+				"value-set-impacts.current": "Current code system version",
 				"unlinked-concepts": {
 					"author": "Author",
 					"concept": "Concept",
@@ -2604,6 +2607,7 @@
 						"exact": "Exact concepts",
 						"exclude": "Exclude",
 						"filter": "Property based expression",
+						"latest": "Latest",
 						"include": "Include",
 						"value-set": "Value set"
 					}

@@ -965,6 +965,9 @@
 				},
 				"opened-tasks": "Avatud ülesanded",
 				"related-artifacts": "Seotud artefaktid",
+				"value-set-impacts": "Väärtushulkade mõjud",
+				"value-set-impacts.source": "Reegli allikas",
+				"value-set-impacts.current": "Koodisüsteemi praegune versioon",
 				"unlinked-concepts": {
 					"author": "Autor",
 					"concept": "Mõiste",
@@ -2303,6 +2306,7 @@
 						"exact": "Täpsed mõisted",
 						"exclude": "Välja arvatud",
 						"filter": "Tunnustel põhinev valem",
+						"latest": "Viimane",
 						"include": "Sisaldab",
 						"value-set": "Loend"
 					}

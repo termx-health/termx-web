@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoadingManager, FilterPipe } from '@termx-health/core-util';
-import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
+import {CodeSystem, CodeSystemArtifactImpact, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule } from '@termx-health/ui';
+import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiListModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { CodeSystemInfoWidgetComponent } from 'term-web/resources/code-system/containers/summary/widgets/code-system-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -21,7 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'code-system-summary.component.html',
-    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, CodeSystemInfoWidgetComponent, MuiButtonModule, RouterLink, MuiIconModule, PrivilegedDirective, MuiDividerModule, CodeSystemVersionsWidgetComponent, MuiDropdownModule, MuiCoreModule, CodeSystemUnlinkedConceptsComponent_1, ResourceTasksWidgetComponent_1, ResourceRelatedArtifactWidgetComponent, ResourceTaskModalComponent, TranslatePipe, FilterPipe]
+    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, CodeSystemInfoWidgetComponent, MuiButtonModule, RouterLink, MuiIconModule, PrivilegedDirective, MuiDividerModule, CodeSystemVersionsWidgetComponent, MuiDropdownModule, MuiCoreModule, MuiListModule, CodeSystemUnlinkedConceptsComponent_1, ResourceTasksWidgetComponent_1, ResourceRelatedArtifactWidgetComponent, ResourceTaskModalComponent, TranslatePipe, FilterPipe]
 })
 export class CodeSystemSummaryComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -30,6 +30,7 @@ export class CodeSystemSummaryComponent implements OnInit {
 
   protected codeSystem?: CodeSystem;
   protected versions?: CodeSystemVersion[];
+  protected valueSetImpacts: CodeSystemArtifactImpact[] = [];
   protected showOnlyOpenedTasks?: boolean = true;
   protected loader = new LoadingManager();
 
@@ -59,12 +60,17 @@ export class CodeSystemSummaryComponent implements OnInit {
     return v.status === 'draft';
   };
 
+  protected reviewValueSetImpact(impact: CodeSystemArtifactImpact): void {
+    this.router.navigate(['/resources/value-sets', impact.artifactId, 'versions', impact.artifactVersion, 'summary']);
+  }
+
   protected loadData(id: string): void {
     this.loader.wrap('load',
-      forkJoin([this.codeSystemService.load(id), this.codeSystemService.searchVersions(id, {limit: -1})]))
-      .subscribe(([cs, versions]) => {
+      forkJoin([this.codeSystemService.load(id), this.codeSystemService.searchVersions(id, {limit: -1}), this.codeSystemService.loadValueSetImpacts(id)]))
+      .subscribe(([cs, versions, impacts]) => {
         this.codeSystem = cs;
         this.versions = versions.data;
+        this.valueSetImpacts = impacts;
       });
   }
 }
