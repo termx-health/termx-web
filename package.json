@@ -27,13 +27,13 @@
     "@codemirror/lang-markdown": "^6.2.0",
     "@ctrl/tinycolor": "^4.2.0",
     "@ngx-translate/core": "^17.0.0",
-    "@termx-health/core-util": "^21.0.3",
-    "@termx-health/markdown": "^21.0.3",
-    "@termx-health/markdown-parser": "^21.0.3",
-    "@termx-health/quill": "^21.0.3",
+    "@termx-health/core-util": "^21.0.4",
+    "@termx-health/markdown": "^21.0.4",
+    "@termx-health/markdown-parser": "^21.0.4",
+    "@termx-health/quill": "^21.0.4",
     "@termx-health/structure-definition-viewer": "5.0.7",
-    "@termx-health/ui": "^21.0.3",
-    "@termx-health/util": "^21.0.3",
+    "@termx-health/ui": "^21.0.4",
+    "@termx-health/util": "^21.0.4",
     "angular-auth-oidc-client": "^21.0.0",
     "codemirror": "^6.0.1",
     "cytoscape": "^3.30.4",
@@ -106,6 +106,8 @@
   },
   "overrides": {
     "@angular/cdk": "$@angular/cdk",
-    "ng-zorro-antd": "$ng-zorro-antd"
+    "ng-zorro-antd": "$ng-zorro-antd",
+    "lodash": "^4.18.0",
+    "lodash-es": "^4.18.0"
   }
 }
