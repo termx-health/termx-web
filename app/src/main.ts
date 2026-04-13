@@ -6,6 +6,7 @@ import { AuthService, AuthModule } from 'term-web/core/auth';
 import { HttpBackend, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { APP_BASE_HREF } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { LangInterceptor } from 'term-web/core/http';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,11 +30,19 @@ import { UserModule } from 'term-web/user/user.module';
 import { SequenceModule } from 'term-web/sequence/sequence.module';
 import { ImplementationGuideModule } from 'term-web/implementation-guide/implementation-guide.module';
 import { RootComponent } from './app/root.component';
+import { NzIconService } from 'ng-zorro-antd/icon';
 
 
 
 if (environment.production) {
   enableProdMode();
+}
+
+function initIconAssets(nzIconService: NzIconService, document: Document): () => void {
+  return () => {
+    const baseHref = document.querySelector('base')?.getAttribute('href') || environment.baseHref || '/';
+    nzIconService.changeAssetsSource(baseHref);
+  };
 }
 
 bootstrapApplication(RootComponent, {
@@ -48,6 +57,7 @@ bootstrapApplication(RootComponent, {
             fallbackLang: environment.defaultLanguage
         }), RootModule, AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, UcumModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
         { provide: LOCALE_ID, useValue: environment.defaultLanguage },
+        { provide: APP_INITIALIZER, useFactory: initIconAssets, deps: [NzIconService, DOCUMENT], multi: true },
         { provide: APP_INITIALIZER, useFactory: initAuth, deps: [AuthService], multi: true },
         { provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref },
         { provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true }

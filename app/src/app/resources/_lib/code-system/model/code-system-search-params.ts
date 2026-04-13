@@ -29,6 +29,7 @@ export class CodeSystemSearchParams extends QueryParams {
   public versionReleaseDateGe?: Date;
   public versionExpirationDateLe?: Date;
   public versionsDecorated?: boolean;
+  public lastVersionDecorated?: boolean;
 
   public propertiesDecorated?: boolean;
 

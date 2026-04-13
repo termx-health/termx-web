@@ -31,6 +31,7 @@ export class CodeSystem {
 
   public concepts?: CodeSystemConcept[];
   public versions?: CodeSystemVersion[];
+  public lastVersion?: CodeSystemVersion;
 
   public valueSet?: string;
 

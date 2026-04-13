@@ -44,3 +44,6 @@ Thumbs.db
 
 #Local configurations
 /src/environments/environment.local.ts
+
+#Agents
+.codex

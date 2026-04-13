@@ -88,15 +88,15 @@
       <td m-table-expand [mItem]="cs"></td>
       <td><a [routerLink]="[cs.id, 'summary']">{{cs.id}}</a></td>
       <td>
-        @if ((cs.versions | apply:findLastVersion)?.version; as version) {
+        @if (cs.lastVersion?.version; as version) {
           <a [routerLink]="[cs.id, 'versions', version, 'summary']">{{version}}</a>
         }
       </td>
       <td>{{cs.title | localName}}</td>
       <td>{{cs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
-      <td><tw-status-tag [status]="(cs.versions | apply:findLastVersion)?.status"/></td>
+      <td><tw-status-tag [status]="cs.lastVersion?.status"/></td>
       <td>
-        @if ((cs.versions | apply:findLastVersion); as v) {
+        @if (cs.lastVersion; as v) {
           <a [routerLink]="[cs.id, 'versions', v?.version, 'concepts']">{{v?.conceptsTotal}}</a>
         }
       </td>
@@ -125,27 +125,7 @@
     <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
       <td></td>
       <td colspan="100%">
-        <div style="display: grid">
-          <div><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</div>
-          <div><b>{{'entities.code-system.content' | translate}}:</b> {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</div>
-          @if (cs.caseSensitive) {
-            <div><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive.options.' + cs.caseSensitive | translate}}</div>
-          }
-          @if (cs.versions.length > 0) {
-            <div>
-              <b>{{'entities.code-system.versions' | translate}}:</b>
-              <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
-                @for (version of cs.versions; track version) {
-                  <b>{{version.version}}</b>
-                  <m-divider mVertical/>
-                  <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-                  <m-divider mVertical/>
-                  <tw-status-tag [status]="version.status"/>
-                }
-              </div>
-            </div>
-          }
-        </div>
+        <tw-code-system-list-expanded-row [codeSystem]="cs"/>
       </td>
     </tr>
 
