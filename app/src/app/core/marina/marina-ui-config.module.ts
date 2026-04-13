@@ -5,6 +5,7 @@ import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATI
 import {MarinaMarkdownModule} from '@termx-health/markdown';
 import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService} from '@termx-health/ui';
 import {TranslateService} from '@ngx-translate/core';
+import {NzIconService} from 'ng-zorro-antd/icon';
 import {environment as env} from 'environments/environment';
 import {HttpErrorHandler} from 'term-web/core/marina/http-error-handler';
 
@@ -56,6 +57,9 @@ export class MarinaUiConfigModule {
     const translate = inject(TranslateService);
     const i18nService = inject(CoreI18nService);
     const muiConfig = inject(MuiConfigService);
+    const nzIconService = inject(NzIconService);
+
+    nzIconService.changeAssetsSource(env.baseHref || '/');
 
     translate.onLangChange.subscribe(({lang}) => {
       const localeImports: Record<string, () => Promise<any>> = {
