@@ -30,8 +30,6 @@ export class AuthService {
     map(result => result.isAuthenticated)
   );
 
-  public notificationShown?: boolean = false;
-
   public get token(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
   }
@@ -44,7 +42,6 @@ export class AuthService {
 
     this.updateAuthTokenCookie(oidcSecurityService);
     this.processAuthFinishEvents(eventService);
-    this.processNewAuthenticationEvents(eventService);
     this.processUserDataChangeEvents(eventService);
   }
 
@@ -185,19 +182,6 @@ export class AuthService {
         })
       )
       .subscribe();
-  }
-
-  private processNewAuthenticationEvents(eventService: PublicEventsService): void {
-    eventService.registerForEvents()
-      .pipe(filter(e => e.type === EventTypes.NewAuthenticationResult))
-      .subscribe(() => {
-        this.oidcSecurityService.getAuthenticationResult().subscribe(r => {
-          if ((r['expires_in'] < 300 || r['refresh_expires_in'] < 300) && !this.notificationShown) {
-            this.notificationShown = true;
-            this.notificationService.warning('core.session-expiration-warning' , null, {duration: 0, closable: true});
-          }
-        });
-      });
   }
 
   private processUserDataChangeEvents(eventService: PublicEventsService): void {
