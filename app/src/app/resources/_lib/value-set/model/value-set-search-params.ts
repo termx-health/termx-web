@@ -21,6 +21,7 @@ export class ValueSetSearchParams extends QueryParams {
   public versionSource?:string;
 
   public decorated?: boolean;
+  public lastVersionDecorated?: boolean;
 
   public lang?: string;
 

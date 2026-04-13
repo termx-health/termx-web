@@ -84,15 +84,15 @@
       <td m-table-expand [mItem]="vs"></td>
       <td><a [routerLink]="[vs.id, 'summary']">{{vs.id}}</a></td>
       <td>
-        @if ((vs.versions | apply:findLastVersion)?.version; as version) {
+        @if (vs.lastVersion?.version; as version) {
           <a [routerLink]="[vs.id, 'versions', version, 'summary']">{{version}}</a>
         }
       </td>
       <td>{{vs.title | localName}}</td>
       <td>{{vs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
-      <td><tw-status-tag [status]="(vs.versions | apply:findLastVersion)?.status"/></td>
+      <td><tw-status-tag [status]="vs.lastVersion?.status"/></td>
       <td>
-        @if ((vs.versions | apply:findLastVersion); as v) {
+        @if (vs.lastVersion; as v) {
           <a [routerLink]="[vs.id, 'versions', v?.version, 'concepts']">{{v?.snapshot?.conceptsTotal}}</a>
         }
       </td>
@@ -111,27 +111,7 @@
     <tr *mTableRowExpand="let vs" class="m-table-expanded-row">
       <td></td>
       <td colspan="100%">
-        <m-form-row mFull>
-          <div *mFormCol>
-            <m-form-item mLabel="entities.value-set.uri">
-              {{vs.uri ?? '-'}}
-            </m-form-item>
-            <m-form-item mLabel="entities.value-set.description">
-              {{vs.description | localName:'-'}}
-            </m-form-item>
-            <m-form-item mLabel="entities.value-set.versions">
-              <div style="display: grid; grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
-                @for (version of vs.versions; track version) {
-                  <b>{{version.version}}</b>
-                  <m-divider mVertical/>
-                  <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-                  <m-divider mVertical/>
-                  <tw-status-tag [status]="version.status"/>
-                }
-              </div>
-            </m-form-item>
-          </div>
-        </m-form-row>
+        <tw-value-set-list-expanded-row [valueSet]="vs"/>
       </td>
     </tr>
 

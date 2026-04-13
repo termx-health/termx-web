@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
-import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@termx-health/core-util';
+import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, AutofocusDirective, ApplyPipe } from '@termx-health/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import {ValueSet, ValueSetSearchParams, ValueSetVersion} from 'term-web/resources/_lib';
+import {ValueSet, ValueSetSearchParams} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {finalize, Observable, tap} from 'rxjs';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
 import { AsyncPipe } from '@angular/common';
-import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@termx-health/ui';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiNoDataModule } from '@termx-health/ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -20,6 +20,7 @@ import { StatusTagComponent } from 'term-web/core/ui/components/publication-stat
 import { ResourceFhirImportModalComponent } from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
 import { MarinaUtilModule } from '@termx-health/util';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { ValueSetListExpandedRowComponent } from 'term-web/resources/value-set/containers/list/value-set-list-expanded-row.component';
 
 interface Filter {
   open: boolean,
@@ -51,15 +52,14 @@ interface Filter {
     MuiTableModule,
     StatusTagComponent,
     MuiPopconfirmModule,
-    MuiDividerModule,
     MuiNoDataModule,
     ResourceFhirImportModalComponent,
     AsyncPipe,
     TranslatePipe,
     MarinaUtilModule,
     ApplyPipe,
-    LocalDatePipe,
-    LocalizedConceptNamePipe
+    LocalizedConceptNamePipe,
+    ValueSetListExpandedRowComponent
 ],
 })
 export class ValueSetListComponent implements OnInit {
@@ -116,7 +116,8 @@ export class ValueSetListComponent implements OnInit {
   private search(): Observable<SearchResult<ValueSet>> {
     const q = copyDeep(this.query);
     q.lang = this.translateService.currentLang;
-    q.decorated = true;
+    q.decorated = false;
+    q.lastVersionDecorated = true;
     q.textContains = this.filter.searchInput || undefined;
     q.publisher = this.filter.publisher || undefined;
     q.versionStatus = this.filter.status || undefined;
@@ -147,19 +148,4 @@ export class ValueSetListComponent implements OnInit {
       .filter((k: keyof Filter) => !exclude.includes(k))
       .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]));
   }
-
-  protected getVersionTranslateTokens = (version: ValueSetVersion, translateOptions: object): string[] => {
-    const tokens = [
-      version.releaseDate ? 'web.value-set.list.versions-release-date' : '',
-      version.expirationDate ? 'web.value-set.list.versions-expiration-date' : '',
-      version.version ? 'web.value-set.list.versions-version' : ''
-    ];
-    return tokens.filter(Boolean).map(t => this.translateService.instant(t, translateOptions));
-  };
-
-  protected findLastVersion = (versions: ValueSetVersion[]): ValueSetVersion => {
-    return versions
-      ?.map(v => ({...v, created: v.created ? new Date(v.created) : undefined}))
-      ?.sort(sortFn('created', false))?.[0];
-  };
 }

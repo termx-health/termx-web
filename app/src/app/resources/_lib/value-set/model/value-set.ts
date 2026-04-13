@@ -22,6 +22,7 @@ export class ValueSet {
   public contacts?: ContactDetail[];
 
   public versions?: ValueSetVersion[];
+  public lastVersion?: ValueSetVersion;
 
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};
   public permissions?: {admin?: string, editor?: string, viewer?: string, endorser?: string};
