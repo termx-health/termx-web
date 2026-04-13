@@ -6,9 +6,8 @@ import {EMPTY, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {QueuedCacheService} from 'term-web/core/ui/services/queued-cache.service';
 import {SnomedLibService} from 'term-web/integration/_lib';
-import {MeasurementUnitLibService} from 'term-web/measurement-unit/_lib';
 import {Designation, ValueSetLibService} from 'term-web/resources/_lib';
-import {CodeSystemConcept, CodeSystemConceptLibService} from 'term-web/resources/_lib/code-system';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSupplementUtil} from 'term-web/resources/_lib/code-system';
 
 
 type ResourceParams = CodeSystemResourceParams & ValueSetResourceParams;
@@ -30,7 +29,6 @@ class LocalizedConceptNameService {
   private translateService = inject(TranslateService);
   private valueSetService = inject(ValueSetLibService);
   private snomedService = inject(SnomedLibService);
-  private measurementUnitService = inject(MeasurementUnitLibService);
 
   private cacheService = new QueuedCacheService();
 
@@ -52,9 +50,6 @@ class LocalizedConceptNameService {
     if (resource.codeSystem === 'snomed-ct' && isString) {
       return this.$snomed(ids);
     }
-    if (resource.codeSystem === 'ucum' && isString) {
-      return this.$ucum(ids);
-    }
     if (resource.codeSystem) {
       return this.$codeSystem(ids, resource, isString);
     }
@@ -71,6 +66,7 @@ class LocalizedConceptNameService {
       ...!isString && {codeSystemEntityVersionId: reqIds.join(",")},
       codeSystem: resource.codeSystem,
       codeSystemVersion: resource.codeSystemVersion,
+      ...ConceptSupplementUtil.forCodeSystem(resource.codeSystem, this.translateService.currentLang),
       limit: reqIds.length
     }).pipe(map(resp =>
       reqIds.map(reqId => {
@@ -126,15 +122,6 @@ class LocalizedConceptNameService {
       res => res.items.map(i => ({id: i.conceptId, name: i.fsn.term}))));
   }
 
-  private $ucum(reqIds: string[] | number[]): Observable<OptimizedResponse[]> {
-    return this.measurementUnitService.search({code: reqIds.join(","), limit: reqIds.length}).pipe(map(resp =>
-      reqIds.map(id => {
-        const val = resp.data.find(c => c.code === id);
-        const name = val.names[this.translateService.currentLang] || Object.values(val.names)?.[0];
-        return {id, name};
-      })));
-  }
-
   private localize = (data: {display: Designation[], additional: Designation[]}, langPriority: string[]): string => {
     const match = (dns: Designation[], l: string): string => dns
       .filter(d => d.language === l)
@@ -157,4 +144,3 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     return this.conceptNameService.transform(resource, identifier);
   }
 }
-

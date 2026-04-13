@@ -51,9 +51,10 @@ export class CodeSystemLibService {
     return this.http.get<CodeSystemConceptTreeSearchResult>(`${this.baseUrl}/${codeSystemId}/concepts/tree-search`, {params: SearchHttpParams.build(params)});
   }
 
-  public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
+  public loadConcept(codeSystemId: string, conceptCode: string, version?: string, params: ConceptSearchParams = {}): Observable<CodeSystemConcept> {
     conceptCode = UriUtil.encodeUriAll(UriUtil.encodeUriAll(conceptCode));
-    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
+    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`,
+      {params: SearchHttpParams.build(params)});
   }
 
   public searchEntityVersions(codeSystemId: string, params: CodeSystemEntityVersionSearchParams = {}): Observable<SearchResult<CodeSystemEntityVersion>> {

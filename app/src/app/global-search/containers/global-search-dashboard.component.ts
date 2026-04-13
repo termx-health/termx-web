@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@termx-health/core-util';
+import {TranslateService} from '@ngx-translate/core';
 import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
-import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {
   CodeSystem,
   CodeSystemConcept,
   CodeSystemConceptLibService,
   CodeSystemLibService,
   CodeSystemSearchParams,
+  ConceptSupplementUtil,
   ConceptSearchParams,
   MapSet,
   MapSetLibService,
@@ -39,7 +40,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
   public codeSystems: CodeSystem[] = [];
   public valueSets: ValueSet[] = [];
   public mapSets: MapSet[] = [];
-  public measurementUnits: MeasurementUnit[] = [];
   public snomedConcepts: SnomedConcept[] = [];
   public filter: Filter = { open: false };
 
@@ -53,11 +53,11 @@ export class GlobalSearchDashboardComponent implements OnInit {
     private mapSetService: MapSetLibService,
     private valueSetService: ValueSetLibService,
     private codeSystemService: CodeSystemLibService,
-    private measurementUnitService: MeasurementUnitLibService,
     private codeSystemConceptService: CodeSystemConceptLibService,
     private stateStore: ComponentStateStore,
     private cacheService: HttpCacheService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) {}
 
   public ngOnInit(): void {
@@ -85,18 +85,16 @@ export class GlobalSearchDashboardComponent implements OnInit {
       this.searchCodeSystems(text),
       this.searchValueSets(text),
       this.searchMapSets(text),
-      this.searchMeasurementUnits(text),
       this.searchSnomed(text)
     ]);
 
     const cacheKey = `${text}-${this.getFilterCacheKey()}`;
     this.loader.wrap('load', this.cacheService.put(cacheKey, searchRequests))
-      .subscribe(([concepts, codeSystems, valueSets, mapSets, measurementUnits, snomedConcepts]) => {
+      .subscribe(([concepts, codeSystems, valueSets, mapSets, snomedConcepts]) => {
         this.concepts = concepts;
         this.codeSystems = codeSystems;
         this.valueSets = valueSets;
         this.mapSets = mapSets;
-        this.measurementUnits = measurementUnits;
         this.snomedConcepts = snomedConcepts;
       });
   }
@@ -113,6 +111,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.conceptParams = new ConceptSearchParams();
     this.conceptParams.textContains = text;
     this.conceptParams.codeSystem = this.filter.codeSystems?.join(',') || undefined;
+    Object.assign(this.conceptParams, ConceptSupplementUtil.forSearchScope(this.filter.codeSystems, this.translateService.currentLang));
     return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of(SearchResult.empty())
       : this.codeSystemConceptService.search(this.conceptParams).pipe(map(c => c), catchError(() => of(SearchResult.empty())));
   }
@@ -155,15 +154,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
       : this.mapSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
-  private searchMeasurementUnits(text: string): Observable<MeasurementUnit[]> {
-    const q = new MeasurementUnitSearchParams();
-    q.textContains = text;
-    q.limit = 100;
-
-    return !this.authService.hasAnyPrivilege(['ucum.CodeSystem.view']) ? of([])
-      : this.measurementUnitService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
-  }
-
   private searchSnomed(text: string): Observable<SnomedConcept[]> {
     if (text.length < 3 || this.isSnomedNotSelectedInFilter()) {
       return of([]);
@@ -193,21 +183,19 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.router.navigate(['/resources/map-sets/', id, 'summary']);
   }
 
-  protected openMeasurementUnit(id: number): void {
-    this.router.navigate(['/measurement-units/', id, 'view']);
-  }
-
   protected get isEmpty(): boolean {
     return !this.concepts?.data?.length &&
       !this.codeSystems?.length &&
       !this.valueSets?.length &&
       !this.mapSets?.length &&
-      !this.measurementUnits?.length &&
       !this.snomedConcepts?.length;
   }
 
   protected findDesignationMatch = (c: CodeSystemConcept): string => {
-   return c?.versions?.flatMap(v => v.designations)?.find(d => d.name.toLowerCase().includes(this.searchText.toLowerCase())).name;
+   const query = this.searchText?.toLowerCase();
+   const match = c?.versions?.flatMap(v => v.designations)
+     ?.find(d => d?.name?.toLowerCase().includes(query));
+   return match?.name || c?.code;
   };
 
   private getFilterCacheKey = (): string => [

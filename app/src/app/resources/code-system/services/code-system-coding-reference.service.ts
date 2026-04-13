@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, of } from 'rxjs';
 import { QueuedCacheService } from 'term-web/core/ui/services/queued-cache.service';
 import { environment } from 'environments/environment';
-import { CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion, ConceptUtil, EntityProperty } from 'term-web/resources/_lib';
+import { CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion, ConceptSupplementUtil, ConceptUtil, EntityProperty } from 'term-web/resources/_lib';
 
 export interface CodingReferenceSummary {
   codeSystem: string;
@@ -15,6 +16,7 @@ export interface CodingReferenceSummary {
 @Injectable({providedIn: 'root'})
 export class CodeSystemCodingReferenceService {
   private conceptService = inject(CodeSystemConceptLibService);
+  private translateService = inject(TranslateService);
   private cacheService = new QueuedCacheService();
 
   public load(property?: EntityProperty, value?: any): Observable<CodingReferenceSummary | undefined> {
@@ -34,6 +36,7 @@ export class CodeSystemCodingReferenceService {
         codeSystem,
         codeSystemVersion: requestedVersion,
         code: Array.from(new Set(codes)).join(','),
+        ...ConceptSupplementUtil.forCodeSystem(codeSystem, this.translateService.currentLang),
         limit: codes.length
       }),
       (resp, requestedCode) => resp.data.find(concept => concept.code === requestedCode)

@@ -27,5 +27,6 @@ export * from 'term-web/resources/_lib/code-system/services/code-system-entity-v
 export * from 'term-web/resources/_lib/code-system/services/code-system-lib.service';
 export * from 'term-web/resources/_lib/code-system/util/code-system-util';
 export * from 'term-web/resources/_lib/code-system/util/concept-util';
+export * from 'term-web/resources/_lib/code-system/util/concept-supplement-util';
 export * from 'term-web/resources/_lib/code-system/util/snomed-util';
 export * from 'term-web/resources/_lib/code-system/code-system-lib.module';

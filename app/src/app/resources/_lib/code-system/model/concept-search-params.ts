@@ -12,6 +12,9 @@ export class ConceptSearchParams extends QueryParams {
   public codeSystemVersion?: string;
   public codeSystemVersions?: string;
   public codeSystemVersionId?: number;
+  public includeSupplement?: boolean;
+  public displayLanguage?: string;
+  public useSupplement?: string;
   public codeSystemVersionReleaseDateLe?: Date;
   public codeSystemVersionReleaseDateGe?: Date;
   public codeSystemVersionExpirationDateLe?: Date;
@@ -35,4 +38,3 @@ export class ConceptSearchParams extends QueryParams {
   public verifiedInMapSetVersionId?: number;
   public unverifiedInMapSetVersionId?: number;
 }
-

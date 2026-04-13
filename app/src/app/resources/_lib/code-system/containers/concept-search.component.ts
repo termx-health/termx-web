@@ -4,7 +4,7 @@ import { BooleanInput, DestroyService, group, isDefined, ApplyPipe, KeysPipe, To
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from 'term-web/resources/_lib/code-system';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptSupplementUtil, ConceptUtil} from 'term-web/resources/_lib/code-system';
 import { MuiSelectModule } from '@termx-health/ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 
@@ -86,6 +86,8 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.codeSystemEntityVersionStatus;
     q.propertyValues = this.propertyValues;
+    q.includeSupplement = ConceptSupplementUtil.forCodeSystem(this.codeSystem, this.translateService.currentLang).includeSupplement;
+    q.displayLanguage = ConceptSupplementUtil.forCodeSystem(this.codeSystem, this.translateService.currentLang).displayLanguage;
     q.limit = 100;
 
     this.loading['search'] = true;
@@ -108,7 +110,13 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     if (isDefined(val) && typeof val === 'string') {
       this.loading['load'] = true;
       this.conceptService.search(
-        {id: isIdArray ? val : undefined, code: !isIdArray ? val : undefined, limit: val.split(',').length, codeSystem: this.codeSystem})
+        {
+          id: isIdArray ? val : undefined,
+          code: !isIdArray ? val : undefined,
+          limit: val.split(',').length,
+          codeSystem: this.codeSystem,
+          ...ConceptSupplementUtil.forCodeSystem(this.codeSystem, this.translateService.currentLang)
+        })
         .pipe(takeUntil(this.destroy$)).subscribe(c => {
         const data = group(c.data, d => this.valueType === 'code' ? d.code! : d.id!);
         this.data = {...(this.data || {}), ...data};

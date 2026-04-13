@@ -9,7 +9,6 @@ import {MarinaUtilModule} from '@termx-health/util';
 import {TranslateModule} from '@ngx-translate/core';
 import {AuthModule} from 'term-web/core/auth';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
-import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
 import {CodeSystemLibModule, ValueSetLibModule} from 'term-web/resources/_lib';
 import {AddButtonComponent} from 'term-web/core/ui/components/add-button/add-button.component';
 import {CopyContainerComponent} from 'term-web/core/ui/components/copy-container/copy-container.component';
@@ -67,7 +66,6 @@ const pipes = [
         DragDropModule,
         CodeSystemLibModule,
         ValueSetLibModule,
-        MeasurementUnitLibModule,
         IntegrationLibModule,
         ...components,
         ...pipes,
