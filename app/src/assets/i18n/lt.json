@@ -20,7 +20,11 @@
       "save": "Išsaugoti",
       "search": "Ieškoti",
       "select": "Pasirinkti",
-      "send": "Siųsti"
+      "send": "Siųsti",
+      "change": "?Change",
+      "download": "?Download",
+      "yes": "?Yes",
+      "no": "?No"
     },
     "confirm": "Ar tikrai?",
     "data-lost-warning": "Pakeitimai nebus išsaugoti!",
@@ -48,6 +52,10 @@
     "session-expiration-warning": "Sesija pasibaigs mažiau nei per 5 minutes!",
     "version-select": {
       "custom": "Rinktis"
+    },
+    "bool": {
+      "yes": "?Yes",
+      "no": "?No"
     }
   },
   "entities": {
@@ -697,11 +705,19 @@
       "publisher": "Leidėjas",
       "status": "Būsena",
       "url": "URL",
-      "version": "Versija"
+      "version": "Versija",
+      "description": "?Description",
+      "experimental": "?Experimental",
+      "purpose": "?Purpose",
+      "title": "?Title"
     },
     "structure-definition-version": {
       "content-type": "Content type",
-      "description": "Description"
+      "description": "Description",
+      "content-format": "?Content format",
+      "release-date": "?Release date",
+      "status": "?Status",
+      "version": "?Version"
     },
     "task": {
       "assignee": "Priskirtas naudotojas",
@@ -747,7 +763,17 @@
       "root-url": "Pagrindinis URL",
       "singular": "Serveris",
       "supported-operations": "Supported operations",
-      "usage": "Usage"
+      "usage": "Usage",
+      "cache-period": "?Cache period (hours)",
+      "cert": "?Certificate auth",
+      "oauth": "?OAuth",
+      "open": "?Open access",
+      "smart": "?SMART on FHIR",
+      "strategy": "?Strategy",
+      "token": "?Token auth",
+      "authoritative-conceptmaps": "?Authoritative ConceptMaps",
+      "authoritative-structuredefinitions": "?Authoritative StructureDefinitions",
+      "authoritative-structuremaps": "?Authoritative StructureMaps"
     },
     "transformation-definition": {
       "name": "Pavadinimas",
@@ -860,6 +886,16 @@
       "designations": "Pavadinimai",
       "display": "Pavadinimas",
       "order-number": "Eilės tvarka"
+    },
+    "ecosystem": {
+      "active": "?Active",
+      "code": "?Code",
+      "description": "?Description",
+      "format-version": "?Format version",
+      "name": "?Name",
+      "plural": "?Ecosystems",
+      "servers": "?Servers",
+      "singular": "?Ecosystem"
     }
   },
   "language": {
@@ -1969,7 +2005,8 @@
       "metadata": "Metadata",
       "properties": "Savybės",
       "provenance": "Auditas",
-      "summary": "Santrauka"
+      "summary": "Santrauka",
+      "resources": "?Resources"
     },
     "resource-form": {
       "add-other-title": "Add other title",
@@ -2196,7 +2233,8 @@
         "import-url": "URL",
         "manual": "Kurti rankiniu būdu",
         "open-fhir": "Atidaryti FHIR",
-        "title": "Struktūros apibrėžtys"
+        "title": "Struktūros apibrėžtys",
+        "last-version": "?Last version"
       },
       "summary": {
         "add-task": "Add task",
@@ -2207,7 +2245,11 @@
         "related-artifacts": "Related artifacts",
         "versions": "Versions",
         "viewer": "Preview",
-        "recalculate-references": "Recalculate"
+        "recalculate-references": "Recalculate",
+        "duplicate-version-modal": {
+          "header": "?Duplicate structure definition version",
+          "version": "?New version"
+        }
       },
       "version-summary": {
         "version-info": "Version info",
@@ -2216,7 +2258,16 @@
       "view": {
         "binding": "Saitas",
         "fixed": "Fiksuotasis"
-      }
+      },
+      "code": "?Code",
+      "url": "?URL",
+      "name": "?Name",
+      "title": "?Title",
+      "publisher": "?Publisher",
+      "content-type": "?Content type",
+      "description": "?Description",
+      "parent": "?Parent",
+      "experimental": "?Experimental"
     },
     "structure-definition-version": {
       "form": {
@@ -2313,7 +2364,27 @@
         "snomed": "SNOMED serveris",
         "terminology": "Terminologijos serveris"
       },
-      "test": "Test"
+      "test": "Test",
+      "authoritative": "?Authoritative Resources",
+      "tab": {
+        "summary": "?Summary",
+        "metadata": "?Metadata",
+        "resources": "?Resources"
+      },
+      "view-header": "?Server details",
+      "authoritative-code-systems": "?Authoritative Code Systems",
+      "authoritative-value-sets": "?Authoritative Value Sets",
+      "authoritative-concept-maps": "?Authoritative Concept Maps",
+      "authoritative-structure-definitions": "?Authoritative Structure Definitions",
+      "authoritative-structure-maps": "?Authoritative Structure Maps",
+      "authoritative-description-code-systems": "?Define which Code Systems this server is authoritative for.",
+      "authoritative-description-value-sets": "?Define which Value Sets this server is authoritative for.",
+      "authoritative-description-concept-maps": "?Define which Concept Maps this server is authoritative for.",
+      "authoritative-description-structure-definitions": "?Define which Structure Definitions this server is authoritative for.",
+      "authoritative-description-structure-maps": "?Define which Structure Maps this server is authoritative for.",
+      "authoritative-preview-btn": "?Preview",
+      "authoritative-preview": "?Matching Resources",
+      "structure-maps": "?Structure Maps"
     },
     "tools": {
       "terminology-service-api": {
@@ -2740,6 +2811,12 @@
           }
         }
       }
+    },
+    "ecosystem": {
+      "add-btn": "?Add ecosystem",
+      "add-header": "?Add ecosystem",
+      "edit-header": "?Edit ecosystem",
+      "select-servers": "?Select servers..."
     }
   }
 }
