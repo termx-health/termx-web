@@ -2102,7 +2102,9 @@
             "header": "Importuoti iš RF2 zip archyvo",
             "type": "Tipas",
             "dry-run": "Bandomasis paleidimas (tik nuskaityti, neimportuoti)",
-            "dry-run-warning": "Bandomasis paleidimas iš RF2 zip failo sukuria pakeitimų ataskaitą neįkeliant į Snowstorm. Kai ataskaita paruošta, rezultatų ekrane naudokite mygtuką \"Tęsti importą\", kad įkeltumėte tą patį failą."
+            "dry-run-warning": "Bandomasis paleidimas iš RF2 zip failo sukuria pakeitimų ataskaitą neįkeliant į Snowstorm. Kai ataskaita paruošta, rezultatų ekrane naudokite mygtuką \"Tęsti importą\", kad įkeltumėte tą patį failą.",
+            "uploading": "Failas įkeliamas…",
+            "scanning": "RF2 failas nuskaitomas…"
           },
           "import-succeeded": "Importavimas iš RF2 zip archyvo sėkmingas",
           "import-warning": "Importavimo metu bus sukurta redagavimui skirta nomenklatūros atšaka. Kodų sistema sukurta nebus. Priklausomai nuo naudojamo SNOMED paketo dydžio, įkėlimas gali užtrukti virš 30-60 min.",
@@ -2188,7 +2190,8 @@
         "stats.descriptions-added": "Pridėti aprašymai",
         "stats.descriptions-invalidated": "Neaktyvūs aprašymai",
         "stats.relationships-added": "Pridėti ryšiai",
-        "stats.relationships-invalidated": "Neaktyvūs ryšiai"
+        "stats.relationships-invalidated": "Neaktyvūs ryšiai",
+        "importing": "Importuojama į Snowstorm…"
       },
       "concept-usage": {
         "title": "SNOMED koncepto naudojimas",

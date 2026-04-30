@@ -2150,7 +2150,9 @@
             "header": "Importovat z RF2 zip",
             "type": "Typ",
             "dry-run": "Suchý běh (pouze skenovat, neimportovat)",
-            "dry-run-warning": "Suchý běh vytvoří zprávu o změnách z RF2 zip souboru bez nahrání do Snowstorm. Po dokončení zprávy použijte na obrazovce výsledků tlačítko \"Pokračovat v importu\" pro nahrání stejného souboru."
+            "dry-run-warning": "Suchý běh vytvoří zprávu o změnách z RF2 zip souboru bez nahrání do Snowstorm. Po dokončení zprávy použijte na obrazovce výsledků tlačítko \"Pokračovat v importu\" pro nahrání stejného souboru.",
+            "uploading": "Nahrávání souboru…",
+            "scanning": "Skenování RF2 souboru…"
           },
           "import-succeeded": "Import z RF2 zip byl úspěšný",
           "import-warning": "Tento import vytvoří pracovní větev. Nebude vytvořena žádná verze kódového systému. Nahrávání může trvat více než 30-60 minut v závislosti na velikosti balíčku SNOMED.",
@@ -2236,7 +2238,8 @@
         "stats.descriptions-added": "Přidané popisy",
         "stats.descriptions-invalidated": "Neaktivní popisy",
         "stats.relationships-added": "Přidané vztahy",
-        "stats.relationships-invalidated": "Neaktivní vztahy"
+        "stats.relationships-invalidated": "Neaktivní vztahy",
+        "importing": "Importování do Snowstorm…"
       },
       "concept-usage": {
         "title": "Použití SNOMED konceptu",

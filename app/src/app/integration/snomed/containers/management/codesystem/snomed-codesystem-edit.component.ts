@@ -32,7 +32,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, dryRun?: boolean} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, dryRun?: boolean, phase?: 'uploading' | 'scanning'} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -121,9 +121,14 @@ export class SnomedCodesystemEditComponent implements OnInit {
       createCodeSystemVersion: true
     };
 
+    this.importModalData.phase = 'uploading';
+    this.importModalData.progress = 0;
+
     if (this.importModalData.dryRun) {
       this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe(resp => {
         if (resp.finished) {
+          this.importModalData.phase = 'scanning';
+          this.importModalData.progress = undefined;
           this.handleScanLorqueStarted(resp.body);
         } else {
           this.importModalData.progress = resp.progress;
@@ -143,6 +148,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   private handleScanLorqueStarted(lorque: {id: number}): void {
     this.loader.wrap('import', this.lorqueService.pollFinishedProcess(lorque.id, this.destroy$)).subscribe(status => {
+      this.importModalData.phase = undefined;
       if (status === 'failed') {
         this.lorqueService.load(lorque.id).subscribe(p => this.notificationService.error(p.resultText));
         return;
