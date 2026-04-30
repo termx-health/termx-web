@@ -107,13 +107,22 @@
         <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
           <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" [disabled]="loader.state['import']" required>
         </m-form-item>
+        <m-form-item mName="dryRun">
+          <m-checkbox name="dryRun" [(ngModel)]="importModalData.dryRun">
+            {{'web.snomed.branch.management.import-modal.dry-run' | translate}}
+          </m-checkbox>
+        </m-form-item>
         @if (importModalData.progress) {
           <m-form-item>
             <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
           </m-form-item>
         }
       </form>
-      <m-alert mType="warning" mShowIcon>{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
+      @if (importModalData.dryRun) {
+        <m-alert mType="info" mShowIcon>{{'web.snomed.branch.management.import-modal.dry-run-warning' | translate}}</m-alert>
+      } @else {
+        <m-alert mType="warning" mShowIcon>{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
+      }
     </ng-container>
 
     <div *m-modal-footer class="m-items-middle">

@@ -1,0 +1,70 @@
+<div class="m-items-middle" style="flex-direction: column">
+  <m-card>
+    <div *m-card-header><m-title>{{'web.snomed.concept-usage.title' | translate}}</m-title></div>
+    <div *mCardContent>
+      <form>
+        <m-form-row>
+          <m-form-item *mFormCol mLabel="web.snomed.concept-usage.codes-input">
+            <m-textarea
+              name="codes"
+              rows="10"
+              [(ngModel)]="rawInput"
+              (ngModelChange)="onInputChange()"
+              placeholder="{{'web.snomed.concept-usage.codes-input-placeholder' | translate}}"></m-textarea>
+          </m-form-item>
+        </m-form-row>
+        <m-form-row>
+          <m-form-item *mFormCol>
+            <m-checkbox name="includeModified" [(ngModel)]="includeModified" (ngModelChange)="onIncludeModifiedChange()">
+              {{'web.snomed.concept-usage.include-modified' | translate}}
+            </m-checkbox>
+          </m-form-item>
+          <m-form-item *mFormCol mLabel="web.snomed.concept-usage.upload-json">
+            <input type="file" accept=".json,application/json" (change)="onFileSelected($event)">
+          </m-form-item>
+        </m-form-row>
+      </form>
+      <m-alert mType="info" mShowIcon>
+        {{'web.snomed.concept-usage.detected' | translate: {count: detectedCodes.length} }}
+      </m-alert>
+    </div>
+    <div *m-card-footer>
+      <m-button mDisplay="primary" [mLoading]="loader.state['search']" [disabled]="!detectedCodes.length" (mClick)="search()">
+        {{'web.snomed.concept-usage.search' | translate}}
+      </m-button>
+    </div>
+  </m-card>
+
+  @if (results) {
+    <m-card>
+      <div *m-card-header><m-title>{{'web.snomed.concept-usage.results' | translate}} ({{results.length}})</m-title></div>
+      <m-table [mData]="results">
+        <tr *mTableHead>
+          <th>{{'web.snomed.concept-usage.resource-type' | translate}}</th>
+          <th>{{'web.snomed.concept-usage.resource-id' | translate}}</th>
+          <th>{{'web.snomed.concept-usage.resource-version' | translate}}</th>
+          <th>{{'web.snomed.concept-usage.concept-code' | translate}}</th>
+          <th>{{'web.snomed.concept-usage.location' | translate}}</th>
+        </tr>
+        @for (row of results; track row) {
+          <tr>
+            <td>{{row.resourceType}}</td>
+            <td>
+              @if (resourceLink(row); as link) {
+                <a [routerLink]="link">{{row.resourceId}}</a>
+              } @else {
+                {{row.resourceId}}
+              }
+            </td>
+            <td>{{row.resourceVersion || '—'}}</td>
+            <td>{{row.conceptCode}}</td>
+            <td>{{row.location}}</td>
+          </tr>
+        }
+        <tr *mTableNoData>
+          <td colspan="5">{{'web.snomed.concept-usage.no-results' | translate}}</td>
+        </tr>
+      </m-table>
+    </m-card>
+  }
+</div>
