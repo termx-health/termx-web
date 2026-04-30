@@ -121,7 +121,10 @@ export class SnomedRF2ScanResultComponent implements OnInit {
     }
     this.envelope = state.envelope;
     this.shortName = state.shortName ?? this.route.snapshot.paramMap.get('shortName') ?? undefined;
-    setTimeout(() => this.downloadJson(), 0);
+    setTimeout(() => {
+      this.downloadJson();
+      this.downloadMarkdown();
+    }, 0);
   }
 
   protected get scan(): ScanResultJson | undefined {
