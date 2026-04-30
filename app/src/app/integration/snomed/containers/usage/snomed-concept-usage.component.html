@@ -7,7 +7,7 @@
           <m-form-item *mFormCol mLabel="web.snomed.concept-usage.codes-input">
             <m-textarea
               name="codes"
-              rows="10"
+              [rows]="10"
               [(ngModel)]="rawInput"
               (ngModelChange)="onInputChange()"
               placeholder="{{'web.snomed.concept-usage.codes-input-placeholder' | translate}}"></m-textarea>
