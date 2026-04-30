@@ -2153,6 +2153,7 @@
             "dry-run-warning": "Suchý běh vytvoří zprávu o změnách z RF2 zip souboru bez nahrání do Snowstorm. Po dokončení zprávy použijte na obrazovce výsledků tlačítko \"Pokračovat v importu\" pro nahrání stejného souboru.",
             "uploading": "Nahrávání souboru…",
             "scanning": "Skenování RF2 souboru…",
+            "importing": "Importování do Snowstorm…",
             "full-mode": "Podrobná analýza (pomalejší; zahrnuje vztahy a přijatelnost)"
           },
           "import-succeeded": "Import z RF2 zip byl úspěšný",

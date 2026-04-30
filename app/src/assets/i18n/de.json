@@ -2057,6 +2057,7 @@
             "dry-run-warning": "Der Probelauf erstellt einen Änderungsbericht aus der RF2-Zip-Datei ohne Upload zu Snowstorm. Sobald der Bericht fertig ist, verwenden Sie auf der Ergebnisseite die Schaltfläche \"Mit Import fortfahren\", um dieselbe Datei hochzuladen.",
             "uploading": "Datei wird hochgeladen…",
             "scanning": "RF2-Datei wird gescannt…",
+            "importing": "Import nach Snowstorm läuft…",
             "full-mode": "Vollständige Analyse (langsamer; einschließlich Beziehungen und Akzeptabilität)"
           },
           "import-succeeded": "Import from RF2 zip succeeded",

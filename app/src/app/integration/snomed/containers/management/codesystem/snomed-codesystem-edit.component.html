@@ -140,6 +140,12 @@
             }
           </m-form-item>
         }
+        @if (importModalData.phase === 'importing') {
+          <m-form-item>
+            <div class="m-bold">{{'web.snomed.branch.management.import-modal.importing' | translate}}</div>
+            <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
+          </m-form-item>
+        }
       </form>
       @if (importModalData.dryRun) {
         <m-alert mType="info" mShowIcon>{{'web.snomed.branch.management.import-modal.dry-run-warning' | translate}}</m-alert>
