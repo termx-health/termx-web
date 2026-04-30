@@ -32,7 +32,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, progressNote?: string, dryRun?: boolean, phase?: 'uploading' | 'scanning'} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, progressNote?: string, dryRun?: boolean, fullMode?: boolean, phase?: 'uploading' | 'scanning'} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -115,7 +115,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
     const file: File | undefined = this.fileInput?.nativeElement?.files?.[0];
     const filename = file?.name;
-    const request = {
+    const request: {branchPath: string, type: string, createCodeSystemVersion: boolean, mode?: 'summary' | 'full'} = {
       branchPath: this.snomedCodeSystem.branchPath,
       type: this.importModalData.type,
       createCodeSystemVersion: true
@@ -125,6 +125,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
     this.importModalData.progress = 0;
 
     if (this.importModalData.dryRun) {
+      request.mode = this.importModalData.fullMode ? 'full' : 'summary';
       this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe(resp => {
         if (resp.finished) {
           this.importModalData.phase = 'scanning';

@@ -2152,7 +2152,8 @@
             "dry-run": "Suchý běh (pouze skenovat, neimportovat)",
             "dry-run-warning": "Suchý běh vytvoří zprávu o změnách z RF2 zip souboru bez nahrání do Snowstorm. Po dokončení zprávy použijte na obrazovce výsledků tlačítko \"Pokračovat v importu\" pro nahrání stejného souboru.",
             "uploading": "Nahrávání souboru…",
-            "scanning": "Skenování RF2 souboru…"
+            "scanning": "Skenování RF2 souboru…",
+            "full-mode": "Podrobná analýza (pomalejší; zahrnuje vztahy a přijatelnost)"
           },
           "import-succeeded": "Import z RF2 zip byl úspěšný",
           "import-warning": "Tento import vytvoří pracovní větev. Nebude vytvořena žádná verze kódového systému. Nahrávání může trvat více než 30-60 minut v závislosti na velikosti balíčku SNOMED.",

@@ -2056,7 +2056,8 @@
             "dry-run": "Probelauf (nur scannen, nicht importieren)",
             "dry-run-warning": "Der Probelauf erstellt einen Änderungsbericht aus der RF2-Zip-Datei ohne Upload zu Snowstorm. Sobald der Bericht fertig ist, verwenden Sie auf der Ergebnisseite die Schaltfläche \"Mit Import fortfahren\", um dieselbe Datei hochzuladen.",
             "uploading": "Datei wird hochgeladen…",
-            "scanning": "RF2-Datei wird gescannt…"
+            "scanning": "RF2-Datei wird gescannt…",
+            "full-mode": "Vollständige Analyse (langsamer; einschließlich Beziehungen und Akzeptabilität)"
           },
           "import-succeeded": "Import from RF2 zip succeeded",
           "import-warning": "This import will create a working branch. No code system version will be created. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",
