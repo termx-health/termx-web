@@ -2183,6 +2183,7 @@
 						"dry-run-warning": "Dry run produces a change report from the RF2 zip without uploading it to Snowstorm. Once the report is ready, use the \"Proceed with import\" button on the result screen to push the same file.",
 						"uploading": "Uploading file…",
 						"scanning": "Scanning RF2 file…",
+						"importing": "Importing to Snowstorm…",
 						"full-mode": "Full analysis (slower; include relationships and acceptability)"
 					},
 					"import-succeeded": "Import from RF2 zip succeeded",

@@ -32,7 +32,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, progressNote?: string, dryRun?: boolean, fullMode?: boolean, phase?: 'uploading' | 'scanning'} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, progressNote?: string, dryRun?: boolean, fullMode?: boolean, phase?: 'uploading' | 'scanning' | 'importing'} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -126,25 +126,42 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
     if (this.importModalData.dryRun) {
       request.mode = this.importModalData.fullMode ? 'full' : 'summary';
-      this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe(resp => {
-        if (resp.finished) {
-          this.importModalData.phase = 'scanning';
-          this.importModalData.progress = undefined;
-          this.handleScanLorqueStarted(resp.body);
-        } else {
-          this.importModalData.progress = resp.progress;
-        }
+      this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe({
+        next: resp => {
+          if (resp.finished) {
+            this.importModalData.phase = 'scanning';
+            this.importModalData.progress = undefined;
+            this.handleScanLorqueStarted(resp.body);
+          } else {
+            this.importModalData.progress = resp.progress;
+          }
+        },
+        error: err => this.handleImportError(err)
       });
       return;
     }
 
-    this.loader.wrap('import', this.snomedService.createImportJob(request, file)).subscribe(resp => {
-      if (resp.finished) {
-        this.pollJobStatus(resp.body.jobId);
-      } else {
-        this.importModalData.progress = resp.progress;
-      }
+    this.loader.wrap('import', this.snomedService.createImportJob(request, file)).subscribe({
+      next: resp => {
+        if (resp.finished) {
+          this.importModalData.phase = 'importing';
+          this.importModalData.progress = undefined;
+          this.importModalData.progressNote = undefined;
+          this.pollJobStatus(resp.body.jobId);
+        } else {
+          this.importModalData.progress = resp.progress;
+        }
+      },
+      error: err => this.handleImportError(err)
     });
+  }
+
+  private handleImportError(err: any): void {
+    this.importModalData.phase = undefined;
+    this.importModalData.progress = undefined;
+    this.importModalData.progressNote = undefined;
+    const message = err?.error?.message ?? err?.message ?? 'web.snomed.branch.management.import-failed';
+    this.notificationService.error(message);
   }
 
   private handleScanLorqueStarted(lorque: {id: number}): void {
@@ -187,14 +204,17 @@ export class SnomedCodesystemEditComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: string): void {
-    this.loader.wrap('import', this.snomedService.pollImportJob(jobId, this.destroy$)).subscribe(jobResp => {
-      this.importModalData = {type: 'SNAPSHOT'};
-      if (jobResp.status === 'FAILED') {
-        this.notificationService.error(jobResp.errorMessage || 'web.snomed.branch.management.import-failed');
-      }
-      if (jobResp.status === 'COMPLETED') {
-        this.notificationService.success('web.snomed.branch.management.import-succeeded');
-      }
+    this.loader.wrap('import', this.snomedService.pollImportJob(jobId, this.destroy$)).subscribe({
+      next: jobResp => {
+        this.importModalData = {type: 'SNAPSHOT'};
+        if (jobResp.status === 'FAILED') {
+          this.notificationService.error(jobResp.errorMessage || 'web.snomed.branch.management.import-failed');
+        }
+        if (jobResp.status === 'COMPLETED') {
+          this.notificationService.success('web.snomed.branch.management.import-succeeded');
+        }
+      },
+      error: err => this.handleImportError(err)
     });
   }
 

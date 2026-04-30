@@ -1944,6 +1944,7 @@
 						"dry-run-warning": "Kuiv käivitus loob RF2 zip-failist muudatuste raporti, kuid ei lae faili Snowstormi. Kui raport on valmis, kasuta tulemuste lehel \"Jätka importimisega\" nuppu sama faili Snowstormi laadimiseks.",
 						"uploading": "Faili üleslaadimine…",
 						"scanning": "RF2 faili skanneerimine…",
+						"importing": "Snowstormi importimine…",
 						"full-mode": "Põhjalik analüüs (aeglasem; kaasab seosed ja aktsepteeritavuse)"
 					},
 					"import-succeeded": "Import RF2 zip failist õnnestus!",

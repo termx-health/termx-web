@@ -2105,6 +2105,7 @@
             "dry-run-warning": "Bandomasis paleidimas iš RF2 zip failo sukuria pakeitimų ataskaitą neįkeliant į Snowstorm. Kai ataskaita paruošta, rezultatų ekrane naudokite mygtuką \"Tęsti importą\", kad įkeltumėte tą patį failą.",
             "uploading": "Failas įkeliamas…",
             "scanning": "RF2 failas nuskaitomas…",
+            "importing": "Importuojama į Snowstorm…",
             "full-mode": "Pilna analizė (lėtesnė; įtraukia ryšius ir priimtinumą)"
           },
           "import-succeeded": "Importavimas iš RF2 zip archyvo sėkmingas",
