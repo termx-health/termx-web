@@ -112,6 +112,13 @@
             {{'web.snomed.branch.management.import-modal.dry-run' | translate}}
           </m-checkbox>
         </m-form-item>
+        @if (importModalData.dryRun) {
+          <m-form-item mName="fullMode">
+            <m-checkbox name="fullMode" [(ngModel)]="importModalData.fullMode">
+              {{'web.snomed.branch.management.import-modal.full-mode' | translate}}
+            </m-checkbox>
+          </m-form-item>
+        }
         @if (importModalData.phase === 'uploading' && importModalData.progress) {
           <m-form-item>
             <div class="m-bold">{{'web.snomed.branch.management.import-modal.uploading' | translate}}</div>

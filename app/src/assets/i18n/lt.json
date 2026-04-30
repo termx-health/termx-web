@@ -2104,7 +2104,8 @@
             "dry-run": "Bandomasis paleidimas (tik nuskaityti, neimportuoti)",
             "dry-run-warning": "Bandomasis paleidimas iš RF2 zip failo sukuria pakeitimų ataskaitą neįkeliant į Snowstorm. Kai ataskaita paruošta, rezultatų ekrane naudokite mygtuką \"Tęsti importą\", kad įkeltumėte tą patį failą.",
             "uploading": "Failas įkeliamas…",
-            "scanning": "RF2 failas nuskaitomas…"
+            "scanning": "RF2 failas nuskaitomas…",
+            "full-mode": "Pilna analizė (lėtesnė; įtraukia ryšius ir priimtinumą)"
           },
           "import-succeeded": "Importavimas iš RF2 zip archyvo sėkmingas",
           "import-warning": "Importavimo metu bus sukurta redagavimui skirta nomenklatūros atšaka. Kodų sistema sukurta nebus. Priklausomai nuo naudojamo SNOMED paketo dydžio, įkėlimas gali užtrukti virš 30-60 min.",

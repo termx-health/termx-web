@@ -2060,7 +2060,8 @@
             "dry-run": "Proefdraai (alleen scannen, niet importeren)",
             "dry-run-warning": "Proefdraai genereert een wijzigingsrapport uit het RF2-zipbestand zonder upload naar Snowstorm. Zodra het rapport klaar is, gebruik op het resultatenscherm de knop \"Doorgaan met importeren\" om hetzelfde bestand te uploaden.",
             "uploading": "Bestand uploaden…",
-            "scanning": "RF2-bestand scannen…"
+            "scanning": "RF2-bestand scannen…",
+            "full-mode": "Volledige analyse (langzamer; inclusief relaties en acceptabiliteit)"
           },
           "import-succeeded": "Import from RF2 zip succeeded",
           "import-warning": "This import will create a working branch. No code system version will be created. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",

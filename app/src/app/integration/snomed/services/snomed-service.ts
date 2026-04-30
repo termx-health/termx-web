@@ -93,7 +93,8 @@ export class SnomedService extends SnomedLibService {
     request: {
       branchPath: string,
       createCodeSystemVersion: boolean,
-      type: string
+      type: string,
+      mode?: 'summary' | 'full'
     },
     file: Blob,
     filename?: string

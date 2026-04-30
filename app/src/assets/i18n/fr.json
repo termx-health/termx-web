@@ -2056,7 +2056,8 @@
             "dry-run": "Simulation (analyse seule, sans import)",
             "dry-run-warning": "La simulation génère un rapport des changements à partir du fichier RF2 zip sans l'envoyer à Snowstorm. Une fois le rapport prêt, utilisez le bouton \"Procéder à l'import\" sur l'écran des résultats pour pousser le même fichier.",
             "uploading": "Téléversement du fichier…",
-            "scanning": "Analyse du fichier RF2…"
+            "scanning": "Analyse du fichier RF2…",
+            "full-mode": "Analyse complète (plus lente ; inclut les relations et l'acceptabilité)"
           },
           "import-succeeded": "Import from RF2 zip succeeded",
           "import-warning": "This import will create a working branch. No code system version will be created. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",
