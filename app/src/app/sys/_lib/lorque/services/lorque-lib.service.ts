@@ -30,4 +30,17 @@ export class LorqueLibService {
       filter(status => status !== 'running')
     ).pipe(tap(() => stopPolling$.next()));
   }
+
+  public pollProcessProgress(id: number, destroy$: Observable<any> = timer(600_000)): Observable<LorqueProcess> {
+    const stopPolling$ = new Subject<void>();
+    return timer(0, 1500).pipe(
+      takeUntil(merge(destroy$, stopPolling$)),
+      switchMap(() => this.load(id)),
+      tap(p => {
+        if (p?.status && p.status !== 'running') {
+          stopPolling$.next();
+        }
+      })
+    );
+  }
 }

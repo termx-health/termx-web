@@ -120,8 +120,17 @@
         }
         @if (importModalData.phase === 'scanning') {
           <m-form-item>
-            <div class="m-bold">{{'web.snomed.branch.management.import-modal.scanning' | translate}}</div>
-            <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
+            <div class="m-bold">
+              {{'web.snomed.branch.management.import-modal.scanning' | translate}}
+              @if (importModalData.progressNote) {
+                <span style="font-weight: normal"> — {{importModalData.progressNote}}</span>
+              }
+            </div>
+            @if (importModalData.progress) {
+              <nz-progress [nzPercent]="importModalData.progress" nzStatus="active"></nz-progress>
+            } @else {
+              <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
+            }
           </m-form-item>
         }
       </form>

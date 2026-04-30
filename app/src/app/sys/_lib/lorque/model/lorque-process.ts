@@ -8,4 +8,6 @@ export class LorqueProcess {
   public result?: any;
   public resultText?: string;
   public resultType?: string;
+  public progressPercent?: number;
+  public progressNote?: string;
 }
