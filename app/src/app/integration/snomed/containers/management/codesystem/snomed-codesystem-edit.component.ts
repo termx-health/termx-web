@@ -157,11 +157,40 @@ export class SnomedCodesystemEditComponent implements OnInit {
   }
 
   private handleImportError(err: any): void {
-    this.importModalData.phase = undefined;
-    this.importModalData.progress = undefined;
-    this.importModalData.progressNote = undefined;
-    const message = err?.error?.message ?? err?.message ?? 'web.snomed.branch.management.import-failed';
-    this.notificationService.error(message);
+    // Close the modal entirely — clearing file/state so the user can't accidentally
+    // click Confirm again and re-upload the same archive into the same broken backend.
+    this.importModalData = {type: 'SNAPSHOT'};
+    this.notificationService.error(this.extractErrorMessage(err));
+  }
+
+  private extractErrorMessage(err: any): string {
+    // termx-server's DefaultExceptionHandler returns either a JSON array of Issue
+    // objects ({code, message, severity, params}) or a single Issue, depending on
+    // the upstream failure. Empty bodies (e.g. an upstream 403 with Content-Length:0)
+    // come through as null/[]. Walk all the shapes; fall back to "<status> <statusText>".
+    const body = err?.error;
+    if (Array.isArray(body) && body.length > 0) {
+      const messages = body
+        .map((i: any) => (typeof i === 'string' ? i : (i?.message || i?.code)))
+        .filter((m: any) => !!m);
+      if (messages.length > 0) {
+        return messages.join('; ');
+      }
+    }
+    if (body?.message) {
+      return body.message;
+    }
+    if (body?.detail) {
+      return body.detail;
+    }
+    if (typeof body === 'string' && body.trim()) {
+      return body;
+    }
+    if (err?.status) {
+      const status = err.statusText ? `${err.status} ${err.statusText}` : `HTTP ${err.status}`;
+      return err.url ? `${status} (${err.url})` : status;
+    }
+    return err?.message || 'web.snomed.branch.management.import-failed';
   }
 
   private handleScanLorqueStarted(lorque: {id: number}): void {
