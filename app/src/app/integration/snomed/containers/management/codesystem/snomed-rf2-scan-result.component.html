@@ -1,0 +1,149 @@
+<div class="m-items-middle" style="flex-direction: column">
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <m-title>{{'web.snomed.scan-result.title' | translate}}</m-title>
+      <div class="m-items-middle">
+        <m-button mDisplay="text" (mClick)="downloadJson()">{{'web.snomed.scan-result.download-json' | translate}}</m-button>
+        <m-button mDisplay="text" (mClick)="downloadMarkdown()">{{'web.snomed.scan-result.download-markdown' | translate}}</m-button>
+        @if ((scan?.invalidatedConcepts?.length ?? 0) > 0) {
+          <m-button mDisplay="text" (mClick)="checkUsage()">{{'web.snomed.scan-result.check-usage' | translate}}</m-button>
+        }
+        @if (scan?.uploadCacheId) {
+          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+            <m-button mDisplay="primary" [mLoading]="loader.state['proceed']" [disabled]="proceeding" (mClick)="proceedImport()">
+              {{'web.snomed.scan-result.proceed-import' | translate}}
+            </m-button>
+          </ng-container>
+        }
+      </div>
+    </div>
+    <div *mCardContent>
+      <m-form-row>
+        <m-form-item *mFormCol mLabel="entities.snomed-codesystem.branch-path">{{scan?.branchPath || '—'}}</m-form-item>
+        <m-form-item *mFormCol mLabel="web.snomed.branch.management.import-modal.type">{{scan?.rf2Type || '—'}}</m-form-item>
+      </m-form-row>
+      <m-form-row>
+        <m-form-item *mFormCol mLabel="web.snomed.scan-result.release-effective-time">{{scan?.releaseEffectiveTime || '—'}}</m-form-item>
+        <m-form-item *mFormCol mLabel="web.snomed.scan-result.scanned-at">{{scan?.scannedAt || '—'}}</m-form-item>
+      </m-form-row>
+    </div>
+  </m-card>
+
+  <m-card>
+    <div *m-card-header><m-title>{{'web.snomed.scan-result.stats' | translate}}</m-title></div>
+    <m-table>
+      <tr *mTableHead>
+        <th>{{'web.snomed.scan-result.metric' | translate}}</th>
+        <th>{{'web.snomed.scan-result.count' | translate}}</th>
+      </tr>
+      <tr><td>{{'web.snomed.scan-result.stats.concepts-added' | translate}}</td><td>{{scan?.stats?.conceptsAdded || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.concepts-modified' | translate}}</td><td>{{scan?.stats?.conceptsModified || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.concepts-invalidated' | translate}}</td><td>{{scan?.stats?.conceptsInvalidated || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.descriptions-added' | translate}}</td><td>{{scan?.stats?.descriptionsAdded || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.descriptions-invalidated' | translate}}</td><td>{{scan?.stats?.descriptionsInvalidated || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.relationships-added' | translate}}</td><td>{{scan?.stats?.relationshipsAdded || 0}}</td></tr>
+      <tr><td>{{'web.snomed.scan-result.stats.relationships-invalidated' | translate}}</td><td>{{scan?.stats?.relationshipsInvalidated || 0}}</td></tr>
+    </m-table>
+  </m-card>
+
+  <m-card>
+    <div *m-card-header><m-title>{{'web.snomed.scan-result.new-concepts' | translate}} ({{scan?.newConcepts?.length || 0}})</m-title></div>
+    <m-table [mData]="scan?.newConcepts ?? []">
+      <tr *mTableHead>
+        <th>{{'web.snomed.scan-result.concept-id' | translate}}</th>
+        <th>{{'web.snomed.scan-result.effective-time' | translate}}</th>
+        <th>{{'web.snomed.scan-result.module' | translate}}</th>
+        <th>{{'web.snomed.scan-result.designations' | translate}}</th>
+        <th>{{'web.snomed.scan-result.attributes' | translate}}</th>
+      </tr>
+      @for (c of scan?.newConcepts ?? []; track c.conceptId) {
+        <tr>
+          <td>{{c.conceptId}}</td>
+          <td>{{c.effectiveTime || '—'}}</td>
+          <td>{{c.moduleId || '—'}}</td>
+          <td>
+            @for (d of c.designations ?? []; track d.descriptionId) {
+              <div>{{designationLabel(d)}}</div>
+            }
+          </td>
+          <td>
+            @for (a of c.attributes ?? []; track a.relationshipId) {
+              <div>{{attributeLabel(a)}}</div>
+            }
+          </td>
+        </tr>
+      }
+      <tr *mTableNoData>
+        <td colspan="5">{{'core.empty' | translate}}</td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card>
+    <div *m-card-header><m-title>{{'web.snomed.scan-result.modified-concepts' | translate}} ({{scan?.modifiedConcepts?.length || 0}})</m-title></div>
+    <m-table [mData]="scan?.modifiedConcepts ?? []">
+      <tr *mTableHead>
+        <th>{{'web.snomed.scan-result.concept-id' | translate}}</th>
+        <th>{{'web.snomed.scan-result.added-designations' | translate}}</th>
+        <th>{{'web.snomed.scan-result.removed-designations' | translate}}</th>
+        <th>{{'web.snomed.scan-result.added-attributes' | translate}}</th>
+        <th>{{'web.snomed.scan-result.removed-attributes' | translate}}</th>
+      </tr>
+      @for (c of scan?.modifiedConcepts ?? []; track c.conceptId) {
+        <tr>
+          <td>{{c.conceptId}}</td>
+          <td>
+            @for (d of c.addedDesignations ?? []; track d.descriptionId) {
+              <div>{{designationLabel(d)}}</div>
+            }
+          </td>
+          <td>
+            @for (d of c.removedDesignations ?? []; track d.descriptionId) {
+              <div>{{designationLabel(d)}}</div>
+            }
+          </td>
+          <td>
+            @for (a of c.addedAttributes ?? []; track a.relationshipId) {
+              <div>{{attributeLabel(a)}}</div>
+            }
+          </td>
+          <td>
+            @for (a of c.removedAttributes ?? []; track a.relationshipId) {
+              <div>{{attributeLabel(a)}}</div>
+            }
+          </td>
+        </tr>
+      }
+      <tr *mTableNoData>
+        <td colspan="5">{{'core.empty' | translate}}</td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card>
+    <div *m-card-header><m-title>{{'web.snomed.scan-result.invalidated-concepts' | translate}} ({{scan?.invalidatedConcepts?.length || 0}})</m-title></div>
+    <m-table [mData]="scan?.invalidatedConcepts ?? []">
+      <tr *mTableHead>
+        <th>{{'web.snomed.scan-result.concept-id' | translate}}</th>
+        <th>{{'web.snomed.scan-result.effective-time' | translate}}</th>
+        <th>{{'web.snomed.scan-result.module' | translate}}</th>
+        <th>{{'web.snomed.scan-result.designations' | translate}}</th>
+      </tr>
+      @for (c of scan?.invalidatedConcepts ?? []; track c.conceptId) {
+        <tr>
+          <td>{{c.conceptId}}</td>
+          <td>{{c.effectiveTime || '—'}}</td>
+          <td>{{c.moduleId || '—'}}</td>
+          <td>
+            @for (d of c.designations ?? []; track d.descriptionId) {
+              <div>{{designationLabel(d)}}</div>
+            }
+          </td>
+        </tr>
+      }
+      <tr *mTableNoData>
+        <td colspan="4">{{'core.empty' | translate}}</td>
+      </tr>
+    </m-table>
+  </m-card>
+</div>

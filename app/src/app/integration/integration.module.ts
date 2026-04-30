@@ -18,6 +18,8 @@ import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-se
 import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-edit.component';
 import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-management.component';
 import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-codesystem-edit.component';
+import {SnomedRF2ScanResultComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-rf2-scan-result.component';
+import {SnomedConceptUsageComponent} from 'term-web/integration/snomed/containers/usage/snomed-concept-usage.component';
 import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/management/snomed-management.component';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
@@ -75,6 +77,8 @@ export const INTEGRATION_ROUTES: Routes = [
   {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/codesystems/:shortName/edit', component: SnomedCodesystemEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
+  {path: 'snomed/codesystems/:shortName/rf2-scan-result', component: SnomedRF2ScanResultComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/concept-usage', component: SnomedConceptUsageComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
   {path: 'snomed/dashboard', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
   {path: 'snomed/dashboard/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
 ];
@@ -111,6 +115,8 @@ export const INTEGRATION_ROUTES: Routes = [
         SnomedBranchEditComponent,
         SnomedBranchManagementComponent,
         SnomedCodesystemEditComponent,
+        SnomedRF2ScanResultComponent,
+        SnomedConceptUsageComponent,
         LoincDashboardComponent,
         LoincListComponent,
         LoincPartListComponent,

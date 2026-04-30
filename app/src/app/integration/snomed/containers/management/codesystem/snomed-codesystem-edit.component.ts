@@ -32,7 +32,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, dryRun?: boolean} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -113,17 +113,47 @@ export class SnomedCodesystemEditComponent implements OnInit {
       return;
     }
 
-    const file: Blob = this.fileInput?.nativeElement?.files?.[0];
-    this.loader.wrap('import', this.snomedService.createImportJob({
+    const file: File | undefined = this.fileInput?.nativeElement?.files?.[0];
+    const filename = file?.name;
+    const request = {
       branchPath: this.snomedCodeSystem.branchPath,
       type: this.importModalData.type,
       createCodeSystemVersion: true
-    }, file)).subscribe(resp => {
+    };
+
+    if (this.importModalData.dryRun) {
+      this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe(resp => {
+        if (resp.finished) {
+          this.handleScanLorqueStarted(resp.body);
+        } else {
+          this.importModalData.progress = resp.progress;
+        }
+      });
+      return;
+    }
+
+    this.loader.wrap('import', this.snomedService.createImportJob(request, file)).subscribe(resp => {
       if (resp.finished) {
         this.pollJobStatus(resp.body.jobId);
       } else {
         this.importModalData.progress = resp.progress;
       }
+    });
+  }
+
+  private handleScanLorqueStarted(lorque: {id: number}): void {
+    this.loader.wrap('import', this.lorqueService.pollFinishedProcess(lorque.id, this.destroy$)).subscribe(status => {
+      if (status === 'failed') {
+        this.lorqueService.load(lorque.id).subscribe(p => this.notificationService.error(p.resultText));
+        return;
+      }
+      this.snomedService.loadScanResult(lorque.id).subscribe(envelope => {
+        this.importModalData = {type: 'SNAPSHOT'};
+        this.router.navigate(
+          ['/integration/snomed/codesystems', this.snomedCodeSystem.shortName, 'rf2-scan-result'],
+          {state: {envelope, shortName: this.snomedCodeSystem.shortName}}
+        );
+      });
     });
   }
 

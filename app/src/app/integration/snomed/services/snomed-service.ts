@@ -2,6 +2,7 @@ import {HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {SearchHttpParams} from '@termx-health/core-util';
 import {EMPTY, mergeMap, Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {SnomedBranch, SnomedCodeSystem, SnomedLibService} from 'term-web/integration/_lib';
 
 
@@ -86,6 +87,46 @@ export class SnomedService extends SnomedLibService {
       }
       return EMPTY;
     }));
+  }
+
+  public scanRF2(
+    request: {
+      branchPath: string,
+      createCodeSystemVersion: boolean,
+      type: string
+    },
+    file: Blob,
+    filename?: string
+  ): Observable<{finished: boolean, body?: any, progress?: number}> {
+    const fd = new FormData();
+    fd.append('request', JSON.stringify(request));
+    if (file) {
+      fd.append('file', file, filename || 'rf2.zip');
+    }
+
+    return this.http.post(`${this.baseUrl}/imports/scan`, fd, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(mergeMap((event: HttpEvent<any>) => {
+      if (event.type === HttpEventType.UploadProgress) {
+        return of({finished: false, progress: Math.round(100 * event.loaded / event.total)});
+      } else if (event instanceof HttpResponse) {
+        return of({finished: true, body: event.body});
+      }
+      return EMPTY;
+    }));
+  }
+
+  public loadScanResult(lorqueProcessId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/imports/scan/result/${lorqueProcessId}`);
+  }
+
+  public proceedScanImport(cacheId: number): Observable<{jobId: string}> {
+    return this.http.post(`${this.baseUrl}/imports/scan/${cacheId}/proceed`, {}).pipe(map(r => r as {jobId: string}));
+  }
+
+  public findConceptUsage(codes: string[]): Observable<any[]> {
+    return this.http.post(`${this.baseUrl}/concept-usage`, {codes}).pipe(map(r => r as any[]));
   }
 
   public deactivateDescription(path: string, descriptionId: string): Observable<any> {
