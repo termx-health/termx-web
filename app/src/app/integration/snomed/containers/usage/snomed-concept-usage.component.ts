@@ -1,6 +1,6 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {LoadingManager} from '@termx-health/core-util';
 import {
   MarinPageLayoutModule,
@@ -40,6 +40,7 @@ interface SnomedConceptUsage {
     MuiSpinnerModule,
     MuiTableModule,
     MuiTextareaModule,
+    RouterLink,
     TranslatePipe
   ]
 })
@@ -55,7 +56,7 @@ export class SnomedConceptUsageComponent implements OnInit {
   protected results?: SnomedConceptUsage[];
 
   public ngOnInit(): void {
-    const state = (this.router.lastSuccessfulNavigation?.extras?.state ?? history.state) as {codes?: string[], scan?: any} | undefined;
+    const state = (this.router.lastSuccessfulNavigation()?.extras?.state ?? history.state) as {codes?: string[], scan?: any} | undefined;
     if (state?.codes?.length) {
       this.rawInput = state.codes.join('\n');
       this.recomputeDetected();

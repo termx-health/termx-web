@@ -112,7 +112,7 @@ export class SnomedRF2ScanResultComponent implements OnInit {
   protected proceeding = false;
 
   public ngOnInit(): void {
-    const state = (this.router.lastSuccessfulNavigation?.extras?.state ?? history.state) as
+    const state = (this.router.lastSuccessfulNavigation()?.extras?.state ?? history.state) as
       {envelope?: ScanEnvelope, shortName?: string} | undefined;
     if (!state?.envelope) {
       this.notificationService.warning('web.snomed.scan-result.no-data');
