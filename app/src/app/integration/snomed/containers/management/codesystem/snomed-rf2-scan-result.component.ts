@@ -14,6 +14,7 @@ import {
   MuiTableModule
 } from '@termx-health/ui';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NzProgressComponent} from 'ng-zorro-antd/progress';
 import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.directive';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {LorqueLibService} from 'term-web/sys/_lib';
@@ -95,6 +96,7 @@ interface ScanEnvelope {
     MuiFormModule,
     MuiSpinnerModule,
     MuiTableModule,
+    NzProgressComponent,
     PrivilegedDirective,
     TranslatePipe
   ]

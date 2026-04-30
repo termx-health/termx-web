@@ -1941,7 +1941,9 @@
 						"header": "Import RF2 zip failist",
 						"type": "Tüüp",
 						"dry-run": "Kuiv käivitus (ainult skanneerimine, ei impordi)",
-						"dry-run-warning": "Kuiv käivitus loob RF2 zip-failist muudatuste raporti, kuid ei lae faili Snowstormi. Kui raport on valmis, kasuta tulemuste lehel \"Jätka importimisega\" nuppu sama faili Snowstormi laadimiseks."
+						"dry-run-warning": "Kuiv käivitus loob RF2 zip-failist muudatuste raporti, kuid ei lae faili Snowstormi. Kui raport on valmis, kasuta tulemuste lehel \"Jätka importimisega\" nuppu sama faili Snowstormi laadimiseks.",
+						"uploading": "Faili üleslaadimine…",
+						"scanning": "RF2 faili skanneerimine…"
 					},
 					"import-succeeded": "Import RF2 zip failist õnnestus!",
 					"import-warning": "Antud import loob uue haru (branch).  Koodisüsteemi versiooni ei looda.  Üleslaadimine võib sõltuvalt SNOMED paketi suurusest kesta kauem kui 30-60 minutit.",
@@ -1992,6 +1994,7 @@
 				"check-usage": "Kontrolli kasutust",
 				"proceed-import": "Jätka importimisega",
 				"proceed-started": "Import alustatud",
+				"importing": "Snowstormi importimine…",
 				"no-data": "Skanneerimise tulemust pole",
 				"stats": "Statistika",
 				"metric": "Mõõdik",

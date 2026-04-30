@@ -2054,7 +2054,9 @@
             "header": "Import from RF2 zip",
             "type": "Type",
             "dry-run": "Probelauf (nur scannen, nicht importieren)",
-            "dry-run-warning": "Der Probelauf erstellt einen Änderungsbericht aus der RF2-Zip-Datei ohne Upload zu Snowstorm. Sobald der Bericht fertig ist, verwenden Sie auf der Ergebnisseite die Schaltfläche \"Mit Import fortfahren\", um dieselbe Datei hochzuladen."
+            "dry-run-warning": "Der Probelauf erstellt einen Änderungsbericht aus der RF2-Zip-Datei ohne Upload zu Snowstorm. Sobald der Bericht fertig ist, verwenden Sie auf der Ergebnisseite die Schaltfläche \"Mit Import fortfahren\", um dieselbe Datei hochzuladen.",
+            "uploading": "Datei wird hochgeladen…",
+            "scanning": "RF2-Datei wird gescannt…"
           },
           "import-succeeded": "Import from RF2 zip succeeded",
           "import-warning": "This import will create a working branch. No code system version will be created. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",
@@ -2140,7 +2142,8 @@
         "stats.descriptions-added": "Bezeichnungen hinzugefügt",
         "stats.descriptions-invalidated": "Bezeichnungen inaktiviert",
         "stats.relationships-added": "Beziehungen hinzugefügt",
-        "stats.relationships-invalidated": "Beziehungen inaktiviert"
+        "stats.relationships-invalidated": "Beziehungen inaktiviert",
+        "importing": "Import nach Snowstorm läuft…"
       },
       "concept-usage": {
         "title": "SNOMED-Konzept-Verwendung",

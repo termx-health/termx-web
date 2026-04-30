@@ -112,9 +112,16 @@
             {{'web.snomed.branch.management.import-modal.dry-run' | translate}}
           </m-checkbox>
         </m-form-item>
-        @if (importModalData.progress) {
+        @if (importModalData.phase === 'uploading' && importModalData.progress) {
           <m-form-item>
+            <div class="m-bold">{{'web.snomed.branch.management.import-modal.uploading' | translate}}</div>
             <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
+          </m-form-item>
+        }
+        @if (importModalData.phase === 'scanning') {
+          <m-form-item>
+            <div class="m-bold">{{'web.snomed.branch.management.import-modal.scanning' | translate}}</div>
+            <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
           </m-form-item>
         }
       </form>

@@ -26,6 +26,14 @@
         <m-form-item *mFormCol mLabel="web.snomed.scan-result.release-effective-time">{{scan?.releaseEffectiveTime || '—'}}</m-form-item>
         <m-form-item *mFormCol mLabel="web.snomed.scan-result.scanned-at">{{scan?.scannedAt || '—'}}</m-form-item>
       </m-form-row>
+      @if (proceeding) {
+        <m-form-row>
+          <m-form-item *mFormCol>
+            <div class="m-bold">{{'web.snomed.scan-result.importing' | translate}}</div>
+            <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
+          </m-form-item>
+        </m-form-row>
+      }
     </div>
   </m-card>
 
