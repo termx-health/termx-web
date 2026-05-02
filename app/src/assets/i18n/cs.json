@@ -495,6 +495,7 @@
       "edit": "Upravit",
       "publish": "Publikovat",
       "resource-id": "Zdroj",
+      "triage": "Triáž",
       "type": "Typ",
       "view": "Zobrazit"
     },
@@ -1979,6 +1980,7 @@
           "actions": {
             "edit": "Upravit",
             "publish": "Publikovat",
+            "triage": "Triáž",
             "view": "Zobrazit"
           },
           "add-header": "Přidat zdroj",

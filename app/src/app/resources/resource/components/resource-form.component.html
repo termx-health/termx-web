@@ -15,7 +15,12 @@
           @for (n of resource.otherTitle; track n; let i = $index) {
             <div class="m-items-middle">
               <m-form-control style="width: 100%" mName="otherTitle-name-{{i}}">
-                <m-textarea name="otherTitle-name-{{i}}" [(ngModel)]="n.name"></m-textarea>
+                @if (!viewMode) {
+                  <m-textarea name="otherTitle-name-{{i}}" [(ngModel)]="n.name"></m-textarea>
+                }
+                @if (viewMode) {
+                  <span>{{n.name}}@if (n.preferred) { <m-icon class="m-text-secondary" [mOptions]="{nzTheme: 'fill'}" mCode="star"/> }</span>
+                }
               </m-form-control>
               @if (!viewMode) {
                 <m-button (mClick)="n.preferred = !n.preferred">
@@ -50,7 +55,12 @@
         }
       </m-form-item>
       <m-form-item *mFormCol mLabel="entities.resource.name" mName="name">
-        <m-textarea name="name" [(ngModel)]="resource.name"></m-textarea>
+        @if (!viewMode) {
+          <m-textarea name="name" [(ngModel)]="resource.name"></m-textarea>
+        }
+        @if (viewMode) {
+          <span>{{resource.name}}</span>
+        }
       </m-form-item>
     </m-form-row>
     <m-form-row>
@@ -74,7 +84,12 @@
       </m-form-item>
       <m-form-item *mFormCol mLabel="entities.resource.uri" mName="uri" [required]="!viewMode">
         <div class="m-items-middle">
-          <m-textarea style="width: 100%" name="uri" [(ngModel)]="resource.uri" [required]="!viewMode"/>
+          @if (!viewMode) {
+            <m-textarea style="width: 100%" name="uri" [(ngModel)]="resource.uri" [required]="!viewMode"/>
+          }
+          @if (viewMode) {
+            <span style="word-break: break-all">{{resource.uri}}</span>
+          }
           @if (resource.uri | validateUrl) {
             <a [href]="resource.uri" target="_blank">
               <m-button m-tooltip mTitle="web.resource-form.open-uri">
@@ -107,7 +122,12 @@
       <m-form-item *mFormCol mLabel="entities.resource.topic">
         <div class="m-items-middle">
           <m-form-control style="width: 100%" mName="topic-text">
-            <m-textarea name="topic-text" [(ngModel)]="resource.topic.text"></m-textarea>
+            @if (!viewMode) {
+              <m-textarea name="topic-text" [(ngModel)]="resource.topic.text"></m-textarea>
+            }
+            @if (viewMode) {
+              <span>{{resource.topic?.text}}</span>
+            }
           </m-form-control>
           <m-form-control style="width: 100%" mName="topic-tags">
             @if (!viewMode) {
@@ -136,7 +156,12 @@
                 }
               </m-form-control>
               <m-form-control style="width: 100%" mName="useContext-value-{{i}}">
-                <m-textarea name="useContext-value-{{i}}" [(ngModel)]="c.value"></m-textarea>
+                @if (!viewMode) {
+                  <m-textarea name="useContext-value-{{i}}" [(ngModel)]="c.value"></m-textarea>
+                }
+                @if (viewMode) {
+                  <span>{{c.value}}</span>
+                }
               </m-form-control>
               @if (!viewMode) {
                 <m-icon class="m-clickable" [mCode]="'close'" (click)="deleteContext(c)"></m-icon>
@@ -151,7 +176,12 @@
     </m-form-row>
     <m-form-row>
       <m-form-item *mFormCol mLabel="entities.resource.source-reference" mName="sourceReference">
-        <m-textarea name="sourceReference" [(ngModel)]="resource.sourceReference"/>
+        @if (!viewMode) {
+          <m-textarea name="sourceReference" [(ngModel)]="resource.sourceReference"/>
+        }
+        @if (viewMode) {
+          <span style="word-break: break-all">{{resource.sourceReference}}</span>
+        }
       </m-form-item>
       <div *mFormCol>
         @if (['CodeSystem', 'ValueSet', 'MapSet'] | includes:resourceType) {

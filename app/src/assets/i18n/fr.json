@@ -477,6 +477,7 @@
       "edit": "Modifier",
       "publish": "Publish",
       "resource-id": "Resource",
+      "triage": "Triage",
       "type": "Type",
       "view": "View"
     },
@@ -1883,6 +1884,7 @@
           "actions": {
             "edit": "Modifier",
             "publish": "Publish",
+            "triage": "Triage",
             "view": "View"
           },
           "add-header": "Add resource",

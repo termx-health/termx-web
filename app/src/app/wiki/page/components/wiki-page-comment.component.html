@@ -109,7 +109,7 @@
 
 
 @if ({active: !!pageComment.children?.length}; as inf) {
-  <m-list>
+  <m-list *twPrivileged="'triage'">
     <!-- Main comment -->
     <m-list-item class="comment" [mClickable]="!inf.active" (mClick)="!_editState[pageComment.id] ? inf.active = true : undefined">
       <ng-container *ngTemplateOutlet="section, context: {$implicit: pageComment}"/>
@@ -121,7 +121,7 @@
       </m-list-item>
     }
     <!-- Send reply -->
-    @if (inf.active && ('edit' | twPrivileged)) {
+    @if (inf.active) {
       <m-list-item class="comment-reply-section">
         @if ({msg: ''}; as d) {
           <div class="m-items-top">

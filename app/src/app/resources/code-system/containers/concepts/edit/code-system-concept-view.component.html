@@ -39,6 +39,35 @@
         </m-card>
       }
 
+      <!-- Opened tasks (visible only when user has triage on the parent code system) -->
+      @if (conceptVersion?.id && ('*.CodeSystem.triage' | twPrivileged)) {
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <div class="m-items-middle">
+              @if (!showOnlyOpenedTasks) {
+                <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                  <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+                </a>
+              }
+              @if (showOnlyOpenedTasks) {
+                <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+              }
+              <span>|</span>
+              @if (showOnlyOpenedTasks) {
+                <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                  <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+                </a>
+              }
+              @if (!showOnlyOpenedTasks) {
+                <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+              }
+            </div>
+          </div>
+          <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
+            [resourceId]="conceptVersion.id | toString"
+          [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"></tw-resource-tasks-widget>
+        </m-card>
+      }
     </div>
     <div style="display: flex; gap: 1rem; flex-direction: column; flex: 2; min-width: 0">
 

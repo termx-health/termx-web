@@ -47,7 +47,19 @@ export class AuthService {
 
   public refresh(): Observable<UserInfo> {
     if (environment.yupiEnabled) {
-      return of({username: 'yupi', privileges: ['*.*.*']}).pipe(tap(u => this.user = u));
+      // Fetch the real session from the backend so server-side yupi configuration
+      // (auth.dev.yupi.privileges) is honoured. Previously we returned a hardcoded
+      // ['*.*.*'] here, which bypassed the backend and made privilege overrides
+      // invisible to the frontend.
+      return this.loadUserInfo().pipe(
+        tap(resp => this.user = resp),
+        catchError(() => {
+          // Backend not running, not in dev mode, or yupi disabled there: fall back
+          // to a permissive guest so the UI shell still renders for design work.
+          this.user = {username: 'yupi', privileges: ['*.*.*']};
+          return of(this.user);
+        })
+      );
     }
 
     return this.refreshUserInfo().pipe(

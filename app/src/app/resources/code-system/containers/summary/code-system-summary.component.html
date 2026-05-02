@@ -68,8 +68,8 @@
           </m-card>
         }
 
-        <!-- Tasks -->
-        <m-card *twPrivileged="'*.Task.view'">
+        <!-- Tasks (visible only when user has triage on this code system) -->
+        <m-card *twPrivileged="'triage'">
           <div *m-card-header class="m-justify-between">
             <div class="m-items-middle">
               @if (!showOnlyOpenedTasks) {

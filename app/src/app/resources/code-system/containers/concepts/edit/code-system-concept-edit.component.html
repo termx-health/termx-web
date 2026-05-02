@@ -87,8 +87,8 @@ mode="concept-edit"></tw-resource-context>
         </m-card>
       }
 
-      <!-- Opened tasks -->
-      @if (conceptVersion?.id && ('*.Task.view' | twPrivileged)) {
+      <!-- Opened tasks (visible only when user has triage on the parent code system) -->
+      @if (conceptVersion?.id && ('*.CodeSystem.triage' | twPrivileged)) {
         <m-card>
           <div *m-card-header class="m-justify-between">
             <div class="m-items-middle">

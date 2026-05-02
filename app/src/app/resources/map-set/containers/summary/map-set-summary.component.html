@@ -25,8 +25,8 @@
 
     </div>
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
-      <!-- Tasks -->
-      <m-card *twPrivileged="'*.Task.view'">
+      <!-- Tasks (visible only when user has triage on this map set) -->
+      <m-card *twPrivileged="'triage'">
         <div *m-card-header class="m-justify-between">
           <div class="m-items-middle">
             @if (!showOnlyOpenedTasks) {
