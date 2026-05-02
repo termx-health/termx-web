@@ -24,7 +24,7 @@
         }
       </div>
     }
-    <div class="m-items-middle">
+    <div class="m-items-middle" *twPrivileged="'triage'">
       <m-icon mCode="download"></m-icon>
       <span>{{'web.value-set-version.summary.info.download' | translate}}
         (@for (format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; track format; let i = $index) {

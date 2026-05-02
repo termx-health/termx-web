@@ -485,6 +485,7 @@
       "edit": "Redaguoti",
       "publish": "Publikuoti",
       "resource-id": "Išteklio ID",
+      "triage": "Triažas",
       "type": "Tipas",
       "view": "Peržiūrėti"
     },
@@ -1930,6 +1931,7 @@
           "actions": {
             "edit": "Redaguoti",
             "publish": "Publikuoti",
+            "triage": "Triažas",
             "view": "Peržiūrėti"
           },
           "add-header": "Pridėti išteklių",

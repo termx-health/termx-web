@@ -8,6 +8,7 @@ export class PrivilegeResource {
 
 export class PrivilegeResourceActions {
   public view?: boolean;
+  public triage?: boolean;
   public edit?: boolean;
   public publish?: boolean;
 }

@@ -7,7 +7,7 @@ import { MuiTooltipModule, MuiCoreModule, MuiTextareaModule, MuiButtonModule, Mu
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 
 export interface ExtendedPageComment extends PageComment {
   children?: PageComment[]
@@ -67,7 +67,7 @@ interface CommentPrivileges {
         '[attr.page-comment-id]': `pageComment?.id`,
         '[attr.line-number]': `pageComment?.options?.lineNumber`,
     },
-    imports: [MuiTooltipModule, MuiCoreModule, MuiTextareaModule, AutofocusDirective, FormsModule, MuiButtonModule, NgTemplateOutlet, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule, TranslatePipe, AbbreviatePipe, ApplyPipe, LocalDateTimePipe, PrivilegedPipe]
+    imports: [MuiTooltipModule, MuiCoreModule, MuiTextareaModule, AutofocusDirective, FormsModule, MuiButtonModule, NgTemplateOutlet, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule, TranslatePipe, AbbreviatePipe, ApplyPipe, LocalDateTimePipe, PrivilegedDirective]
 })
 export class WikiPageCommentComponent {
   private pageCommentService = inject(PageCommentService);

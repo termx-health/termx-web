@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import {AuthService} from 'term-web/core/auth';
+import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.directive';
 
 import { MuiIconButtonModule, MuiCardModule, MuiTextareaModule, MuiButtonModule } from '@termx-health/ui';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'tw-wiki-comment-popover',
     template: `
     @if (!commentData.edit) {
-      <m-icon-button class="btn" mIcon="comment" mSize="small" (mClick)="open()"/>
+      <m-icon-button *twPrivileged="'triage'" class="btn" mIcon="comment" mSize="small" (mClick)="open()"/>
     }
     
     @if (commentData.edit) {
@@ -38,7 +39,7 @@ import { FormsModule } from '@angular/forms';
       border-radius: 50%;
     }
   `],
-    imports: [MuiIconButtonModule, MuiCardModule, MuiTextareaModule, FormsModule, MuiButtonModule]
+    imports: [MuiIconButtonModule, MuiCardModule, MuiTextareaModule, FormsModule, MuiButtonModule, PrivilegedDirective]
 })
 export class WikiCommentPopoverComponent {
   protected auth = inject(AuthService);

@@ -5,6 +5,7 @@ import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersio
 import {forkJoin, of} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { ResourceTasksWidgetComponent } from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { MarinPageLayoutModule, MuiCardModule, MuiListModule, MuiDividerModule } from '@termx-health/ui';
 
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,7 @@ import { CodeSystemPropertyValueEditComponent } from 'term-web/resources/code-sy
 import { CodeSystemAssociationEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@termx-health/util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
     templateUrl: './code-system-concept-view.component.html',
@@ -29,7 +31,7 @@ import { MarinaUtilModule } from '@termx-health/util';
       margin-top: 1rem
     }
   `],
-    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiCardModule, MuiListModule, FormsModule, MuiDividerModule, StatusTagComponent, ResourceRelatedArtifactWidgetComponent, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, TranslatePipe, MarinaUtilModule, LocalDatePipe, LocalDateTimePipe, ToStringPipe]
+    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiCardModule, MuiListModule, FormsModule, MuiDividerModule, StatusTagComponent, ResourceRelatedArtifactWidgetComponent, ResourceTasksWidgetComponent, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, TranslatePipe, MarinaUtilModule, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
 })
 export class CodeSystemConceptViewComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
@@ -43,6 +45,7 @@ export class CodeSystemConceptViewComponent implements OnInit {
   public codeSystemVersions?: CodeSystemVersion[];
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
+  protected showOnlyOpenedTasks = true;
 
   protected loader = new LoadingManager();
 

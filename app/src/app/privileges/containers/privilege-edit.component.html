@@ -48,6 +48,7 @@
               <th>{{'entities.privilege-resource.type' | translate}}</th>
               <th>{{'entities.privilege-resource.resource-id' | translate}}</th>
               <th>{{'entities.privilege-resource.view' | translate}}</th>
+              <th>{{'entities.privilege-resource.triage' | translate}}</th>
               <th>{{'entities.privilege-resource.edit' | translate}}</th>
               <th>{{'entities.privilege-resource.publish' | translate}}</th>
               <th class="tw-table-actions"></th>
@@ -65,6 +66,11 @@
                   </td>
                   <td>
                     @if (resource.actions?.view) {
+                      <m-icon mCode="check"></m-icon>
+                    }
+                  </td>
+                  <td>
+                    @if (resource.actions?.triage) {
                       <m-icon mCode="check"></m-icon>
                     }
                   </td>
@@ -182,15 +188,24 @@
             {{'web.privileges.resources.modal.actions.view' | translate}}
           </m-checkbox>
         </ng-template>
+        <m-form-item [mLabel]="triage"></m-form-item>
+        <ng-template #triage>
+          <m-checkbox name="action-triage" [ngModel]="modalData.resource.actions.triage"
+                      (ngModelChange)="onActionToggle('triage', $event)">
+            {{'web.privileges.resources.modal.actions.triage' | translate}}
+          </m-checkbox>
+        </ng-template>
         <m-form-item [mLabel]="edit"></m-form-item>
         <ng-template #edit>
-          <m-checkbox name="action-edit" [(ngModel)]="modalData.resource.actions.edit">
+          <m-checkbox name="action-edit" [ngModel]="modalData.resource.actions.edit"
+                      (ngModelChange)="onActionToggle('edit', $event)">
             {{'web.privileges.resources.modal.actions.edit' | translate}}
           </m-checkbox>
         </ng-template>
         <m-form-item [mLabel]="publish"></m-form-item>
         <ng-template #publish>
-          <m-checkbox name="action-publish" [(ngModel)]="modalData.resource.actions.publish">
+          <m-checkbox name="action-publish" [ngModel]="modalData.resource.actions.publish"
+                      (ngModelChange)="onActionToggle('publish', $event)">
             {{'web.privileges.resources.modal.actions.publish' | translate}}
           </m-checkbox>
         </ng-template>

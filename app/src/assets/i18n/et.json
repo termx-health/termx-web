@@ -489,6 +489,7 @@
 			"edit": "Muuda",
 			"publish": "Avalda",
 			"resource-id": "Ressurss",
+			"triage": "Triaaž",
 			"type": "Tüüp",
 			"view": "Vaata"
 		},
@@ -1790,6 +1791,7 @@
 					"actions": {
 						"edit": "Muuda",
 						"publish": "Avalda",
+						"triage": "Triaaž",
 						"view": "Vaata"
 					},
 					"add-header": "Lisa ressurss",
