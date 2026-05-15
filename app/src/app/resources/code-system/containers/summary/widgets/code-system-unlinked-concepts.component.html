@@ -45,7 +45,7 @@
       }
       @if (!(tasks | apply: findTask:entityVersion.id)) {
         <td></td>
-        <td>@if (approvalRequired && ('*.Task.edit' | twHasAnyPrivilege)) {
+        <td>@if (approvalRequired && ('*.Task.write' | twHasAnyPrivilege)) {
           <a
           (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a>
         }
@@ -91,7 +91,7 @@
       <m-form-item mName="assignee" mLabel="web.code-system.summary.unlinked-concepts.task-modal.assignee" required>
         <tw-user-select name="assignee"
           [(ngModel)]="taskModalData.assignee"
-          [anyRole]="[codeSystem + '.CodeSystem.edit', codeSystem + '.CodeSystem.publish']"
+          [anyRole]="[codeSystem + '.CodeSystem.write', codeSystem + '.CodeSystem.maintain']"
         required></tw-user-select>
       </m-form-item>
     </form>

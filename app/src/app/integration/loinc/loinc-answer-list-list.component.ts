@@ -133,7 +133,7 @@ export class LoincAnswerListListComponent implements OnInit {
   }
 
   protected openConcept(code: string, cs = 'loinc-answer-list'): void {
-    const canEdit = this.authService.hasPrivilege(`${cs}.CodeSystem.edit`);
+    const canEdit = this.authService.hasPrivilege(`${cs}.CodeSystem.write`);
     const path = '/resources/code-systems/' + cs + '/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
   }

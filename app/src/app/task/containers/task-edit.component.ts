@@ -59,7 +59,7 @@ class TaskContextLinkService {
     },
     'concept-version': (ctx: TaskContextItem): void => {
       this.codeSystemEntityVersionService.load(ctx.id).subscribe(({id, codeSystem, code}) => {
-        if (this.auth.hasAnyPrivilege([codeSystem + '.CodeSystem.edit'])) {
+        if (this.auth.hasAnyPrivilege([codeSystem + '.CodeSystem.write'])) {
           this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'edit'], {queryParams: {conceptVersionId: id}});
         } else {
           this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'view'], {queryParams: {conceptVersionId: id}});

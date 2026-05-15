@@ -24,7 +24,7 @@ import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 
 export const WIKI_PAGE_ROUTES: Routes = [
   {path: ':slug', component: WikiPageComponent},
-  {path: ':slug/edit', component: WikiPageEditComponent, data: {privilege: ['*.Wiki.edit']}, canDeactivate: [unsavedChangesGuard]},
+  {path: ':slug/edit', component: WikiPageEditComponent, data: {privilege: ['*.Wiki.write']}, canDeactivate: [unsavedChangesGuard]},
   {path: ':slug/history', component: WikiPageHistoryComponent},
   {path: '', component: WikiPageComponent},
 ];

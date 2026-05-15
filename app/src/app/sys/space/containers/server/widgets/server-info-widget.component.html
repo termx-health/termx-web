@@ -1,7 +1,7 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <span>{{'entities.server.singular' | translate}}</span>
-    <a [routerLink]="['/servers', server.id, 'edit']" *twPrivileged="server.id + '.Space.edit'">
+    <a [routerLink]="['/servers', server.id, 'edit']" *twPrivileged="server.id + '.Space.write'">
       <m-button mSize="small"><m-icon mCode="edit"/> {{'core.btn.edit' | translate}}</m-button>
     </a>
   </div>

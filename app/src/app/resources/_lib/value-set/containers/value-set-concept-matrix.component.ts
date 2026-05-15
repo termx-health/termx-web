@@ -27,7 +27,7 @@ class ValueSetConceptMatrixService {
   }
 
   public load(id: string, version: string): Observable<ConceptView[]> {
-    if (!id || !version || !this.authService.hasPrivilege(`${id}.ValueSet.view`)) {
+    if (!id || !version || !this.authService.hasPrivilege(`${id}.ValueSet.read`)) {
       return of([]);
     }
 

@@ -15,7 +15,7 @@
       }
 
       <!-- Add actions -->
-      <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
+      <tw-add-button *twPrivileged="'*.Task.write'" [routerLink]="['./add']">
         {{'web.task.add-btn' | translate}}
       </tw-add-button>
 
@@ -147,7 +147,7 @@
         }
       </td>
       <td>
-        @if ('*.Task.edit' | twHasAnyPrivilege) {
+        @if ('*.Task.write' | twHasAnyPrivilege) {
           <a [routerLink]="[task.number, 'edit']">{{task.number}}</a>
         } @else {
           {{task.number}}

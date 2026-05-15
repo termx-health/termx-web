@@ -88,7 +88,7 @@ export class ResourceTaskModalComponent {
   }
 
   protected getRoles = (ctx: TaskModalParamsContext): string[] => {
-    return [`${ctx.resourceId}.${this.resourceType}.edit`, `${ctx.resourceId}.${this.resourceType}.publish`];
+    return [`${ctx.resourceId}.${this.resourceType}.write`, `${ctx.resourceId}.${this.resourceType}.maintain`];
   };
 
   protected versionMissing = (ctx: TaskModalParamsContext): boolean => {

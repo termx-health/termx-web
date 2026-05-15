@@ -64,7 +64,7 @@
               </div>
               @for (concept of uniquenessResult.duplicates[key]; track concept) {
                 <div class="m-items-middle">
-                  <a [routerLink]="['/resources/code-systems', codeSystem, 'concepts', concept.code, (codeSystem + '.CodeSystem.edit' | twHasAnyPrivilege) ? 'edit' : 'view']">{{concept.code}}</a>
+                  <a [routerLink]="['/resources/code-systems', codeSystem, 'concepts', concept.code, (codeSystem + '.CodeSystem.write' | twHasAnyPrivilege) ? 'edit' : 'view']">{{concept.code}}</a>
                   <label>{{concept | apply:getDisplay}}</label>
                 </div>
               }

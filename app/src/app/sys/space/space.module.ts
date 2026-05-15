@@ -30,21 +30,21 @@ export const SPACE_CTX_ROUTES: Routes = [
 
 export const SPACE_ROUTES: Routes = [
   {path: '', component: SpaceListComponent},
-  {path: 'add', data: {privilege: ['*.Space.edit']}, component: SpaceEditComponent},
-  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: SpaceEditComponent},
-  {path: ':id/github', data: {privilege: ['{id}.Space.edit']}, component: SpaceGithubComponent},
-  {path: ':spaceId/packages/add', data: {privilege: ['{id}.Space.edit']}, component: PackageEditComponent},
-  {path: ':spaceId/packages/:id/edit', data: {privilege: ['{id}.Space.edit']}, component: PackageEditComponent}
+  {path: 'add', data: {privilege: ['*.Space.write']}, component: SpaceEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Space.write']}, component: SpaceEditComponent},
+  {path: ':id/github', data: {privilege: ['{id}.Space.write']}, component: SpaceGithubComponent},
+  {path: ':spaceId/packages/add', data: {privilege: ['{id}.Space.write']}, component: PackageEditComponent},
+  {path: ':spaceId/packages/:id/edit', data: {privilege: ['{id}.Space.write']}, component: PackageEditComponent}
 ];
 
 export const SERVER_ROUTES: Routes = [
   {path: '', component: ServerListComponent},
-  {path: 'add', data: {privilege: ['*.Space.edit']}, component: ServerEditComponent},
-  {path: ':id/summary', data: {privilege: ['{id}.Space.view']}, component: ServerSummaryComponent},
-  {path: ':id/details', data: {privilege: ['{id}.Space.view']}, component: ServerEditComponent},
-  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: ServerEditComponent},
-  {path: ':id/resources', data: {privilege: ['{id}.Space.view']}, component: ServerResourcesComponent},
-  {path: ':id/authoritative/:type', data: {privilege: ['{id}.Space.edit']}, component: ServerAuthoritativeEditComponent},
+  {path: 'add', data: {privilege: ['*.Space.write']}, component: ServerEditComponent},
+  {path: ':id/summary', data: {privilege: ['{id}.Space.read']}, component: ServerSummaryComponent},
+  {path: ':id/details', data: {privilege: ['{id}.Space.read']}, component: ServerEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Space.write']}, component: ServerEditComponent},
+  {path: ':id/resources', data: {privilege: ['{id}.Space.read']}, component: ServerResourcesComponent},
+  {path: ':id/authoritative/:type', data: {privilege: ['{id}.Space.write']}, component: ServerAuthoritativeEditComponent},
 ];
 
 @NgModule({

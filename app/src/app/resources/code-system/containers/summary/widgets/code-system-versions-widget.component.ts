@@ -95,7 +95,7 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
   }
 
   protected loadRelease(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.releaseService.search({resource: ['CodeSystem', this.codeSystem].join('|')}).subscribe(r => {
         this.releases = collect(r.data.flatMap(rel => rel.resources
             .filter(res => res.resourceType === 'CodeSystem')

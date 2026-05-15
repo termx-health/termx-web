@@ -83,7 +83,7 @@ export class MapSetVersionsWidgetComponent implements OnChanges{
   }
 
   protected loadRelease(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.releaseService.search({resource: ['MapSet', this.mapSet].join('|')}).subscribe(r => {
         this.releases = collect(r.data.flatMap(rel => rel.resources
             .filter(res => res.resourceType === 'MapSet')

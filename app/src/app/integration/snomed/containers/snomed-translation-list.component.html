@@ -7,8 +7,8 @@
       (mAfterSubmit)="translationsChanged.emit()"
       (mAfterDelete)="translationsChanged.emit()"
       [mRowEditAllowed]="editAllowed"
-      [mEditAllowed]="'snomed-ct.CodeSystem.edit' | twPrivileged"
-      [mDeleteAllowed]="'snomed-ct.CodeSystem.edit' | twPrivileged">
+      [mEditAllowed]="'snomed-ct.CodeSystem.write' | twPrivileged"
+      [mDeleteAllowed]="'snomed-ct.CodeSystem.write' | twPrivileged">
     <m-editable-column [mTitle]="'entities.snomed-translation.branch'" mName="branch">
       <ng-template #viewTemplate let-t>{{t.branch}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
@@ -73,7 +73,7 @@
         </m-select>
       </ng-template>
     </m-editable-column>
-    <m-editable-column *twPrivileged="'*.Task.view'" [mTitle]="'entities.snomed-translation.task'">
+    <m-editable-column *twPrivileged="'*.Task.read'" [mTitle]="'entities.snomed-translation.task'">
       <ng-template #viewTemplate let-t>
         @if ((tasks | apply:findTask:t.id); as task) {
           <a [routerLink]="['/tasks', task?.number,'edit']">{{task?.number}}</a>

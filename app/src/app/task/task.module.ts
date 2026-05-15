@@ -12,8 +12,8 @@ import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const TASK_ROUTES: Routes = [
   {path: '', component: TaskListComponent},
-  {path: 'add', data: {privilege: ['*.Task.edit']}, component: TaskEditComponent},
-  {path: ':number/edit', data: {privilege: ['*.Task.edit']}, component: TaskEditComponent},
+  {path: 'add', data: {privilege: ['*.Task.write']}, component: TaskEditComponent},
+  {path: ':number/edit', data: {privilege: ['*.Task.write']}, component: TaskEditComponent},
 ];
 
 @NgModule({

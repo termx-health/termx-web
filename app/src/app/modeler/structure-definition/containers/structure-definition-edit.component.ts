@@ -57,7 +57,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     }
 
     if (this.mode === 'edit') {
-      this.canEdit = this.authService.hasPrivilege(this.id + '.StructureDefinition.edit');
+      this.canEdit = this.authService.hasPrivilege(this.id + '.StructureDefinition.write');
       this.loader.wrap('init', this.structureDefinitionService.load(this.id!).pipe(
         catchError(err => {
           this.notificationService.error('Failed to load structure definition', err?.error?.message || err?.message || 'Unknown error');

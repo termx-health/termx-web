@@ -21,8 +21,8 @@ import {ObservationDefinitionService} from 'term-web/observation-definition/serv
 
 export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   {path: '', component: ObservationDefinitionListComponent},
-  {path: 'add', data: {privilege: ['*.ObservationDefinition.edit']}, component: ObservationDefinitionEditComponent},
-  {path: ':id/edit', data: {privilege: ['*.ObservationDefinition.edit']}, component: ObservationDefinitionEditComponent},
+  {path: 'add', data: {privilege: ['*.ObservationDefinition.write']}, component: ObservationDefinitionEditComponent},
+  {path: ':id/edit', data: {privilege: ['*.ObservationDefinition.write']}, component: ObservationDefinitionEditComponent},
   {path: ':id/view', component: ObservationDefinitionViewComponent},
 ];
 

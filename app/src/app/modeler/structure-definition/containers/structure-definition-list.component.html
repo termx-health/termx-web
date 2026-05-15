@@ -13,7 +13,7 @@
         ></m-input>
       }
 
-      <m-dropdown *twPrivileged="'*.StructureDefinition.edit'">
+      <m-dropdown *twPrivileged="'*.StructureDefinition.write'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.structure-definition.list.add-structure-definition' | translate}}
         </tw-add-button>
@@ -73,7 +73,7 @@
       <th>{{'entities.structure-definition.url' | translate}}</th>
       <th>{{'entities.structure-definition.content-type' | translate}}</th>
       <th>{{'entities.structure-definition.status' | translate}}</th>
-      <th *twPrivileged="'*.StructureDefinition.edit'" class="tw-table-actions"></th>
+      <th *twPrivileged="'*.StructureDefinition.write'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let def">
@@ -90,7 +90,7 @@
       <td>{{def.url}}</td>
       <td>{{def.contentType}}</td>
       <td><tw-status-tag [status]="def.status"/></td>
-      <td *twPrivileged="'*.StructureDefinition.edit'" class="tw-table-actions">
+      <td *twPrivileged="'*.StructureDefinition.write'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item [href]="fhirUrl(def.id)" target="_blank" rel="noopener">
             <m-icon [mCode]="'link'"/>&nbsp; {{'web.structure-definition.list.open-fhir' | translate}}

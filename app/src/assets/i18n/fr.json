@@ -474,12 +474,12 @@
       "resources": "Resources"
     },
     "privilege-resource": {
-      "edit": "Modifier",
-      "publish": "Publish",
+      "write": "Modifier",
+      "maintain": "Publish",
       "resource-id": "Resource",
       "triage": "Triage",
       "type": "Type",
-      "view": "View"
+      "read": "View"
     },
     "provenance": {
       "activity": "Activity",
@@ -1882,10 +1882,10 @@
       "resources": {
         "modal": {
           "actions": {
-            "edit": "Modifier",
-            "publish": "Publish",
+            "write": "Modifier",
+            "maintain": "Publish",
             "triage": "Triage",
-            "view": "View"
+            "read": "View"
           },
           "add-header": "Add resource",
           "edit-header": "Edit resource",

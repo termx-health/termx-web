@@ -151,7 +151,7 @@
               <div>{{a.fileName}}</div>
             </div>
             <m-icon-button
-              *twPrivileged="'*.Wiki.edit'"
+              *twPrivileged="'*.Wiki.write'"
               [mIcon]="a['_deleting'] ? 'loading' : 'delete'"
               (mClick)="$event.preventDefault(); $event.stopPropagation(); deleteAttachment(a)"
             ></m-icon-button>
@@ -161,7 +161,7 @@
     </m-list>
 
 
-    <div *twPrivileged="'*.Wiki.edit'" style="margin-top: var(--gap-default)">
+    <div *twPrivileged="'*.Wiki.write'" style="margin-top: var(--gap-default)">
       <input #fui id="file" type="file" class="upload-input" accept="image/*" (change)="uploadAttachment($event, fui)" [disabled]="loader.state['fileUpload']"/>
       <label for="file">
         @if (loader.state['fileUpload']) {

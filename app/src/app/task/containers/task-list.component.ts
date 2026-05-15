@@ -72,7 +72,7 @@ export class TaskListComponent implements OnInit {
   }
 
   private loadUsers(): void {
-    if (this.auth.hasPrivilege("*.Users.view")) {
+    if (this.auth.hasPrivilege("*.Users.read")) {
       this.loader.wrap('user-list', this.userService.loadAll()).subscribe(users => this.users = users);
     }
   }

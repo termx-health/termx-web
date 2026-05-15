@@ -33,7 +33,7 @@ export class ServerSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.canEdit = this.authService.hasPrivilege(id + '.Space.edit');
+    this.canEdit = this.authService.hasPrivilege(id + '.Space.write');
     this.loader.wrap('load', this.serverService.load(Number(id)))
       .subscribe(ts => this.server = ts);
   }

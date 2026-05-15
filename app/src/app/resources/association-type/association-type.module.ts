@@ -8,8 +8,8 @@ import {AssociationTypeService} from 'term-web/resources/association-type/servic
 
 export const ASSOCIATION_TYPE_ROUTES: Routes = [
   {path: '', component: AssociationTypeListComponent},
-  {path: 'add', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.edit']}},
-  {path: ':code/edit', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.edit']}},
+  {path: 'add', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.write']}},
+  {path: ':code/edit', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.write']}},
   {path: ':code/view', component: AssociationTypeViewComponent},
 ];
 

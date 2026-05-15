@@ -72,7 +72,7 @@
 
 
 <ng-template #successNotificationContent>
-  @if ('*.CodeSystem.edit' | twHasAnyPrivilege) {
+  @if ('*.CodeSystem.write' | twHasAnyPrivilege) {
     <a (click)="openCodeSystem( 'edit')">{{'web.integration.loinc-import.loinc' | translate}}</a>
   } @else {
     <a (click)="openCodeSystem('view')">{{'web.integration.loinc-import.loinc' | translate}}</a>

@@ -4,6 +4,6 @@
     <tw-code-system-concepts-list
       [codeSystem]="codeSystem"
       [versions]="versions"
-    [viewMode]="!(codeSystem.id + '.CodeSystem.edit' | twPrivileged)"></tw-code-system-concepts-list>
+    [viewMode]="!(codeSystem.id + '.CodeSystem.write' | twPrivileged)"></tw-code-system-concepts-list>
   }
 </m-page>

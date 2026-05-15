@@ -27,19 +27,19 @@ import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from 'term-web/wiki/wiki.module';
 const APP_ROUTES: Routes = [
   {path: 'landing', component: LandingPageComponent},
   {path: 'resources', children: RESOURCES_ROUTES},
-  {path: 'resources/implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
-  {path: 'global-search', children: GLOBAL_SEARCH_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
-  {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
-  {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}},
+  {path: 'resources/implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.read']}},
+  {path: 'global-search', children: GLOBAL_SEARCH_ROUTES, data: {privilege: ['*.CodeSystem.read', '*.ValueSet.read', '*.MapSet.read']}},
+  {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.read', '*.ValueSet.read', '*.MapSet.read']}},
+  {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.read']}},
   {path: 'terminology-service-api', children: TERMINOLOGY_SERVICE_API_ROUTES},
   {path: 'sequences', children: SEQUENCE_ROUTES},
-  {path: 'wiki', children: WIKI_ROUTES, data: {privilege: ['*.Wiki.view']}},
-  {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.view']}},
-  {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.view', '*.TransformationDefinition.view']}},
-  {path: 'ucum', children: UCUM_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
-  {path: 'servers', children: SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
-  {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
-  {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
+  {path: 'wiki', children: WIKI_ROUTES, data: {privilege: ['*.Wiki.read']}},
+  {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.read']}},
+  {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.read', '*.TransformationDefinition.read']}},
+  {path: 'ucum', children: UCUM_ROUTES, data: {privilege: ['ucum.CodeSystem.read']}},
+  {path: 'servers', children: SERVER_ROUTES, data: {privilege: ['*.Space.read']}},
+  {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.read']}},
+  {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.read']}},
   {path: 'fhir', children: FHIR_ROUTES},
   {path: '', children: SYS_ROUTES},
   {
@@ -48,9 +48,9 @@ const APP_ROUTES: Routes = [
       {path: '', children: SPACE_ROUTES},
       {path: 'context', component: SpaceContextComponent, children: SPACE_CTX_ROUTES}
     ],
-    data: {privilege: ['*.Space.view']}
+    data: {privilege: ['*.Space.read']}
   },
-  {path: 'ecosystems', children: ECOSYSTEM_ROUTES, data: {privilege: ['*.Space.view']}, providers: [EcosystemService, ServerLibService]},
+  {path: 'ecosystems', children: ECOSYSTEM_ROUTES, data: {privilege: ['*.Space.read']}, providers: [EcosystemService, ServerLibService]},
   {path: 'info', loadComponent: () => import('./core/info/info.component')}
 ];
 

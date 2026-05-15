@@ -126,10 +126,10 @@ export class AuthService {
     return userPrivileges.some(userPrivilege => {
       let upParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege).splice(1, 3);  //userPrivilege.split('.');
       let apParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege).splice(1, 3);  //authPrivilege.split('.');
-      if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.view'
+      if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.read'
         apParts = ['*'].concat(apParts);
       }
-      if (upParts.length === 2 && upParts[0] === '*') { // handle special case like '*.view'
+      if (upParts.length === 2 && upParts[0] === '*') { // handle special case like '*.read'
         upParts = ['*'].concat(upParts);
       }
 

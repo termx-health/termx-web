@@ -54,7 +54,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.valueSetService.loadProvenances(this.version.valueSet, this.version.version))
         .subscribe(resp => this.provenances = resp);
-      if (this.authService.hasPrivilege('*.Space.view')) {
+      if (this.authService.hasPrivilege('*.Space.read')) {
         this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
           this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
             && (Object.keys(s.integration.github.dirs || {}).some(d => ['valueset-fhir-json', 'valueset-fhir-fsh'].includes(d)))
@@ -128,7 +128,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   }
 
   protected loadRelease(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.releaseService.search({resource: ['ValueSet', this.version.valueSet, this.version.version].join('|')}).subscribe(r => {
         this.releases = r.data;
       });

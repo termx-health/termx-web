@@ -97,7 +97,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
       this.loadData();
       this.loadSummary(cs.id, version?.version);
     });
-    this.viewMode = !(this.auth.hasPrivilege(id + '.CodeSystem.edit'));
+    this.viewMode = !(this.auth.hasPrivilege(id + '.CodeSystem.write'));
   }
 
   protected loadData(): void {

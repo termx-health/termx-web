@@ -492,12 +492,12 @@
       "resources": "Zdroje"
     },
     "privilege-resource": {
-      "edit": "Upravit",
-      "publish": "Publikovat",
+      "write": "Upravit",
+      "maintain": "Publikovat",
       "resource-id": "Zdroj",
       "triage": "Triáž",
       "type": "Typ",
-      "view": "Zobrazit"
+      "read": "Zobrazit"
     },
     "provenance": {
       "activity": "Aktivita",
@@ -1978,10 +1978,10 @@
       "resources": {
         "modal": {
           "actions": {
-            "edit": "Upravit",
-            "publish": "Publikovat",
+            "write": "Upravit",
+            "maintain": "Publikovat",
             "triage": "Triáž",
-            "view": "Zobrazit"
+            "read": "Zobrazit"
           },
           "add-header": "Přidat zdroj",
           "edit-header": "Upravit zdroj",

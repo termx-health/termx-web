@@ -31,7 +31,7 @@
       </m-card>
 
       <!-- Tasks -->
-      <m-card *twPrivileged="'*.Task.view'">
+      <m-card *twPrivileged="'*.Task.read'">
         <div *m-card-header class="m-justify-between">
           <div class="m-items-middle">
             @if (!showOnlyOpenedTasks) {
@@ -54,7 +54,7 @@
           </div>
           <m-button mDisplay="text"
             (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: '' + structureDefinition?.id}})"
-            *twPrivileged="'*.Task.edit'">
+            *twPrivileged="'*.Task.write'">
             <m-icon mCode="plus"/>&nbsp; {{'web.structure-definition.summary.add-task' | translate}}
           </m-button>
         </div>

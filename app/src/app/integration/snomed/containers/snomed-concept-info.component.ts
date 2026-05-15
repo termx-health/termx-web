@@ -103,10 +103,10 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public loadKtsReferences(): void {
     this.loader.wrap('modules', this.info.modules()).subscribe(modules => {
       this.loader.wrap('kts-references', forkJoin([
-        this.authService.hasPrivilege('*.ValueSet.view') ? this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}) : of({data: []}),
-        this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
-        this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
-        this.authService.hasPrivilege('*.Page.view') && modules.includes('wiki') ? this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100}) : of({data: []})]
+        this.authService.hasPrivilege('*.ValueSet.read') ? this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.MapSet.read') ? this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.MapSet.read') ? this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.Page.read') && modules.includes('wiki') ? this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100}) : of({data: []})]
       )).subscribe(([vs, ms1, ms2, p]) => {
         const lang = this.translateService.currentLang;
         this.ktsReferences = [
@@ -121,11 +121,11 @@ export class SnomedConceptInfoComponent implements OnChanges {
 
   public openReference(type: string, id: any): void {
     if (type === 'Value set') {
-      const canEdit = this.authService.hasPrivilege(id + '.ValueSet.edit');
+      const canEdit = this.authService.hasPrivilege(id + '.ValueSet.write');
       this.router.navigate(['/resources/value-sets', id, canEdit ? 'edit' : 'view']);
     }
     if (type === 'Map set') {
-      const canEdit = this.authService.hasPrivilege(id + '.MapSet.edit');
+      const canEdit = this.authService.hasPrivilege(id + '.MapSet.write');
       this.router.navigate(['/resources/map-sets', id, canEdit ? 'edit' : 'view']);
     }
     if (type === 'Page') {

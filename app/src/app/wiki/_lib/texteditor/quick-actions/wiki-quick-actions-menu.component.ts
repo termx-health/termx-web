@@ -33,8 +33,8 @@ import { WikiQuickActionsTemplateComponent } from 'term-web/wiki/_lib/texteditor
     
     <!-- WikiQuickActionsBaseComponent -->
     <tw-wiki-link-action/>
-    <tw-wiki-structure-definition-action *twPrivileged="'*.StructureDefinition.view'"/>
-    <tw-wiki-template-action *twPrivileged="'*.Wiki.view'" [lang]="lang"/>
+    <tw-wiki-structure-definition-action *twPrivileged="'*.StructureDefinition.read'"/>
+    <tw-wiki-template-action *twPrivileged="'*.Wiki.read'" [lang]="lang"/>
     `,
     styles: [`
     .dropdown-options-container {

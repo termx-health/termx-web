@@ -10,8 +10,8 @@ import {NamingSystemService} from 'term-web/resources/naming-system/services/nam
 
 export const NAMING_SYSTEM_ROUTES: Routes = [
   {path: '', component: NamingSystemListComponent},
-  {path: 'add', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.edit']}},
-  {path: ':id/edit', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.edit']}},
+  {path: 'add', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.write']}},
+  {path: ':id/edit', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.write']}},
   {path: ':id/view', component: NamingSystemViewComponent},
 ];
 

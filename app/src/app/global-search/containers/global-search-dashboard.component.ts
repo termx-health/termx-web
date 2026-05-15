@@ -112,7 +112,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.conceptParams.textContains = text;
     this.conceptParams.codeSystem = this.filter.codeSystems?.join(',') || undefined;
     Object.assign(this.conceptParams, ConceptSupplementUtil.forSearchScope(this.filter.codeSystems, this.translateService.currentLang));
-    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of(SearchResult.empty())
+    return !this.authService.hasAnyPrivilege(['*.CodeSystem.read']) ? of(SearchResult.empty())
       : this.codeSystemConceptService.search(this.conceptParams).pipe(map(c => c), catchError(() => of(SearchResult.empty())));
   }
 
@@ -128,7 +128,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.ids = this.filter.codeSystems?.join(',') || undefined;
     q.limit = 100;
 
-    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of([])
+    return !this.authService.hasAnyPrivilege(['*.CodeSystem.read']) ? of([])
       : this.codeSystemService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
@@ -139,7 +139,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.publisher = this.filter.publisher;
     q.limit = 100;
 
-    return !this.authService.hasAnyPrivilege(['*.ValueSet.view']) ? of([])
+    return !this.authService.hasAnyPrivilege(['*.ValueSet.read']) ? of([])
       : this.valueSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
@@ -150,7 +150,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.publisher = this.filter.publisher;
     q.limit = 100;
 
-    return !this.authService.hasAnyPrivilege(['*.MapSet.view']) ? of([])
+    return !this.authService.hasAnyPrivilege(['*.MapSet.read']) ? of([])
       : this.mapSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
@@ -162,7 +162,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.term = text;
     q.limit = 100;
 
-    return !this.authService.hasAnyPrivilege(['snomed-ct.CodeSystem.view']) ? of([])
+    return !this.authService.hasAnyPrivilege(['snomed-ct.CodeSystem.read']) ? of([])
       : this.snomedService.findConcepts(q).pipe(map(cs => cs.items), catchError(() => of([])));
   }
 

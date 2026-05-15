@@ -32,12 +32,12 @@ import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {ImplementationGuideLibModule} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
-const EDIT = {privilege: ['{id}.ImplementationGuide.edit']};
-const VIEW = {privilege: ['{id}.ImplementationGuide.view']};
+const EDIT = {privilege: ['{id}.ImplementationGuide.write']};
+const VIEW = {privilege: ['{id}.ImplementationGuide.read']};
 
 export const IG_ROUTES: Routes = [
   {path: '', component: ImplementationGuideListComponent},
-  {path: 'add', component: ImplementationGuideEditComponent, data: {privilege: ['*.ImplementationGuide.edit']}},
+  {path: 'add', component: ImplementationGuideEditComponent, data: {privilege: ['*.ImplementationGuide.write']}},
   {path: ':id/edit', component: ImplementationGuideEditComponent, data: EDIT},
   {path: ':id/summary', component: ImplementationGuideSummaryComponent, data: VIEW},
   {path: ':id/provenances', component: ImplementationGuideProvenancesComponent, data: VIEW},

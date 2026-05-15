@@ -35,7 +35,7 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadUsers(): void {
-    if (!this.auth.hasPrivilege('*.Users.view')) {
+    if (!this.auth.hasPrivilege('*.Users.read')) {
       return;
     }
     const req$ = this.userService.loadAll({

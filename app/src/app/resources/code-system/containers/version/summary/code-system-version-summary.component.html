@@ -48,7 +48,7 @@
           <m-button mDisplay="text"
               (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version',
               context: {resourceId: codeSystem?.id, resourceVersionId: codeSystemVersion?.id, resourceVersionVersion: codeSystemVersion?.version}})"
-            *twPrivileged="'*.Task.edit'">
+            *twPrivileged="'*.Task.write'">
             <m-icon mCode="plus"/>&nbsp; {{'web.code-system-version.summary.add-task' | translate}}
           </m-button>
         </div>

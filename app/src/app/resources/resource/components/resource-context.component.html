@@ -57,7 +57,7 @@
                 </a>
               }
               @if (resourceType === 'CodeSystem') {
-                @if ('*.Checklist.view' | twPrivileged) {
+                @if ('*.Checklist.read' | twPrivileged) {
                   <a class="submenu__item" [routerLink]="navigate('checklists')" routerLinkActive="active">
                     <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
                   </a>

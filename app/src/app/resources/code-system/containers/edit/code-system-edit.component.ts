@@ -65,7 +65,7 @@ export class CodeSystemEditComponent implements OnInit {
 
      if (isDefined(id)) {
        this.mode = 'edit';
-       this.canEdit = this.authService.hasPrivilege(id + '.CodeSystem.edit');
+       this.canEdit = this.authService.hasPrivilege(id + '.CodeSystem.write');
        this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
        this.codeSystemService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
      }

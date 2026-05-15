@@ -32,10 +32,10 @@
       ></m-input>
 
       <div class="m-items-middle">
-        <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
+        <tw-add-button *twPrivileged="'*.ObservationDefinition.write'" [routerLink]="['add']">
           {{'web.observation-definition.header-add' | translate}}
         </tw-add-button>
-        <m-button *twPrivileged="'*.ObservationDefinition.edit'" (mClick)="importData.visible = true">
+        <m-button *twPrivileged="'*.ObservationDefinition.write'" (mClick)="importData.visible = true">
           {{'web.observation-definition.import-from-loinc' | translate}}
         </m-button>
 
@@ -90,7 +90,7 @@
       </tr>
 
       <tr *mTableRow="let obs;let i = index">
-        <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']" style="white-space: nowrap">{{obs.code}}</a></td>
+        <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.write' | twHasAnyPrivilege)? 'edit': 'view']" style="white-space: nowrap">{{obs.code}}</a></td>
         <td>
           <div style="display:grid">
             <label>{{obs.names | localName}}</label>

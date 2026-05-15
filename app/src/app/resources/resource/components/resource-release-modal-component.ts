@@ -34,7 +34,7 @@ export class ResourceReleaseModalComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public ngOnInit(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.loader.wrap('load', this.releaseService.search({status: 'draft', limit: 10_000})).subscribe(r => {
         this.releases = r.data;
       });

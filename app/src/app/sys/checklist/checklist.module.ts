@@ -12,9 +12,9 @@ import {ChecklistService} from 'term-web/sys/checklist/services/checklist.servic
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const CHECKLIST_ROUTES: Routes = [
-  {path: '', data: {privilege: ['*.Checklist.view']}, component: ChecklistRuleListComponent},
-  {path: 'add', data: {privilege: ['*.Checklist.edit']}, component: ChecklistRuleEditComponent},
-  {path: ':id/edit', data: {privilege: ['{id}.Checklist.edit']}, component: ChecklistRuleEditComponent},
+  {path: '', data: {privilege: ['*.Checklist.read']}, component: ChecklistRuleListComponent},
+  {path: 'add', data: {privilege: ['*.Checklist.write']}, component: ChecklistRuleEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Checklist.write']}, component: ChecklistRuleEditComponent},
 ];
 
 @NgModule({

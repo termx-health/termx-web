@@ -141,7 +141,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   }
 
   protected loadRelease(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.releaseService.search({resource: ['MapSet', this.version.mapSet, this.version.version].join('|')}).subscribe(r => {
         this.releases = r.data;
       });

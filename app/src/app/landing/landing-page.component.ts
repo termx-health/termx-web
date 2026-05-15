@@ -74,9 +74,9 @@ export class LandingPageComponent {
     const mapSets$ = this.mapSetService.search({limit: 0});
 
     this.loader.wrap('resources', forkJoin([
-      this.withPrivilege(codeSystems$, "*.CodeSystem.view", 'terminology'),
-      this.withPrivilege(valueSets$, "*.ValueSet.view", 'terminology'),
-      this.withPrivilege(mapSets$, "*.MapSet.view", 'terminology'),
+      this.withPrivilege(codeSystems$, "*.CodeSystem.read", 'terminology'),
+      this.withPrivilege(valueSets$, "*.ValueSet.read", 'terminology'),
+      this.withPrivilege(mapSets$, "*.MapSet.read", 'terminology'),
     ])).subscribe(([cs, vs, ms]) => {
       this.data.codeSystemCount = cs.meta.total;
       this.data.valueSetCount = vs.meta.total;
@@ -90,9 +90,9 @@ export class LandingPageComponent {
     const tasksOpen$ = this.taskService.searchTasks({limit: 0, statusesNe: 'cancelled,completed,error,rejected'});
 
     this.loader.wrap('summary', forkJoin([
-      this.withPrivilege(spaces$, '*.Space.view', 'core'),
-      this.withPrivilege(pages$, '*.Wiki.view', 'wiki'),
-      this.withPrivilege(tasksOpen$, '*.Task.view', 'task')
+      this.withPrivilege(spaces$, '*.Space.read', 'core'),
+      this.withPrivilege(pages$, '*.Wiki.read', 'wiki'),
+      this.withPrivilege(tasksOpen$, '*.Task.read', 'task')
     ])).subscribe(([spaces, pages, tasks]) => {
       this.data.spacesCount = spaces.meta.total;
       this.data.pagesCount = pages.meta.total;
@@ -108,9 +108,9 @@ export class LandingPageComponent {
     const tasksAssignedToUser$ = this.taskService.searchTasks({assignees: user});
 
     this.loader.wrap('task', forkJoin([
-      this.withPrivilege(tasks$, '*.Task.view', 'task'),
-      this.withPrivilege(tasksCreatedByUser$, '*.Task.view', 'task'),
-      this.withPrivilege(tasksAssignedToUser$, '*.Task.view', 'task'),
+      this.withPrivilege(tasks$, '*.Task.read', 'task'),
+      this.withPrivilege(tasksCreatedByUser$, '*.Task.read', 'task'),
+      this.withPrivilege(tasksAssignedToUser$, '*.Task.read', 'task'),
     ])).subscribe(([tasks, created, assigned]) => {
       this.data.tasksCount = tasks.meta.total;
       this.data.tasksCreated = created;
@@ -123,6 +123,6 @@ export class LandingPageComponent {
   }
 
   protected taskRoute = (task: Task): any[] => {
-    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
+    return this.authService.hasPrivilege('*.Task.write') ? ['/tasks', task.number, 'edit'] : [];
   };
 }

@@ -539,12 +539,12 @@
 			"resources": "Resources"
 		},
 		"privilege-resource": {
-			"edit": "Edit",
-			"publish": "Publish",
+			"write": "Edit",
+			"maintain": "Publish",
 			"resource-id": "Resource",
 			"triage": "Triage",
 			"type": "Type",
-			"view": "View"
+			"read": "View"
 		},
 		"provenance": {
 			"activity": "Activity",
@@ -2024,10 +2024,10 @@
 			"resources": {
 				"modal": {
 					"actions": {
-						"edit": "Edit",
-						"publish": "Publish",
+						"write": "Edit",
+						"maintain": "Publish",
 						"triage": "Triage",
-						"view": "View"
+						"read": "View"
 					},
 					"add-header": "Add resource",
 					"edit-header": "Edit resource",

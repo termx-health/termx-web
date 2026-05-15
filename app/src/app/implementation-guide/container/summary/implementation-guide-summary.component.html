@@ -15,7 +15,7 @@
       <!-- Versions -->
       <m-card>
         <m-title *m-card-header mTitle="entities.implementation-guide-version.multiple">
-          <div mControls *twPrivileged="ig?.id + '.ImplementationGuide.edit'">
+          <div mControls *twPrivileged="ig?.id + '.ImplementationGuide.write'">
             <m-button mDisplay="text" [routerLink]="['/resources/implementation-guides', ig?.id, 'versions', 'add']">
               {{'web.implementation-guide.summary.add-version' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>

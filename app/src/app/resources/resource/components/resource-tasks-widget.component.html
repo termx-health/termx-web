@@ -6,7 +6,7 @@
 @if (tasks?.length > 0 && !loader.isLoading) {
   <m-list mSeparated>
     @for (task of tasks| filter:filterTask:taskFilters; track task) {
-      <m-list-item [mClickable]="'*.Task.edit' | twPrivileged" (mClick)="openTask(task.number)">
+      <m-list-item [mClickable]="'*.Task.write' | twPrivileged" (mClick)="openTask(task.number)">
         @switch (displayType) {
           @case ('full') {
             <div class="m-justify-between">

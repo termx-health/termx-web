@@ -37,11 +37,11 @@ export class EcosystemEditComponent implements OnInit {
       const id = paramMap.get('id');
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.canEdit = this.authService.hasPrivilege(id + '.Space.edit');
+        this.canEdit = this.authService.hasPrivilege(id + '.Space.write');
         this.loader.wrap('load', this.ecosystemService.load(Number(id)))
           .subscribe(e => this.ecosystem = e);
       } else {
-        this.canEdit = this.authService.hasPrivilege('*.Space.edit');
+        this.canEdit = this.authService.hasPrivilege('*.Space.write');
         this.ecosystem = new Ecosystem();
         this.ecosystem.active = true;
         this.ecosystem.formatVersion = '1';

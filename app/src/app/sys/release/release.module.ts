@@ -17,12 +17,12 @@ import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
 export const RELEASE_ROUTES: Routes = [
-  {path: '', data: {privilege: ['*.Release.view']}, component: ReleaseListComponent},
-  {path: 'add', data: {privilege: ['*.Release.edit']}, component: ReleaseEditComponent},
-  {path: ':id/edit', data: {privilege: ['{id}.Release.edit']}, component: ReleaseEditComponent},
-  {path: ':id/summary', data: {privilege: ['{id}.Release.view']}, component: ReleaseSummaryComponent},
-  {path: ':id/provenances', data: {privilege: ['{id}.Release.view']}, component: ReleaseProvenancesComponent},
-  {path: ':id/diff', data: {privilege: ['{id}.Release.view']}, component: ReleaseResourceDiffComponent},
+  {path: '', data: {privilege: ['*.Release.read']}, component: ReleaseListComponent},
+  {path: 'add', data: {privilege: ['*.Release.write']}, component: ReleaseEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Release.write']}, component: ReleaseEditComponent},
+  {path: ':id/summary', data: {privilege: ['{id}.Release.read']}, component: ReleaseSummaryComponent},
+  {path: ':id/provenances', data: {privilege: ['{id}.Release.read']}, component: ReleaseProvenancesComponent},
+  {path: ':id/diff', data: {privilege: ['{id}.Release.read']}, component: ReleaseResourceDiffComponent},
 ];
 
 @NgModule({

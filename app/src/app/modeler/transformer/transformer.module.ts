@@ -12,8 +12,8 @@ import {ModelerLibModule} from 'term-web/modeler/_lib';
 
 export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   {path: 'transformation-definitions', component: TransformationDefinitionListComponent},
-  {path: 'transformation-definitions/add', data: {privilege: ['*.TransformationDefinition.edit']}, component: TransformationDefinitionEditComponent},
-  {path: 'transformation-definitions/:id/edit', data: {privilege: ['{id}.TransformationDefinition.view']}, component: TransformationDefinitionEditComponent},
+  {path: 'transformation-definitions/add', data: {privilege: ['*.TransformationDefinition.write']}, component: TransformationDefinitionEditComponent},
+  {path: 'transformation-definitions/:id/edit', data: {privilege: ['{id}.TransformationDefinition.read']}, component: TransformationDefinitionEditComponent},
 ];
 
 @NgModule({

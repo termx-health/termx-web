@@ -6,7 +6,7 @@
           <div *m-card-header class="m-justify-between">
             <m-title>{{'web.snomed.codesystem.form.header' | translate: {name: snomedCodeSystem.shortName} }}</m-title>
             <m-dropdown>
-              <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <ng-container *twPrivileged="'snomed-ct.CodeSystem.write'">
                 <a *m-dropdown-item (mClick)="importModalData.visible = true">
                   {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
                 </a>
@@ -14,12 +14,12 @@
               <a *m-dropdown-item (mClick)="exportModalData.visible = true">
                 {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
               </a>
-              <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <ng-container *twPrivileged="'snomed-ct.CodeSystem.write'">
                 <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">
                   {{'web.snomed.codesystem.form.upgrade' | translate}}
                 </a>
               </ng-container>
-              <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <ng-container *twPrivileged="'snomed-ct.CodeSystem.write'">
                 <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteCodeSystem()">
                   {{'core.btn.delete' | translate}}
                 </a>

@@ -17,8 +17,8 @@ export const WIKI_ROUTES: Routes = [
 
 export const WIKI_MANAGEMENT_ROUTES: Routes = [
   {path: 'templates', component: TemplateListComponent},
-  {path: 'templates/add', component: TemplateEditComponent, data: {privilege: ['*.Wiki.edit']}},
-  {path: 'templates/:id/edit', component: TemplateEditComponent, data: {privilege: ['*.Wiki.edit']}}
+  {path: 'templates/add', component: TemplateEditComponent, data: {privilege: ['*.Wiki.write']}},
+  {path: 'templates/:id/edit', component: TemplateEditComponent, data: {privilege: ['*.Wiki.write']}}
 ];
 
 @NgModule({

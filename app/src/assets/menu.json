@@ -34,9 +34,9 @@
                 },
                 "link": "global-search",
                 "privileges": [
-                    "*.CodeSystem.view",
-                    "*.ValueSet.view",
-                    "*.MapSet.view"
+                    "*.CodeSystem.read",
+                    "*.ValueSet.read",
+                    "*.MapSet.read"
                 ]
             }
         ]
@@ -52,11 +52,11 @@
             "cs": "Terminologie"
         },
         "privileges": [
-            "*.CodeSystem.view",
-            "*.ValueSet.view",
-            "*.MapSet.view",
-            "*.NamingSystem.view",
-            "*.AssociationType.view"
+            "*.CodeSystem.read",
+            "*.ValueSet.read",
+            "*.MapSet.read",
+            "*.NamingSystem.read",
+            "*.AssociationType.read"
         ],
         "items": [
             {
@@ -71,7 +71,7 @@
                 },
                 "link": "resources/code-systems",
                 "privileges": [
-                    "*.CodeSystem.view"
+                    "*.CodeSystem.read"
                 ]
             },
             {
@@ -86,7 +86,7 @@
                 },
                 "link": "resources/value-sets",
                 "privileges": [
-                    "*.ValueSet.view"
+                    "*.ValueSet.read"
                 ]
             },
             {
@@ -101,7 +101,7 @@
                 },
                 "link": "resources/map-sets",
                 "privileges": [
-                    "*.MapSet.view"
+                    "*.MapSet.read"
                 ]
             },
             {
@@ -116,7 +116,7 @@
                 },
                 "link": "resources/naming-systems",
                 "privileges": [
-                    "*.NamingSystem.view"
+                    "*.NamingSystem.read"
                 ]
             },
             {
@@ -131,7 +131,7 @@
                 },
                 "link": "resources/association-types",
                 "privileges": [
-                    "*.AssociationType.view"
+                    "*.AssociationType.read"
                 ]
             },
             {
@@ -146,7 +146,7 @@
                 },
                 "link": "resources/defined-properties",
                 "privileges": [
-                    "*.DefinedProperty.view"
+                    "*.DefinedProperty.read"
                 ]
             },
             {
@@ -162,9 +162,9 @@
                 "icon": "interaction",
                 "link": "integration/dashboard",
                 "privileges": [
-                    "*.CodeSystem.view",
-                    "*.ValueSet.view",
-                    "*.MapSet.view"
+                    "*.CodeSystem.read",
+                    "*.ValueSet.read",
+                    "*.MapSet.read"
                 ]
             }
         ]
@@ -180,9 +180,9 @@
             "cs": "Externí zdroje"
         },
         "privileges": [
-            "snomed-ct.CodeSystem.view",
-            "loinc.CodeSystem.view",
-            "ucum.CodeSystem.view"
+            "snomed-ct.CodeSystem.read",
+            "loinc.CodeSystem.read",
+            "ucum.CodeSystem.read"
         ],
         "items": [
             {
@@ -197,7 +197,7 @@
                 },
                 "link": "integration/snomed/dashboard",
                 "privileges": [
-                    "snomed-ct.CodeSystem.view"
+                    "snomed-ct.CodeSystem.read"
                 ]
             },
             {
@@ -212,7 +212,7 @@
                 },
                 "link": "integration/snomed/management",
                 "privileges": [
-                    "snomed-ct.CodeSystem.view"
+                    "snomed-ct.CodeSystem.read"
                 ]
             },
             {
@@ -227,7 +227,7 @@
                 },
                 "link": "integration/loinc",
                 "privileges": [
-                    "loinc.CodeSystem.view"
+                    "loinc.CodeSystem.read"
                 ]
             },
             {
@@ -242,7 +242,7 @@
                 },
                 "link": "measurement-units",
                 "privileges": [
-                    "ucum.CodeSystem.view"
+                    "ucum.CodeSystem.read"
                 ]
             },
             {
@@ -257,7 +257,7 @@
                 },
                 "link": "ucum",
                 "privileges": [
-                    "ucum.CodeSystem.view"
+                    "ucum.CodeSystem.read"
                 ]
             },
             {
@@ -272,7 +272,7 @@
                 },
                 "link": "observation-definitions",
                 "privileges": [
-                    "*.ObservationDefinition.view"
+                    "*.ObservationDefinition.read"
                 ]
             }
         ]
@@ -288,7 +288,7 @@
             "cs": "Wiki"
         },
         "privileges": [
-            "*.Wiki.view"
+            "*.Wiki.read"
         ],
         "items": [
             {
@@ -303,7 +303,7 @@
                 },
                 "link": "wiki",
                 "privileges": [
-                    "*.Wiki.view"
+                    "*.Wiki.read"
                 ]
             },
             {
@@ -318,7 +318,7 @@
                 },
                 "link": "wiki-management/templates",
                 "privileges": [
-                    "*.Wiki.view"
+                    "*.Wiki.read"
                 ]
             }
         ]
@@ -334,11 +334,11 @@
             "cs": "Modeler"
         },
         "privileges": [
-            "*.StructureDefinition.view",
-            "*.TransformationDefinition.view",
-            "*.CodeSystem.view",
-            "*.ValueSet.view",
-            "*.MapSet.view"
+            "*.StructureDefinition.read",
+            "*.TransformationDefinition.read",
+            "*.CodeSystem.read",
+            "*.ValueSet.read",
+            "*.MapSet.read"
         ],
         "items": [
             {
@@ -353,7 +353,7 @@
                 },
                 "link": "modeler/structure-definitions",
                 "privileges": [
-                    "*.StructureDefinition.view"
+                    "*.StructureDefinition.read"
                 ]
             },
             {
@@ -368,7 +368,7 @@
                 },
                 "link": "modeler/transformation-definitions",
                 "privileges": [
-                    "*.TransformationDefinition.view"
+                    "*.TransformationDefinition.read"
                 ]
             },
             {
@@ -378,7 +378,7 @@
                 },
                 "link": "resources/implementation-guides",
                 "privileges": [
-                    "*.ImplementationGuide.view"
+                    "*.ImplementationGuide.read"
                 ]
             }
         ]
@@ -407,7 +407,7 @@
                 "icon": "inbox",
                 "link": "tasks",
                 "privileges": [
-                    "*.Task.view"
+                    "*.Task.read"
                 ]
             },
             {
@@ -423,7 +423,7 @@
                 "icon": "appstore",
                 "link": "spaces",
                 "privileges": [
-                    "*.Space.view"
+                    "*.Space.read"
                 ]
             },
             {
@@ -439,7 +439,7 @@
                 "icon": "cloud-server",
                 "link": "servers",
                 "privileges": [
-                    "*.Server.view"
+                    "*.Server.read"
                 ]
             },
             {
@@ -455,7 +455,7 @@
                 "icon": "cluster",
                 "link": "ecosystems",
                 "privileges": [
-                    "*.Space.view"
+                    "*.Space.read"
                 ]
             },
             {
@@ -471,7 +471,7 @@
                 "icon": "rocket",
                 "link": "releases",
                 "privileges": [
-                    "*.Release.view"
+                    "*.Release.read"
                 ]
             },
             {
@@ -487,7 +487,7 @@
                 "icon": "check-square",
                 "link": "checklists",
                 "privileges": [
-                    "*.Checklist.view"
+                    "*.Checklist.read"
                 ]
             },
             {
@@ -503,7 +503,7 @@
                 "icon": "key",
                 "link": "privileges",
                 "privileges": [
-                    "*.Privilege.view"
+                    "*.Privilege.read"
                 ]
             },
             {
@@ -532,7 +532,7 @@
                 "icon": "field-binary",
                 "link": "sequences",
                 "privileges": [
-                    "*.Sequence.view"
+                    "*.Sequence.read"
                 ]
             }
         ]
