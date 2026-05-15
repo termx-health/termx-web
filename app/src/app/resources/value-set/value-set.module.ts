@@ -29,11 +29,11 @@ import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/cont
 import {ValueSetRuleFormComponent} from 'term-web/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
-const EDIT = {privilege: ['{id}.ValueSet.edit']};
-const VIEW = {privilege: ['{id}.ValueSet.view']};
+const EDIT = {privilege: ['{id}.ValueSet.write']};
+const VIEW = {privilege: ['{id}.ValueSet.read']};
 export const VALUE_SET_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
-  {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.write']}},
   {path: ':id/edit', component: ValueSetEditComponent, data: EDIT},
   {path: ':id/details', component: ValueSetEditComponent, data: VIEW},
   {path: ':id/summary', component: ValueSetSummaryComponent, data: VIEW},

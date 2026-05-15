@@ -167,21 +167,21 @@ export class PrivilegeEditComponent implements OnInit {
     return val ? Number(val) : undefined;
   };
 
-  public onActionToggle(action: 'triage' | 'edit' | 'publish', value: boolean): void {
+  public onActionToggle(action: 'triage' | 'write' | 'maintain', value: boolean): void {
     const actions = this.modalData.resource!.actions!;
     actions[action] = value;
     if (!value) {
       return;
     }
     if (action === 'triage') {
-      actions.view = true;
-    } else if (action === 'edit') {
-      actions.view = true;
+      actions.read = true;
+    } else if (action === 'write') {
+      actions.read = true;
       actions.triage = true;
-    } else if (action === 'publish') {
-      actions.view = true;
+    } else if (action === 'maintain') {
+      actions.read = true;
       actions.triage = true;
-      actions.edit = true;
+      actions.write = true;
     }
   }
 }

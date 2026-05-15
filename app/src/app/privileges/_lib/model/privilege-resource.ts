@@ -7,8 +7,8 @@ export class PrivilegeResource {
 }
 
 export class PrivilegeResourceActions {
-  public view?: boolean;
+  public read?: boolean;
   public triage?: boolean;
-  public edit?: boolean;
-  public publish?: boolean;
+  public write?: boolean;
+  public maintain?: boolean;
 }

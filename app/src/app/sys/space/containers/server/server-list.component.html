@@ -4,18 +4,18 @@
 
     <div class="m-items-middle">
       <m-input name="searchInput" [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
-      <tw-add-button *twPrivileged="'*.Server.edit'" [routerLink]="['./add']">
+      <tw-add-button *twPrivileged="'*.Server.write'" [routerLink]="['./add']">
         {{'web.server.add-btn' | translate}}
       </tw-add-button>
 
-      <m-dropdown *twPrivileged="'*.Server.view'">
+      <m-dropdown *twPrivileged="'*.Server.read'">
         <m-button *m-dropdown-container mDisplay="text">
           <m-icon mCode="more"/>
         </m-button>
         <a *m-dropdown-item (mClick)="exportEcosystem()">
           {{'web.server.export-ecosystem' | translate}}
         </a>
-        <ng-container *twPrivileged="'*.Server.edit'">
+        <ng-container *twPrivileged="'*.Server.write'">
           <a *m-dropdown-item (mClick)="fileInput.click()">
             {{'web.server.import-ecosystem' | translate}}
           </a>

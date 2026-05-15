@@ -110,7 +110,7 @@ mode="concept-edit"></tw-resource-context>
                 <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
               }
             </div>
-            <m-button mDisplay="text" (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
+            <m-button mDisplay="text" (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.write'">
               <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}
             </m-button>
           </div>
@@ -279,7 +279,7 @@ mode="concept-edit"></tw-resource-context>
         <tw-user-select
           name="assignee"
           [(ngModel)]="taskModalData.assignee"
-          [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
+          [anyRole]="[codeSystem.id + '.CodeSystem.write', codeSystem.id + '.CodeSystem.maintain']"
         required></tw-user-select>
       </m-form-item>
       <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">

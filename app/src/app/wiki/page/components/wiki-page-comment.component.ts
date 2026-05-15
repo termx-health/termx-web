@@ -144,7 +144,7 @@ export class WikiPageCommentComponent {
     const isCommentAuthor = this.isCommentAuthor(c);
     const isParentCommentAuthor = isDefined(c.parentId) && this.isCommentAuthor(this.pageComment);
     const isRoot = isNil(c.parentId);
-    const hasPrivileges = this.authService.hasPrivilege(`*.Wiki.edit`);
+    const hasPrivileges = this.authService.hasPrivilege(`*.Wiki.write`);
 
     return {
       resolve: isRoot && status('active') && hasPrivileges,

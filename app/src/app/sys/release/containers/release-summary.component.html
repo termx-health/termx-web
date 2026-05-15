@@ -16,7 +16,7 @@
                   <m-icon mCode="appstore"/>
                 </span>
               </div>
-              <div *twPrivileged="release?.code + '.Release.edit'" [routerLink]="['/releases', release?.id, 'edit']">
+              <div *twPrivileged="release?.code + '.Release.write'" [routerLink]="['/releases', release?.id, 'edit']">
                 <a class="m-items-middle">{{'core.btn.edit' | translate}}
                   <m-icon mCode="form"/>
                 </a>
@@ -35,7 +35,7 @@
           <div style="align-self: flex-end">
             <tw-status-tag [status]="release?.status"></tw-status-tag>
           </div>
-          <div class="m-items-middle" *twPrivileged="release?.id + '.Release.publish'">
+          <div class="m-items-middle" *twPrivileged="release?.id + '.Release.maintain'">
             @if (release?.status !== 'draft') {
               <a (mClick)="changeStatus('draft')">{{'web.release.make-draft' | translate}}</a>
             }
@@ -68,7 +68,7 @@
               <m-icon mCode="plus"></m-icon>&nbsp; {{'web.release.add-resource' | translate}}
             </m-button>
           }
-          @if (release?.status === 'active' && release?.terminologyServer && (release.id + '.Release.publish' | twPrivileged)) {
+          @if (release?.status === 'active' && release?.terminologyServer && (release.id + '.Release.maintain' | twPrivileged)) {
             <m-button
               mDisplay="text"
               (mClick)="serverSync()">
@@ -135,7 +135,7 @@
             }
             @if (release?.status === 'draft') {
               <td>
-                <m-dropdown *twPrivileged="release?.id + '.Release.edit'">
+                <m-dropdown *twPrivileged="release?.id + '.Release.write'">
                   <a *m-dropdown-item (mClick)="modalData = {resource: r, visible: true}">{{'core.btn.edit' | translate}}</a>
                   <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteResource(r.id)">{{'core.btn.delete' | translate}}</a>
                 </m-dropdown>
@@ -224,7 +224,7 @@
             }
           </div>
         </m-card>
-        <m-card *twPrivileged="'*.Task.view'">
+        <m-card *twPrivileged="'*.Task.read'">
           <div *m-card-header class="m-items-middle">
             @if (!showOnlyOpenedTasks) {
               <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">

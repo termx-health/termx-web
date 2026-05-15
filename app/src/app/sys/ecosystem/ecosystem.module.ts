@@ -6,8 +6,8 @@ import {EcosystemService} from './services/ecosystem.service';
 
 export const ECOSYSTEM_ROUTES: Routes = [
   {path: '', component: EcosystemListComponent},
-  {path: 'add', component: EcosystemEditComponent, data: {privilege: ['*.Space.edit']}},
-  {path: ':id/edit', component: EcosystemEditComponent, data: {privilege: ['{id}.Space.edit']}},
+  {path: 'add', component: EcosystemEditComponent, data: {privilege: ['*.Space.write']}},
+  {path: ':id/edit', component: EcosystemEditComponent, data: {privilege: ['{id}.Space.write']}},
 ];
 
 @NgModule({

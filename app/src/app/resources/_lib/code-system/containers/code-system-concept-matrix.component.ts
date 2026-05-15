@@ -32,7 +32,7 @@ class CodeSystemConceptMatrixService {
     concepts: ConceptView[],
     total: number
   }> {
-    if (!id || !this.authService.hasPrivilege(`${id}.CodeSystem.view`)) {
+    if (!id || !this.authService.hasPrivilege(`${id}.CodeSystem.read`)) {
       return of({properties: [], concepts: [], total: 0});
     }
 

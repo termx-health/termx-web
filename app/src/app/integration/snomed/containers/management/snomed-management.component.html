@@ -3,7 +3,7 @@
     <div *m-card-header class="m-justify-between">
       <m-title>{{'web.snomed.branch.list.codesystem.header' | translate}}</m-title>
       <div class="m-items-middle">
-        <tw-add-button *twPrivileged="'snomed-ct.CodeSystem.edit'" (click)="editionModalData.visible = true">
+        <tw-add-button *twPrivileged="'snomed-ct.CodeSystem.write'" (click)="editionModalData.visible = true">
           {{'web.snomed.branch.list.codesystem.add-edition' | translate}}
         </tw-add-button>
       </div>
@@ -80,7 +80,7 @@
     <m-card>
       <div *m-card-header class="m-justify-between">
         <m-title>{{'web.snomed.branch.list.' + type | translate}}</m-title>
-        @if (type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)) {
+        @if (type === 'working' && ('snomed-ct.CodeSystem.write' | twPrivileged)) {
           <div class="m-items-middle">
             <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
               {{'web.snomed.branch.list.add-branch' | translate}}

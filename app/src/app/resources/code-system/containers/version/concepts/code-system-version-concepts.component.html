@@ -3,5 +3,5 @@
   <tw-code-system-concepts-list
     [codeSystem]="codeSystem"
     [version]="codeSystemVersion"
-  [viewMode]="!(codeSystem.id + '.CodeSystem.edit' | twPrivileged)"></tw-code-system-concepts-list>
+  [viewMode]="!(codeSystem.id + '.CodeSystem.write' | twPrivileged)"></tw-code-system-concepts-list>
 }

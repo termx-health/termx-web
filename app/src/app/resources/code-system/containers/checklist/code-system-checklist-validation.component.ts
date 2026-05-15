@@ -118,7 +118,7 @@ export class CodeSystemChecklistValidationComponent implements OnChanges {
 
   public openResource(type: string, id: string): void {
     if (type === 'Concept') {
-      const canEdit = this.authService.hasPrivilege(`${this.codeSystemId}.CodeSystem.edit`);
+      const canEdit = this.authService.hasPrivilege(`${this.codeSystemId}.CodeSystem.write`);
       this.router.navigate(['/resources', 'code-systems', this.codeSystemId, 'concepts', id, canEdit ? 'edit' : 'view']);
     }
   }

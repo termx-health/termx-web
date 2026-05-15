@@ -9,7 +9,7 @@
           <m-button mDisplay="text" (mClick)="checkUsage()">{{'web.snomed.scan-result.check-usage' | translate}}</m-button>
         }
         @if (scan?.uploadCacheId) {
-          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+          <ng-container *twPrivileged="'snomed-ct.CodeSystem.write'">
             <m-button mDisplay="primary" [mLoading]="loader.state['proceed']" [disabled]="proceeding" (mClick)="proceedImport()">
               {{'web.snomed.scan-result.proceed-import' | translate}}
             </m-button>

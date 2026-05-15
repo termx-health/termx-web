@@ -111,7 +111,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
           .filter(u => u.spaceId === this.space.id || u.target.startsWith(`${this.space?.code}/`))
           // include usages where current page is referenced from
           .filter(u => u.target.endsWith(slug))
-          .filter(u => this.authService.hasPrivilege(`${u.spaceId}.Wiki.view`));
+          .filter(u => this.authService.hasPrivilege(`${u.spaceId}.Wiki.read`));
       });
 
       this.pageCommentService.search({

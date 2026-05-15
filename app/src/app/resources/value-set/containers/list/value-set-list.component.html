@@ -15,7 +15,7 @@
       }
 
       <!-- Add/Edit actions -->
-      <m-dropdown *twPrivileged="'*.ValueSet.edit'">
+      <m-dropdown *twPrivileged="'*.ValueSet.write'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.value-set.list.add-value-set' | translate}}
         </tw-add-button>
@@ -101,7 +101,7 @@
           <a *m-dropdown-item (click)="openFhir(vs.id)">
             <m-icon [mCode]="'link'"/>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
           </a>
-          <ng-container *twPrivileged="'*.ValueSet.publish'">
+          <ng-container *twPrivileged="'*.ValueSet.maintain'">
             <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

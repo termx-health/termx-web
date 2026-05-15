@@ -7,10 +7,10 @@
       @if (false) {
         <m-input name="searchInput" [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
       }
-      <tw-add-button *twPrivileged="'*.Space.edit'" [routerLink]="['./add']">
+      <tw-add-button *twPrivileged="'*.Space.write'" [routerLink]="['./add']">
         {{'web.space.add-btn' | translate}}
       </tw-add-button>
-      <m-button mClass="m-justify-between" *twPrivileged="'*.Space.edit'" (mClick)="touchImport()">
+      <m-button mClass="m-justify-between" *twPrivileged="'*.Space.write'" (mClick)="touchImport()">
         <m-icon mCode="import"></m-icon>
         <label>{{'web.space.import-btn' | translate}}</label>
       </m-button>

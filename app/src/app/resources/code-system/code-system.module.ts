@@ -51,11 +51,11 @@ import {CodeSystemVersionDuplicateModalComponent} from 'term-web/resources/code-
 import {CodeSystemVersionEditComponent} from 'term-web/resources/code-system/containers/version/edit/code-system-version-edit.component';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 
-const EDIT = {privilege: ['{id}.CodeSystem.edit']};
-const VIEW = {privilege: ['{id}.CodeSystem.view']};
+const EDIT = {privilege: ['{id}.CodeSystem.write']};
+const VIEW = {privilege: ['{id}.CodeSystem.read']};
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
-  {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.write']}},
   {path: ':id/edit', component: CodeSystemEditComponent, data: EDIT},
   {path: ':id/details', component: CodeSystemEditComponent, data: VIEW},
   {path: ':id/summary', component: CodeSystemSummaryComponent, data: VIEW},
@@ -77,8 +77,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: VIEW},
-  {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.read']}},
+  {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.read']}},
 ];
 
 export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{

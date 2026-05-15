@@ -32,7 +32,7 @@
         <m-card style="max-width: 33%">
           <div *m-card-header class="m-justify-between">
             <label>{{terminologyServers?.[release.terminologyServer]?.names | localName: '...'}}</label>
-          <m-button *twPrivileged="release.id + '.Release.publish'" m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
+          <m-button *twPrivileged="release.id + '.Release.maintain'" m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
               source: ('entities.server.current-installation' | translate),
               target: (terminologyServers?.[release.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync()">
               <div class="m-items-middle"><label>{{'Sync'}}</label>

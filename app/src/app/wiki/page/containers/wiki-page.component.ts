@@ -141,7 +141,7 @@ export class WikiPageComponent implements OnInit {
         if (cs === 'snomed-ct') {
           return ['/integration/snomed/dashboard/', concept];
         } else {
-          if (this.auth.hasAnyPrivilege([cs + '.CodeSystem.edit'])) {
+          if (this.auth.hasAnyPrivilege([cs + '.CodeSystem.write'])) {
             return ['/resources/code-systems/', cs, 'concepts', concept, 'edit'];
           }
           return ['/resources/code-systems/', cs, 'concepts', concept, 'view'];

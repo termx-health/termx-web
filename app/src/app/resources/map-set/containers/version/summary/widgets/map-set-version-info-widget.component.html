@@ -88,7 +88,7 @@
         <span>{{'web.map-set-version.summary.info.last-reviewed' | translate}}:
         {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
         <a (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
+        *twPrivileged="'*.Task.write'">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
       </div>
     }
     @if (mapSet?.settings?.approvalRequired) {
@@ -97,10 +97,10 @@
         <span>{{'web.map-set-version.summary.info.last-approved' | translate}}:
         {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
         <a (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
+        *twPrivileged="'*.Task.write'">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
       </div>
     }
-    <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
+    <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.maintain'">
       <m-icon mCode="tool"></m-icon>
       @if (version.status !== 'draft') {
         <a (mClick)="changeVersionStatus('draft')">{{'web.map-set-version.summary.info.make-draft' | translate}}</a>
@@ -114,7 +114,7 @@
         <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
       }
     </div>
-    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+    <div class="m-items-middle" *twPrivileged="'*.Release.read'">
       <m-icon mCode="rocket"/>
       @if (releases?.length > 0) {
         <div>
@@ -125,11 +125,11 @@
           }
         </div>
       }
-      @if (!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)) {
+      @if (!(releases?.length > 0) && ('*.Release.write' | twPrivileged)) {
         <a (mClick)="releaseModal.toggleModal({resourceId: mapSet?.id, resourceVersion: version?.version, resourceTitle: mapSet?.title})"
         >{{'web.map-set-version.summary.info.add-to-release' | translate}}</a>
       }
-      @if (!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)) {
+      @if (!(releases?.length > 0) && !('*.Release.write' | twPrivileged)) {
         <span>{{'web.map-set-version.summary.info.release-unspecified' | translate}}</span>
       }
     </div>

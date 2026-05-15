@@ -53,7 +53,7 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    if (this.authService.hasPrivilege('*.CodeSystem.edit')) {
+    if (this.authService.hasPrivilege('*.CodeSystem.write')) {
       this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
     } else {
       this.router.navigate(['/resources/code-systems/', cs.id, 'view']);

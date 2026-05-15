@@ -66,7 +66,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   };
 
   public loadTasks(): void {
-    if (this.resourceType === 'Release' && this.authService.hasPrivilege('*.Release.view')) {
+    if (this.resourceType === 'Release' && this.authService.hasPrivilege('*.Release.read')) {
       this.loader.wrap('load', this.releaseService.loadResources(Number(this.resourceId))).subscribe(resources => {
         this.tasks = [];
         resources.forEach(r => this.loader.wrap('load', this.loadResourceTasks(r.resourceId, this.resourceTypeMap[r.resourceType])).subscribe(t => this.tasks = [...this.tasks, ...t]));

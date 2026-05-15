@@ -47,10 +47,10 @@
             <tr *mTableHead>
               <th>{{'entities.privilege-resource.type' | translate}}</th>
               <th>{{'entities.privilege-resource.resource-id' | translate}}</th>
-              <th>{{'entities.privilege-resource.view' | translate}}</th>
+              <th>{{'entities.privilege-resource.read' | translate}}</th>
               <th>{{'entities.privilege-resource.triage' | translate}}</th>
-              <th>{{'entities.privilege-resource.edit' | translate}}</th>
-              <th>{{'entities.privilege-resource.publish' | translate}}</th>
+              <th>{{'entities.privilege-resource.write' | translate}}</th>
+              <th>{{'entities.privilege-resource.maintain' | translate}}</th>
               <th class="tw-table-actions"></th>
             </tr>
             <ng-container *mTableRow="let key;">
@@ -65,7 +65,7 @@
                     <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="35"></m-abbreviate>
                   </td>
                   <td>
-                    @if (resource.actions?.view) {
+                    @if (resource.actions?.read) {
                       <m-icon mCode="check"></m-icon>
                     }
                   </td>
@@ -75,12 +75,12 @@
                     }
                   </td>
                   <td>
-                    @if (resource.actions?.edit) {
+                    @if (resource.actions?.write) {
                       <m-icon mCode="check"></m-icon>
                     }
                   </td>
                   <td>
-                    @if (resource.actions?.publish) {
+                    @if (resource.actions?.maintain) {
                       <m-icon mCode="check"></m-icon>
                     }
                   </td>
@@ -182,10 +182,10 @@
         </m-form-item>
       }
       @if (modalData.resource.resourceType !== 'Admin') {
-        <m-form-item [mLabel]="view"></m-form-item>
-        <ng-template #view>
-          <m-checkbox name="action-view" [(ngModel)]="modalData.resource.actions.view">
-            {{'web.privileges.resources.modal.actions.view' | translate}}
+        <m-form-item [mLabel]="read"></m-form-item>
+        <ng-template #read>
+          <m-checkbox name="action-read" [(ngModel)]="modalData.resource.actions.read">
+            {{'web.privileges.resources.modal.actions.read' | translate}}
           </m-checkbox>
         </ng-template>
         <m-form-item [mLabel]="triage"></m-form-item>
@@ -195,18 +195,18 @@
             {{'web.privileges.resources.modal.actions.triage' | translate}}
           </m-checkbox>
         </ng-template>
-        <m-form-item [mLabel]="edit"></m-form-item>
-        <ng-template #edit>
-          <m-checkbox name="action-edit" [ngModel]="modalData.resource.actions.edit"
-                      (ngModelChange)="onActionToggle('edit', $event)">
-            {{'web.privileges.resources.modal.actions.edit' | translate}}
+        <m-form-item [mLabel]="write"></m-form-item>
+        <ng-template #write>
+          <m-checkbox name="action-write" [ngModel]="modalData.resource.actions.write"
+                      (ngModelChange)="onActionToggle('write', $event)">
+            {{'web.privileges.resources.modal.actions.write' | translate}}
           </m-checkbox>
         </ng-template>
-        <m-form-item [mLabel]="publish"></m-form-item>
-        <ng-template #publish>
-          <m-checkbox name="action-publish" [ngModel]="modalData.resource.actions.publish"
-                      (ngModelChange)="onActionToggle('publish', $event)">
-            {{'web.privileges.resources.modal.actions.publish' | translate}}
+        <m-form-item [mLabel]="maintain"></m-form-item>
+        <ng-template #maintain>
+          <m-checkbox name="action-maintain" [ngModel]="modalData.resource.actions.maintain"
+                      (ngModelChange)="onActionToggle('maintain', $event)">
+            {{'web.privileges.resources.modal.actions.maintain' | translate}}
           </m-checkbox>
         </ng-template>
       }

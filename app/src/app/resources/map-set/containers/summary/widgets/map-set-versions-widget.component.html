@@ -84,7 +84,7 @@
             }
           }
         </div>
-        <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+        <div class="m-items-middle" *twPrivileged="'*.Release.read'">
           <m-icon mCode="rocket"/>
           @if (releases?.[version.mapSet + version.version]?.length > 0) {
             @for (release of releases?.[version.mapSet + version.version]; track release) {
@@ -93,11 +93,11 @@
               </div>
             }
           }
-          @if (!(releases?.[version.mapSet + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)) {
+          @if (!(releases?.[version.mapSet + version.version]?.length > 0) && ('*.Release.write' | twPrivileged)) {
             <a (mClick)="releaseModal.toggleModal({resourceId: mapSet, resourceVersion: version?.version, resourceTitle: mapSetTitle})"
             >{{'web.map-set-version.summary.info.add-to-release' | translate}}</a>
           }
-          @if (!(releases?.[version.mapSet + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)) {
+          @if (!(releases?.[version.mapSet + version.version]?.length > 0) && !('*.Release.write' | twPrivileged)) {
             <span>{{'web.map-set-version.summary.info.release-unspecified' | translate}}</span>
           }
         </div>

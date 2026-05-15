@@ -8,8 +8,8 @@ import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const DEFINED_PROPERTY_ROUTES: Routes = [
   {path: '', component: DefinedPropertyListComponent},
-  {path: 'add', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.edit']}},
-  {path: ':id/edit', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.edit']}}
+  {path: 'add', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.write']}},
+  {path: ':id/edit', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.write']}}
 ];
 
 @NgModule({

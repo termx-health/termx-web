@@ -80,7 +80,7 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
     this.loader.wrap('load', this.snomedTranslationService.loadConceptTranslations(conceptId)).subscribe(resp => {
       this.translations = resp;
       const translationIds = resp.map(r => r.id);
-      if (translationIds.length > 0 && this.authService.hasPrivilege('*.Task.view')) {
+      if (translationIds.length > 0 && this.authService.hasPrivilege('*.Task.read')) {
         this.taskService.searchTasks({context: translationIds.map(id => 'snomed-translation|' + id).join(','), limit: -1}).subscribe(tasks => {
           this.tasks = tasks.data;
         });

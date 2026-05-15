@@ -187,13 +187,13 @@
     <tw-provenance-list [provenances]="provenances"></tw-provenance-list>
   </m-card>
 
-  @if ('*.Task.view' | twPrivileged) {
+  @if ('*.Task.read' | twPrivileged) {
     <m-card class="m-card-inside">
       <div *m-card-header class="m-justify-between">
         <div class="m-card__title">
           {{'web.snomed.task.card-header' | translate}}
         </div>
-        <m-button (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
+        <m-button (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.write'">
           <m-icon mCode="plus"/>&nbsp; {{'core.btn.add' | translate}}
         </m-button>
       </div>
@@ -213,7 +213,7 @@
       <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
         <tw-user-select name="assignee"
           [(ngModel)]="taskModalData.assignee"
-          [anyRole]="['snomed-ct.CodeSystem.edit', 'snomed-ct.CodeSystem.publish']"
+          [anyRole]="['snomed-ct.CodeSystem.write', 'snomed-ct.CodeSystem.maintain']"
           required/>
         </m-form-item>
         <m-form-item mName="comment" mLabel="web.snomed.task.comment">

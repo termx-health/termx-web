@@ -72,7 +72,7 @@ export class ValueSetVersionEditComponent implements OnInit {
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
     this.viewMode = this.route.snapshot.routeConfig?.path === ':id/versions/:versionCode/details';
     if (this.viewMode) {
-      this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.edit');
+      this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.write');
     }
 
     if (this.mode === 'edit') {

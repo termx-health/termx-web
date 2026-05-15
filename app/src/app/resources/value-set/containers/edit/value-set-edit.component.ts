@@ -53,7 +53,7 @@ export class ValueSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.canEdit = this.authService.hasPrivilege(id + '.ValueSet.edit');
+        this.canEdit = this.authService.hasPrivilege(id + '.ValueSet.write');
         this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
         this.valueSetService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
       }

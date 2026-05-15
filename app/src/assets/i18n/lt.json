@@ -482,12 +482,12 @@
       "resources": "Ištekliai"
     },
     "privilege-resource": {
-      "edit": "Redaguoti",
-      "publish": "Publikuoti",
+      "write": "Redaguoti",
+      "maintain": "Publikuoti",
       "resource-id": "Išteklio ID",
       "triage": "Triažas",
       "type": "Tipas",
-      "view": "Peržiūrėti"
+      "read": "Peržiūrėti"
     },
     "provenance": {
       "activity": "Veikla",
@@ -1929,10 +1929,10 @@
       "resources": {
         "modal": {
           "actions": {
-            "edit": "Redaguoti",
-            "publish": "Publikuoti",
+            "write": "Redaguoti",
+            "maintain": "Publikuoti",
             "triage": "Triažas",
-            "view": "Peržiūrėti"
+            "read": "Peržiūrėti"
           },
           "add-header": "Pridėti išteklių",
           "edit-header": "Redaguoti išteklių",

@@ -81,7 +81,7 @@ export class MapSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.canEdit = this.authService.hasPrivilege(id + '.MapSet.edit');
+        this.canEdit = this.authService.hasPrivilege(id + '.MapSet.write');
         this.loader.wrap('load', this.mapSetService.load(id)).subscribe(vs => this.mapSet = this.writeMS(vs));
         this.mapSetService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
       }

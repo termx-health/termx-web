@@ -22,7 +22,7 @@
           </div>
           <div class="m-items-middle">
             <tw-status-tag [status]="version.status"></tw-status-tag>
-            @if (version.status === 'draft' && versions?.length > 1 && (ig  + '.ImplementationGuide.publish' | twHasAnyPrivilege)) {
+            @if (version.status === 'draft' && versions?.length > 1 && (ig  + '.ImplementationGuide.maintain' | twHasAnyPrivilege)) {
               <m-divider mVertical></m-divider>
               <m-dropdown>
                 <a *m-dropdown-item (click)="deleteVersion(version.version)">

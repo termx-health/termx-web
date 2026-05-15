@@ -182,14 +182,14 @@
           <m-card mDisplay="bordered" *twPrivileged="'*.CodeSystem.triage'">
             <div *m-card-header class="m-justify-between">
               <label>{{'entities.task.plural' | translate}}</label>
-              @if ([codeSystem.id + '.CodeSystem.edit', '*.Task.edit'] | twHasAllPrivileges) {
+              @if ([codeSystem.id + '.CodeSystem.write', '*.Task.write'] | twHasAllPrivileges) {
                 <m-button mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}">
                 <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
               }
             </div>
             <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
               openInNewTab
-              [displayType]="(codeSystem.id + '.CodeSystem.edit' | twPrivileged) ? 'content' : 'full'"
+              [displayType]="(codeSystem.id + '.CodeSystem.write' | twPrivileged) ? 'content' : 'full'"
               [taskFilters]="{statuses: ['requested']}"
               [resourceId]="selectedConcept.version.id | toString"/>
             </m-card>
@@ -331,7 +331,7 @@
             <tw-user-select
               name="assignee"
               [(ngModel)]="taskModalData.assignee"
-              [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
+              [anyRole]="[codeSystem.id + '.CodeSystem.write', codeSystem.id + '.CodeSystem.maintain']"
             required></tw-user-select>
           </m-form-item>
           <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">

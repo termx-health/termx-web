@@ -122,6 +122,6 @@ export class LandingTaskComponent implements OnChanges {
   };
 
   protected taskRoute = (task: Task): any[] => {
-    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
+    return this.authService.hasPrivilege('*.Task.write') ? ['/tasks', task.number, 'edit'] : [];
   };
 }

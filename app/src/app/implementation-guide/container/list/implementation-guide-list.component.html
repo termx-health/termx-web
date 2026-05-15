@@ -3,7 +3,7 @@
     <span>{{'entities.implementation-guide.multiple' | translate}}</span>
     <div class="m-items-middle">
       <m-input name="searchInput" [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
-      <m-dropdown *twPrivileged="'*.ImplementationGuide.edit'">
+      <m-dropdown *twPrivileged="'*.ImplementationGuide.write'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.implementation-guide.list.add' | translate}}
         </tw-add-button>
@@ -24,7 +24,7 @@
       <th>{{'entities.implementation-guide-version.fhir-version' | translate}}</th>
       <th>{{'entities.implementation-guide.title' | translate}} / {{'entities.implementation-guide-version.package-id' | translate}}</th>
       <th>{{'entities.implementation-guide-version.date' | translate}}</th>
-      <th *twPrivileged="'*.ImplementationGuide.edit'" class="tw-table-actions"></th>
+      <th *twPrivileged="'*.ImplementationGuide.write'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let ig">
@@ -53,7 +53,7 @@
           <a *m-dropdown-item (click)="openFhir(ig.id)">
             <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.implementation-guide.list.open-fhir' | translate}}
           </a>
-          <ng-container *twPrivileged="'*.Implementation.publish'">
+          <ng-container *twPrivileged="'*.Implementation.maintain'">
             <a *m-dropdown-item (click)="delete(ig.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

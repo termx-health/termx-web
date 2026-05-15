@@ -57,7 +57,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.codeSystemService.loadProvenances(this.version.codeSystem, this.version.version))
         .subscribe(resp => this.provenances = resp);
-      if (this.authService.hasPrivilege('*.Space.view')) {
+      if (this.authService.hasPrivilege('*.Space.read')) {
         this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
           this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
             && (Object.keys(s.integration.github.dirs || {}).some(d => ['codesystem-fhir-json', 'codesystem-fhir-fsh'].includes(d)))
@@ -135,7 +135,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   }
 
   protected loadRelease(): void {
-    if (this.authService.hasPrivilege('*.Release.view')) {
+    if (this.authService.hasPrivilege('*.Release.read')) {
       this.releaseService.search({resource: ['CodeSystem', this.version.codeSystem, this.version.version].join('|')}).subscribe(r => {
         this.releases = r.data;
       });

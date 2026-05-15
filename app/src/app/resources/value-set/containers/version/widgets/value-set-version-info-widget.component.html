@@ -45,7 +45,7 @@
         <span>{{'web.value-set-version.summary.info.last-reviewed' | translate}}:
         {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.value-set-version.summary.info.none' | translate)}} </span>
         <a (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: valueSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.value-set-version.summary.info.create-review' | translate}}</a>
+        *twPrivileged="'*.Task.write'">{{'web.value-set-version.summary.info.create-review' | translate}}</a>
       </div>
     }
     @if (valueSet?.settings?.approvalRequired) {
@@ -54,10 +54,10 @@
         <span>{{'web.value-set-version.summary.info.last-approved' | translate}}:
         {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.value-set-version.summary.info.none' | translate)}} </span>
         <a (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: valueSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.value-set-version.summary.info.create-approve' | translate}}</a>
+        *twPrivileged="'*.Task.write'">{{'web.value-set-version.summary.info.create-approve' | translate}}</a>
       </div>
     }
-    <div class="m-items-middle" *twPrivileged="version.valueSet + '.ValueSet.publish'">
+    <div class="m-items-middle" *twPrivileged="version.valueSet + '.ValueSet.maintain'">
       <m-icon mCode="tool"></m-icon>
       @if (version.status !== 'draft') {
         <a (mClick)="changeVersionStatus('draft')">{{'web.value-set-version.summary.info.make-draft' | translate}}</a>
@@ -71,7 +71,7 @@
         <a (mClick)="changeVersionStatus('retired')">{{'web.value-set-version.summary.info.retire' | translate}}</a>
       }
     </div>
-    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+    <div class="m-items-middle" *twPrivileged="'*.Release.read'">
       <m-icon mCode="rocket"/>
       @if (releases?.length > 0) {
         <div>
@@ -82,11 +82,11 @@
           }
         </div>
       }
-      @if (!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)) {
+      @if (!(releases?.length > 0) && ('*.Release.write' | twPrivileged)) {
         <a (mClick)="releaseModal.toggleModal({resourceId: valueSet?.id, resourceVersion: version?.version, resourceTitle: valueSet?.title})"
         >{{'web.value-set-version.summary.info.add-to-release' | translate}}</a>
       }
-      @if (!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)) {
+      @if (!(releases?.length > 0) && !('*.Release.write' | twPrivileged)) {
         <span>{{'web.value-set-version.summary.info.release-unspecified' | translate}}</span>
       }
     </div>
