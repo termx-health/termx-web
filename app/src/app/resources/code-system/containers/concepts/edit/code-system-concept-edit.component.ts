@@ -22,6 +22,7 @@ import {CodeSystemService} from 'term-web/resources/code-system/services/code-sy
 import {CodeSystemAssociationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
 import {CodeSystemDesignationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/designation/code-system-designation-edit.component';
 import {CodeSystemPropertyValueEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
+import {CodingRefreshApi, CodingRefreshScope, CodingValueRefreshModalComponent} from 'term-web/resources/code-system/components/coding-value-refresh-modal.component';
 import { ResourceContextComponent as ResourceContextComponent_1 } from 'term-web/resources/resource/components/resource-context.component';
 import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule } from '@termx-health/ui';
 import { SequenceValueGeneratorComponent } from 'term-web/sequence/_lib/components/sequence-value-generator.component';
@@ -49,7 +50,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
       margin-top: 1rem
     }
   `],
-    imports: [ResourceContextComponent_1, MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, SequenceValueGeneratorComponent, MuiTextareaModule, AddButtonComponent, MuiListModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiTooltipModule, ResourceRelatedArtifactWidgetComponent, PrivilegedDirective, MuiButtonModule, ResourceTasksWidgetComponent_1, MuiTagModule, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, CodeSystemConceptReferenceComponent, MuiModalModule, UserSelectComponent, TranslatePipe, MarinaUtilModule, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
+    imports: [ResourceContextComponent_1, MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, SequenceValueGeneratorComponent, MuiTextareaModule, AddButtonComponent, MuiListModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiTooltipModule, ResourceRelatedArtifactWidgetComponent, PrivilegedDirective, MuiButtonModule, ResourceTasksWidgetComponent_1, MuiTagModule, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, CodeSystemConceptReferenceComponent, CodingValueRefreshModalComponent, MuiModalModule, UserSelectComponent, TranslatePipe, MarinaUtilModule, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
@@ -77,6 +78,46 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("designationEdit") public designationEdit?: CodeSystemDesignationEditComponent;
   @ViewChild("propertyValueEdit") public propertyValueEdit?: CodeSystemPropertyValueEditComponent;
   @ViewChild("associationEdit") public associationEdit?: CodeSystemAssociationEditComponent;
+  @ViewChild("refreshModal") public refreshModal?: CodingValueRefreshModalComponent;
+
+  protected refreshApi: CodingRefreshApi = {
+    findCandidates: (scope, statuses) => {
+      if (scope.kind !== 'entity-version') {
+        throw new Error('Unexpected scope');
+      }
+      return this.codeSystemService.findConceptRefCandidates(scope.csevId, statuses);
+    },
+    refresh: (scope, statuses) => {
+      if (scope.kind !== 'entity-version') {
+        throw new Error('Unexpected scope');
+      }
+      return this.codeSystemService.refreshConceptRefs(scope.csevId, statuses);
+    }
+  };
+
+  protected openRefreshReferences(): void {
+    if (!this.conceptVersion?.id) {
+      return;
+    }
+    this.refreshModal?.open({kind: 'entity-version', csevId: this.conceptVersion.id});
+  }
+
+  protected onReferencesRefreshed(): void {
+    if (this.concept?.code) {
+      this.loadConceptAgain();
+    }
+  }
+
+  private loadConceptAgain(): void {
+    this.loader.wrap('load', this.codeSystemService.loadConcept(this.codeSystemId, this.concept.code))
+      .subscribe(c => {
+        this.concept = c;
+        const v = c.versions?.find(v => v.id === this.conceptVersion?.id);
+        if (v) {
+          this.selectVersion(v);
+        }
+      });
+  }
   @ViewChild(ResourceContextComponent) public resourceContextComponent?: ResourceContextComponent;
   @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
 

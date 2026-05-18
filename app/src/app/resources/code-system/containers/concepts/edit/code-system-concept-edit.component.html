@@ -160,6 +160,11 @@ mode="concept-edit"></tw-resource-context>
                 <a *m-dropdown-item (mClick)="openFhir(concept.code)">
                   {{'web.code-system-concept.list.open-fhir' | translate}}
                 </a>
+                @if (conceptVersion.id && ('*.CodeSystem.write' | twPrivileged)) {
+                  <a *m-dropdown-item (mClick)="openRefreshReferences()">
+                    {{'web.code-system.coding-refresh.action' | translate}}
+                  </a>
+                }
               </m-dropdown>
             </div>
           </div>
@@ -267,6 +272,8 @@ mode="concept-edit"></tw-resource-context>
   </div>
 </m-page>
 
+
+<tw-coding-value-refresh-modal #refreshModal [api]="refreshApi" (refreshed)="onReferencesRefreshed()"></tw-coding-value-refresh-modal>
 
 <m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
   <m-title *mModalHeader>
