@@ -50,7 +50,18 @@
           [disabled]="!codeSystem || true"
         [mLoading]="loader.state['detect']">{{'web.code-system-validator.circular-dependencies-detector.detect' | translate}}</m-button>
       </m-card>
+
+      <m-card [mTitle]="'web.code-system.coding-refresh.action'">
+        <div>{{'web.code-system.coding-refresh.validator-desc' | translate}}</div>
+        <m-button *m-card-footer
+          mDisplay="primary"
+          (click)="openRefreshReferences()"
+          [disabled]="!codeSystem || !version"
+        [mLoading]="loader.state['refresh-load']">{{'web.code-system.coding-refresh.action' | translate}}</m-button>
+      </m-card>
     </div>
+
+    <tw-coding-value-refresh-modal #refreshModal [api]="refreshApi"></tw-coding-value-refresh-modal>
 
 
     @if (!!uniquenessResult) {

@@ -1,11 +1,13 @@
-import {HttpHeaders} from '@angular/common/http';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {isDefined, serializeDate} from '@termx-health/core-util';
+import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UriUtil} from 'term-web/core/utils/uri-util';
 import {CodeSystemConcept, CodeSystemLibService, CodeSystemTransactionRequest, CodeSystemVersion, ConceptTransactionRequest} from 'term-web/resources/_lib';
+import {CodingValueUpdateCandidate} from 'term-web/resources/_lib/code-system/model/coding-value-update-candidate';
 import {LorqueProcess} from 'term-web/sys/_lib';
 
 @Injectable()
@@ -140,5 +142,35 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public deleteEntityPropertyUsages(codeSystemId: string, propertyId: number): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}/delete-usages`, {});
+  }
+
+  public findConceptRefCandidates(csevId: number, allowedStatuses: string[]): Observable<CodingValueUpdateCandidate[]> {
+    const params = new HttpParams().set('allowedStatuses', (allowedStatuses ?? []).join(','));
+    return this.http.get<CodingValueUpdateCandidate[]>(
+      `${environment.termxApi}/ts/code-system-entity-versions/${csevId}/coding-value-update-candidates`,
+      {params}
+    );
+  }
+
+  public refreshConceptRefs(csevId: number, allowedStatuses: string[]): Observable<{applied: number}> {
+    return this.http.post<{applied: number}>(
+      `${environment.termxApi}/ts/code-system-entity-versions/${csevId}/refresh-coding-values`,
+      {allowedStatuses}
+    );
+  }
+
+  public findVersionRefCandidates(codeSystemId: string, version: string, allowedStatuses: string[]): Observable<CodingValueUpdateCandidate[]> {
+    const params = new HttpParams().set('allowedStatuses', (allowedStatuses ?? []).join(','));
+    return this.http.get<CodingValueUpdateCandidate[]>(
+      `${this.baseUrl}/${codeSystemId}/versions/${version}/coding-value-update-candidates`,
+      {params}
+    );
+  }
+
+  public refreshVersionRefs(codeSystemId: string, version: string, allowedStatuses: string[]): Observable<{applied?: number; queued?: number}> {
+    return this.http.post<{applied?: number; queued?: number}>(
+      `${this.baseUrl}/${codeSystemId}/versions/${version}/refresh-coding-values`,
+      {allowedStatuses}
+    );
   }
 }
