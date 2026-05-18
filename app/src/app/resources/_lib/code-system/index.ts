@@ -5,6 +5,7 @@ export * from 'term-web/resources/_lib/code-system/containers/code-system-widget
 export * from 'term-web/resources/_lib/code-system/containers/concept-search.component';
 export * from 'term-web/resources/_lib/code-system/model/code-system';
 export * from 'term-web/resources/_lib/code-system/model/code-system-association';
+export * from 'term-web/resources/_lib/code-system/model/coding-value-update-candidate';
 export * from 'term-web/resources/_lib/code-system/model/code-system-concept';
 export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-item';
 export * from 'term-web/resources/_lib/code-system/model/code-system-concept-tree-search-result';

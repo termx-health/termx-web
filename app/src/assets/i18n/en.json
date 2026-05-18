@@ -1034,6 +1034,24 @@
 				},
 				"view-header": "View code system"
 			},
+			"coding-refresh": {
+				"action": "Refresh references",
+				"header": "Refresh references to other code systems",
+				"allowed-statuses": "Allowed target statuses",
+				"allowed-statuses-desc": "Only versions matching one of these statuses are considered when picking the latest version.",
+				"preview-btn": "Preview changes",
+				"apply-btn": "Apply",
+				"preview-desc": "{{count}} reference(s) will be updated:",
+				"property": "Property",
+				"target": "Target",
+				"current": "Current version",
+				"candidate": "New version",
+				"up-to-date": "All references are up to date",
+				"up-to-date-desc": "No property values were found that point to an older version.",
+				"applied": "References updated",
+				"queued": "References queued for update",
+				"validator-desc": "Scan property values in this code system version and update references to the newest available version of their target code systems."
+			},
 			"list": {
 				"add-code-system": "Add code system",
 				"count": "Count",

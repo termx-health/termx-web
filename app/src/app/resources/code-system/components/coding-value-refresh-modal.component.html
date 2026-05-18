@@ -1,0 +1,60 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="close()">
+  <ng-container *m-modal-header>
+    {{'web.code-system.coding-refresh.header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    @if (step === 'select') {
+      <m-form-item mLabel="web.code-system.coding-refresh.allowed-statuses">
+        <div class="m-items-middle">
+          <m-checkbox name="active" [(ngModel)]="allow.active">
+            <tw-status-tag status="active"></tw-status-tag>
+          </m-checkbox>
+          <m-checkbox name="draft" [(ngModel)]="allow.draft">
+            <tw-status-tag status="draft"></tw-status-tag>
+          </m-checkbox>
+        </div>
+        <div class="m-subtitle">{{'web.code-system.coding-refresh.allowed-statuses-desc' | translate}}</div>
+      </m-form-item>
+    }
+    @if (step === 'preview') {
+      <div>
+        <p>{{'web.code-system.coding-refresh.preview-desc' | translate: {count: candidates.length} }}</p>
+        <m-table>
+          <thead>
+            <tr>
+              <th>{{'web.code-system.coding-refresh.property' | translate}}</th>
+              <th>{{'web.code-system.coding-refresh.target' | translate}}</th>
+              <th>{{'web.code-system.coding-refresh.current' | translate}}</th>
+              <th>{{'web.code-system.coding-refresh.candidate' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of candidates; track c.propertyValueId) {
+              <tr>
+                <td>{{c.entityProperty}}</td>
+                <td>{{c.targetCodeSystem}} | {{c.targetCode}}</td>
+                <td>{{c.currentVersion || '—'}}</td>
+                <td><tw-status-tag [status]="c.candidateStatus" [extraText]="c.candidateVersion ? '| ' + c.candidateVersion : undefined" compact /></td>
+              </tr>
+            }
+          </tbody>
+        </m-table>
+      </div>
+    }
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    @if (step === 'select') {
+      <m-button mDisplay="primary" [mLoading]="loader.state['candidates']" [disabled]="!allow.active && !allow.draft" (click)="previewCandidates()">
+        {{'web.code-system.coding-refresh.preview-btn' | translate}}
+      </m-button>
+    }
+    @if (step === 'preview') {
+      <m-button mDisplay="primary" [mLoading]="loader.state['apply']" (click)="applyRefresh()">
+        {{'web.code-system.coding-refresh.apply-btn' | translate}}
+      </m-button>
+    }
+  </div>
+</m-modal>
