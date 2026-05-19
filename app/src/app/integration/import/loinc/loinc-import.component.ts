@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {DestroyService} from '@termx-health/core-util';
 import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule } from '@termx-health/ui';
 import {environment} from 'environments/environment';
-import {BobArchivesComponent, JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import {BobArchivesComponent, BobObject, JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 
@@ -89,6 +89,32 @@ export class LoincImportComponent {
       }
       this.jobResponse = jobResp;
     }).add(() => this.loading['process'] = false);
+  }
+
+  /**
+   * Per-row Import button on the "Stored archives" panel: re-uses {@link data.version} +
+   * {@link data.language} from the form (so the user can set them once and import any of the
+   * stored release zips). The server unpacks the zip by basename and runs the same import
+   * pipeline as the legacy multipart endpoint — no need to re-upload from the browser.
+   */
+  protected importFromArchive(archive: BobObject): void {
+    if (!archive?.uuid) {
+      return;
+    }
+    if (!this.data.version) {
+      this.notificationService.error('Set the version (and language, if importing translations) above before importing from a stored archive.');
+      return;
+    }
+    this.jobResponse = null;
+    this.loading['process'] = true;
+    this.http.post<JobLogResponse>(`${environment.termxApi}/loinc/import/from-archive`, {
+      archiveUuid: archive.uuid,
+      version: this.data.version,
+      language: this.data.language,
+    }).subscribe({
+      next: resp => this.pollJobStatus(resp.jobId as number),
+      error: () => this.loading['process'] = false,
+    });
   }
 
   protected openCodeSystem(mode: 'edit' | 'view'): void {
