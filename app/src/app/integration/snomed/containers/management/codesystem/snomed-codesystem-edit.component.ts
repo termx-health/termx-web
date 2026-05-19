@@ -139,10 +139,20 @@ export class SnomedCodesystemEditComponent implements OnInit {
     this.importModalData.phase = 'uploading';
     this.importModalData.progress = 0;
 
+    // Tag the upload with the current CS so the Stored archives card below filters to just
+    // this CodeSystem's archives. snomedRF2Type goes on the meta so the per-row Import button
+    // can default to the right RF2 type instead of always SNAPSHOT.
+    const archiveMeta = {
+      shortName: this.snomedCodeSystem.shortName,
+      branchPath,
+      rf2Type: this.importModalData.type,
+    };
+
     this.loader.wrap('import', this.bobService.upload({
       container: 'snomed',
       file,
       description: `${dryRun ? 'dry-run upload' : 'import upload'} for ${this.snomedCodeSystem.shortName}`,
+      meta: archiveMeta,
     })).subscribe({
       next: ev => {
         if (!ev.finished) {
@@ -220,11 +230,15 @@ export class SnomedCodesystemEditComponent implements OnInit {
     if (!archive?.uuid || !this.snomedCodeSystem) {
       return;
     }
-    const branchPath = this.snomedCodeSystem.branchPath;
+    // Prefer the meta the upload was tagged with — that's the branch the user intended at
+    // upload time. Fall back to the current CS so legacy archives (uploaded before meta
+    // scoping landed) still work.
+    const branchPath = archive.meta?.['branchPath'] || this.snomedCodeSystem.branchPath;
+    const type = archive.meta?.['rf2Type'] || 'SNAPSHOT';
     this.loader.wrap('importFromArchive', this.snomedService.createImportJobFromArchive({
       archiveUuid: archive.uuid,
       branchPath,
-      type: 'SNAPSHOT',
+      type,
       createCodeSystemVersion: true
     })).subscribe({
       next: lorque => {

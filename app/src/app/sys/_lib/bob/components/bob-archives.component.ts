@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {LoadingManager, QueryParams} from '@termx-health/core-util';
 import {MuiButtonModule, MuiCardModule, MuiCoreModule, MuiNotificationService, MuiPopconfirmModule, MuiTableModule} from '@termx-health/ui';
@@ -14,8 +14,16 @@ import {BobLibService} from 'term-web/sys/_lib/bob/services/bob-lib.service';
  * SNOMED RF2 zip. The upload uses the streaming {@code POST /bob/objects} endpoint, so
  * multi-hundred-MB files never live in JVM heap.
  *
+ * The optional {@link meta} input scopes the card to a logical "owner" — e.g. a specific
+ * SNOMED CodeSystem. When set:
+ *   - {@code GET /bob/objects?meta=…} is sent so only matching rows are listed.
+ *   - Uploads are tagged with the same meta so they show up under the same scope next time.
+ *
  * Usage:
- *   <tw-bob-archives container="snomed" actionLabel="Import" (action)="importFromArchive($event)" />
+ *   <tw-bob-archives container="snomed"
+ *                    [meta]="{shortName: cs.shortName, branchPath: cs.branchPath}"
+ *                    actionLabel="Import"
+ *                    (action)="importFromArchive($event)" />
  */
 @Component({
   selector: 'tw-bob-archives',
@@ -23,10 +31,16 @@ import {BobLibService} from 'term-web/sys/_lib/bob/services/bob-lib.service';
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule, MuiButtonModule, MuiCardModule, MuiCoreModule, MuiPopconfirmModule, MuiTableModule]
 })
-export class BobArchivesComponent implements OnInit {
+export class BobArchivesComponent implements OnInit, OnChanges {
   @Input() public container!: string;
   /** Optional per-row action button label. Hidden if not set. */
   @Input() public actionLabel?: string;
+  /**
+   * Optional JSONB-containment filter and upload tag. When set, only archives whose meta
+   * contains all listed entries are shown, and new uploads inherit the same meta — so the
+   * card always stays scoped to its logical owner (current CS, current LOINC release, etc.).
+   */
+  @Input() public meta?: {[k: string]: any};
   @Output() public action = new EventEmitter<BobObject>();
 
   protected archives: BobObject[] = [];
@@ -42,8 +56,23 @@ export class BobArchivesComponent implements OnInit {
     this.load();
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    // Reload when meta or container changes — the parent may swap the CS context without
+    // recreating the component (e.g. ViewChild route reuse), and we'd otherwise show stale rows.
+    if (!changes['container']?.firstChange && (changes['container'] || changes['meta'])) {
+      this.load();
+    }
+  }
+
   protected load(): void {
-    this.loader.wrap('load', this.bobService.query(this.container, Object.assign(new QueryParams(), {limit: 100}) as any))
+    if (!this.container) {
+      return;
+    }
+    const params: QueryParams & {meta?: any} = Object.assign(new QueryParams(), {limit: 100}) as any;
+    if (this.meta && Object.keys(this.meta).length > 0) {
+      params.meta = this.compactMeta();
+    }
+    this.loader.wrap('load', this.bobService.query(this.container, params))
       .subscribe(resp => this.archives = resp.data || []);
   }
 
@@ -58,7 +87,12 @@ export class BobArchivesComponent implements OnInit {
     const file = this.uploadFile;
     this.uploadProgress = 0;
     this.loader.start('upload');
-    this.bobService.upload({container: this.container, file, description: this.uploadDescription})
+    this.bobService.upload({
+      container: this.container,
+      file,
+      description: this.uploadDescription,
+      meta: this.compactMeta(),
+    })
       .pipe(finalize(() => {
         this.loader.stop('upload');
         this.uploadProgress = undefined;
@@ -76,6 +110,24 @@ export class BobArchivesComponent implements OnInit {
         },
         error: err => this.notificationService.error(this.extractError(err)),
       });
+  }
+
+  /** Drops {@code undefined} / {@code null} values so the server-side {@code @>} JSONB
+   *  containment filter doesn't try to match an explicit null. */
+  private compactMeta(): {[k: string]: any} | undefined {
+    if (!this.meta) {
+      return undefined;
+    }
+    const out: {[k: string]: any} = {};
+    let any = false;
+    for (const key of Object.keys(this.meta)) {
+      const v = this.meta[key];
+      if (v !== undefined && v !== null && v !== '') {
+        out[key] = v;
+        any = true;
+      }
+    }
+    return any ? out : undefined;
   }
 
   protected download(o: BobObject): void {
