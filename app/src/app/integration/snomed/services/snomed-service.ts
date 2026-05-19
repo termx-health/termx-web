@@ -4,6 +4,8 @@ import {SearchHttpParams} from '@termx-health/core-util';
 import {EMPTY, mergeMap, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SnomedBranch, SnomedCodeSystem, SnomedLibService} from 'term-web/integration/_lib';
+import {SnomedRF2FileStats} from 'term-web/integration/snomed/services/snomed-rf2-file-stats';
+import {BobObject} from 'term-web/sys/_lib';
 
 
 @Injectable()
@@ -147,6 +149,25 @@ export class SnomedService extends SnomedLibService {
 
   public proceedScanImport(cacheId: number): Observable<{jobId: string}> {
     return this.http.post(`${this.baseUrl}/imports/scan/${cacheId}/proceed`, {}).pipe(map(r => r as {jobId: string}));
+  }
+
+  /** Per-zip-entry row counts for a SNOMED RF2 archive in Bob — drives the archive detail page's
+   *  "Files" panel. Backend: GET /snomed/archives/{uuid}/file-stats. */
+  public loadArchiveFileStats(uuid: string): Observable<SnomedRF2FileStats> {
+    return this.http.get<SnomedRF2FileStats>(`${this.baseUrl}/archives/${uuid}/file-stats`);
+  }
+
+  /** Other archives uploaded against the same branchPath as {@code uuid}, excluding {@code uuid}
+   *  itself and any delta archives. Used as the Diff section's baseline picker.
+   *  Backend: GET /snomed/archives/{uuid}/diff-candidates  (404 until Phase 2b lands). */
+  public loadDiffCandidates(uuid: string): Observable<BobObject[]> {
+    return this.http.get<BobObject[]>(`${this.baseUrl}/archives/${uuid}/diff-candidates`);
+  }
+
+  /** Kick off the delta-generator run on (this uuid as current, baselineUuid as baseline).
+   *  Returns a LorqueProcess the caller polls. Backend: POST /snomed/archives/{uuid}/delta. */
+  public calculateDelta(uuid: string, baselineUuid: string): Observable<{id: number}> {
+    return this.http.post<{id: number}>(`${this.baseUrl}/archives/${uuid}/delta`, {baselineUuid});
   }
 
   public findConceptUsage(codes: string[]): Observable<any[]> {

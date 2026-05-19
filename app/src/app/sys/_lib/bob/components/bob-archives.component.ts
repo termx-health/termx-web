@@ -42,6 +42,12 @@ export class BobArchivesComponent implements OnInit, OnChanges {
    */
   @Input() public meta?: {[k: string]: any};
   @Output() public action = new EventEmitter<BobObject>();
+  /**
+   * Fired when the user clicks the filename cell. When a listener is bound, the filename
+   * renders as a link and the default download-on-click is suppressed — the host component
+   * decides whether to navigate, download, open a modal, etc.
+   */
+  @Output() public itemClick = new EventEmitter<BobObject>();
 
   protected archives: BobObject[] = [];
   protected loader = new LoadingManager();
@@ -128,6 +134,16 @@ export class BobArchivesComponent implements OnInit, OnChanges {
       }
     }
     return any ? out : undefined;
+  }
+
+  protected onItemClick(o: BobObject): void {
+    if (this.itemClick.observed) {
+      // Host wants to handle the click — typically a route navigation.
+      this.itemClick.emit(o);
+    } else {
+      // No listener bound → preserve the old "click filename downloads" behaviour.
+      this.download(o);
+    }
   }
 
   protected download(o: BobObject): void {
