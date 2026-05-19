@@ -27,8 +27,18 @@
   .m-page__header-wrapper {
     border-bottom: unset;
   }
+
 }
 
+::ng-deep .semi-embedded {
+  .m-page-header__dropdown__border-top {
+    display: none;
+  }
+
+  .m-page-header m-dropdown + .m-icon-button-wrapper {
+    display: none;
+  }
+}
 
 ::ng-deep#preloader.hide {
   opacity: 0;

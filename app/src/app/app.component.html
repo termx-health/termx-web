@@ -1,47 +1,67 @@
-<m-page-layout
-  [class.embedded]="router.url | apply: isEmbedded"
-  [mTitle]="titleTpl"
-  [mMenu]="menu$ | async" mMenuMode="horizontal"
-  [mAuthenticated]="auth.isAuthenticated | async"
-  [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
-  (mLangChange)="onLangChange($event)"
-  (mLogin)="login()"
-  (mLogout)="logout()"
+@if (semiEmbedded) {
+  <m-page-layout
+    [class.embedded]="router.url | apply: isEmbedded"
+    [class.semi-embedded]="semiEmbedded"
+    [mTitle]="titleTpl"
+    [mMenu]="menu$ | async" mMenuMode="horizontal"
+    [mAuthenticated]="auth.isAuthenticated | async"
+    [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
+    (mLangChange)="onLangChange($event)"
+    (mLogin)="login()"
   >
-  <ng-template #titleTpl>
-    <a style="color: inherit" [routerLink]="['/landing']">{{'web.app.header' | translate}}</a>
-  </ng-template>
+    <ng-container [ngTemplateOutlet]="contentTpl"/>
+  </m-page-layout>
+} @else {
+  <m-page-layout
+    [class.embedded]="router.url | apply: isEmbedded"
+    [class.semi-embedded]="semiEmbedded"
+    [mTitle]="titleTpl"
+    [mMenu]="menu$ | async" mMenuMode="horizontal"
+    [mAuthenticated]="auth.isAuthenticated | async"
+    [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
+    (mLangChange)="onLangChange($event)"
+    (mLogin)="login()"
+    (mLogout)="logout()"
+  >
+    <ng-container [ngTemplateOutlet]="contentTpl"/>
+  </m-page-layout>
+}
 
-  <ng-template #userInfoTpl>
-    <div class="tw-form-view">
+<ng-template #titleTpl>
+  <a style="color: inherit" [routerLink]="['/landing']">{{'web.app.header' | translate}}</a>
+</ng-template>
+
+<ng-template #userInfoTpl>
+  <div class="tw-form-view">
 <!--      <nz-switch name="theme" [ngModel]="(preferences.theme$ | async) === 'dark'" (ngModelChange)="preferences.setTheme($event ? 'dark' : 'light')"></nz-switch>-->
-      <div class="tw-user-info__user">
-        <div>{{auth.user?.username}}</div>
-      </div>
+    <div class="tw-user-info__user">
+      <div>{{auth.user?.username}}</div>
+    </div>
 
-      <div class="tw-user-info__info">
-        @if (auth.user.privileges; as roles) {
-          <m-form-item mLabel="entities.common.privileges">
-            @for (role of roles; track role) {
-              <div>{{role}}</div>
-            }
-          </m-form-item>
-        }
-      </div>
-
-      <div class="tw-user-info__info">
-        <m-form-item mLabel="entities.common.versions">
-          @for (v of versions | keyvalue; track v) {
-            <div>
-              <span>{{v.key}}: </span>
-              <span style="text-align: right">{{v.value}}</span>
-            </div>
+    <div class="tw-user-info__info">
+      @if (auth.user.privileges; as roles) {
+        <m-form-item mLabel="entities.common.privileges">
+          @for (role of roles; track role) {
+            <div>{{role}}</div>
           }
         </m-form-item>
-      </div>
+      }
     </div>
-  </ng-template>
 
+    <div class="tw-user-info__info">
+      <m-form-item mLabel="entities.common.versions">
+        @for (v of versions | keyvalue; track v) {
+          <div>
+            <span>{{v.key}}: </span>
+            <span style="text-align: right">{{v.value}}</span>
+          </div>
+        }
+      </m-form-item>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentTpl>
   @if (activeRoutePrivileges$ | async; as privileges) {
     @if (!privileges?.length || (privileges | twHasAnyPrivilege)) {
       <router-outlet/>
@@ -53,6 +73,4 @@
       </m-form-row>
     }
   }
-</m-page-layout>
-
-
+</ng-template>
