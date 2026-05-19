@@ -75,6 +75,11 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected fileStats?: SnomedRF2FileStats;
   protected diffCandidates: BobObject[] = [];
   protected selectedBaselineUuid?: string;
+  /** Provenance archives for delta detail. Loaded only when the current archive has
+   *  meta.kind === 'delta', so the page can show the source / baseline filenames as clickable
+   *  links instead of raw uuids. */
+  protected sourceArchive?: BobObject;
+  protected baselineArchive?: BobObject;
 
   protected loader = new LoadingManager();
   protected deltaProgress?: number;
@@ -116,7 +121,54 @@ export class SnomedArchiveDetailComponent implements OnInit {
         this.fileStats = stats;
         this.diffCandidates = candidates ?? [];
         this.selectedBaselineUuid = undefined;
+        this.sourceArchive = undefined;
+        this.baselineArchive = undefined;
+        // For a delta archive, resolve the source + baseline uuids to their BobObjects so the
+        // provenance panel can render filenames + clickable links rather than opaque uuids.
+        // Best-effort: if either lookup 404s the panel falls back to showing the uuid.
+        if (this.isDelta) {
+          const src = this.sourceUuid;
+          const base = this.baselineUuid;
+          if (src) {
+            this.bobService.load(src).pipe(catchError(() => of(undefined))).subscribe(o => this.sourceArchive = o);
+          }
+          if (base) {
+            this.bobService.load(base).pipe(catchError(() => of(undefined))).subscribe(o => this.baselineArchive = o);
+          }
+        }
       });
+  }
+
+  /** Open another archive in the same per-CS detail route. */
+  protected openArchive(uuid: string | undefined): void {
+    if (!uuid || !this.shortName) {
+      return;
+    }
+    this.router.navigate(['/integration/snomed/codesystems', this.shortName, 'archives', uuid]);
+  }
+
+  // ─── Delta summary (read from archive.meta, set by SnomedDeltaCalculateService) ──────
+
+  protected get rowsExported(): number | undefined {
+    const v = this.archive?.meta?.['rowsExported'];
+    return typeof v === 'number' ? v : undefined;
+  }
+
+  protected get generatedAt(): string | undefined {
+    return this.archive?.meta?.['generatedAt'];
+  }
+
+  protected get latestStateMode(): boolean | undefined {
+    const v = this.archive?.meta?.['latestState'];
+    return typeof v === 'boolean' ? v : undefined;
+  }
+
+  /** Formats large counts with thousand separators for the headline tiles. */
+  protected formatNumber(n: number | undefined): string {
+    if (n == null) {
+      return '—';
+    }
+    return n.toLocaleString();
   }
 
   protected get isDelta(): boolean {
