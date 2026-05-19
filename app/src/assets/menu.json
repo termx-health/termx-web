@@ -232,21 +232,6 @@
             },
             {
                 "label": {
-                    "en": "Measurement units",
-                    "et": "Mõõtühikud",
-                    "lt": "Matavimo vienetai",
-                    "de": "Maßeinheiten",
-                    "fr": "Unités de mesure",
-                    "nl": "Meeteenheden",
-                    "cs": "Měrné jednotky"
-                },
-                "link": "measurement-units",
-                "privileges": [
-                    "ucum.CodeSystem.read"
-                ]
-            },
-            {
-                "label": {
                     "en": "UCUM",
                     "et": "UCUM",
                     "lt": "UCUM",

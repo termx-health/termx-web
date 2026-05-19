@@ -9,7 +9,7 @@ import {environment} from 'environments/environment';
 import {delay, distinctUntilChanged, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService, HasAnyPrivilegePipe} from 'term-web/core/auth';
 import {InfoService} from 'term-web/core/info';
-import { AsyncPipe, KeyValuePipe } from '@angular/common';
+import { AsyncPipe, KeyValuePipe, NgTemplateOutlet } from '@angular/common';
 import { NoPrivilegeComponent } from 'term-web/core/components/no-privilege';
 
 
@@ -27,7 +27,7 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.less'],
-    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe]
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, NgTemplateOutlet, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe]
 })
 export class AppComponent {
   protected auth = inject(AuthService);
@@ -53,6 +53,7 @@ export class AppComponent {
     distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
   );
   protected isEmbedded = (url: string): boolean => url?.startsWith('/embedded');
+  protected readonly semiEmbedded = !!environment.embedded;
   protected versions = {
     web: environment.appVersion,
     service: ''
