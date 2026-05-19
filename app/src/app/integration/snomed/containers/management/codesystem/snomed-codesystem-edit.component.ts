@@ -6,7 +6,7 @@ import { compareStrings, DestroyService, isDefined, LoadingManager, validateForm
 import { MuiNotificationService, MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, MuiAlertModule } from '@termx-health/ui';
 import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'term-web/integration/_lib';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
-import {BobArchivesComponent, BobObject, LorqueLibService} from 'term-web/sys/_lib';
+import {BobArchivesComponent, BobLibService, BobObject, LorqueLibService} from 'term-web/sys/_lib';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { NzProgressComponent } from 'ng-zorro-antd/progress';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SnomedCodesystemEditComponent implements OnInit {
   private snomedService = inject(SnomedService);
+  private bobService = inject(BobLibService);
   private lorqueService = inject(LorqueLibService);
   private notificationService = inject(MuiNotificationService);
   private router = inject(Router);
@@ -108,51 +109,104 @@ export class SnomedCodesystemEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Two-step import flow:
+   *   1. Stream-upload the zip to the Bob "snomed" container (heap-safe even on full
+   *      International editions — server uses StreamingFileUpload + temp file).
+   *   2. Trigger the server-side import (or dry-run scan) by uuid via the from-archive
+   *      endpoint, which streams Minio → Snowstorm / Minio → scan parser without buffering.
+   * The progress UI keeps the same three phases (uploading / scanning / importing); only the
+   * uploading phase reports concrete byte progress, the rest are indeterminate Lorque polls.
+   */
   protected importFromRF2(): void {
     if (!validateForm(this.importModalForm)) {
       return;
     }
-
     const file: File | undefined = this.fileInput?.nativeElement?.files?.[0];
-    const filename = file?.name;
-    const request: {branchPath: string, type: string, createCodeSystemVersion: boolean, mode?: 'summary' | 'full'} = {
-      branchPath: this.snomedCodeSystem.branchPath,
+    if (!file) {
+      return;
+    }
+
+    const dryRun = !!this.importModalData.dryRun;
+    const branchPath = this.snomedCodeSystem.branchPath;
+    const importParams = {
+      branchPath,
       type: this.importModalData.type,
-      createCodeSystemVersion: true
+      createCodeSystemVersion: true,
+      ...(dryRun ? {mode: this.importModalData.fullMode ? 'full' : 'summary'} : {}),
     };
 
     this.importModalData.phase = 'uploading';
     this.importModalData.progress = 0;
 
-    if (this.importModalData.dryRun) {
-      request.mode = this.importModalData.fullMode ? 'full' : 'summary';
-      this.loader.wrap('import', this.snomedService.scanRF2(request, file, filename)).subscribe({
-        next: resp => {
-          if (resp.finished) {
-            this.importModalData.phase = 'scanning';
-            this.importModalData.progress = undefined;
-            this.handleScanLorqueStarted(resp.body);
-          } else {
-            this.importModalData.progress = resp.progress;
-          }
-        },
-        error: err => this.handleImportError(err)
-      });
-      return;
-    }
-
-    this.loader.wrap('import', this.snomedService.createImportJob(request, file)).subscribe({
-      next: resp => {
-        if (resp.finished) {
+    this.loader.wrap('import', this.bobService.upload({
+      container: 'snomed',
+      file,
+      description: `${dryRun ? 'dry-run upload' : 'import upload'} for ${this.snomedCodeSystem.shortName}`,
+    })).subscribe({
+      next: ev => {
+        if (!ev.finished) {
+          this.importModalData.progress = ev.progress;
+          return;
+        }
+        // Upload done — kick off the server-side phase. We don't need progress for the
+        // BobObject create response itself; switch to the indeterminate "scanning" /
+        // "importing" phase driven by Lorque polling.
+        const uuid = ev.body!.uuid!;
+        if (dryRun) {
+          this.importModalData.phase = 'scanning';
+          this.importModalData.progress = undefined;
+          this.snomedService.scanRF2FromArchive({archiveUuid: uuid, ...importParams as any}).subscribe({
+            next: lorque => this.handleScanLorqueStarted(lorque),
+            error: err => this.handleImportError(err),
+          });
+        } else {
           this.importModalData.phase = 'importing';
           this.importModalData.progress = undefined;
           this.importModalData.progressNote = undefined;
-          this.pollJobStatus(resp.body.jobId);
-        } else {
-          this.importModalData.progress = resp.progress;
+          this.snomedService.createImportJobFromArchive({archiveUuid: uuid, ...importParams as any}).subscribe({
+            next: lorque => this.handleImportLorqueStarted(lorque),
+            error: err => this.handleImportError(err),
+          });
         }
       },
-      error: err => this.handleImportError(err)
+      error: err => this.handleImportError(err),
+    });
+  }
+
+  /**
+   * The from-archive import Lorque process completes after Bob → Snowstorm streaming finishes
+   * and the tracking row is written; result text holds {"jobId":"…"}. We then hand off to the
+   * existing Snowstorm-side job poller, exactly like the legacy createImportJob path.
+   */
+  private handleImportLorqueStarted(lorque: {id: number}): void {
+    this.lorqueService.pollProcessProgress(lorque.id, this.destroy$).subscribe(p => {
+      if (p?.progressPercent != null) {
+        this.importModalData.progress = p.progressPercent;
+      }
+      if (p?.progressNote) {
+        this.importModalData.progressNote = p.progressNote;
+      }
+      if (!p?.status || p.status === 'running') {
+        return;
+      }
+      if (p.status === 'failed') {
+        this.lorqueService.load(lorque.id).subscribe(loaded => this.notificationService.error(loaded.resultText));
+        this.importModalData = {type: 'SNAPSHOT'};
+        return;
+      }
+      // status === 'completed' — pull the {jobId} payload and hand to existing poller.
+      this.lorqueService.load(lorque.id).subscribe(loaded => {
+        try {
+          const payload = JSON.parse(loaded.resultText || '{}');
+          if (payload.jobId) {
+            this.pollJobStatus(payload.jobId);
+          }
+        } catch {
+          // payload was not JSON — just close the modal
+          this.importModalData = {type: 'SNAPSHOT'};
+        }
+      });
     });
   }
 
