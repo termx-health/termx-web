@@ -1,0 +1,41 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <h3 style="margin: 0;">Stored archives ({{container}})</h3>
+    <m-button mDisplay="text" (mClick)="load()" [mLoading]="loader.state['load']">↻</m-button>
+  </div>
+  <div *mCardContent="!loader.state['load']">
+    <m-table [mData]="archives" mEmptyText="No archives yet">
+      <tr *mTableHead>
+        <th>File</th>
+        <th>Description</th>
+        <th style="width: 1%; white-space: nowrap;"></th>
+      </tr>
+      <tr *mTableRow="let o">
+        <td>
+          <a (click)="download(o)">{{o.storage?.filename || o.uuid}}</a>
+          <div class="m-subtitle">{{o.contentType}}</div>
+        </td>
+        <td>{{o.description || '-'}}</td>
+        <td>
+          @if (actionLabel) {
+            <m-button mDisplay="primary" mSize="small" (mClick)="action.emit(o)">{{actionLabel}}</m-button>
+          }
+          <m-button mDisplay="text" mSize="small" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="remove(o)">
+            {{'core.btn.delete' | translate}}
+          </m-button>
+        </td>
+      </tr>
+    </m-table>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+      <input #fileInput type="file" (change)="onPickFile(fileInput)">
+      <input type="text" placeholder="Description (optional)" [(ngModel)]="uploadDescription" style="flex: 1;">
+      <m-button mDisplay="primary" [disabled]="!uploadFile" [mLoading]="loader.state['upload']" (mClick)="upload()">
+        Upload
+      </m-button>
+    </div>
+    @if (uploadProgress !== undefined) {
+      <div style="margin-top: 0.5rem;">Uploading: {{uploadProgress}}%</div>
+    }
+  </div>
+</m-card>

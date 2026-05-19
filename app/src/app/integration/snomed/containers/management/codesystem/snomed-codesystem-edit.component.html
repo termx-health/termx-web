@@ -185,3 +185,16 @@
     </div>
   </m-modal>
 </m-form-row>
+
+<!--
+  Stored RF2 archives — uploaded to the Bob "snomed" container via the streaming /bob/objects
+  endpoint, so JVM heap stays flat even on full International editions (~1 GB). The per-row
+  "Import" button calls /snomed/imports/from-archive which streams Minio → Snowstorm.
+-->
+<ng-container *twPrivileged="'snomed-ct.CodeSystem.read'">
+  <m-form-row>
+    <div *m-form-col>
+      <tw-bob-archives container="snomed" actionLabel="Import" (action)="importFromArchive($event)"/>
+    </div>
+  </m-form-row>
+</ng-container>

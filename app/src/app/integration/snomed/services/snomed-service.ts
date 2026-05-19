@@ -122,6 +122,29 @@ export class SnomedService extends SnomedLibService {
     return this.http.get(`${this.baseUrl}/imports/scan/result/${lorqueProcessId}`);
   }
 
+  /**
+   * Streaming counterpart of {@link createImportJob} — the archive already lives in the Bob
+   * "snomed" container (uploaded via {@link BobLibService#upload}). Returns a Lorque process
+   * the caller polls for progress / completion.
+   */
+  public createImportJobFromArchive(request: {
+    archiveUuid: string;
+    branchPath: string;
+    type: string;
+    createCodeSystemVersion: boolean;
+  }): Observable<{id: number}> {
+    return this.http.post(`${this.baseUrl}/imports/from-archive`, request).pipe(map(r => r as {id: number}));
+  }
+
+  public scanRF2FromArchive(request: {
+    archiveUuid: string;
+    branchPath: string;
+    type: string;
+    mode?: 'summary' | 'full';
+  }): Observable<{id: number}> {
+    return this.http.post(`${this.baseUrl}/imports/scan/from-archive`, request).pipe(map(r => r as {id: number}));
+  }
+
   public proceedScanImport(cacheId: number): Observable<{jobId: string}> {
     return this.http.post(`${this.baseUrl}/imports/scan/${cacheId}/proceed`, {}).pipe(map(r => r as {jobId: string}));
   }
