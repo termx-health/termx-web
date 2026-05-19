@@ -3,7 +3,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
-import {DestroyService, LoadingManager, LocalDateTimePipe} from '@termx-health/core-util';
+import {DestroyService, LoadingManager} from '@termx-health/core-util';
 import {
   MarinPageLayoutModule,
   MuiAlertModule,
@@ -56,7 +56,6 @@ import {BobLibService, BobObject, LorqueLibService} from 'term-web/sys/_lib';
     MuiSpinnerModule,
     MuiTableModule,
     TranslatePipe,
-    LocalDateTimePipe,
   ],
 })
 export class SnomedArchiveDetailComponent implements OnInit {
