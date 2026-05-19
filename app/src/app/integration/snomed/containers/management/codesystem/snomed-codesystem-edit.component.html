@@ -194,7 +194,10 @@
 <ng-container *twPrivileged="'snomed-ct.CodeSystem.read'">
   <m-form-row>
     <div *m-form-col>
-      <tw-bob-archives container="snomed" actionLabel="Import" (action)="importFromArchive($event)"/>
+      <tw-bob-archives container="snomed"
+                       [meta]="{shortName: snomedCodeSystem?.shortName, branchPath: snomedCodeSystem?.branchPath}"
+                       actionLabel="Import"
+                       (action)="importFromArchive($event)"/>
     </div>
   </m-form-row>
 </ng-container>

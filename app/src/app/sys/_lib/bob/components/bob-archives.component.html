@@ -15,7 +15,17 @@
           <a (click)="download(o)">{{o.storage?.filename || o.uuid}}</a>
           <div class="m-subtitle">{{o.contentType}}</div>
         </td>
-        <td>{{o.description || '-'}}</td>
+        <td>
+          <div>{{o.description || '-'}}</div>
+          @if (o.meta && (o.meta['branchPath'] || o.meta['rf2Type'] || o.meta['version'] || o.meta['language'])) {
+            <div class="m-subtitle">
+              @if (o.meta['branchPath']) { <span>{{o.meta['branchPath']}}</span> }
+              @if (o.meta['rf2Type']) { <span> · {{o.meta['rf2Type']}}</span> }
+              @if (o.meta['version']) { <span> · v{{o.meta['version']}}</span> }
+              @if (o.meta['language']) { <span> · {{o.meta['language']}}</span> }
+            </div>
+          }
+        </td>
         <td>
           @if (actionLabel) {
             <m-button mDisplay="primary" mSize="small" (mClick)="action.emit(o)">{{actionLabel}}</m-button>
