@@ -81,6 +81,13 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected sourceArchive?: BobObject;
   protected baselineArchive?: BobObject;
 
+  /** Form bound to the "Import to Snowstorm" panel for source archives. Defaults are seeded
+   *  from the archive's meta on load so the admin doesn't have to re-pick the RF2 type. */
+  protected importForm: {type: 'SNAPSHOT' | 'DELTA' | 'FULL'; createCodeSystemVersion: boolean} = {
+    type: 'SNAPSHOT',
+    createCodeSystemVersion: true,
+  };
+
   protected loader = new LoadingManager();
   protected deltaProgress?: number;
   protected deltaError?: string;
@@ -135,6 +142,14 @@ export class SnomedArchiveDetailComponent implements OnInit {
           if (base) {
             this.bobService.load(base).pipe(catchError(() => of(undefined))).subscribe(o => this.baselineArchive = o);
           }
+        } else {
+          // Seed the import-to-Snowstorm form from whatever rf2Type the modal tagged at upload.
+          // Falls back to SNAPSHOT (the most common case) if meta lacks the tag.
+          const rf2Type = this.rf2Type;
+          this.importForm.type = (rf2Type === 'DELTA' || rf2Type === 'FULL') ? rf2Type : 'SNAPSHOT';
+          // Creating a CS version only makes sense for SNAPSHOT/FULL — DELTA imports a diff,
+          // not a new versioned state.
+          this.importForm.createCodeSystemVersion = this.importForm.type !== 'DELTA';
         }
       });
   }
@@ -271,35 +286,89 @@ export class SnomedArchiveDetailComponent implements OnInit {
     this.deltaError = this.extractErrorMessage(err);
   }
 
+  /** Source-archive path: imports the current archive into Snowstorm using the rf2Type +
+   *  createCodeSystemVersion the admin picked in the form. */
+  protected uploadToSnowstorm(): void {
+    this.runSnowstormImport(this.importForm.type, this.importForm.createCodeSystemVersion, 'upload');
+  }
+
+  /** Delta-archive path: always DELTA, no CodeSystem version (deltas don't bump versions —
+   *  they merge into the existing branch state). */
   protected uploadDeltaToSnowstorm(): void {
+    this.runSnowstormImport('DELTA', false, 'upload-delta');
+  }
+
+  /**
+   * Shared import flow: POST /snomed/imports/from-archive, poll the Lorque process until the
+   * Bob→Snowstorm streaming finishes, pull the Snowstorm jobId out of the result, then chain
+   * into Snowstorm-side polling so the admin sees a real "import succeeded" notification —
+   * not just "the file got forwarded".
+   */
+  private runSnowstormImport(
+    type: 'SNAPSHOT' | 'DELTA' | 'FULL',
+    createCodeSystemVersion: boolean,
+    loaderKey: 'upload' | 'upload-delta',
+  ): void {
     if (!this.uuid || !this.branchPath) {
+      this.notificationService.error('Archive is missing a branchPath — re-upload it from the CodeSystem edit page.');
       return;
     }
     this.loader
       .wrap(
-        'upload-delta',
+        loaderKey,
         this.snomedService.createImportJobFromArchive({
           archiveUuid: this.uuid,
           branchPath: this.branchPath,
-          type: 'DELTA',
-          createCodeSystemVersion: false,
+          type,
+          createCodeSystemVersion,
         }),
       )
       .subscribe({
         next: lorque => {
-          this.notificationService.success('Delta upload to Snowstorm started');
+          this.notificationService.success(`${type} upload to Snowstorm started`);
           this.lorqueService.pollProcessProgress(lorque.id, this.destroy$).subscribe(p => {
-            if (p?.status === 'failed') {
+            if (!p?.status || p.status === 'running') {
+              return;
+            }
+            if (p.status === 'failed') {
               this.lorqueService
                 .load(lorque.id)
-                .subscribe(loaded => this.notificationService.error(loaded.resultText));
-            } else if (p?.status === 'completed') {
-              this.notificationService.success('Delta forwarded to Snowstorm');
+                .subscribe(loaded => this.notificationService.error(loaded.resultText || `${type} upload failed`));
+              return;
             }
+            // status === 'completed' — pull the {jobId} out of the lorque result and start
+            // polling Snowstorm directly. Same pattern the legacy modal flow used.
+            this.lorqueService.load(lorque.id).subscribe(loaded => {
+              try {
+                const payload = JSON.parse(loaded.resultText || '{}');
+                if (payload.jobId) {
+                  this.pollSnowstormImport(payload.jobId);
+                  return;
+                }
+              } catch {
+                /* fall through */
+              }
+              this.notificationService.success(`${type} archive forwarded to Snowstorm`);
+            });
           });
         },
         error: err => this.notificationService.error(this.extractErrorMessage(err)),
       });
+  }
+
+  /** Polls Snowstorm's own import-job state via the existing snomedService.pollImportJob
+   *  helper (same one snomed-codesystem-edit.component used pre-refactor). */
+  private pollSnowstormImport(jobId: string): void {
+    this.snomedService.pollImportJob(jobId, this.destroy$).subscribe({
+      next: jobResp => {
+        if (jobResp?.status === 'FAILED') {
+          this.notificationService.error(jobResp.errorMessage || 'Snowstorm import failed');
+        } else if (jobResp?.status === 'COMPLETED') {
+          this.notificationService.success('Snowstorm import completed');
+        }
+      },
+      error: err => this.notificationService.error(this.extractErrorMessage(err)),
+    });
   }
 
   protected baselineLabel(c: BobObject): string {

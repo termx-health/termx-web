@@ -111,6 +111,41 @@
       </div>
     </m-card>
 
+    <!-- ─── Import to Snowstorm (source archives only) ─────────────────────────────
+         Lets the admin import this archive into Snowstorm directly, without going
+         through a delta. The rf2Type defaults to whatever the modal upload tagged on
+         meta; the createCodeSystemVersion checkbox follows the SNAPSHOT convention. -->
+    @if (!isDelta) {
+      <m-card style="margin-top: 1rem;">
+        <div *m-card-header><h3 style="margin: 0;">Import to Snowstorm</h3></div>
+        <div *mCardContent>
+          <p class="m-subtitle" style="margin: 0 0 0.75rem 0;">
+            Import this archive into Snowstorm on branch
+            <code>{{branchPath || '(unset)'}}</code>. For a SNAPSHOT or FULL upload,
+            keep "Create CodeSystem version" checked so Snowstorm bumps the version pin.
+          </p>
+          <m-form-row>
+            <m-form-item *mFormCol mLabel="RF2 type" required>
+              <m-select name="importType" [(ngModel)]="importForm.type">
+                <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
+                <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
+                <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
+              </m-select>
+            </m-form-item>
+            <m-form-item *mFormCol mLabel="Create CodeSystem version">
+              <m-checkbox name="csv" [(ngModel)]="importForm.createCodeSystemVersion"></m-checkbox>
+            </m-form-item>
+            <m-button *mFormCol mDisplay="primary"
+                      [disabled]="!branchPath || loader.state['upload']"
+                      [mLoading]="loader.state['upload']"
+                      (mClick)="uploadToSnowstorm()">
+              Upload to Snowstorm
+            </m-button>
+          </m-form-row>
+        </div>
+      </m-card>
+    }
+
     <!-- ─── Diff section (only for source archives, not deltas) ──────────────────── -->
     @if (!isDelta) {
       <m-card style="margin-top: 1rem;">
