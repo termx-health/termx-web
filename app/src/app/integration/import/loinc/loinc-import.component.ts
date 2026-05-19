@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {DestroyService} from '@termx-health/core-util';
 import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule } from '@termx-health/ui';
 import {environment} from 'environments/environment';
-import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import {BobArchivesComponent, JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 
@@ -16,7 +16,7 @@ import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privi
 @Component({
     templateUrl: 'loinc-import.component.html',
     providers: [DestroyService],
-    imports: [MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, FormsModule, MuiFormModule, MuiInputModule, ValueSetConceptSelectComponent, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, HasAnyPrivilegePipe]
+    imports: [MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, FormsModule, MuiFormModule, MuiInputModule, ValueSetConceptSelectComponent, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, HasAnyPrivilegePipe, BobArchivesComponent]
 })
 export class LoincImportComponent {
   private http = inject(HttpClient);

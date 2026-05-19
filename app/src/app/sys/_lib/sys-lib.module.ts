@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {BobLibModule} from 'term-web/sys/_lib/bob';
 import {ChecklistLibModule} from 'term-web/sys/_lib/checklist';
 import {SpaceLibModule} from 'term-web/sys/_lib/space';
 import {JobLibModule} from 'term-web/sys/_lib/job';
@@ -8,6 +9,7 @@ import {ReleaseLibModule} from 'term-web/sys/_lib/release';
 
 @NgModule({
   imports: [
+    BobLibModule,
     JobLibModule,
     LorqueLibModule,
     ProvenanceLibModule,
@@ -16,6 +18,7 @@ import {ReleaseLibModule} from 'term-web/sys/_lib/release';
     SpaceLibModule
   ],
   exports: [
+    BobLibModule,
     JobLibModule,
     LorqueLibModule,
     ProvenanceLibModule,

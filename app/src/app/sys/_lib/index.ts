@@ -11,6 +11,7 @@ export * from 'term-web/sys/_lib/provenance/services/provenance-lib.service';
 export * from 'term-web/sys/_lib/sys-lib.module';
 
 
+export * from 'term-web/sys/_lib/bob';
 export * from 'term-web/sys/_lib/checklist';
 export * from 'term-web/sys/_lib/job';
 export * from 'term-web/sys/_lib/lorque';

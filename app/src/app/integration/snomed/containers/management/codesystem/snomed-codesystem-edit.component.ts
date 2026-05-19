@@ -6,7 +6,7 @@ import { compareStrings, DestroyService, isDefined, LoadingManager, validateForm
 import { MuiNotificationService, MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, MuiAlertModule } from '@termx-health/ui';
 import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'term-web/integration/_lib';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
-import {LorqueLibService} from 'term-web/sys/_lib';
+import {BobArchivesComponent, BobObject, LorqueLibService} from 'term-web/sys/_lib';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { NzProgressComponent } from 'ng-zorro-antd/progress';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -15,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
     templateUrl: 'snomed-codesystem-edit.component.html',
     providers: [DestroyService],
-    imports: [MuiFormModule, MuiSpinnerModule, FormsModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, PrivilegedDirective, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, NzProgressComponent, MuiAlertModule, TranslatePipe, FilterPipe, JoinPipe, LocalDateTimePipe, ToStringPipe, ValuesPipe]
+    imports: [MuiFormModule, MuiSpinnerModule, FormsModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, PrivilegedDirective, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, NzProgressComponent, MuiAlertModule, TranslatePipe, FilterPipe, JoinPipe, LocalDateTimePipe, ToStringPipe, ValuesPipe, BobArchivesComponent]
 })
 export class SnomedCodesystemEditComponent implements OnInit {
   private snomedService = inject(SnomedService);
@@ -153,6 +153,41 @@ export class SnomedCodesystemEditComponent implements OnInit {
         }
       },
       error: err => this.handleImportError(err)
+    });
+  }
+
+  /**
+   * Kicks off a streaming SNOMED import against a previously-uploaded archive in Bob —
+   * invoked by the per-row "Import" button on <tw-bob-archives>. The full upload has already
+   * happened (no re-upload from the browser); we only POST the uuid + import params and poll
+   * the Lorque process for completion.
+   */
+  protected importFromArchive(archive: BobObject): void {
+    if (!archive?.uuid || !this.snomedCodeSystem) {
+      return;
+    }
+    const branchPath = this.snomedCodeSystem.branchPath;
+    this.loader.wrap('importFromArchive', this.snomedService.createImportJobFromArchive({
+      archiveUuid: archive.uuid,
+      branchPath,
+      type: 'SNAPSHOT',
+      createCodeSystemVersion: true
+    })).subscribe({
+      next: lorque => {
+        this.notificationService.success('Import started');
+        // The polling pattern matches the existing scan flow — Snowstorm runs the actual import
+        // server-side; the Lorque process here completes once the archive has been uploaded to
+        // Snowstorm and the tracking row is written. Snowstorm import status is then polled via
+        // the existing tracking record.
+        this.lorqueService.pollProcessProgress(lorque.id, this.destroy$).subscribe(p => {
+          if (p?.status === 'failed') {
+            this.lorqueService.load(lorque.id).subscribe(loaded => this.notificationService.error(loaded.resultText));
+          } else if (p?.status === 'completed') {
+            this.notificationService.success('Archive uploaded to Snowstorm; import running');
+          }
+        });
+      },
+      error: err => this.notificationService.error(this.extractErrorMessage(err)),
     });
   }
 

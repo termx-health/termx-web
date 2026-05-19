@@ -90,3 +90,12 @@
     <m-button mDisplay="primary" (click)="importLoinc()">{{'core.btn.confirm' | translate}}</m-button>
   </div>
 </m-modal>
+
+<!--
+  Stored LOINC release archives — uploaded to the Bob "loinc" container via the streaming
+  /bob/objects endpoint. The per-row Import action is not wired yet (LOINC's multi-file
+  import flow needs a server-side zip-entry dispatcher; see termx-server PR #121).
+-->
+<div style="margin-top: 1rem;">
+  <tw-bob-archives container="loinc"/>
+</div>
