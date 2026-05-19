@@ -12,7 +12,7 @@
       </tr>
       <tr *mTableRow="let o">
         <td>
-          <a (click)="download(o)">{{o.storage?.filename || o.uuid}}</a>
+          <a (click)="onItemClick(o)">{{o.storage?.filename || o.uuid}}</a>
           <div class="m-subtitle">{{o.contentType}}</div>
         </td>
         <td>

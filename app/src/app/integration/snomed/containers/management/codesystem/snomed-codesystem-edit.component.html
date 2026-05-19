@@ -107,51 +107,18 @@
         <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
           <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" [disabled]="loader.state['import']" required>
         </m-form-item>
-        <m-form-item mName="dryRun">
-          <m-checkbox name="dryRun" [(ngModel)]="importModalData.dryRun">
-            {{'web.snomed.branch.management.import-modal.dry-run' | translate}}
-          </m-checkbox>
-        </m-form-item>
-        @if (importModalData.dryRun) {
-          <m-form-item mName="fullMode">
-            <m-checkbox name="fullMode" [(ngModel)]="importModalData.fullMode">
-              {{'web.snomed.branch.management.import-modal.full-mode' | translate}}
-            </m-checkbox>
-          </m-form-item>
-        }
         @if (importModalData.phase === 'uploading' && importModalData.progress) {
           <m-form-item>
             <div class="m-bold">{{'web.snomed.branch.management.import-modal.uploading' | translate}}</div>
             <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
           </m-form-item>
         }
-        @if (importModalData.phase === 'scanning') {
-          <m-form-item>
-            <div class="m-bold">
-              {{'web.snomed.branch.management.import-modal.scanning' | translate}}
-              @if (importModalData.progressNote) {
-                <span style="font-weight: normal"> — {{importModalData.progressNote}}</span>
-              }
-            </div>
-            @if (importModalData.progress) {
-              <nz-progress [nzPercent]="importModalData.progress" nzStatus="active"></nz-progress>
-            } @else {
-              <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
-            }
-          </m-form-item>
-        }
-        @if (importModalData.phase === 'importing') {
-          <m-form-item>
-            <div class="m-bold">{{'web.snomed.branch.management.import-modal.importing' | translate}}</div>
-            <nz-progress [nzPercent]="100" nzStatus="active" [nzShowInfo]="false"></nz-progress>
-          </m-form-item>
-        }
       </form>
-      @if (importModalData.dryRun) {
-        <m-alert mType="info" mShowIcon>{{'web.snomed.branch.management.import-modal.dry-run-warning' | translate}}</m-alert>
-      } @else {
-        <m-alert mType="warning" mShowIcon>{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
-      }
+      <m-alert mType="info" mShowIcon>
+        Upload streams to object storage; you'll land on the archive detail page where you can
+        review files, calculate a delta against another upload on the same branch, and choose
+        what to push to Snowstorm.
+      </m-alert>
     </ng-container>
 
     <div *m-modal-footer class="m-items-middle">
@@ -196,8 +163,9 @@
     <div *m-form-col>
       <tw-bob-archives container="snomed"
                        [meta]="{shortName: snomedCodeSystem?.shortName, branchPath: snomedCodeSystem?.branchPath}"
-                       actionLabel="Import"
-                       (action)="importFromArchive($event)"/>
+                       actionLabel="Open"
+                       (action)="importFromArchive($event)"
+                       (itemClick)="importFromArchive($event)"/>
     </div>
   </m-form-row>
 </ng-container>

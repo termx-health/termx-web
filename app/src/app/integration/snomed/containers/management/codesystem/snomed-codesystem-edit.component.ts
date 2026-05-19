@@ -33,7 +33,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, progressNote?: string, dryRun?: boolean, fullMode?: boolean, phase?: 'uploading' | 'scanning' | 'importing'} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number, phase?: 'uploading'} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -110,13 +110,11 @@ export class SnomedCodesystemEditComponent implements OnInit {
   }
 
   /**
-   * Two-step import flow:
-   *   1. Stream-upload the zip to the Bob "snomed" container (heap-safe even on full
-   *      International editions — server uses StreamingFileUpload + temp file).
-   *   2. Trigger the server-side import (or dry-run scan) by uuid via the from-archive
-   *      endpoint, which streams Minio → Snowstorm / Minio → scan parser without buffering.
-   * The progress UI keeps the same three phases (uploading / scanning / importing); only the
-   * uploading phase reports concrete byte progress, the rest are indeterminate Lorque polls.
+   * "Import from RF2" modal: stream-upload the zip to the Bob "snomed" container (heap-safe
+   * even on full International editions) and then navigate to the per-archive detail page.
+   * From there the admin reviews the upload, picks a baseline, calculates a delta, and chooses
+   * what to push to Snowstorm. The legacy "Dry run" checkbox is gone — every upload lands on
+   * the same detail page, dry-run-style or not.
    */
   protected importFromRF2(): void {
     if (!validateForm(this.importModalForm)) {
@@ -127,21 +125,12 @@ export class SnomedCodesystemEditComponent implements OnInit {
       return;
     }
 
-    const dryRun = !!this.importModalData.dryRun;
     const branchPath = this.snomedCodeSystem.branchPath;
-    const importParams = {
-      branchPath,
-      type: this.importModalData.type,
-      createCodeSystemVersion: true,
-      ...(dryRun ? {mode: this.importModalData.fullMode ? 'full' : 'summary'} : {}),
-    };
-
     this.importModalData.phase = 'uploading';
     this.importModalData.progress = 0;
 
-    // Tag the upload with the current CS so the Stored archives card below filters to just
-    // this CodeSystem's archives. snomedRF2Type goes on the meta so the per-row Import button
-    // can default to the right RF2 type instead of always SNAPSHOT.
+    // Tag the upload with the current CS so the Stored archives card filters to this CS, and
+    // so the per-archive detail page can pre-fill branchPath / rf2Type without re-asking.
     const archiveMeta = {
       shortName: this.snomedCodeSystem.shortName,
       branchPath,
@@ -151,7 +140,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
     this.loader.wrap('import', this.bobService.upload({
       container: 'snomed',
       file,
-      description: `${dryRun ? 'dry-run upload' : 'import upload'} for ${this.snomedCodeSystem.shortName}`,
+      description: `${this.importModalData.type ?? 'SNAPSHOT'} upload for ${this.snomedCodeSystem.shortName}`,
       meta: archiveMeta,
     })).subscribe({
       next: ev => {
@@ -159,26 +148,16 @@ export class SnomedCodesystemEditComponent implements OnInit {
           this.importModalData.progress = ev.progress;
           return;
         }
-        // Upload done — kick off the server-side phase. We don't need progress for the
-        // BobObject create response itself; switch to the indeterminate "scanning" /
-        // "importing" phase driven by Lorque polling.
+        // Upload done — close the modal and route to the archive detail page. Calculate
+        // Delta / Upload to Snowstorm live there.
         const uuid = ev.body!.uuid!;
-        if (dryRun) {
-          this.importModalData.phase = 'scanning';
-          this.importModalData.progress = undefined;
-          this.snomedService.scanRF2FromArchive({archiveUuid: uuid, ...importParams as any}).subscribe({
-            next: lorque => this.handleScanLorqueStarted(lorque),
-            error: err => this.handleImportError(err),
-          });
-        } else {
-          this.importModalData.phase = 'importing';
-          this.importModalData.progress = undefined;
-          this.importModalData.progressNote = undefined;
-          this.snomedService.createImportJobFromArchive({archiveUuid: uuid, ...importParams as any}).subscribe({
-            next: lorque => this.handleImportLorqueStarted(lorque),
-            error: err => this.handleImportError(err),
-          });
-        }
+        this.importModalData = {type: 'SNAPSHOT'};
+        this.router.navigate([
+          '/integration/snomed/codesystems',
+          this.snomedCodeSystem.shortName,
+          'archives',
+          uuid,
+        ]);
       },
       error: err => this.handleImportError(err),
     });
@@ -188,21 +167,21 @@ export class SnomedCodesystemEditComponent implements OnInit {
    * The from-archive import Lorque process completes after Bob → Snowstorm streaming finishes
    * and the tracking row is written; result text holds {"jobId":"…"}. We then hand off to the
    * existing Snowstorm-side job poller, exactly like the legacy createImportJob path.
+   *
+   * Kept for compatibility with the per-row Import button on the Stored archives card while
+   * the new archive detail page rolls out — see {@link importFromArchive} below.
    */
   private handleImportLorqueStarted(lorque: {id: number}): void {
     this.lorqueService.pollProcessProgress(lorque.id, this.destroy$).subscribe(p => {
       if (p?.progressPercent != null) {
-        this.importModalData.progress = p.progressPercent;
-      }
-      if (p?.progressNote) {
-        this.importModalData.progressNote = p.progressNote;
+        // Existing modal-progress UI is gone; we used to mirror this onto importModalData.
+        // The detail page has its own progress handling now; this is no-op here.
       }
       if (!p?.status || p.status === 'running') {
         return;
       }
       if (p.status === 'failed') {
         this.lorqueService.load(lorque.id).subscribe(loaded => this.notificationService.error(loaded.resultText));
-        this.importModalData = {type: 'SNAPSHOT'};
         return;
       }
       // status === 'completed' — pull the {jobId} payload and hand to existing poller.
@@ -221,42 +200,20 @@ export class SnomedCodesystemEditComponent implements OnInit {
   }
 
   /**
-   * Kicks off a streaming SNOMED import against a previously-uploaded archive in Bob —
-   * invoked by the per-row "Import" button on <tw-bob-archives>. The full upload has already
-   * happened (no re-upload from the browser); we only POST the uuid + import params and poll
-   * the Lorque process for completion.
+   * Clicking a row's Import button on <tw-bob-archives> just navigates to the per-archive
+   * detail page now — Snowstorm imports live there alongside Calculate Delta. The actual
+   * /imports/from-archive POST is moved into {@link SnomedArchiveDetailComponent}.
    */
   protected importFromArchive(archive: BobObject): void {
     if (!archive?.uuid || !this.snomedCodeSystem) {
       return;
     }
-    // Prefer the meta the upload was tagged with — that's the branch the user intended at
-    // upload time. Fall back to the current CS so legacy archives (uploaded before meta
-    // scoping landed) still work.
-    const branchPath = archive.meta?.['branchPath'] || this.snomedCodeSystem.branchPath;
-    const type = archive.meta?.['rf2Type'] || 'SNAPSHOT';
-    this.loader.wrap('importFromArchive', this.snomedService.createImportJobFromArchive({
-      archiveUuid: archive.uuid,
-      branchPath,
-      type,
-      createCodeSystemVersion: true
-    })).subscribe({
-      next: lorque => {
-        this.notificationService.success('Import started');
-        // The polling pattern matches the existing scan flow — Snowstorm runs the actual import
-        // server-side; the Lorque process here completes once the archive has been uploaded to
-        // Snowstorm and the tracking row is written. Snowstorm import status is then polled via
-        // the existing tracking record.
-        this.lorqueService.pollProcessProgress(lorque.id, this.destroy$).subscribe(p => {
-          if (p?.status === 'failed') {
-            this.lorqueService.load(lorque.id).subscribe(loaded => this.notificationService.error(loaded.resultText));
-          } else if (p?.status === 'completed') {
-            this.notificationService.success('Archive uploaded to Snowstorm; import running');
-          }
-        });
-      },
-      error: err => this.notificationService.error(this.extractErrorMessage(err)),
-    });
+    this.router.navigate([
+      '/integration/snomed/codesystems',
+      this.snomedCodeSystem.shortName,
+      'archives',
+      archive.uuid,
+    ]);
   }
 
   private handleImportError(err: any): void {
@@ -296,31 +253,10 @@ export class SnomedCodesystemEditComponent implements OnInit {
     return err?.message || 'web.snomed.branch.management.import-failed';
   }
 
-  private handleScanLorqueStarted(lorque: {id: number}): void {
-    this.loader.wrap('import', this.lorqueService.pollProcessProgress(lorque.id, this.destroy$)).subscribe(p => {
-      if (p?.progressPercent != null) {
-        this.importModalData.progress = p.progressPercent;
-      }
-      if (p?.progressNote) {
-        this.importModalData.progressNote = p.progressNote;
-      }
-      if (!p?.status || p.status === 'running') {
-        return;
-      }
-      this.importModalData.phase = undefined;
-      if (p.status === 'failed') {
-        this.lorqueService.load(lorque.id).subscribe(loaded => this.notificationService.error(loaded.resultText));
-        return;
-      }
-      this.snomedService.loadScanResult(lorque.id).subscribe(envelope => {
-        this.importModalData = {type: 'SNAPSHOT'};
-        this.router.navigate(
-          ['/integration/snomed/codesystems', this.snomedCodeSystem.shortName, 'rf2-scan-result'],
-          {state: {envelope, shortName: this.snomedCodeSystem.shortName}}
-        );
-      });
-    });
-  }
+  // handleScanLorqueStarted has been removed — the legacy dry-run flow now lives on the
+  // per-archive detail page (Calculate Delta button), so this modal no longer needs the
+  // scan-result navigation path. The /rf2-scan-result route stays available for any
+  // bookmarked URLs but no UI links to it any more.
 
   private getRF2File(jobId: string): void {
     this.exportModalData = {type: 'SNAPSHOT'};
