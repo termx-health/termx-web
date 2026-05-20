@@ -122,8 +122,13 @@
   per-slot selects) — Import button at the bottom of the form is the single confirm step.
 -->
 <div style="margin-top: 1rem;">
+  <!-- [uploadMeta] not [meta]: we want every stored LOINC archive listed (across versions
+       and languages) so the admin can see what's already on the server, but we still want
+       NEW uploads tagged with the form's current version+language. Using [meta] for both
+       had a bug — uploading 2.83 would flip data.version, which then filtered 2.82 out of
+       the list (it's still in the DB, just hidden from view). -->
   <tw-bob-archives container="loinc"
-                   [meta]="{version: data.version, language: data.language}"
+                   [uploadMeta]="{version: data.version, language: data.language}"
                    actionLabel="Open"
                    (action)="onArchiveOpen($event)"
                    (itemClick)="onArchiveOpen($event)"
