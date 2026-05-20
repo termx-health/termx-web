@@ -125,6 +125,16 @@ export class SnomedService extends SnomedLibService {
   }
 
   /**
+   * Most-recent scan envelope for a Bob archive, server-side keyed by archive uuid.
+   * Replaces the previous "envelope via Angular router state" approach which was lost on
+   * refresh / back-forward-cache restore and could surface a stale envelope on URL-pasted
+   * navigations. Returns {@code null} (HTTP 200 with empty body) when no scan exists yet.
+   */
+  public loadLatestScanResult(archiveUuid: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/archives/${archiveUuid}/latest-scan-result`);
+  }
+
+  /**
    * Streaming counterpart of {@link createImportJob} — the archive already lives in the Bob
    * "snomed" container (uploaded via {@link BobLibService#upload}). Returns a Lorque process
    * the caller polls for progress / completion.

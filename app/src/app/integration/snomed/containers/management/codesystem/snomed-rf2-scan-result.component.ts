@@ -120,40 +120,55 @@ export class SnomedRF2ScanResultComponent implements OnInit {
 
   public ngOnInit(): void {
     // Subscribe to paramMap so navigating between different archives' scan results within
-    // the same CodeSystem refreshes the page. Without this, Angular reuses the component
-    // instance and ngOnInit only fires once — the result envelope from the first analyze
-    // sticks around for every subsequent visit (regression: "always show the same data
-    // independent which delta file I select").
+    // the same CodeSystem refreshes the page. Each paramMap emission re-fetches the latest
+    // scan envelope server-side, keyed by archive uuid — this is the canonical "same URL ⇒
+    // same data" path. Router state is consulted only as a fast-path for the Analyze
+    // concepts → router.navigate handoff (so we don't re-fetch what the just-completed
+    // server call already returned to us).
     this.route.paramMap.subscribe(p => {
       this.shortName = p.get('shortName') ?? undefined;
       this.archiveUuid = p.get('archiveUuid') ?? undefined;
+      this.envelope = undefined;
+      this.archive = undefined;
 
-      // Envelope arrives via router state on the navigation that triggered this scan
-      // (Analyze concepts button on the archive detail page). Direct visits and reloads
-      // would lose it — kept simple for now since the only callers are programmatic.
+      if (!this.archiveUuid) {
+        this.router.navigate(['/integration/snomed/management']);
+        return;
+      }
+
+      // Fast path: envelope arrived via router state on the Analyze-concepts navigation.
+      // Skip the server round-trip in that case.
       const state = (this.router.lastSuccessfulNavigation()?.extras?.state ?? history.state) as
         {envelope?: ScanEnvelope, shortName?: string} | undefined;
       if (state?.envelope) {
         this.envelope = state.envelope;
       } else {
-        this.envelope = undefined;
-        // No data — direct visit or browser reload — bounce back to the archive page.
-        // (Re-running the scan automatically would surprise the admin with a multi-minute job.)
-        if (this.archiveUuid && this.shortName) {
-          this.notificationService.warning('No cached scan result — re-run "Analyze concepts" on the archive page.');
-          this.router.navigate(['/integration/snomed/codesystems', this.shortName, 'archives', this.archiveUuid]);
-        } else {
-          this.router.navigate(['/integration/snomed/management']);
-        }
-        return;
+        // Refresh / paste / back-forward / no state — fetch the latest scan keyed by archive
+        // uuid. The server resolves to the most-recent scan_lorque_id for this Bob uuid and
+        // returns the envelope. Null body means "never scanned" → route the admin back to
+        // the archive page so they can hit Analyze.
+        this.loader
+          .wrap('load-envelope', this.snomedService.loadLatestScanResult(this.archiveUuid))
+          .subscribe({
+            next: env => {
+              if (env && env.json) {
+                this.envelope = env as ScanEnvelope;
+              } else {
+                this.notificationService.warning('No cached scan result — re-run "Analyze concepts" on the archive page.');
+                if (this.shortName && this.archiveUuid) {
+                  this.router.navigate(['/integration/snomed/codesystems', this.shortName, 'archives', this.archiveUuid]);
+                }
+              }
+            },
+            error: () => {
+              this.notificationService.error('Failed to load the latest scan result for this archive.');
+            },
+          });
       }
 
-      // Look up the archive separately to show its filename in the header — clearer than
-      // the just-a-hash URL the page used to have.
-      this.archive = undefined;
-      if (this.archiveUuid) {
-        this.bobService.load(this.archiveUuid).pipe(catchError(() => of(undefined))).subscribe(o => this.archive = o);
-      }
+      // Always fetch the BobObject so the header can show filename + DELTA badge regardless
+      // of which code path filled the envelope.
+      this.bobService.load(this.archiveUuid).pipe(catchError(() => of(undefined))).subscribe(o => this.archive = o);
     });
   }
 
