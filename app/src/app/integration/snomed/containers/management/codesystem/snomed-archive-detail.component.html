@@ -123,25 +123,30 @@
             Import this archive into Snowstorm on branch
             <code>{{branchPath || '(unset)'}}</code>. For a SNAPSHOT or FULL upload,
             keep "Create CodeSystem version" checked so Snowstorm bumps the version pin.
+            DELTA isn't offered here — pick "Calculate Delta" below for that flow.
           </p>
-          <m-form-row>
-            <m-form-item *mFormCol mLabel="RF2 type" required>
-              <m-select name="importType" [(ngModel)]="importForm.type">
-                <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
-                <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
-                <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
-              </m-select>
-            </m-form-item>
-            <m-form-item *mFormCol mLabel="Create CodeSystem version">
-              <m-checkbox name="csv" [(ngModel)]="importForm.createCodeSystemVersion"></m-checkbox>
-            </m-form-item>
-            <m-button *mFormCol mDisplay="primary"
-                      [disabled]="!branchPath || loader.state['upload']"
-                      [mLoading]="loader.state['upload']"
-                      (mClick)="uploadToSnowstorm()">
-              Upload to Snowstorm
-            </m-button>
-          </m-form-row>
+          <!-- <form> wrapper supplies the NgForm ControlContainer that m-checkbox /
+               m-select require when bound with name + ngModel. Without it Angular 21
+               raises NG01203 ('No value accessor for form control name csv'). -->
+          <form #importNgForm="ngForm">
+            <m-form-row>
+              <m-form-item *mFormCol mLabel="RF2 type" required>
+                <m-select name="importType" [(ngModel)]="importForm.type">
+                  <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
+                  <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
+                </m-select>
+              </m-form-item>
+              <m-form-item *mFormCol mLabel="Create CodeSystem version">
+                <m-checkbox name="csv" [(ngModel)]="importForm.createCodeSystemVersion"></m-checkbox>
+              </m-form-item>
+              <m-button *mFormCol mDisplay="primary"
+                        [disabled]="!branchPath || loader.state['upload']"
+                        [mLoading]="loader.state['upload']"
+                        (mClick)="uploadToSnowstorm()">
+                Upload to Snowstorm
+              </m-button>
+            </m-form-row>
+          </form>
         </div>
       </m-card>
     }

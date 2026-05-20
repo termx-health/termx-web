@@ -2,7 +2,6 @@ import {CommonModule, Location} from '@angular/common';
 import {Component, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TranslatePipe} from '@ngx-translate/core';
 import {DestroyService, LoadingManager} from '@termx-health/core-util';
 import {
   MarinPageLayoutModule,
@@ -55,7 +54,6 @@ import {BobLibService, BobObject, LorqueLibService} from 'term-web/sys/_lib';
     MuiSelectModule,
     MuiSpinnerModule,
     MuiTableModule,
-    TranslatePipe,
   ],
 })
 export class SnomedArchiveDetailComponent implements OnInit {
@@ -82,8 +80,10 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected baselineArchive?: BobObject;
 
   /** Form bound to the "Import to Snowstorm" panel for source archives. Defaults are seeded
-   *  from the archive's meta on load so the admin doesn't have to re-pick the RF2 type. */
-  protected importForm: {type: 'SNAPSHOT' | 'DELTA' | 'FULL'; createCodeSystemVersion: boolean} = {
+   *  from the archive's meta on load so the admin doesn't have to re-pick the RF2 type.
+   *  DELTA is intentionally not offered — that flow lives under the Diff section + the
+   *  generated delta archive's own page. */
+  protected importForm: {type: 'SNAPSHOT' | 'FULL'; createCodeSystemVersion: boolean} = {
     type: 'SNAPSHOT',
     createCodeSystemVersion: true,
   };
@@ -144,12 +144,11 @@ export class SnomedArchiveDetailComponent implements OnInit {
           }
         } else {
           // Seed the import-to-Snowstorm form from whatever rf2Type the modal tagged at upload.
-          // Falls back to SNAPSHOT (the most common case) if meta lacks the tag.
+          // Falls back to SNAPSHOT (the most common case). DELTA is not offered here — the
+          // delta flow lives under the Diff section.
           const rf2Type = this.rf2Type;
-          this.importForm.type = (rf2Type === 'DELTA' || rf2Type === 'FULL') ? rf2Type : 'SNAPSHOT';
-          // Creating a CS version only makes sense for SNAPSHOT/FULL — DELTA imports a diff,
-          // not a new versioned state.
-          this.importForm.createCodeSystemVersion = this.importForm.type !== 'DELTA';
+          this.importForm.type = rf2Type === 'FULL' ? 'FULL' : 'SNAPSHOT';
+          this.importForm.createCodeSystemVersion = true;
         }
       });
   }
