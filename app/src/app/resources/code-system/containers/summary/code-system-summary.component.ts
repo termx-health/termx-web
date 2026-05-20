@@ -7,7 +7,7 @@ import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-syste
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiListModule } from '@termx-health/ui';
+import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiListModule } from '@termx-health/ui';
 import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
 import { CodeSystemInfoWidgetComponent } from 'term-web/resources/code-system/containers/summary/widgets/code-system-info-widget.component';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -21,7 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'code-system-summary.component.html',
-    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, CodeSystemInfoWidgetComponent, MuiButtonModule, RouterLink, MuiIconModule, PrivilegedDirective, MuiDividerModule, CodeSystemVersionsWidgetComponent, MuiDropdownModule, MuiCoreModule, MuiListModule, CodeSystemUnlinkedConceptsComponent_1, ResourceTasksWidgetComponent_1, ResourceRelatedArtifactWidgetComponent, ResourceTaskModalComponent, TranslatePipe, FilterPipe]
+    imports: [ResourceContextComponent, PrivilegeContextDirective, MuiFormModule, MuiCardModule, CodeSystemInfoWidgetComponent, MuiButtonModule, RouterLink, MuiIconModule, PrivilegedDirective, MuiDividerModule, CodeSystemVersionsWidgetComponent, MuiDropdownModule, MuiCoreModule, MuiListModule, CodeSystemUnlinkedConceptsComponent_1, ResourceTasksWidgetComponent_1, ResourceRelatedArtifactWidgetComponent, ResourceTaskModalComponent, TranslatePipe, FilterPipe]
 })
 export class CodeSystemSummaryComponent implements OnInit {
   private route = inject(ActivatedRoute);
