@@ -17,7 +17,9 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {NzProgressComponent} from 'ng-zorro-antd/progress';
 import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.directive';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
-import {LorqueLibService} from 'term-web/sys/_lib';
+import {BobLibService, BobObject, LorqueLibService} from 'term-web/sys/_lib';
+import {of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 interface ScanDesignation {
   descriptionId?: string;
@@ -104,29 +106,55 @@ interface ScanEnvelope {
 export class SnomedRF2ScanResultComponent implements OnInit {
   private snomedService = inject(SnomedService);
   private lorqueService = inject(LorqueLibService);
+  private bobService = inject(BobLibService);
   private notificationService = inject(MuiNotificationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   protected envelope?: ScanEnvelope;
   protected shortName?: string;
+  protected archiveUuid?: string;
+  protected archive?: BobObject;
   protected loader = new LoadingManager();
   protected proceeding = false;
 
   public ngOnInit(): void {
-    const state = (this.router.lastSuccessfulNavigation()?.extras?.state ?? history.state) as
-      {envelope?: ScanEnvelope, shortName?: string} | undefined;
-    if (!state?.envelope) {
-      this.notificationService.warning('web.snomed.scan-result.no-data');
-      this.router.navigate(['/integration/snomed/management']);
-      return;
-    }
-    this.envelope = state.envelope;
-    this.shortName = state.shortName ?? this.route.snapshot.paramMap.get('shortName') ?? undefined;
-    setTimeout(() => {
-      this.downloadJson();
-      this.downloadMarkdown();
-    }, 0);
+    // Subscribe to paramMap so navigating between different archives' scan results within
+    // the same CodeSystem refreshes the page. Without this, Angular reuses the component
+    // instance and ngOnInit only fires once — the result envelope from the first analyze
+    // sticks around for every subsequent visit (regression: "always show the same data
+    // independent which delta file I select").
+    this.route.paramMap.subscribe(p => {
+      this.shortName = p.get('shortName') ?? undefined;
+      this.archiveUuid = p.get('archiveUuid') ?? undefined;
+
+      // Envelope arrives via router state on the navigation that triggered this scan
+      // (Analyze concepts button on the archive detail page). Direct visits and reloads
+      // would lose it — kept simple for now since the only callers are programmatic.
+      const state = (this.router.lastSuccessfulNavigation()?.extras?.state ?? history.state) as
+        {envelope?: ScanEnvelope, shortName?: string} | undefined;
+      if (state?.envelope) {
+        this.envelope = state.envelope;
+      } else {
+        this.envelope = undefined;
+        // No data — direct visit or browser reload — bounce back to the archive page.
+        // (Re-running the scan automatically would surprise the admin with a multi-minute job.)
+        if (this.archiveUuid && this.shortName) {
+          this.notificationService.warning('No cached scan result — re-run "Analyze concepts" on the archive page.');
+          this.router.navigate(['/integration/snomed/codesystems', this.shortName, 'archives', this.archiveUuid]);
+        } else {
+          this.router.navigate(['/integration/snomed/management']);
+        }
+        return;
+      }
+
+      // Look up the archive separately to show its filename in the header — clearer than
+      // the just-a-hash URL the page used to have.
+      this.archive = undefined;
+      if (this.archiveUuid) {
+        this.bobService.load(this.archiveUuid).pipe(catchError(() => of(undefined))).subscribe(o => this.archive = o);
+      }
+    });
   }
 
   protected get scan(): ScanResultJson | undefined {

@@ -1,7 +1,15 @@
 <div class="m-items-middle" style="flex-direction: column">
   <m-card>
     <div *m-card-header class="m-justify-between">
-      <m-title>{{'web.snomed.scan-result.title' | translate}}</m-title>
+      <div>
+        <m-title>SNOMED RF2 files analyzator</m-title>
+        @if (archive) {
+          <div class="m-subtitle" style="margin-top: 0.25rem;">
+            {{archive.storage?.filename || archiveUuid}}
+            @if (archive.meta?.['kind'] === 'delta') { <span> · <strong>DELTA</strong></span> }
+          </div>
+        }
+      </div>
       <div class="m-items-middle">
         <m-button mDisplay="text" (mClick)="downloadJson()">{{'web.snomed.scan-result.download-json' | translate}}</m-button>
         <m-button mDisplay="text" (mClick)="downloadMarkdown()">{{'web.snomed.scan-result.download-markdown' | translate}}</m-button>

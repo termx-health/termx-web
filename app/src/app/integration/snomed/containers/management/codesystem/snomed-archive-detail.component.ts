@@ -91,6 +91,10 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected loader = new LoadingManager();
   protected deltaProgress?: number;
   protected deltaError?: string;
+  /** Last delta uuid produced from THIS source archive's Calculate Delta run, used to
+   *  render a "Go to Delta view" link as a fallback when the redirect didn't catch (e.g.
+   *  the user navigated back to this page after the lorque completed). */
+  protected lastGeneratedDeltaUuid?: string;
   /** Progress / error state for the legacy SnomedRF2ScanService run triggered by the
    *  "Analyze concepts" button on delta archives. The actual scan result is rendered on
    *  the existing SnomedRF2ScanResultComponent route. */
@@ -98,12 +102,21 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected scanError?: string;
 
   public ngOnInit(): void {
-    this.shortName = this.route.snapshot.paramMap.get('shortName') ?? undefined;
-    this.uuid = this.route.snapshot.paramMap.get('uuid') ?? undefined;
-    if (!this.uuid) {
-      return;
-    }
-    this.refresh();
+    // Subscribe to paramMap so navigating between sibling archive detail pages (source
+    // → delta after Calculate Delta completes, or any other deep link) actually refreshes
+    // the page. Without this, Angular Router reuses the component instance, ngOnInit fires
+    // only once, and we keep rendering the first uuid's data — which is why the
+    // "redirect to Delta view after Calculate Delta" appeared to do nothing. The router
+    // *did* navigate; the page just didn't re-render because nothing re-read paramMap.
+    this.route.paramMap.subscribe(p => {
+      this.shortName = p.get('shortName') ?? undefined;
+      this.uuid = p.get('uuid') ?? undefined;
+      this.lastGeneratedDeltaUuid = undefined; // stale once we switch archives
+      if (!this.uuid) {
+        return;
+      }
+      this.refresh();
+    });
   }
 
   /** Reloads everything — used after a delta calculation, since the page can rebind to the
@@ -260,6 +273,9 @@ export class SnomedArchiveDetailComponent implements OnInit {
         try {
           const payload = JSON.parse(loaded.resultText || '{}');
           if (payload.deltaUuid && this.shortName) {
+            // Stash the uuid so the Diff section renders a "Go to Delta view" link if the
+            // user navigates back here later — defensive fallback for the redirect.
+            this.lastGeneratedDeltaUuid = payload.deltaUuid;
             this.notificationService.success('Delta generated');
             this.router.navigate([
               '/integration/snomed/codesystems',
@@ -428,11 +444,15 @@ export class SnomedArchiveDetailComponent implements OnInit {
       // invalidated tables already, plus the "Find usages" button into the concept-usage
       // analysis page (which is the answer to "how do I see which CS/VS are affected").
       this.snomedService.loadScanResult(lorqueId).subscribe(envelope => {
-        if (!this.shortName) {
+        if (!this.shortName || !this.uuid) {
           return;
         }
+        // archiveUuid in the URL so the scan-result page knows which archive's results
+        // these are (fixes the "always show same data" stale-component bug), AND so it can
+        // render the filename in its header. Envelope still travels via router state to
+        // avoid re-fetching from the server on the destination.
         this.router.navigate(
-          ['/integration/snomed/codesystems', this.shortName, 'rf2-scan-result'],
+          ['/integration/snomed/codesystems', this.shortName, 'rf2-scan-result', this.uuid],
           {state: {envelope, shortName: this.shortName}},
         );
       });
