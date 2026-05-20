@@ -6,47 +6,71 @@
     </nz-breadcrumb>
   </div>
   <form #form="ngForm">
-    <m-form-item mName="csVersion" mLabel="entities.code-system-version.version" required>
-      <m-input name="csVersion" [(ngModel)]="data.version" required></m-input>
-    </m-form-item>
-    <m-form-item mName="parts" mLabel="web.integration.loinc-import.parts" required>
-      <input #partsFileInput id="partsFileInput" name="parts" type="file" required>
-    </m-form-item>
-    <m-form-item mName="loinc-terminology" mLabel="web.integration.loinc-import.loinc-terminology" required>
-      <input #loincTerminologyFileInput id="loincTerminologyFileInput" name="loinc-terminology" type="file" required>
-    </m-form-item>
-    <m-form-item mName="loinc-terminology" mLabel="web.integration.loinc-import.supplementary-properties">
-      <input #supplementaryPropertiesFileInput id="supplementaryPropertiesFileInput" name="supplementary-properties" type="file">
-    </m-form-item>
-    <m-form-item mName="panels" mLabel="web.integration.loinc-import.panels">
-      <input #panelsFileInput id="panelsFileInput" name="panels" type="file">
-    </m-form-item>
-
     <m-form-row>
-      <m-form-item *m-form-col mName="answer-list" mLabel="web.integration.loinc-import.answer-list">
-        <input #answerListFileInput id="answerListFileInput" name="answer-list" type="file">
+      <!-- Version — populated from distinct meta.version values across stored archives.
+           Picking a version auto-resolves the latest matching archive so admins don't have
+           to do a second click for the common case of one archive per version. -->
+      <m-form-item *mFormCol mName="version" mLabel="entities.code-system-version.version" required>
+        <m-select name="version" [(ngModel)]="data.version" (ngModelChange)="onVersionChange()" required>
+          @for (v of versionOptions; track v.value) {
+            <m-option [mValue]="v.value" [mLabel]="v.label"/>
+          }
+        </m-select>
       </m-form-item>
-      <m-form-item *m-form-col mName="answer-list-link" mLabel="web.integration.loinc-import.answer-list-link">
-        <input #answerListLinkFileInput id="answerListLinkFileInput" name="answer-list-link" type="file">
+      <!-- Language drives the basename suggestion for the `translations` slot —
+           <lang>LinguisticVariant.csv only matches when the server knows the language. -->
+      <m-form-item *mFormCol mName="language" mLabel="web.integration.loinc-import.language">
+        <tw-value-set-concept-select name="language" [(ngModel)]="data.language"
+                                     valueSet="languages"
+                                     (ngModelChange)="onLanguageChange()"/>
       </m-form-item>
     </m-form-row>
 
-    <m-form-row>
-      <m-form-item *m-form-col mName="language" mLabel="web.integration.loinc-import.language">
-        <tw-value-set-concept-select name="language" [(ngModel)]="data.language" valueSet="languages"></tw-value-set-concept-select>
+    <!-- Archive picker. Shown when the version has more than one upload, so the admin can
+         pick a specific one. Hidden otherwise (the version select already determined it). -->
+    @if (matchingArchives.length > 1) {
+      <m-form-item mName="archiveUuid" mLabel="LOINC archive">
+        <m-select name="archiveUuid" [(ngModel)]="data.archiveUuid" (ngModelChange)="onArchiveChange()">
+          @for (a of matchingArchives; track a.uuid) {
+            <m-option [mValue]="a.uuid" [mLabel]="a.storage?.filename || a.uuid"/>
+          }
+        </m-select>
       </m-form-item>
-      <m-form-item *m-form-col mName="translations" mLabel="web.integration.loinc-import.translations">
-        <input #translationsFileInput id="translationsFileInput" name="translations" type="file">
-      </m-form-item>
-    </m-form-row>
+    }
 
-    <m-form-item mName="orderObservation" mLabel="web.integration.loinc-import.order-observation">
-      <input #orderObservationFileInput id="orderObservationFileInput" name="orderObservation" type="file">
-    </m-form-item>
-
+    <!-- Per-slot file selects — once an archive is picked, each slot lists every .csv entry
+         inside the zip, preselected from the server's basename suggestion. Admins can
+         override (e.g. swap in a custom Part.csv) before clicking Import. -->
+    @if (data.archiveUuid) {
+      @if (entries.length === 0) {
+        <m-alert mType="warning" mShowIcon>
+          No .csv entries found in this archive — re-upload or pick a different one.
+        </m-alert>
+      } @else {
+        @for (slot of slots; track slot.key) {
+          <m-form-item [mName]="slot.key" [mLabel]="slot.label">
+            <m-select [name]="'slot-' + slot.key" [(ngModel)]="data.fileMap[slot.key]">
+              <!-- Empty option leaves the slot unmapped — the server's auto-dispatch fills in
+                   whichever basename it matches for that slot, or skips if nothing matches. -->
+              <m-option [mValue]="''" [mLabel]="'(none — use server default)'"/>
+              @for (e of entries; track e.name) {
+                <m-option [mValue]="e.name" [mLabel]="e.name + (e.suggestedSlot === slot.key ? ' (suggested)' : '')"/>
+              }
+            </m-select>
+          </m-form-item>
+        }
+      }
+    } @else {
+      <m-alert mType="info" mShowIcon>
+        Pick a LOINC version above to load the matching release archive — or upload a new
+        zip via the Stored archives card below.
+      </m-alert>
+    }
   </form>
 
-  <m-button *m-card-footer (click)="modalData = {visible: true}" [mLoading]="loading['process']" [disabled]="form.invalid">
+  <m-button *m-card-footer (click)="modalData = {visible: true}"
+            [mLoading]="loading['process']"
+            [disabled]="form.invalid || !data.archiveUuid">
     {{'web.integration.loinc-import.import' | translate}}
   </m-button>
   @if (jobResponse) {
@@ -92,11 +116,15 @@
 </m-modal>
 
 <!--
-  Stored LOINC release archives — uploaded to the Bob "loinc" container via the streaming
-  /bob/objects endpoint. Per-row "Import" calls POST /loinc/import/from-archive, which
-  unpacks the zip server-side and runs the same import pipeline as the legacy multipart
-  endpoint above. The version / language from the form above are sent with the request.
+  Stored LOINC release archives. Uploads via this card are tagged with the version + language
+  currently in the form above (meta.version) so the version select above picks them up on
+  the next load. Per-row "Open" routes the row back into the form (version + archive +
+  per-slot selects) — Import button at the bottom of the form is the single confirm step.
 -->
 <div style="margin-top: 1rem;">
-  <tw-bob-archives container="loinc" actionLabel="Import" (action)="importFromArchive($event)"/>
+  <tw-bob-archives container="loinc"
+                   [meta]="{version: data.version, language: data.language}"
+                   actionLabel="Open"
+                   (action)="onArchiveOpen($event)"
+                   (itemClick)="onArchiveOpen($event)"/>
 </div>
