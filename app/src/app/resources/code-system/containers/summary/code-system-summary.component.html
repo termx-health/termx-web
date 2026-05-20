@@ -1,5 +1,15 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[codeSystem?.id, 'CodeSystem']">
+<!-- Plain div wrapper rather than <m-page mLoading="...">. MuiPageComponent's constructor
+     declares a hard dependency on MuiPageLayoutComponent via element-injection, and Angular
+     21's standalone-component DI on this route doesn't surface the app shell's
+     <m-page-layout> as an ancestor — same NG0201 mode that hit the landing page (PR #78).
+     The previous twPrivilegeContext / ResourceContextComponent ancestors don't fix it; the
+     only reliable cure is to skip <m-page> entirely. Loading state is now expressed via the
+     m-loading class on the wrapper div (same overlay-pattern marina-ui's <m-page> applied
+     internally). -->
+<div [twPrivilegeContext]="[codeSystem?.id, 'CodeSystem']"
+     [class.m-loading]="loader.isLoading"
+     style="width: 100%; padding: 1rem;">
 
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -138,6 +148,6 @@
       </div>
     </m-form-row>
 
-  </m-page>
+</div>
 
-  <tw-resource-task-modal #taskModal (taskCreated)="tasksWidgetComponent.loadTasks()" resourceType="CodeSystem"/>
+<tw-resource-task-modal #taskModal (taskCreated)="tasksWidgetComponent.loadTasks()" resourceType="CodeSystem"/>
