@@ -91,6 +91,11 @@ export class SnomedArchiveDetailComponent implements OnInit {
   protected loader = new LoadingManager();
   protected deltaProgress?: number;
   protected deltaError?: string;
+  /** Progress / error state for the legacy SnomedRF2ScanService run triggered by the
+   *  "Analyze concepts" button on delta archives. The actual scan result is rendered on
+   *  the existing SnomedRF2ScanResultComponent route. */
+  protected scanProgress?: number;
+  protected scanError?: string;
 
   public ngOnInit(): void {
     this.shortName = this.route.snapshot.paramMap.get('shortName') ?? undefined;
@@ -368,6 +373,75 @@ export class SnomedArchiveDetailComponent implements OnInit {
       },
       error: err => this.notificationService.error(this.extractErrorMessage(err)),
     });
+  }
+
+  /**
+   * Trigger the legacy in-Java RF2 scan against this archive (typically a delta) and route
+   * to the existing /rf2-scan-result page when it finishes. That page renders the added /
+   * modified / invalidated concept tables and has its own "Find usages" button into the
+   * concept-usage analysis page — i.e. we reuse the dry-run UI on delta archives per the
+   * Phase 2 user spec.
+   *
+   * The endpoint POST /snomed/imports/scan/from-archive already accepts any Bob archive uuid
+   * and produces a SnomedRF2ScanEnvelope, so this is pure wiring — no new backend.
+   */
+  protected analyzeConcepts(): void {
+    if (!this.uuid || !this.branchPath || !this.shortName) {
+      return;
+    }
+    this.scanError = undefined;
+    this.scanProgress = 0;
+    this.loader.wrap(
+      'scan',
+      this.snomedService.scanRF2FromArchive({
+        archiveUuid: this.uuid,
+        branchPath: this.branchPath,
+        // For a delta the RF2 layout under /Delta/* uses delta filenames; reuse the same
+        // SnomedImportRequest.type the legacy /imports/scan flow used (the scan parser keys
+        // off filename prefixes, not the type tag, so DELTA is safe here).
+        type: this.isDelta ? 'DELTA' : (this.rf2Type as 'SNAPSHOT' | 'FULL') ?? 'SNAPSHOT',
+        // 'full' mode populates relationships + language refset so the result has acceptability
+        // and attribute coverage. Summary mode hides those — and on a delta they're already
+        // small enough that the full pass costs no real time.
+        mode: 'full',
+      }),
+    ).subscribe({
+      next: lorque => this.pollScanProgress(lorque.id),
+      error: err => this.handleScanError(err),
+    });
+  }
+
+  private pollScanProgress(lorqueId: number): void {
+    this.lorqueService.pollProcessProgress(lorqueId, this.destroy$).subscribe(p => {
+      if (p?.progressPercent != null) {
+        this.scanProgress = p.progressPercent;
+      }
+      if (!p?.status || p.status === 'running') {
+        return;
+      }
+      this.scanProgress = undefined;
+      if (p.status === 'failed') {
+        this.lorqueService.load(lorqueId).subscribe(loaded => this.scanError = loaded.resultText ?? 'Scan failed');
+        return;
+      }
+      // Hand off to the existing scan-result component — it has the added/modified/
+      // invalidated tables already, plus the "Find usages" button into the concept-usage
+      // analysis page (which is the answer to "how do I see which CS/VS are affected").
+      this.snomedService.loadScanResult(lorqueId).subscribe(envelope => {
+        if (!this.shortName) {
+          return;
+        }
+        this.router.navigate(
+          ['/integration/snomed/codesystems', this.shortName, 'rf2-scan-result'],
+          {state: {envelope, shortName: this.shortName}},
+        );
+      });
+    });
+  }
+
+  private handleScanError(err: any): void {
+    this.scanProgress = undefined;
+    this.scanError = this.extractErrorMessage(err);
   }
 
   protected baselineLabel(c: BobObject): string {
