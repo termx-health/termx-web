@@ -1,4 +1,13 @@
-<m-page mFull>
+<!-- Plain div wrapper rather than <m-page mFull>. MuiPageComponent's constructor declares
+     a hard dependency on MuiPageLayoutComponent via element-injection, and Angular 21's
+     standalone-component DI for this specific route fails to surface the AppComponent's
+     <m-page-layout> as an ancestor — landing rendered fine via the app shell's chrome but
+     its body was completely BLANK because <m-page> threw before its content rendered (the
+     "Source: Standalone[LandingPageComponent]" NG0201). Other pages (IG / CodeSystem
+     summaries) use <m-page> with extra context directives that happen to keep DI happy;
+     landing doesn't need any of that, just the full-bleed layout — keep .wrapper styles
+     intact and skip the page chrome entirely. -->
+<div style="width:100%">
   <div class="wrapper animated">
     <!-- Resources -->
     @if ((['*.CodeSystem.read', '*.ValueSet.read', '*.MapSet.read'] | twPrivileged) && (modules | includes: 'terminology')) {
@@ -98,7 +107,7 @@
       }
     }
   </div>
-</m-page>
+</div>
 
 
 <ng-template #taskTemplate let-task>
