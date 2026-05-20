@@ -55,6 +55,13 @@ export class BobArchivesComponent implements OnInit, OnChanges {
    * because clearing the input also fires this with no selection.
    */
   @Output() public fileSelected = new EventEmitter<File | undefined>();
+  /**
+   * Fired AFTER a successful upload, once the server returns the new {@link BobObject}.
+   * Hosts use this to refresh side-state — e.g. the LOINC import page's version dropdown,
+   * which is populated from {@code meta.version} across all stored archives, needs to
+   * re-query after each new upload to surface the just-added version.
+   */
+  @Output() public uploaded = new EventEmitter<BobObject>();
 
   protected archives: BobObject[] = [];
   protected loader = new LoadingManager();
@@ -118,6 +125,9 @@ export class BobArchivesComponent implements OnInit, OnChanges {
             this.uploadDescription = undefined;
             this.notificationService.success('Archive uploaded');
             this.load();
+            if (ev.body) {
+              this.uploaded.emit(ev.body);
+            }
           } else {
             this.uploadProgress = ev.progress;
           }

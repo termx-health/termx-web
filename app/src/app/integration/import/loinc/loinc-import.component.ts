@@ -300,6 +300,36 @@ export class LoincImportComponent {
     }
   }
 
+  /**
+   * Called by {@code <tw-bob-archives (uploaded)>} after a new LOINC archive has been
+   * persisted to Bob. Refreshes the archives list (so the just-uploaded version shows up
+   * in the dropdown), then auto-selects a "more suitable" pick where possible:
+   *
+   *   - If the uploaded BobObject has {@code meta.version} (it should — the page tagged
+   *     the upload with the form's {@code data.version} via the {@code [meta]} binding),
+   *     select that version + the new uuid and route the per-slot selects to it via
+   *     {@code onVersionChange()}.
+   *   - If meta.version is empty (the admin uploaded without setting a version first),
+   *     leave the form alone and let the admin pick — the new file is in the list but
+   *     its dropdown entry shows as "(untagged)".
+   */
+  protected onLoincUploaded(uploaded: BobObject): void {
+    this.loader
+      .wrap(
+        'archives',
+        this.bobService.query('loinc', Object.assign(new QueryParams(), {limit: 100}) as any),
+      )
+      .subscribe(resp => {
+        this.archives = resp.data ?? [];
+        const newVersion = (uploaded.meta?.['version'] as string | undefined) ?? '';
+        if (newVersion) {
+          this.data.version = newVersion;
+          this.data.archiveUuid = uploaded.uuid;
+          this.onVersionChange();
+        }
+      });
+  }
+
   protected openCodeSystem(mode: 'edit' | 'view'): void {
     this.router.navigate(['/resources/code-systems/', 'loinc', mode]);
   }
