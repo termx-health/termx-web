@@ -1,3 +1,18 @@
+<!--
+  Body content (privilege guard + <router-outlet/>) is inlined directly inside each
+  <m-page-layout> below — NOT projected through <ng-container [ngTemplateOutlet]="contentTpl"/>
+  the way it used to be. The template-outlet indirection broke Angular 21 standalone
+  element-injection: routed components that use <m-page>, <m-page-bar>, <m-page-...>
+  (directly or transitively via shared components like <tw-resource-context>) all throw
+  "NG0201: No provider found for MuiPageLayoutComponent" because the injector chain didn't
+  surface this AppComponent's <m-page-layout> as an ancestor of the projected <router-outlet>.
+  Inlining keeps <router-outlet> as a direct child of <m-page-layout> in BOTH the DOM and
+  the logical view tree, so element-injection resolves correctly without per-page workarounds.
+
+  Some duplication between the two branches is unavoidable — the only difference between
+  embedded and non-embedded modes is the (mLogout) binding; if marina-ui ever makes that
+  optional we can collapse them into one.
+-->
 @if (semiEmbedded) {
   <m-page-layout
     [class.embedded]="router.url | apply: isEmbedded"
@@ -9,7 +24,17 @@
     (mLangChange)="onLangChange($event)"
     (mLogin)="login()"
   >
-    <ng-container [ngTemplateOutlet]="contentTpl"/>
+    @if (activeRoutePrivileges$ | async; as privileges) {
+      @if (!privileges?.length || (privileges | twHasAnyPrivilege)) {
+        <router-outlet/>
+      } @else {
+        <m-form-row>
+          <div *m-form-col>
+            <tw-no-privilege style="display: block; margin-top: calc(var(--page-content-padding) * 3)" [privileges]="privileges"/>
+          </div>
+        </m-form-row>
+      }
+    }
   </m-page-layout>
 } @else {
   <m-page-layout
@@ -23,7 +48,17 @@
     (mLogin)="login()"
     (mLogout)="logout()"
   >
-    <ng-container [ngTemplateOutlet]="contentTpl"/>
+    @if (activeRoutePrivileges$ | async; as privileges) {
+      @if (!privileges?.length || (privileges | twHasAnyPrivilege)) {
+        <router-outlet/>
+      } @else {
+        <m-form-row>
+          <div *m-form-col>
+            <tw-no-privilege style="display: block; margin-top: calc(var(--page-content-padding) * 3)" [privileges]="privileges"/>
+          </div>
+        </m-form-row>
+      }
+    }
   </m-page-layout>
 }
 
@@ -59,18 +94,4 @@
       </m-form-item>
     </div>
   </div>
-</ng-template>
-
-<ng-template #contentTpl>
-  @if (activeRoutePrivileges$ | async; as privileges) {
-    @if (!privileges?.length || (privileges | twHasAnyPrivilege)) {
-      <router-outlet/>
-    } @else {
-      <m-form-row>
-        <div *m-form-col>
-          <tw-no-privilege style="display: block; margin-top: calc(var(--page-content-padding) * 3)" [privileges]="privileges"/>
-        </div>
-      </m-form-row>
-    }
-  }
 </ng-template>
