@@ -270,6 +270,66 @@ export class LoincImportComponent {
     this.onArchiveChange();
   }
 
+  /**
+   * Auto-detect the LOINC release version from the chosen file's NAME so the admin doesn't
+   * have to type it before uploading. Triggered by the {@code (fileSelected)} event on
+   * {@code <tw-bob-archives>}. Standard LOINC distribution filenames are
+   * {@code Loinc_<version>.zip} (e.g. {@code Loinc_2.82.zip}) and that's what we match —
+   * if the regex misses, the version field stays as whatever the admin had previously, so
+   * they can still type / pick it manually.
+   *
+   * Only overwrites the version when (a) the field is empty, or (b) the detected version
+   * differs from what's in the field. Doesn't clobber an admin-typed value with a re-detect
+   * of the same one.
+   *
+   * (For archives whose filename doesn't reveal the version, the server can still pick it
+   * up from the {@code Loinc_<version>_DifferenceReport.pdf} entry inside the zip — see
+   * {@code LoincZipReader.describe}; we'd need to add a similar regex on the server side
+   * to backfill {@code meta.version} on already-uploaded archives.)
+   */
+  protected onLoincFilePicked(file: File | undefined): void {
+    if (!file) {
+      return;
+    }
+    const m = /Loinc[_-]?([\d.]+)/i.exec(file.name);
+    if (m && m[1]) {
+      const detected = m[1].replace(/\.+$/, ''); // strip trailing dots if filename was "Loinc_2.82..zip"
+      if (this.data.version !== detected) {
+        this.data.version = detected;
+      }
+    }
+  }
+
+  /**
+   * Called by {@code <tw-bob-archives (uploaded)>} after a new LOINC archive has been
+   * persisted to Bob. Refreshes the archives list (so the just-uploaded version shows up
+   * in the dropdown), then auto-selects a "more suitable" pick where possible:
+   *
+   *   - If the uploaded BobObject has {@code meta.version} (it should — the page tagged
+   *     the upload with the form's {@code data.version} via the {@code [meta]} binding),
+   *     select that version + the new uuid and route the per-slot selects to it via
+   *     {@code onVersionChange()}.
+   *   - If meta.version is empty (the admin uploaded without setting a version first),
+   *     leave the form alone and let the admin pick — the new file is in the list but
+   *     its dropdown entry shows as "(untagged)".
+   */
+  protected onLoincUploaded(uploaded: BobObject): void {
+    this.loader
+      .wrap(
+        'archives',
+        this.bobService.query('loinc', Object.assign(new QueryParams(), {limit: 100}) as any),
+      )
+      .subscribe(resp => {
+        this.archives = resp.data ?? [];
+        const newVersion = (uploaded.meta?.['version'] as string | undefined) ?? '';
+        if (newVersion) {
+          this.data.version = newVersion;
+          this.data.archiveUuid = uploaded.uuid;
+          this.onVersionChange();
+        }
+      });
+  }
+
   protected openCodeSystem(mode: 'edit' | 'view'): void {
     this.router.navigate(['/resources/code-systems/', 'loinc', mode]);
   }

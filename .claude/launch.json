@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "termx-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 4200
+    },
+    {
+      "name": "termx-web-embedded",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:embedded"],
+      "port": 4200
+    },
+    {
+      "name": "termx-server",
+      "runtimeExecutable": "/Users/igor/source/termx/termx-server/scripts/run-backend.sh",
+      "runtimeArgs": [],
+      "port": 8200
+    },
+    {
+      "name": "tx-minio",
+      "runtimeExecutable": "/Users/igor/source/termx/termx-server/scripts/run-minio.sh",
+      "runtimeArgs": [],
+      "port": 9000
+    }
+  ]
+}

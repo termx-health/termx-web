@@ -126,5 +126,7 @@
                    [meta]="{version: data.version, language: data.language}"
                    actionLabel="Open"
                    (action)="onArchiveOpen($event)"
-                   (itemClick)="onArchiveOpen($event)"/>
+                   (itemClick)="onArchiveOpen($event)"
+                   (fileSelected)="onLoincFilePicked($event)"
+                   (uploaded)="onLoincUploaded($event)"/>
 </div>
