@@ -36,11 +36,32 @@ export class BobArchivesComponent implements OnInit, OnChanges {
   /** Optional per-row action button label. Hidden if not set. */
   @Input() public actionLabel?: string;
   /**
-   * Optional JSONB-containment filter and upload tag. When set, only archives whose meta
-   * contains all listed entries are shown, and new uploads inherit the same meta — so the
-   * card always stays scoped to its logical owner (current CS, current LOINC release, etc.).
+   * Optional JSONB-containment filter and upload tag — historical shorthand for "use the
+   * same map for both filtering the listed rows AND tagging new uploads". Useful when a
+   * single page is scoped to one logical owner (e.g. SNOMED CodeSystem edit, where every
+   * archive on the page belongs to the same {@code shortName} + {@code branchPath}).
+   *
+   * <p>If you need the two to differ — e.g. the LOINC import page wants to LIST every
+   * stored release regardless of version while TAGGING new uploads with the form's
+   * current version — pass {@link uploadMeta} (and/or {@link filterMeta}) instead.
+   * {@code uploadMeta} overrides {@code meta} for upload-tagging only; {@code filterMeta}
+   * overrides {@code meta} for list-filtering only.
    */
   @Input() public meta?: {[k: string]: any};
+  /**
+   * Optional override of {@link meta} for the LIST-FILTER side ONLY. Pass {@code {}} (or
+   * omit) to show every archive in the container regardless of meta. Doesn't affect the
+   * tag applied to new uploads — that still comes from {@link meta} or {@link uploadMeta}.
+   */
+  @Input() public filterMeta?: {[k: string]: any};
+  /**
+   * Optional override of {@link meta} for the UPLOAD-TAG side ONLY. New uploads carry this
+   * meta map on their {@code BobObject}. Doesn't affect which existing archives are listed
+   * — that still comes from {@link meta} or {@link filterMeta}. Useful when the host
+   * wants every archive visible but each new upload tagged with a specific version /
+   * language / branch.
+   */
+  @Input() public uploadMeta?: {[k: string]: any};
   @Output() public action = new EventEmitter<BobObject>();
   /**
    * Fired when the user clicks the filename cell. When a listener is bound, the filename
@@ -77,9 +98,12 @@ export class BobArchivesComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    // Reload when meta or container changes — the parent may swap the CS context without
-    // recreating the component (e.g. ViewChild route reuse), and we'd otherwise show stale rows.
-    if (!changes['container']?.firstChange && (changes['container'] || changes['meta'])) {
+    // Reload when the FILTER side changes (or container changes). Note we intentionally do
+    // NOT reload when uploadMeta changes alone — that only affects upload tagging, not the
+    // list. The LOINC page used to lose its existing-versions list every time `data.version`
+    // flipped after a new upload because [meta] was driving both filter AND tag.
+    if (!changes['container']?.firstChange
+        && (changes['container'] || changes['meta'] || changes['filterMeta'])) {
       this.load();
     }
   }
@@ -89,8 +113,9 @@ export class BobArchivesComponent implements OnInit, OnChanges {
       return;
     }
     const params: QueryParams & {meta?: any} = Object.assign(new QueryParams(), {limit: 100}) as any;
-    if (this.meta && Object.keys(this.meta).length > 0) {
-      params.meta = this.compactMeta();
+    const effectiveFilterMeta = this.compactMetaOf(this.filterMeta ?? this.meta);
+    if (effectiveFilterMeta) {
+      params.meta = effectiveFilterMeta;
     }
     this.loader.wrap('load', this.bobService.query(this.container, params))
       .subscribe(resp => this.archives = resp.data || []);
@@ -112,7 +137,7 @@ export class BobArchivesComponent implements OnInit, OnChanges {
       container: this.container,
       file,
       description: this.uploadDescription,
-      meta: this.compactMeta(),
+      meta: this.compactMetaOf(this.uploadMeta ?? this.meta),
     })
       .pipe(finalize(() => {
         this.loader.stop('upload');
@@ -136,16 +161,19 @@ export class BobArchivesComponent implements OnInit, OnChanges {
       });
   }
 
-  /** Drops {@code undefined} / {@code null} values so the server-side {@code @>} JSONB
-   *  containment filter doesn't try to match an explicit null. */
-  private compactMeta(): {[k: string]: any} | undefined {
-    if (!this.meta) {
+  /** Drops {@code undefined} / {@code null} / empty-string values so the server-side
+   *  {@code @>} JSONB containment filter doesn't try to match an explicit null.
+   *  Returns {@code undefined} when every key was empty, so callers can skip the param
+   *  entirely (sending {@code @> {}} would still trivially match everything but generates
+   *  ugly noise in server logs). */
+  private compactMetaOf(source: {[k: string]: any} | undefined): {[k: string]: any} | undefined {
+    if (!source) {
       return undefined;
     }
     const out: {[k: string]: any} = {};
     let any = false;
-    for (const key of Object.keys(this.meta)) {
-      const v = this.meta[key];
+    for (const key of Object.keys(source)) {
+      const v = source[key];
       if (v !== undefined && v !== null && v !== '') {
         out[key] = v;
         any = true;
