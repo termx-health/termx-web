@@ -74,13 +74,30 @@
             </div>
           </div>
 
-          <div style="margin-top: 1.5rem;">
+          <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <m-button mDisplay="primary"
                       [mLoading]="loader.state['upload-delta']"
                       (mClick)="uploadDeltaToSnowstorm()">
               Upload Delta to Snowstorm
             </m-button>
+            <!-- Reuses the legacy in-Java SnomedRF2ScanService against the delta zip — same
+                 added / modified / invalidated tables the dry-run flow rendered, plus a
+                 "Find usages" link from that result page into /integration/snomed/concept-usage
+                 so admins can see which local CodeSystems / ValueSets reference the touched
+                 concepts. -->
+            <m-button mDisplay="default"
+                      [mLoading]="loader.state['scan']"
+                      [disabled]="!branchPath || !shortName"
+                      (mClick)="analyzeConcepts()">
+              Analyze concepts
+            </m-button>
           </div>
+          @if (scanProgress != null) {
+            <p class="m-subtitle" style="margin-top: 0.5rem;">Scanning delta: {{scanProgress}}%</p>
+          }
+          @if (scanError) {
+            <m-alert mType="warning" mShowIcon>{{scanError}}</m-alert>
+          }
         </div>
       </m-card>
     }
