@@ -48,6 +48,13 @@ export class BobArchivesComponent implements OnInit, OnChanges {
    * decides whether to navigate, download, open a modal, etc.
    */
   @Output() public itemClick = new EventEmitter<BobObject>();
+  /**
+   * Fired when the user picks a file in the upload input — BEFORE the upload starts. Lets the
+   * host component peek at the file (e.g. parse its name for a version tag) and tweak
+   * {@link meta} via two-way binding so the upload picks up the new tag. {@code File | undefined}
+   * because clearing the input also fires this with no selection.
+   */
+  @Output() public fileSelected = new EventEmitter<File | undefined>();
 
   protected archives: BobObject[] = [];
   protected loader = new LoadingManager();
@@ -84,6 +91,7 @@ export class BobArchivesComponent implements OnInit, OnChanges {
 
   protected onPickFile(input: HTMLInputElement): void {
     this.uploadFile = input.files?.[0];
+    this.fileSelected.emit(this.uploadFile);
   }
 
   protected upload(): void {
