@@ -3,6 +3,7 @@
   "version": "3.2.1",
   "scripts": {
     "ng": "ng",
+    "postinstall": "node etc/postinstall-strip-fhir-ts.js",
     "start": "ng serve",
     "start:embedded": "ng serve --configuration embedded",
     "version:sync": "node -e \"const v=require('fs').readFileSync('VERSION','utf8').trim(); const p=require('./package.json'); p.version=v; require('fs').writeFileSync('package.json', JSON.stringify(p,null,2)+'\\n')\"",
