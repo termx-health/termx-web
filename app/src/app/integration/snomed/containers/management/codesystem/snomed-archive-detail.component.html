@@ -205,6 +205,15 @@
             @if (deltaError) {
               <m-alert mType="warning" mShowIcon>{{deltaError}}</m-alert>
             }
+            <!-- Fallback if the redirect didn't fire / the user navigated back here:
+                 a permanent link to the most recently produced delta. -->
+            @if (lastGeneratedDeltaUuid && !deltaProgress) {
+              <p style="margin-top: 0.75rem;">
+                <m-button mDisplay="link" (mClick)="openArchive(lastGeneratedDeltaUuid)">
+                  Go to Delta view →
+                </m-button>
+              </p>
+            }
           }
         </div>
       </m-card>

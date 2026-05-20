@@ -78,7 +78,12 @@ export const INTEGRATION_ROUTES: Routes = [
   {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.write']}},
   {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.write']}},
   {path: 'snomed/codesystems/:shortName/edit', component: SnomedCodesystemEditComponent, data: {privilege: ['snomed-ct.CodeSystem.write']}},
-  {path: 'snomed/codesystems/:shortName/rf2-scan-result', component: SnomedRF2ScanResultComponent, data: {privilege: ['snomed-ct.CodeSystem.read']}},
+  // archiveUuid in the path so navigating between scan results of different archives within
+  // the same CodeSystem triggers Angular Router to refire ngOnInit / paramMap. Without the
+  // parameter, the component instance is reused and stays bound to the first archive's
+  // envelope — admins reported "always show the same data independent which delta file I
+  // select" on Phase 2c.
+  {path: 'snomed/codesystems/:shortName/rf2-scan-result/:archiveUuid', component: SnomedRF2ScanResultComponent, data: {privilege: ['snomed-ct.CodeSystem.read']}},
   {path: 'snomed/codesystems/:shortName/archives/:uuid', component: SnomedArchiveDetailComponent, data: {privilege: ['snomed-ct.CodeSystem.read']}},
   {path: 'snomed/concept-usage', component: SnomedConceptUsageComponent, data: {privilege: ['snomed-ct.CodeSystem.read']}},
   {path: 'snomed/dashboard', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.read']}},
