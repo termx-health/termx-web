@@ -9,12 +9,20 @@ import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {MarinPageLayoutModule} from '@termx-health/ui';
 
 type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule],
+  // MarinPageLayoutModule has to be imported directly even though CoreUiModule transitively
+  // re-exports it via MarinaUiModule. Angular 21's standalone element-injection no longer
+  // resolves MuiPageLayoutComponent (the host that <m-page> needs as a DI ancestor) through
+  // nested NgModule re-export chains the same way Angular 17 did — without this direct
+  // import the page throws "NG0201: No provider found for MuiPageLayoutComponent. Source:
+  // Standalone[LandingPageComponent]". Other pages that use <m-page> already import
+  // MarinPageLayoutModule directly for the same reason (e.g. SnomedDashboardComponent).
+  imports: [CoreUiModule, MarinPageLayoutModule, TaskLibModule, WikiLibModule, SysLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
