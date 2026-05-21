@@ -102,7 +102,9 @@ export class MapSetListComponent implements OnInit {
   // events
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin + environment.baseHref}fhir/ConceptMap/${id}`, '_blank');
+    // Explicit ?_summary=false: keep all group.element[] association rows in the opened
+    // tab. Same self-documenting pattern as the CodeSystem and ValueSet list pages.
+    window.open(`${window.location.origin + environment.baseHref}fhir/ConceptMap/${id}?_summary=false`, '_blank');
   }
 
   protected deleteMapSet(mapSetId: string): void {

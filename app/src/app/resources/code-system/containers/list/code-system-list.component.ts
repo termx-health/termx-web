@@ -113,7 +113,12 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin + environment.baseHref}fhir/CodeSystem/${id}`, '_blank');
+    // Explicit ?_summary=false: ensures the opened tab shows the FULL FHIR CodeSystem
+    // body — including concept[], filter[], property[], text — rather than the lightweight
+    // representation a server might default to. Read defaults to full today, but pinning
+    // it here keeps the "Show FHIR" action self-documenting and stable against future
+    // server-side default changes.
+    window.open(`${window.location.origin + environment.baseHref}fhir/CodeSystem/${id}?_summary=false`, '_blank');
   }
 
 
