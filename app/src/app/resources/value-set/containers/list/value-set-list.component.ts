@@ -136,10 +136,7 @@ export class ValueSetListComponent implements OnInit {
   }
 
   protected openFhir(id: string): void {
-    // Explicit ?_summary=false: keep compose.include with its inline concept[] entries
-    // and any rule.concepts arrays in the opened tab. Same self-documenting pattern as
-    // the CodeSystem and ConceptMap list pages.
-    window.open(`${window.location.origin + environment.baseHref}fhir/ValueSet/${id}?_summary=false`, '_blank');
+    window.open(`${window.location.origin + environment.baseHref}fhir/ValueSet/${id}`, '_blank');
   }
 
 
