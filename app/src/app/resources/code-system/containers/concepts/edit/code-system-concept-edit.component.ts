@@ -24,7 +24,7 @@ import {CodeSystemDesignationEditComponent} from 'term-web/resources/code-system
 import {CodeSystemPropertyValueEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
 import {CodingRefreshApi, CodingRefreshScope, CodingValueRefreshModalComponent} from 'term-web/resources/code-system/components/coding-value-refresh-modal.component';
 import { ResourceContextComponent as ResourceContextComponent_1 } from 'term-web/resources/resource/components/resource-context.component';
-import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule } from '@termx-health/ui';
+import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule, MuiCheckboxModule } from '@termx-health/ui';
 import { SequenceValueGeneratorComponent } from 'term-web/sequence/_lib/components/sequence-value-generator.component';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
@@ -50,7 +50,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
       margin-top: 1rem
     }
   `],
-    imports: [ResourceContextComponent_1, MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, SequenceValueGeneratorComponent, MuiTextareaModule, AddButtonComponent, MuiListModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiTooltipModule, ResourceRelatedArtifactWidgetComponent, PrivilegedDirective, MuiButtonModule, ResourceTasksWidgetComponent_1, MuiTagModule, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, CodeSystemConceptReferenceComponent, CodingValueRefreshModalComponent, MuiModalModule, UserSelectComponent, TranslatePipe, MarinaUtilModule, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
+    imports: [ResourceContextComponent_1, MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, SequenceValueGeneratorComponent, MuiTextareaModule, AddButtonComponent, MuiListModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiTooltipModule, ResourceRelatedArtifactWidgetComponent, PrivilegedDirective, MuiButtonModule, MuiCheckboxModule, ResourceTasksWidgetComponent_1, MuiTagModule, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, CodeSystemConceptReferenceComponent, CodingValueRefreshModalComponent, MuiModalModule, UserSelectComponent, TranslatePipe, MarinaUtilModule, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
@@ -70,6 +70,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   protected loader = new LoadingManager();
   public mode: 'add' | 'edit' = 'add';
   protected showOnlyOpenedTasks: boolean = true;
+  protected propertyValueExtensionsVisible = false;
 
   protected taskModalData: {visible?: boolean, assignee?: string, comment?: string} = {};
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;

@@ -54,6 +54,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() @BooleanInput() public showCodingReference: boolean | string = false;
   @Input() @BooleanInput() public compact: boolean | string = false;
+  @Input() @BooleanInput() public extensionsVisible: boolean | string = false;
   @Input() public propertyValues?: ExtendedEntityPropertyValue[];
   @Input() public properties?: EntityProperty[];
   @Input() public codeSystemId?: string;
