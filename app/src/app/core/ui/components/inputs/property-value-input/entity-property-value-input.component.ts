@@ -1,8 +1,8 @@
 import {Component, DoCheck, forwardRef, Input, OnChanges, SimpleChanges, ViewChild, inject} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm, FormsModule } from '@angular/forms';
 import { BooleanInput, DestroyService, isDefined, validateForm, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe } from '@termx-health/core-util';
-import {EntityProperty} from 'term-web/resources/_lib';
-import { MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, MuiSelectModule, MuiTooltipModule } from '@termx-health/ui';
+import {EntityProperty, EntityPropertyValue, EntityPropertyValueExtension} from 'term-web/resources/_lib';
+import { MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, MuiSelectModule, MuiTooltipModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
@@ -23,12 +23,32 @@ import { environment } from 'environments/environment';
         flex-wrap: wrap;
         max-width: 100%;
       }
+
+      .extension-tooltip {
+        display: grid;
+        gap: 0.25rem;
+        max-width: 36rem;
+        word-break: break-word;
+      }
+
+      .extension-editor {
+        display: grid;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .extension-editor__row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        gap: 0.5rem;
+        align-items: start;
+      }
     `],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true },
         DestroyService
     ],
-    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe]
+    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, MuiButtonModule, MuiIconModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe]
 })
 export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, ControlValueAccessor {
   private codingReferenceService = inject(CodeSystemCodingReferenceService);
@@ -40,6 +60,8 @@ export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, Co
   @Input() @BooleanInput() public compact: boolean | string = false;
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;
+  @Input() public propertyValue?: EntityPropertyValue;
+  @Input() @BooleanInput() public extensionsVisible: boolean | string = false;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -101,6 +123,37 @@ export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, Co
       ?.map(f => (f.property?.name || f.association) + '|' + (f.value?.code || f.value))
       .join(';');
   };
+
+  protected extensionValue(extension: EntityPropertyValueExtension): string {
+    return [
+      extension.valueString,
+      extension.valueCode,
+      extension.valueDateTime,
+      extension.valueInteger,
+      extension.valueDecimal,
+      extension.valueBoolean
+    ].find(isDefined)?.toString() ?? '';
+  }
+
+  protected extensionList(): EntityPropertyValueExtension[] {
+    return this.propertyValue?.extensions ?? [];
+  }
+
+  protected addExtension(): void {
+    if (!this.propertyValue) {
+      return;
+    }
+    this.propertyValue.extensions = [...this.propertyValue.extensions || [], {}];
+    this.fireOnChange();
+  }
+
+  protected removeExtension(index: number): void {
+    if (!this.propertyValue) {
+      return;
+    }
+    this.propertyValue.extensions = this.propertyValue.extensions?.filter((_, i) => i !== index) || [];
+    this.fireOnChange();
+  }
 
   private prepareValue(property: EntityProperty): void {
     if (property?.type === 'Coding') {

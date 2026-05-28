@@ -87,6 +87,7 @@
                     viewMode
                     name="value" [ngModel]="property.value"
                     [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                    [propertyValue]="property"
                   [codeSystem]="codeSystem.id"></tw-property-value-input>
                 }
               </div>
@@ -102,5 +103,4 @@
     </div>
   </div>
 </m-page>
-
 

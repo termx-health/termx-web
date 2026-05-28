@@ -226,14 +226,21 @@ mode="concept-edit"></tw-resource-context>
           <m-card class="m-card-inside">
             <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values">
               @if (codeSystem && conceptVersion?.status === 'draft') {
-                <m-dropdown mControls>
-                  <tw-add-button *m-dropdown-container>
-                    {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
-                  </tw-add-button>
-                  @for (prop of codeSystem.properties | filter: filterProperties: 'property'; track prop) {
-                    <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
-                  }
-                </m-dropdown>
+                <div class="m-items-middle" mControls>
+                  <m-dropdown>
+                    <tw-add-button *m-dropdown-container>
+                      {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
+                    </tw-add-button>
+                    @for (prop of codeSystem.properties | filter: filterProperties: 'property'; track prop) {
+                      <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
+                    }
+                  </m-dropdown>
+                  <m-checkbox
+                      name="propertyValueExtensionsVisible"
+                      [(ngModel)]="propertyValueExtensionsVisible">
+                    {{ 'web.code-system-concept-version.property-value.edit-composite-values' | translate }}
+                  </m-checkbox>
+                </div>
               }
             </m-title>
             <tw-code-system-property-value-edit #propertyValueEdit
@@ -241,6 +248,7 @@ mode="concept-edit"></tw-resource-context>
               [properties]="codeSystem?.properties"
               [propertyValues]="conceptVersion?.propertyValues"
               [showCodingReference]="true"
+              [extensionsVisible]="propertyValueExtensionsVisible"
             [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
           </m-card>
           <!-- Associations -->

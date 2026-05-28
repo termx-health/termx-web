@@ -89,21 +89,54 @@
           }
         }
       }
+      @if (propertyValue && extensionsVisible) {
+        <div class="extension-editor">
+          <m-button mDisplay="text" mShape="circle" m-tooltip mTitle="core.btn.add" (mClick)="addExtension()">
+            <m-icon mCode="plus"/>
+          </m-button>
+          @for (extension of extensionList(); track extension; let i = $index) {
+            <div class="extension-editor__row">
+              <m-textarea
+                  name="extensionUrl{{i}}"
+                  placeholder="URL"
+                  [(ngModel)]="extension.url"
+                  (ngModelChange)="fireOnChange()"></m-textarea>
+              <m-textarea
+                  name="extensionValue{{i}}"
+                  placeholder="Value"
+                  [(ngModel)]="extension.valueString"
+                  (ngModelChange)="fireOnChange()"></m-textarea>
+              <m-button mDisplay="text" mShape="circle" m-tooltip mTitle="core.btn.delete" (mClick)="removeExtension(i)">
+                <m-icon mCode="close"/>
+              </m-button>
+            </div>
+          }
+        </div>
+      }
     }
 
     @if (viewMode) {
       <div style="word-break: break-word">
+        <ng-template #extensionTooltip>
+          <div class="extension-tooltip">
+            @for (extension of propertyValue?.extensions; track extension) {
+              <div>{{ extension.url }}: {{ extension | apply:extensionValue }}</div>
+            }
+          </div>
+        </ng-template>
         @if (['string', 'decimal', 'integer', undefined, null] | includes:property?.type) {
-          <label>{{ value }}</label>
+          <label [mTooltip]="!!propertyValue?.extensions?.length" [mTitle]="extensionTooltip">{{ value }}</label>
         }
         @if ('boolean' === property?.type) {
-          <m-checkbox [ngModel]="value" name="value" readOnly></m-checkbox>
+          <span [mTooltip]="!!propertyValue?.extensions?.length" [mTitle]="extensionTooltip">
+            <m-checkbox [ngModel]="value" name="value" readOnly></m-checkbox>
+          </span>
         }
         @if ('dateTime' === property?.type) {
-          <label>{{ value | localDate }}</label>
+          <label [mTooltip]="!!propertyValue?.extensions?.length" [mTitle]="extensionTooltip">{{ value | localDate }}</label>
         }
         @if ('code' === property?.type) {
-          <label>{{ value | localizedConceptName: {codeSystem: codeSystem} | async }}</label>
+          <label [mTooltip]="!!propertyValue?.extensions?.length" [mTitle]="extensionTooltip">{{ value | localizedConceptName: {codeSystem: codeSystem} | async }}</label>
         }
         @if ('Coding' === property?.type) {
           <span [class.coding-compact-view]="compact" class="m-items-middle" [style.gap]="compact ? '0.15rem' : '0.5rem'">

@@ -14,8 +14,19 @@ export class EntityProperty extends DefinedProperty {
 export class EntityPropertyValue {
   public id?: number;
   public value?: any;
+  public extensions?: EntityPropertyValueExtension[];
   public entityPropertyId?: number;
   public entityProperty?: string;
 
   public supplement?: boolean;
+}
+
+export class EntityPropertyValueExtension {
+  public url?: string;
+  public valueString?: string;
+  public valueBoolean?: boolean;
+  public valueDecimal?: number;
+  public valueInteger?: number;
+  public valueDateTime?: string;
+  public valueCode?: string;
 }

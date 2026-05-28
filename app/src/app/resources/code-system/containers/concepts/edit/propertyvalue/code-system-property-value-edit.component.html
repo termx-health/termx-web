@@ -18,10 +18,12 @@
                   <tw-property-value-input name="{{pv._key}}-propertyValue"
                     [(ngModel)]="pv.value"
                     [property]="pv.entityPropertyId | apply:getProperty:properties"
+                    [propertyValue]="pv"
                     [codeSystem]="codeSystemId"
                     [required]="(pv._key | apply:isRequired:properties)"
                     [showCodingReference]="showCodingReference"
                     [compact]="compact"
+                    [extensionsVisible]="extensionsVisible"
                   [viewMode]="pv.supplement"></tw-property-value-input>
                 </m-form-item>
               }
@@ -56,6 +58,7 @@
             <tw-property-value-input
               name="value" [ngModel]="pv.value"
               [property]="pv.entityPropertyId | apply: getProperty: properties"
+              [propertyValue]="pv"
               [codeSystem]="codeSystemId"
               [showCodingReference]="showCodingReference"
               [compact]="compact"
