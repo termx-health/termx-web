@@ -27,6 +27,8 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() @BooleanInput() public showStatus: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
+  /** Debounce (ms) before a search request is issued after typing stops. */
+  @Input() public searchDebounce: number = 250;
 
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
@@ -46,7 +48,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
-      debounceTime(250),
+      debounceTime(this.searchDebounce),
       distinctUntilChanged(),
       switchMap(text => this.searchConcepts(text)),
     ).subscribe(data => this.data = data);

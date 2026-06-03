@@ -6,56 +6,68 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$lookup</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="lookUp()">{{'web.integration.send-request' | translate}}</m-button>
+      <div class="m-items-middle" style="gap: .5rem">
+        <m-select name="method" [(ngModel)]="method" style="width: 7rem">
+          <m-option mValue="GET" mLabel="GET"></m-option>
+          <m-option mValue="POST" mLabel="POST"></m-option>
+        </m-select>
+        <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="lookUp()">{{'web.integration.send-request' | translate}}</m-button>
+      </div>
     </div>
 
-    <m-form-item [mLabel]="code" required>
-      <ng-template #code>
-        <div>{{'web.integration.fhir.code-system.lookup.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.code-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="code" [(ngModel)]="data.code"></m-textarea>
+    <!-- 1. System — select from CodeSystems; shows the canonical URL -->
+    <m-form-item mLabel="System" required>
+      <tw-code-system-search name="system" [(ngModel)]="codeSystem" (ngModelChange)="onSystemSelect($event)"></tw-code-system-search>
+      @if (data.system) {
+        <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.system}}</div>
+      }
     </m-form-item>
 
-    <m-form-item [mLabel]="system" required>
-      <ng-template #system>
-        <div>{{'web.integration.fhir.code-system.lookup.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.system-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
+    <!-- 2. Version — from the selected CodeSystem (optional) -->
+    <m-form-item mLabel="Version">
+      <tw-code-system-version-select name="version" valueType="full" [autoSelect]="false"
+        [codeSystemId]="codeSystem?.id" [disabled]="!codeSystem"
+        [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-code-system-version-select>
     </m-form-item>
 
-    <m-form-item [mLabel]="version">
-      <ng-template #version>
-        <div>{{'web.integration.fhir.code-system.lookup.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.lookup.version-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
+    <!-- 3. Code — free text + concept autocomplete from the selected CS/version -->
+    <m-form-item mLabel="Code" required>
+      <m-input name="code" [(ngModel)]="data.code" placeholder="Enter any code, or pick a concept below"></m-input>
+      @if (codeSystem) {
+        <div style="margin-top: .25rem">
+          <tw-concept-search name="codePick" valueType="code" displayType="codeName"
+            [codeSystem]="codeSystem.id" [codeSystemVersion]="data.version" [searchDebounce]="600"
+            [ngModel]="data.code" (ngModelChange)="data.code = $event"
+            placeholder="Search concept…"></tw-concept-search>
+        </div>
+      }
     </m-form-item>
 
-    <m-form-item [mLabel]="date">
-      <ng-template #date>
-        <div>{{'web.integration.fhir.code-system.lookup.date' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="dateContent"></m-icon>
-        <ng-template #dateContent>
-          <span [innerHTML]="('web.integration.fhir.code-system.lookup.date-tooltip'| translate)"></span>
-        </ng-template>
-      </ng-template>
+    <!-- 4. Show designations -->
+    <m-form-item mLabel="Show designations">
+      <m-checkbox name="showDesignations" [(ngModel)]="data.showDesignations"></m-checkbox>
+    </m-form-item>
+
+    <!-- 5. Designation languages — any language selectable; the version's languages listed first -->
+    <m-form-item mLabel="Designation languages">
+      <m-select name="langs" [multiple]="true" [(ngModel)]="data.designationLanguages" placeholder="Languages">
+        @for (l of languageOptions; track l.code) {
+          <m-option [mValue]="l.code" [mLabel]="l.label"></m-option>
+        }
+      </m-select>
+    </m-form-item>
+
+    <!-- 6. Date -->
+    <m-form-item mLabel="Date">
       <m-date-picker name="date" [(ngModel)]="data.date"></m-date-picker>
     </m-form-item>
 
-    <m-form-item [mLabel]="properties">
-      <ng-template #properties>
-        <div>{{'web.integration.fhir.code-system.lookup.properties' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="propertiesContent"></m-icon>
-        <ng-template #propertiesContent>
-          <span [innerHTML]="('web.integration.fhir.code-system.lookup.properties-tooltip' | translate)"></span>
-        </ng-template>
-      </ng-template>
+    <!-- 7. Properties -->
+    <m-form-item mLabel="Properties">
       <div class="m-items-middle">
-        <m-textarea name="propertyInput" [(ngModel)]="data.propertyInput"></m-textarea>
+        <m-input name="propertyInput" [(ngModel)]="data.propertyInput"></m-input>
         <m-button (click)="addProperty()">
-          <m-icon [mCode]="'plus'"></m-icon>
+          <m-icon mCode="plus"></m-icon>
         </m-button>
       </div>
     </m-form-item>
@@ -63,11 +75,22 @@
       <div style="display:flex">
         <p>{{property}}</p>&nbsp;
         <m-button mSize="small" (click)="removeProperty(index)">
-          <m-icon [mCode]="'delete'"></m-icon>
+          <m-icon mCode="delete"></m-icon>
         </m-button>
       </div>
     }
 
+    <!-- 8. Request command preview (GET / POST) -->
+    <m-form-item mLabel="Request command">
+      <div class="m-items-middle" style="align-items: flex-start">
+        <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
+        <m-button (click)="copyCommand()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
+
+    <!-- 9. Results -->
     @if (response || error) {
       <m-card class="m-card-inside">
         <div *m-card-header class="m-items-middle">

@@ -27,6 +27,10 @@ export class FhirCodeSystemLibService {
     return this.http.get<FhirParameters>(`${this.baseUrl}/$lookup`, {params: SearchHttpParams.build(params)});
   }
 
+  public lookupPost(params: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$lookup`, {...params, resourceType: 'Parameters'});
+  }
+
   public validateCode(params: FhirCodeSystemValidateCodeParams): Observable<FhirParameters> {
     return this.http.get<FhirParameters>(`${this.baseUrl}/$validate-code`, {params: SearchHttpParams.build(params)});
   }

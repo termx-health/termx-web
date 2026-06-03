@@ -6,33 +6,49 @@
         <nz-breadcrumb-item>ValueSet</nz-breadcrumb-item>
         <nz-breadcrumb-item>$expand</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button mDisplay="primary" [disabled]="!data.url || !data.valueSetVersion" (click)="expand()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.url" (click)="expand()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="url" required>
-      <ng-template #url>
-        <div>{{'web.integration.fhir.value-set.expand.url' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
-        <ng-template #urlContent>
-          A canonical reference to a value set. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined
-          implicitly by some code system known to the server
-        </ng-template>
-      </ng-template>
-      <m-textarea name="url" [(ngModel)]="data.url"></m-textarea>
-    </m-form-item>
-    <m-form-item [mLabel]="conceptMapVersion" required>
-      <ng-template #conceptMapVersion>
-        <div>{{'web.integration.fhir.value-set.expand.value-set-version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersionContent"></m-icon>
-        <ng-template #conceptMapVersionContent>
-          The identifier that is used to identify a specific version of the value set to be used when generating the expansion. This is an arbitrary value
-          managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version
-          is not available.
-        </ng-template>
-      </ng-template>
-      <m-textarea name="valueSetVersion" [(ngModel)]="data.valueSetVersion"></m-textarea>
+    <!-- ValueSet -->
+    <m-form-item mLabel="ValueSet" required>
+      <tw-value-set-search name="valueSet" [(ngModel)]="valueSet" (ngModelChange)="onValueSetSelect($event)"></tw-value-set-search>
+      @if (data.url) {
+        <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.url}}</div>
+      }
     </m-form-item>
 
+    <!-- ValueSet version (optional) -->
+    <m-form-item mLabel="Version">
+      <tw-value-set-version-select name="valueSetVersion" valueType="full"
+        [valueSetId]="valueSet?.id" [disabled]="!valueSet"
+        [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-value-set-version-select>
+    </m-form-item>
+
+    <!-- Include designations -->
+    <m-form-item mLabel="Include designations">
+      <m-checkbox name="includeDesignations" [(ngModel)]="data.includeDesignations"></m-checkbox>
+    </m-form-item>
+
+    <!-- Designation languages — any language selectable; the version's languages listed first -->
+    <m-form-item mLabel="Designation languages">
+      <m-select name="langs" [multiple]="true" [(ngModel)]="designationLanguages" placeholder="Languages">
+        @for (l of languageOptions; track l.code) {
+          <m-option [mValue]="l.code" [mLabel]="l.label"></m-option>
+        }
+      </m-select>
+    </m-form-item>
+
+    <!-- Request command preview -->
+    <m-form-item mLabel="Request command">
+      <div class="m-items-middle" style="align-items: flex-start">
+        <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
+        <m-button (click)="copyCommand()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
+
+    <!-- Results -->
     @if (response || error) {
       <m-card class="m-card-inside">
         <div *m-card-header class="m-items-middle">
@@ -44,7 +60,7 @@
         @if (response) {
           <pre>{{response | json}}</pre>
         }
-        @for (issue of error?.issue; track $index) {
+        @for (issue of error?.issue; track issue) {
           <div>
             <m-alert [mType]="issue.severity" mShowIcon>
               {{issue?.details?.text}}
@@ -53,6 +69,5 @@
         }
       </m-card>
     }
-
   </m-spinner>
 </m-card>

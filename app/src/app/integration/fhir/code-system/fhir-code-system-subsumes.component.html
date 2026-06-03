@@ -6,41 +6,61 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$subsumes</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button mDisplay="primary" [disabled]="!data.codeA || !data.codeB || !data.system" (click)="subsumes()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.system || !data.codeA || !data.codeB" (click)="subsumes()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="codeA" required>
-      <ng-template #codeA>
-        <div>{{'web.integration.fhir.code-system.subsumes.code-a' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-a-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="codeA" [(ngModel)]="data.codeA"></m-textarea>
+    <!-- System -->
+    <m-form-item mLabel="System" required>
+      <tw-code-system-search name="system" [(ngModel)]="codeSystem" (ngModelChange)="onSystemSelect($event)"></tw-code-system-search>
+      @if (data.system) {
+        <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.system}}</div>
+      }
     </m-form-item>
 
-    <m-form-item [mLabel]="codeB" required>
-      <ng-template #codeB>
-        <div>{{'web.integration.fhir.code-system.subsumes.code-b' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-b-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="codeB" [(ngModel)]="data.codeB"></m-textarea>
+    <!-- Version (optional) -->
+    <m-form-item mLabel="Version">
+      <tw-code-system-version-select name="version" valueType="full" [autoSelect]="false"
+        [codeSystemId]="codeSystem?.id" [disabled]="!codeSystem"
+        [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-code-system-version-select>
     </m-form-item>
 
-    <m-form-item [mLabel]="system" required>
-      <ng-template #system>
-        <div>{{'web.integration.fhir.code-system.subsumes.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.system-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
+    <!-- Code A -->
+    <m-form-item mLabel="Code A" required>
+      <m-input name="codeA" [(ngModel)]="data.codeA" placeholder="Enter any code, or pick a concept below"></m-input>
+      @if (codeSystem) {
+        <div style="margin-top: .25rem">
+          <tw-concept-search name="codeAPick" valueType="code" displayType="codeName"
+            [codeSystem]="codeSystem.id" [codeSystemVersion]="versionObj?.version" [searchDebounce]="600"
+            [ngModel]="data.codeA" (ngModelChange)="data.codeA = $event"
+            placeholder="Search concept…"></tw-concept-search>
+        </div>
+      }
     </m-form-item>
 
-    <m-form-item [mLabel]="version">
-      <ng-template #version>
-        <div>{{'web.integration.fhir.code-system.subsumes.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.version-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
+    <!-- Code B -->
+    <m-form-item mLabel="Code B" required>
+      <m-input name="codeB" [(ngModel)]="data.codeB" placeholder="Enter any code, or pick a concept below"></m-input>
+      @if (codeSystem) {
+        <div style="margin-top: .25rem">
+          <tw-concept-search name="codeBPick" valueType="code" displayType="codeName"
+            [codeSystem]="codeSystem.id" [codeSystemVersion]="versionObj?.version" [searchDebounce]="600"
+            [ngModel]="data.codeB" (ngModelChange)="data.codeB = $event"
+            placeholder="Search concept…"></tw-concept-search>
+        </div>
+      }
     </m-form-item>
 
+    <!-- Request command preview -->
+    <m-form-item mLabel="Request command">
+      <div class="m-items-middle" style="align-items: flex-start">
+        <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
+        <m-button (click)="copyCommand()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
+
+    <!-- Results -->
     @if (response || error) {
       <m-card class="m-card-inside">
         <div *m-card-header class="m-items-middle">
