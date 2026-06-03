@@ -104,9 +104,21 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
   private writeVersion(version: CodeSystemVersion): CodeSystemVersion {
     version.status ??= 'draft';
-    version.releaseDate ??= new Date();
+    // The API returns dates as strings (e.g. "2026-06-03"); the date picker needs real
+    // Date objects — passing a string crashes ng-zorro with "Invalid time value".
+    version.releaseDate = this.toDate(version.releaseDate) ?? new Date();
+    version.expirationDate = this.toDate(version.expirationDate);
     version.identifiers ??= [];
     return version;
+  }
+
+  /** Coerce an API date (string | Date) into a valid Date; undefined when absent or unparseable. */
+  private toDate(value: Date | string | undefined): Date | undefined {
+    if (!value) {
+      return undefined;
+    }
+    const d = value instanceof Date ? value : new Date(value);
+    return isNaN(d.getTime()) ? undefined : d;
   }
 
   private getLastVersion(versions: CodeSystemVersion[]): CodeSystemVersion {

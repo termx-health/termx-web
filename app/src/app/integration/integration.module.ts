@@ -32,6 +32,7 @@ import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {IntegrationDashboardComponent} from 'term-web/integration/dashboard/integration-dashboard.component';
+import {IntegrationOperationsComponent} from 'term-web/integration/operations/integration-operations.component';
 import {FhirCodeSystemFindMatchesComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-find-matches.component';
 import {FhirCodeSystemLookupComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-lookup.component';
 import {FhirCodeSystemSubsumesComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-subsumes.component';
@@ -53,14 +54,6 @@ export const INTEGRATION_ROUTES: Routes = [
   {
     path: 'dashboard', component: IntegrationDashboardComponent, children: [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent, data: {privilege: ['*.CodeSystem.write', '*.ValueSet.write', '*.MapSet.write']}},
-      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent, data: {privilege: ['*.CodeSystem.read']}},
-      {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent, data: {privilege: ['*.CodeSystem.read']}},
-      {path: 'fhir/CodeSystem/$subsumes', component: FhirCodeSystemSubsumesComponent, data: {privilege: ['*.CodeSystem.read']}},
-      {path: 'fhir/CodeSystem/$find-matches', component: FhirCodeSystemFindMatchesComponent, data: {privilege: ['*.CodeSystem.read']}},
-      {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent, data: {privilege: ['*.ValueSet.read']}},
-      {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent, data: {privilege: ['*.ValueSet.read']}},
-      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent, data: {privilege: ['*.MapSet.read']}},
-      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.read']}},
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.write']}},
@@ -70,6 +63,18 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/value-set', component: ValueSetFileImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.write']}},
       {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.CodeSystem.write']}}
+    ]
+  },
+  {
+    path: 'operations', component: IntegrationOperationsComponent, children: [
+      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent, data: {privilege: ['*.CodeSystem.read']}},
+      {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent, data: {privilege: ['*.CodeSystem.read']}},
+      {path: 'fhir/CodeSystem/$subsumes', component: FhirCodeSystemSubsumesComponent, data: {privilege: ['*.CodeSystem.read']}},
+      {path: 'fhir/CodeSystem/$find-matches', component: FhirCodeSystemFindMatchesComponent, data: {privilege: ['*.CodeSystem.read']}},
+      {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent, data: {privilege: ['*.ValueSet.read']}},
+      {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent, data: {privilege: ['*.ValueSet.read']}},
+      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent, data: {privilege: ['*.MapSet.read']}},
+      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.read']}}
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.read']}},
@@ -103,6 +108,7 @@ export const INTEGRATION_ROUTES: Routes = [
         NzProgressModule,
         ImportJobLogComponent,
         IntegrationDashboardComponent,
+        IntegrationOperationsComponent,
         IntegrationFhirSyncComponent,
         IntegrationAtcImportComponent,
         IntegrationIcdImportComponent,

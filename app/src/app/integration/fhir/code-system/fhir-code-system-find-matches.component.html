@@ -6,55 +6,59 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$find-matches</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button mDisplay="primary" [disabled]="!data.system || !(data.properties?.length > 0)" (click)="findMatches()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.system" (click)="findMatches()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="system" required>
-      <ng-template #system>
-        <div>{{'web.integration.fhir.code-system.find-matches.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.system-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="system" [(ngModel)]="data.system"></m-textarea>
+    <!-- System -->
+    <m-form-item mLabel="System" required>
+      <tw-code-system-search name="system" [(ngModel)]="codeSystem" (ngModelChange)="onSystemSelect($event)"></tw-code-system-search>
+      @if (data.system) {
+        <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.system}}</div>
+      }
     </m-form-item>
 
-    <m-form-item [mLabel]="version">
-      <ng-template #version>
-        <div>{{'web.integration.fhir.code-system.find-matches.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.version-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
+    <!-- Version (optional) -->
+    <m-form-item mLabel="Version">
+      <tw-code-system-version-select name="version" valueType="full" [autoSelect]="false"
+        [codeSystemId]="codeSystem?.id" [disabled]="!codeSystem"
+        [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-code-system-version-select>
     </m-form-item>
 
-    <m-form-item [mLabel]="properties" required>
-      <ng-template #properties>
-        <div>{{'web.integration.fhir.code-system.find-matches.properties' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.properties-tooltip' | translate}}"></m-icon>
-      </ng-template>
+    <!-- Exact -->
+    <m-form-item mLabel="Exact">
+      <m-checkbox name="exact" [(ngModel)]="data.exact"></m-checkbox>
+    </m-form-item>
+
+    <!-- Properties (name / value pairs to match on) -->
+    <m-form-item mLabel="Properties">
       <div class="m-items-middle">
-        <m-textarea name="propertyName" [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-textarea>
-        <m-textarea name="propertyValue" [(ngModel)]="propertyInput.propertyValue" placeholder="web.integration.fhir.code-system.find-matches.property-value"></m-textarea>
+        <m-input name="propertyName" [(ngModel)]="propertyInput.propertyName" placeholder="property"></m-input>
+        <m-input name="propertyValue" [(ngModel)]="propertyInput.propertyValue" placeholder="value"></m-input>
         <m-button (click)="addProperty()">
-          <m-icon [mCode]="'plus'"></m-icon>
+          <m-icon mCode="plus"></m-icon>
         </m-button>
       </div>
     </m-form-item>
     @for (property of data.properties; track property; let index = $index) {
       <div style="display:flex">
-        <p>{{property.propertyName}} {{property.propertyValue}}</p>&nbsp;
+        <p>{{property.propertyName}} = {{property.propertyValue}}</p>&nbsp;
         <m-button mSize="small" (click)="removeProperty(index)">
           <m-icon [mCode]="'delete'"></m-icon>
         </m-button>
       </div>
     }
 
-    <m-form-item [mLabel]="exact">
-      <ng-template #exact>
-        <div>{{'web.integration.fhir.code-system.find-matches.exact' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.exact-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-checkbox name="exact" [(ngModel)]="data.exact"></m-checkbox>
+    <!-- Request command preview (POST body) -->
+    <m-form-item mLabel="Request command">
+      <div class="m-items-middle" style="align-items: flex-start">
+        <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
+        <m-button (click)="copyCommand()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
     </m-form-item>
 
+    <!-- Results -->
     @if (response || error) {
       <m-card class="m-card-inside">
         <div *m-card-header class="m-items-middle">

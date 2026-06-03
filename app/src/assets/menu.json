@@ -151,6 +151,24 @@
             },
             {
                 "label": {
+                    "en": "Operations",
+                    "et": "Operatsioonid",
+                    "lt": "Operacijos",
+                    "de": "Operationen",
+                    "fr": "Opérations",
+                    "nl": "Operaties",
+                    "cs": "Operace"
+                },
+                "icon": "api",
+                "link": "integration/operations",
+                "privileges": [
+                    "*.CodeSystem.read",
+                    "*.ValueSet.read",
+                    "*.MapSet.read"
+                ]
+            },
+            {
+                "label": {
                     "en": "Import",
                     "et": "Import",
                     "lt": "Importavimas",

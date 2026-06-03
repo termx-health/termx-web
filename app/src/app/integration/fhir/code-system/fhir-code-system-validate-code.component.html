@@ -9,41 +9,50 @@
       <m-button mDisplay="primary" [disabled]="!data.code || !data.url" (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="code" required>
-      <ng-template #code>
-        <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.code-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="code" [(ngModel)]="data.code"></m-textarea>
-    </m-form-item>
-    <m-form-item [mLabel]="version">
-      <ng-template #version>
-        <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.version-tooltip' | translate}}"></m-icon>
-      </ng-template>
-      <m-textarea name="version" [(ngModel)]="data.version"></m-textarea>
-    </m-form-item>
-    <m-form-item [mLabel]="url" required>
-      <ng-template #url>
-        <div>{{'web.integration.fhir.code-system.validate-code.url' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
-        <ng-template #urlContent>
-          {{'web.integration.fhir.code-system.validate-code.url-tooltip' | translate}}
-        </ng-template>
-      </ng-template>
-      <m-textarea name="url" [(ngModel)]="data.url"></m-textarea>
-    </m-form-item>
-    <m-form-item [mLabel]="display">
-      <ng-template #display>
-        <div>{{'web.integration.fhir.code-system.validate-code.display' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="displayContent"></m-icon>
-        <ng-template #displayContent>
-          <span [innerHTML]="('web.integration.fhir.code-system.validate-code.display-tooltip' | translate)"></span>
-        </ng-template>
-      </ng-template>
-      <m-textarea name="display" [(ngModel)]="data.display"></m-textarea>
+    <!-- System -->
+    <m-form-item mLabel="System" required>
+      <tw-code-system-search name="system" [(ngModel)]="codeSystem" (ngModelChange)="onSystemSelect($event)"></tw-code-system-search>
+      @if (data.url) {
+        <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.url}}</div>
+      }
     </m-form-item>
 
+    <!-- Version (optional) -->
+    <m-form-item mLabel="Version">
+      <tw-code-system-version-select name="version" valueType="full" [autoSelect]="false"
+        [codeSystemId]="codeSystem?.id" [disabled]="!codeSystem"
+        [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-code-system-version-select>
+    </m-form-item>
+
+    <!-- Code (free text + concept autocomplete) -->
+    <m-form-item mLabel="Code" required>
+      <m-input name="code" [(ngModel)]="data.code" placeholder="Enter any code, or pick a concept below"></m-input>
+      @if (codeSystem) {
+        <div style="margin-top: .25rem">
+          <tw-concept-search name="codePick" valueType="code" displayType="codeName"
+            [codeSystem]="codeSystem.id" [codeSystemVersion]="versionObj?.version" [searchDebounce]="600"
+            [ngModel]="data.code" (ngModelChange)="data.code = $event"
+            placeholder="Search concept…"></tw-concept-search>
+        </div>
+      }
+    </m-form-item>
+
+    <!-- Display (to validate the term) -->
+    <m-form-item mLabel="Display">
+      <m-input name="display" [(ngModel)]="data.display"></m-input>
+    </m-form-item>
+
+    <!-- Request command preview -->
+    <m-form-item mLabel="Request command">
+      <div class="m-items-middle" style="align-items: flex-start">
+        <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
+        <m-button (click)="copyCommand()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
+
+    <!-- Results -->
     @if (response || error) {
       <m-card class="m-card-inside">
         <div *m-card-header class="m-items-middle">
@@ -64,6 +73,5 @@
         }
       </m-card>
     }
-
   </m-spinner>
 </m-card>

@@ -4,4 +4,5 @@ export class FhirCodeSystemLookupParams {
   public version?: string;
   public date?: string;
   public properties?: string;
+  public displayLanguage?: string;
 }
