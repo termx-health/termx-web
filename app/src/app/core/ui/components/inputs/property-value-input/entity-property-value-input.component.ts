@@ -43,6 +43,25 @@ import { environment } from 'environments/environment';
         gap: 0.5rem;
         align-items: start;
       }
+
+      .extension-view {
+        display: grid;
+        gap: 0.15rem;
+        margin-top: 0.25rem;
+      }
+
+      .extension-view__row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 0.5rem;
+        font-size: 0.85em;
+        color: var(--color-text-secondary, #8c8c8c);
+        word-break: break-word;
+      }
+
+      .extension-view__url {
+        font-style: italic;
+      }
     `],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true },
