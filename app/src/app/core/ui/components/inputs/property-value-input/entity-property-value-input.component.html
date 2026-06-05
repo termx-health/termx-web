@@ -155,6 +155,17 @@
             }
           </span>
         }
+
+        @if (!compact && propertyValue?.extensions?.length) {
+          <div class="extension-view">
+            @for (extension of extensionList(); track extension) {
+              <div class="extension-view__row">
+                <span class="extension-view__url">{{ extension.url }}</span>
+                <span class="extension-view__value">{{ extension | apply:extensionValue }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
     }
   </m-form-control>
