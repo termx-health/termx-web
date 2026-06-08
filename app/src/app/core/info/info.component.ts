@@ -16,45 +16,50 @@ import {InfoService} from 'term-web/core/info/info.service';
   template: `
       <m-form-row>
         <div *m-form-col class="tw-flex-container" style="gap: 2rem">
-          <h1 style="margin-top: 2.5rem">
-            <div>{{ env.appVersion }}</div>
+          <section style="margin-top: 1.5rem">
+            <h4 class="small">
+              Web
+            </h4>
+
+            <div class="version">{{ env.appVersion }}</div>
             @if (webBuild | async; as wb) {
-              <div class="m-subtitle small">
+              <div class="m-text-secondary small build">
                 @if (wb.buildTime) {<span>built {{ wb.buildTime }}</span>}
                 @if (wb.pr) {<span> · PR #{{ wb.pr }}</span>}
                 @if (wb.commit) {<span> · {{ wb.commit }}</span>}
               </div>
             }
-            @if (serviceInfo | async; as si) {
-              <div class="m-subtitle small">service: {{ si.version }}</div>
-              @if (si.buildTime || si.pr || si.commit) {
-                <div class="m-subtitle small">
-                  @if (si.buildTime) {<span>built {{ si.buildTime }}</span>}
-                  @if (si.pr) {<span> · PR #{{ si.pr }}</span>}
-                  @if (si.commit) {<span> · {{ si.commit }}</span>}
-                </div>
-              }
-            }
-          </h1>
-      
-          <section>
-            <h4 class="small">
-              Web
-            </h4>
-      
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem; margin-top: 0.75rem">
               <div class="cardy m-rounded">
                 <div class="small">Default language</div>
                 <div class="m-text-secondary small">{{ env.defaultLanguage }}</div>
               </div>
-      
+
               <div class="cardy m-rounded">
                 <div class="small">UI languages</div>
                 <div class="m-text-secondary small">{{ env.uiLanguages | join: ', ' }}</div>
               </div>
             </div>
           </section>
-      
+
+          <section>
+            <h4 class="small">
+              Server
+            </h4>
+
+            @if (serviceInfo | async; as si) {
+              <div class="version">{{ si.version }}</div>
+              @if (si.buildTime || si.pr || si.commit) {
+                <div class="m-text-secondary small build">
+                  @if (si.buildTime) {<span>built {{ si.buildTime }}</span>}
+                  @if (si.pr) {<span> · PR #{{ si.pr }}</span>}
+                  @if (si.commit) {<span> · {{ si.commit }}</span>}
+                </div>
+              }
+            }
+          </section>
+
           <section>
             <h4 class="small">
               Modules
@@ -115,6 +120,16 @@ import {InfoService} from 'term-web/core/info/info.service';
       </m-form-row>
       `,
   styles: [`
+    .version {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .build {
+      margin-top: 0.15rem;
+    }
+
     .small {
       font-size: 0.9rem;
       word-break: break-all;
