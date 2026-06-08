@@ -22,7 +22,27 @@ export class InfoService {
     return this.cache.put('version', this.http.get<{version: string}>(`${this.baseUrl}`, {context: SKIP_HTTP_ERROR})).pipe(map(r => r.version));
   }
 
+  /** Full backend build metadata from /info (version + build-time/commit/pr, the latter populated after PR #175 lands). */
+  public serviceInfo(): Observable<WebBuild | null> {
+    return this.cache.put('service-info', this.http.get<Record<string, string>>(`${this.baseUrl}`, {context: SKIP_HTTP_ERROR})).pipe(
+      map(r => ({version: r?.['version'], buildTime: r?.['build-time'], commit: r?.['commit'], pr: r?.['pr']})),
+      catchError(() => of(null))
+    );
+  }
+
   public modules(): Observable<string[]> {
     return this.cache.put('modules', this.http.get<string[]>(`${this.baseUrl}/modules`, {context: SKIP_HTTP_ERROR}));
   }
+
+  /** Build metadata of the deployed web bundle (etc/generate-version.mjs → /version.json). Null if absent (e.g. `ng serve`). */
+  public webBuild(): Observable<WebBuild | null> {
+    return this.http.get<WebBuild>(`${environment.baseHref}version.json`, {context: SKIP_HTTP_ERROR}).pipe(catchError(() => of(null)));
+  }
+}
+
+export interface WebBuild {
+  version?: string;
+  buildTime?: string;
+  commit?: string;
+  pr?: string;
 }

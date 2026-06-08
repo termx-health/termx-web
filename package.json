@@ -7,7 +7,7 @@
     "start": "ng serve",
     "start:embedded": "ng serve --configuration embedded",
     "version:sync": "node -e \"const v=require('fs').readFileSync('VERSION','utf8').trim(); const p=require('./package.json'); p.version=v; require('fs').writeFileSync('package.json', JSON.stringify(p,null,2)+'\\n')\"",
-    "prebuild": "npm run version:sync",
+    "prebuild": "npm run version:sync && node etc/generate-version.mjs",
     "build": "ng build",
     "watch:lib": "ng build lib --watch --configuration production",
     "test": "ng test",
