@@ -18,7 +18,23 @@ import {InfoService} from 'term-web/core/info/info.service';
         <div *m-form-col class="tw-flex-container" style="gap: 2rem">
           <h1 style="margin-top: 2.5rem">
             <div>{{ env.appVersion }}</div>
-            <div class="m-subtitle small">{{ version | async }}</div>
+            @if (webBuild | async; as wb) {
+              <div class="m-subtitle small">
+                @if (wb.buildTime) {<span>built {{ wb.buildTime }}</span>}
+                @if (wb.pr) {<span> · PR #{{ wb.pr }}</span>}
+                @if (wb.commit) {<span> · {{ wb.commit }}</span>}
+              </div>
+            }
+            @if (serviceInfo | async; as si) {
+              <div class="m-subtitle small">service: {{ si.version }}</div>
+              @if (si.buildTime || si.pr || si.commit) {
+                <div class="m-subtitle small">
+                  @if (si.buildTime) {<span>built {{ si.buildTime }}</span>}
+                  @if (si.pr) {<span> · PR #{{ si.pr }}</span>}
+                  @if (si.commit) {<span> · {{ si.commit }}</span>}
+                </div>
+              }
+            }
           </h1>
       
           <section>
@@ -114,6 +130,7 @@ export default class InfoComponent {
   protected service = inject(InfoService);
   protected env = environment;
 
-  protected version = this.service.version();
   protected modules = this.service.modules();
+  protected webBuild = this.service.webBuild();
+  protected serviceInfo = this.service.serviceInfo();
 }

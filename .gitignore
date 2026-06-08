@@ -4,6 +4,9 @@
 /out-tsc
 src/styles/build
 
+# generated at build (etc/generate-version.mjs)
+/app/src/assets/base/version.json
+
 # dependencies
 /node_modules
 
