@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { remove, unique, uniqueBy, group, LoadingManager, ApplyPipe, FilterPipe, SortPipe } from '@termx-health/core-util';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
@@ -77,7 +77,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   `],
     imports: [MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule, TransformationDefinitionResourceFormComponent, TranslatePipe, ApplyPipe, FilterPipe, SortPipe]
 })
-export class TransformationDefinitionResourcesComponent implements OnInit {
+export class TransformationDefinitionResourcesComponent implements OnChanges {
   private service = inject(TransformationDefinitionService);
 
   @Input() public definition: TransformationDefinition;
@@ -86,7 +86,7 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
   protected selectedResource: TransformationDefinitionResource;
   protected loader = new LoadingManager<'import'>();
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
     this.onResourceSelect(this.definition.mapping);
   }
 
