@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
-import {LoadingManager, validateForm, ApplyPipe, LocalDatePipe, SortPipe} from '@termx-health/core-util';
+import {LoadingManager, validateForm, ApplyPipe, LocalDatePipe} from '@termx-health/core-util';
 import {MuiNoDataModule, MuiListModule, MuiDropdownModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiButtonModule, MuiDividerModule, MarinPageLayoutModule} from '@termx-health/ui';
 import {MarinaUtilModule} from '@termx-health/util';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.dire
       MuiListModule, MuiNoDataModule, MuiDropdownModule, MuiIconModule, MuiModalModule, MuiFormModule,
       MuiButtonModule, MuiDividerModule, MarinPageLayoutModule, FormsModule,
       TranslatePipe, StatusTagComponent, SemanticVersionSelectComponent, PrivilegedDirective, ApplyPipe,
-      LocalDatePipe, SortPipe, MarinaUtilModule
+      LocalDatePipe, MarinaUtilModule
     ]
 })
 export class StructureDefinitionVersionsWidgetComponent {

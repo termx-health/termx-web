@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe } from '@termx-health/core-util';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
 import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {MapSetVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -20,7 +20,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 @Component({
     selector: 'tw-map-set-versions-widget',
     templateUrl: 'map-set-versions-widget.component.html',
-    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe, PrivilegedPipe]
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, PrivilegedPipe]
 })
 export class MapSetVersionsWidgetComponent implements OnChanges{
   private router = inject(Router);

@@ -38,4 +38,5 @@ export class StructureDefinitionVersion {
   public status?: string;
   public releaseDate?: string;
   public description?: LocalizedName;
+  public algorithm?: string;
 }

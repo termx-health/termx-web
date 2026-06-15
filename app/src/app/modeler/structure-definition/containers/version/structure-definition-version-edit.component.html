@@ -52,6 +52,11 @@
                 <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
               </m-form-item>
             </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="algorithm" mLabel="entities.resource.version.algorithm">
+                <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
+              </m-form-item>
+            </m-form-row>
           </form>
         }
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe } from '@termx-health/core-util';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
 import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -23,7 +23,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 @Component({
     selector: 'tw-code-system-versions-widget',
     templateUrl: 'code-system-versions-widget.component.html',
-    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, MuiCoreModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiIconModule, MuiPopconfirmModule, RouterLink, MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, ValueSetVersionSaveModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe, HasAnyPrivilegePipe, PrivilegedPipe]
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, MuiCoreModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiIconModule, MuiPopconfirmModule, RouterLink, MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, ValueSetVersionSaveModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, HasAnyPrivilegePipe, PrivilegedPipe]
 })
 export class CodeSystemVersionsWidgetComponent implements OnChanges {
   private router = inject(Router);

@@ -10,6 +10,7 @@ import {StructureDefinition, StructureDefinitionVersion} from 'term-web/modeler/
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
 import {StatusTagComponent} from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import {ValueSetConceptSelectComponent} from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +18,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     imports: [
       ResourceContextComponent, MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule,
       MuiDatePickerModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiMultiLanguageInputModule,
-      FormsModule, StatusTagComponent, TranslatePipe, SemanticVersionSelectComponent, AsyncPipe, ApplyPipe
+      FormsModule, StatusTagComponent, TranslatePipe, SemanticVersionSelectComponent, AsyncPipe, ApplyPipe,
+      ValueSetConceptSelectComponent
     ]
 })
 export class StructureDefinitionVersionEditComponent implements OnInit {
