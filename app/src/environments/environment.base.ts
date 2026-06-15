@@ -9,6 +9,12 @@ export interface Environment {
   guestDisabled: boolean,
 
   defaultLanguage: string,
+  /**
+   * Regional locale used to format dates for the English UI language ('en-GB' or 'en-US').
+   * Controls day/month order: en-GB -> 15 Jun 2026 / 15/06/2026, en-US -> Jun 15, 2026 / 6/15/2026.
+   * Defaults to 'en-GB'.
+   */
+  englishLocale?: string,
   uiLanguages: string[],
   contentLanguages: string[],
   /**

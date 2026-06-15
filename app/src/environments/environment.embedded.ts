@@ -11,6 +11,7 @@ export const environment: Environment = {
   guestDisabled: true,
 
   defaultLanguage: 'en',
+  englishLocale: 'en-GB',
   uiLanguages: [...UI_LANGS],
   contentLanguages: [...UI_LANGS],
   extraLanguages: {},

@@ -60,14 +60,19 @@ export class MarinaUiConfigModule {
     translate.onLangChange.subscribe(({lang}) => {
       const localeImports: Record<string, () => Promise<any>> = {
         de: () => import('@angular/common/locales/de'),
-        en: () => import('@angular/common/locales/en'),
+        // English dates follow a regional locale (en-GB by default, en-US via web.env) so day/month
+        // order is unambiguous. The data is registered under the 'en' id below, so translations and
+        // the rest of the app keep using 'en' unchanged — only the date formats differ.
+        en: () => env.englishLocale === 'en-US'
+          ? import('@angular/common/locales/en')
+          : import('@angular/common/locales/en-GB'),
         et: () => import('@angular/common/locales/et'),
         fr: () => import('@angular/common/locales/fr'),
         lt: () => import('@angular/common/locales/lt'),
         nl: () => import('@angular/common/locales/nl'),
       };
       (localeImports[lang]?.() ?? Promise.reject(`No locale data for '${lang}'`))
-        .then(locale => registerLocaleData(locale.default))
+        .then(locale => registerLocaleData(locale.default, lang))
         .catch(e => console.warn(`Failed to register locale data for '${lang}'`, e));
       i18nService.use(lang);
 

@@ -15,6 +15,7 @@ var twConfig = {
   "snomedBrowserUrl": "${SNOMED_BROWSER_URL}",
   "snomedBrowserDailyBuildUrl": "${SNOMED_BROWSER_DAILY_BUILD_URL}",
   "defaultLanguage": "${DEFAULT_LANGUAGE}",
+  "englishLocale": "${ENGLISH_LOCALE}",
   "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
