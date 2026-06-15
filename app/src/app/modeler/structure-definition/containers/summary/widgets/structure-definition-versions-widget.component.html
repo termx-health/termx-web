@@ -4,7 +4,7 @@
 
 @if (versions?.length > 0) {
   <m-list mSeparated>
-    @for (version of versions | sort: 'version' : 'descend'; track version) {
+    @for (version of versions; track version) {
       <m-list-item mClickable (mClick)="versionSelected.emit(version.version)">
         <div class="m-justify-between">
           <div class="m-items-middle">

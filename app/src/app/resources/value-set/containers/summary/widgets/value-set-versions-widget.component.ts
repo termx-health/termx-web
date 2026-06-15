@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe, SortPipe } from '@termx-health/core-util';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe } from '@termx-health/core-util';
 import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import {ValueSetVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -21,7 +21,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 @Component({
     selector: 'tw-value-set-versions-widget',
     templateUrl: 'value-set-versions-widget.component.html',
-    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiAbbreviateModule, EntityPropertyValueInputComponent, FormsModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe, SortPipe, PrivilegedPipe]
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiAbbreviateModule, EntityPropertyValueInputComponent, FormsModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe, PrivilegedPipe]
 })
 export class ValueSetVersionsWidgetComponent implements OnChanges{
   private router = inject(Router);
