@@ -10,6 +10,7 @@ var twConfig = {
   "chefFhirVersion": "${CHEF_FHIR_VERSION}",
   "plantUmlUrl": "${PLANT_UML_URL}",
   "fmlEditor": "${FML_EDITOR}",
+  "fhirUmlConverterApi": "${FHIR_UML_CONVERTER_API}",
   "snowstormUrl": "${SNOWSTORM_URL}",
   "snowstormDailyBuildUrl": "${SNOWSTORM_DAILY_BUILD_URL}",
   "snomedBrowserUrl": "${SNOMED_BROWSER_URL}",
