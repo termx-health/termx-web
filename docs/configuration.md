@@ -78,6 +78,7 @@ web.env (env vars)  ──envsubst──▶  assets/env.js  ──▶  window.tw
 | `CHEF_FHIR_VERSION` | `5.0.0` | FHIR version passed to Chef. |
 | `PLANT_UML_URL` | `/plantuml` | PlantUML server endpoint (diagram rendering). |
 | `FML_EDITOR` | `/fml-editor` | FHIR Mapping Language editor endpoint. |
+| `FHIR_UML_CONVERTER_API` | *(empty)* | Base URL of the external [fhir2uml](https://fhir-uml-converter.online) converter. When set, the StructureDefinition **UML** diagram tab appears (it renders a class diagram from the version's FHIR content via this service); empty/unset hides the tab. |
 
 ## 6. SNOMED CT browsing links (optional)
 

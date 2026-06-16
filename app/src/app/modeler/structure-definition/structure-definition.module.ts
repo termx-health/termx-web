@@ -14,6 +14,7 @@ import {StructureDefinitionSummaryComponent} from 'term-web/modeler/structure-de
 import {StructureDefinitionVersionSummaryComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-summary.component';
 import {StructureDefinitionVersionContentComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-content.component';
 import {StructureDefinitionVersionEditComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-edit.component';
+import {StructureDefinitionVersionUmlComponent} from 'term-web/modeler/structure-definition/containers/version/structure-definition-version-uml.component';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
 
 export const STRUCTURE_DEFINITION_ROUTES: Routes = [
@@ -28,6 +29,7 @@ export const STRUCTURE_DEFINITION_ROUTES: Routes = [
   {path: 'structure-definitions/:id/versions/:versionCode/elements', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.read'], contentMode: 'elements'}},
   {path: 'structure-definitions/:id/versions/:versionCode/fsh', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.read'], contentMode: 'fsh'}},
   {path: 'structure-definitions/:id/versions/:versionCode/json', component: StructureDefinitionVersionContentComponent, data: {privilege: ['{id}.StructureDefinition.read'], contentMode: 'json'}},
+  {path: 'structure-definitions/:id/versions/:versionCode/uml', component: StructureDefinitionVersionUmlComponent, data: {privilege: ['{id}.StructureDefinition.read']}},
   // {path: 'structure-definitions/:id/view', component: StructureDefinitionViewComponent, data: {privilege: ['{id}.StructureDefinition.read']}},
 ];
 
@@ -45,6 +47,7 @@ export const STRUCTURE_DEFINITION_ROUTES: Routes = [
         StructureDefinitionVersionSummaryComponent,
         StructureDefinitionVersionContentComponent,
         StructureDefinitionVersionEditComponent,
+        StructureDefinitionVersionUmlComponent,
         StructureDefinitionTypeListComponent,
         StructureDefinitionConstraintListComponent
     ],

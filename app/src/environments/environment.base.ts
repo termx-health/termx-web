@@ -40,6 +40,8 @@ export interface Environment {
   chefFhirVersion?: string,
   plantUmlUrl?: string,
   fmlEditor?: string,
+  /** Base URL of the external FHIR→UML converter (fhir2uml). When unset, the StructureDefinition UML tab is hidden. */
+  fhirUmlConverterApi?: string,
 
   snowstormUrl?: string,
   snomedBrowserUrl?: string,

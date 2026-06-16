@@ -27,6 +27,7 @@ export const environment: Environment = {
   chefFhirVersion: dynamicEnv.chefFhirVersion || '5.0.0',
   plantUmlUrl: dynamicEnv.plantUmlUrl || '/plantuml',
   fmlEditor: dynamicEnv.fmlEditor || '/fml-editor',
+  fhirUmlConverterApi: dynamicEnv.fhirUmlConverterApi,
 
   snowstormUrl: dynamicEnv.snowstormUrl,
   snomedBrowserUrl: dynamicEnv.snomedBrowserUrl,
