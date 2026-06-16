@@ -25,6 +25,25 @@ export class ChefService {
     return this.http.post(`${environment.chefUrl}/fsh2fhir`, req).pipe(catchError(err => of(err.error)));
   }
 
+  /**
+   * FSH -> FHIR via the chef v2 endpoint, which accepts a `snapshot` option so SUSHI generates
+   * the snapshot. Needed for UML rendering: FSH-authored definitions (logical models, profiles)
+   * otherwise ship only a differential, and the FHIR->UML converter renders from the snapshot.
+   * v2 takes raw FSH as the body with options in the Content-Type header.
+   */
+  public fshToFhirV2(fsh: string, options?: {fhirVersion?: string; snapshot?: boolean; canonical?: string; version?: string}): Observable<FshToFhirResponse> {
+    const opts: {[key: string]: string | boolean} = {
+      fhirVersion: `${environment.chefFhirVersion}` || '5.0.0',
+      ...options
+    };
+    const params = Object.entries(opts)
+      .filter(([, v]) => v !== undefined && v !== null && v !== '')
+      .map(([k, v]) => `${k}=${v}`)
+      .join('; ');
+    const headers = {'Content-Type': `application/fsh${params ? '; ' + params : ''}`};
+    return this.http.post(`${environment.chefUrl}/v2/fsh2fhir`, fsh, {headers}).pipe(catchError(err => of(err.error)));
+  }
+
   public fhirToFsh(req: FhirToFshRequest, version: string = '5.0.0'): Observable<FhirToFshResponse> {
     const igResource = {
       resourceType: 'ImplementationGuide',
