@@ -2101,6 +2101,21 @@
 				"fixed-uri": "Fikseeritud URI",
 				"fsh-header": "FSH",
 				"json-header": "JSON",
+				"uml-header": "UML",
+				"uml": {
+					"title": "UML-diagramm",
+					"diagram": "Diagramm",
+					"view": "Vaade",
+					"export": "Ekspordi kujul",
+					"filename": "Faili nimi",
+					"show-constraints": "Näita kitsendusi",
+					"show-bindings": "Näita seoseid",
+					"hide-removed-objects": "Peida eemaldatud objektid",
+					"reduce-slice-classes": "Vähenda slice-klasse",
+					"hide-legend": "Peida legend",
+					"generate": "Genereeri",
+					"empty": "Diagrammi pole veel genereeritud"
+				},
 				"modal": {
 					"content": "Teil on salvestamata muudatused!",
 					"no-save-proceed": "Jätka",

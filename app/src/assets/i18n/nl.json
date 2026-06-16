@@ -2226,6 +2226,21 @@
         "fixed-uri": "Fixed URI",
         "fsh-header": "FSH",
         "json-header": "JSON",
+        "uml-header": "UML",
+        "uml": {
+          "title": "UML-diagram",
+          "diagram": "Diagram",
+          "view": "Weergave",
+          "export": "Exporteren als",
+          "filename": "Bestandsnaam",
+          "show-constraints": "Beperkingen tonen",
+          "show-bindings": "Bindingen tonen",
+          "hide-removed-objects": "Verwijderde objecten verbergen",
+          "reduce-slice-classes": "Slice-klassen verminderen",
+          "hide-legend": "Legenda verbergen",
+          "generate": "Genereren",
+          "empty": "Nog geen diagram gegenereerd"
+        },
         "modal": {
           "content": "You have unsaved changes!",
           "no-save-proceed": "Doorgaan",

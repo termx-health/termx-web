@@ -2271,6 +2271,21 @@
         "fixed-uri": "Fiksuotasis URI",
         "fsh-header": "FSH",
         "json-header": "JSON",
+        "uml-header": "UML",
+        "uml": {
+          "title": "UML diagrama",
+          "diagram": "Diagrama",
+          "view": "Rodinys",
+          "export": "Eksportuoti kaip",
+          "filename": "Failo pavadinimas",
+          "show-constraints": "Rodyti apribojimus",
+          "show-bindings": "Rodyti susiejimus",
+          "hide-removed-objects": "Slėpti pašalintus objektus",
+          "reduce-slice-classes": "Sumažinti slice klases",
+          "hide-legend": "Slėpti legendą",
+          "generate": "Generuoti",
+          "empty": "Diagrama dar nesugeneruota"
+        },
         "modal": {
           "content": "Turite neišsaugotų pakeitimų!",
           "no-save-proceed": "Tęsti",

@@ -2336,6 +2336,21 @@
         "fixed-uri": "Pevné URI",
         "fsh-header": "FSH",
         "json-header": "JSON",
+        "uml-header": "UML",
+        "uml": {
+          "title": "UML diagram",
+          "diagram": "Diagram",
+          "view": "Zobrazení",
+          "export": "Exportovat jako",
+          "filename": "Název souboru",
+          "show-constraints": "Zobrazit omezení",
+          "show-bindings": "Zobrazit vazby",
+          "hide-removed-objects": "Skrýt odebrané objekty",
+          "reduce-slice-classes": "Zredukovat slice třídy",
+          "hide-legend": "Skrýt legendu",
+          "generate": "Generovat",
+          "empty": "Zatím nebyl vygenerován žádný diagram"
+        },
         "modal": {
           "content": "Máte neuložené změny!",
           "no-save-proceed": "Pokračovat",
