@@ -1,0 +1,69 @@
+<tw-resource-context resourceType="StructureDefinition" [resource]="$any(structureDefinition)" [versions]="$any(versions)" [version]="$any(version)" mode="uml"></tw-resource-context>
+
+<m-page [mLoading]="loader.isLoading">
+  <m-card>
+    <m-title *m-card-header mTitle="web.structure-definition.form.uml.title">
+      <ng-container mControls>
+        <m-button mDisplay="primary" [mLoading]="loader.state['generate']" [disabled]="!contentFhir" (mClick)="generate()">
+          <m-icon mCode="play-circle"></m-icon>&nbsp;{{'web.structure-definition.form.uml.generate' | translate}}
+        </m-button>
+      </ng-container>
+    </m-title>
+
+    <form #form="ngForm">
+      <m-form-row>
+        <m-form-item *mFormCol mName="view" [mLabel]="'web.structure-definition.form.uml.view'">
+          <m-select name="view" [(ngModel)]="request.view">
+            @for (v of views; track v) {
+              <m-option [mLabel]="v" [mValue]="v"></m-option>
+            }
+          </m-select>
+        </m-form-item>
+        <m-form-item *mFormCol mName="exportAs" [mLabel]="'web.structure-definition.form.uml.export'">
+          <m-select name="exportAs" [(ngModel)]="request.exportAs">
+            @for (e of exports; track e) {
+              <m-option [mLabel]="e" [mValue]="e"></m-option>
+            }
+          </m-select>
+        </m-form-item>
+        <m-form-item *mFormCol mName="filename" [mLabel]="'web.structure-definition.form.uml.filename'">
+          <m-input name="filename" [(ngModel)]="request.attachmentFilename"></m-input>
+        </m-form-item>
+      </m-form-row>
+
+      <m-form-row>
+        <div *mFormCol style="display: flex; flex-wrap: wrap; gap: 1rem">
+          <m-checkbox name="showConstraints" [(ngModel)]="request.showConstraints">{{'web.structure-definition.form.uml.show-constraints' | translate}}</m-checkbox>
+          <m-checkbox name="showBindings" [(ngModel)]="request.showBindings">{{'web.structure-definition.form.uml.show-bindings' | translate}}</m-checkbox>
+          <m-checkbox name="hideRemovedObjects" [(ngModel)]="request.hideRemovedObjects">{{'web.structure-definition.form.uml.hide-removed-objects' | translate}}</m-checkbox>
+          <m-checkbox name="reduceSliceClasses" [(ngModel)]="request.reduceSliceClasses">{{'web.structure-definition.form.uml.reduce-slice-classes' | translate}}</m-checkbox>
+          <m-checkbox name="hideLegend" [(ngModel)]="request.hideLegend">{{'web.structure-definition.form.uml.hide-legend' | translate}}</m-checkbox>
+        </div>
+      </m-form-row>
+    </form>
+  </m-card>
+
+  <m-card style="margin-top: 1rem">
+    <m-title *m-card-header mTitle="web.structure-definition.form.uml.diagram">
+      <ng-container mControls>
+        @if (imageUrl || umlText) {
+          <m-button mDisplay="text" m-tooltip mTitle="core.btn.download" (mClick)="download()">
+            <m-icon mCode="download"></m-icon>
+          </m-button>
+        }
+      </ng-container>
+    </m-title>
+
+    <m-spinner [mLoading]="loader.state['generate']">
+      @if (!imageUrl && !umlText) {
+        <m-no-data></m-no-data>
+      }
+      @if (imageUrl) {
+        <img [src]="imageUrl" alt="UML diagram" style="max-width: 100%"/>
+      }
+      @if (umlText) {
+        <pre style="white-space: pre-wrap; word-break: break-word">{{umlText}}</pre>
+      }
+    </m-spinner>
+  </m-card>
+</m-page>

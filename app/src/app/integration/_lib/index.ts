@@ -34,3 +34,6 @@ export * from 'term-web/integration/_lib/snomed/pipe/snomed-concept-name-pipe';
 export * from 'term-web/integration/_lib/snomed/services/snomed-lib.service';
 export * from 'term-web/integration/_lib/snomed/services/snomed-translation-lib.service';
 export * from 'term-web/integration/_lib/snomed/util/snomed-util';
+export * from 'term-web/integration/_lib/fhir-uml-converter/model/fhir-to-uml-request';
+export * from 'term-web/integration/_lib/fhir-uml-converter/model/fhir-to-uml-response';
+export * from 'term-web/integration/_lib/fhir-uml-converter/services/fhir-uml-converter.service';

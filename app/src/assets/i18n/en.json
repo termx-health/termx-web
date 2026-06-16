@@ -2373,6 +2373,21 @@
 				"fixed-uri": "Fixed URI",
 				"fsh-header": "FSH",
 				"json-header": "JSON",
+				"uml-header": "UML",
+				"uml": {
+					"title": "UML diagram",
+					"diagram": "Diagram",
+					"view": "View",
+					"export": "Export as",
+					"filename": "File name",
+					"show-constraints": "Show constraints",
+					"show-bindings": "Show bindings",
+					"hide-removed-objects": "Hide removed objects",
+					"reduce-slice-classes": "Reduce slice classes",
+					"hide-legend": "Hide legend",
+					"generate": "Generate",
+					"empty": "No diagram generated yet"
+				},
 				"modal": {
 					"content": "You have unsaved changes!",
 					"no-save-proceed": "Proceed",

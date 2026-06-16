@@ -8,6 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@termx-health/util';
 import { ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'tw-resource-context',
@@ -37,7 +38,10 @@ export class ResourceContextComponent {
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' | 'resources' | 'elements' | 'fsh' | 'json' = 'summary';
+  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' | 'resources' | 'elements' | 'fsh' | 'json' | 'uml' = 'summary';
+
+  /** The StructureDefinition UML tab is shown only when an external fhir2uml service is configured. */
+  protected umlEnabled = !!environment.fhirUmlConverterApi;
 
   protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides', 'TerminologyServer': 'servers', 'StructureDefinition': 'structure-definitions'};
   protected routePrefix = (type: string): string => type === 'TerminologyServer' ? '/' : type === 'StructureDefinition' ? '/modeler' : '/resources';
@@ -57,7 +61,8 @@ export class ResourceContextComponent {
         'checklist': [...base, 'checklists'],
         'elements': [...base, 'summary'],
         'fsh': [...base, 'summary'],
-        'json': [...base, 'summary']
+        'json': [...base, 'summary'],
+        'uml': [...base, 'summary']
       };
       this.router.navigate(commands[this.mode], {replaceUrl: true});
     } else {
@@ -80,6 +85,7 @@ export class ResourceContextComponent {
       'elements': [...base, 'elements'],
       'fsh': [...base, 'fsh'],
       'json': [...base, 'json'],
+      'uml': [...base, 'uml'],
     };
     this.router.navigate(commands[this.mode], {replaceUrl: true});
   }

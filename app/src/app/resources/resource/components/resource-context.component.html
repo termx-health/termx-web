@@ -45,6 +45,11 @@
                 <a class="submenu__item" [routerLink]="navigate('json')" routerLinkActive="active">
                   <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.structure-definition.form.json-header', icon: 'file-text'}"/>
                 </a>
+                @if (umlEnabled) {
+                  <a class="submenu__item" [routerLink]="navigate('uml')" routerLinkActive="active">
+                    <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.structure-definition.form.uml-header', icon: 'apartment'}"/>
+                  </a>
+                }
               }
               @if (!(['TerminologyServer', 'StructureDefinition'] | includes: resourceType)) {
                 <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">

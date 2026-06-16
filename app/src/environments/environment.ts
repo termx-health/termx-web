@@ -33,6 +33,8 @@ export const environment: Environment = {
   chefFhirVersion: '5.0.0',
   plantUmlUrl: 'https://demo.termx.org/plantuml',
   fmlEditor: 'https://demo.termx.org/fml-editor',
+  // Set to a reachable fhir2uml service base URL to enable the StructureDefinition UML tab, e.g.:
+  // fhirUmlConverterApi: 'http://localhost:8080/api',
 
   snowstormUrl: 'https://snowstorm.termx.org/',
   snomedBrowserUrl: 'https://snomed.termx.org/',
