@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, OnInit, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { DestroyService, LoadingManager, validateForm, format, getDateFormat, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
+import { DestroyService, LoadingManager, validateForm, format, getDateDisplayFormat, JoinPipe, LocalDatePipe } from '@termx-health/core-util';
 import { LocalizedName, MarinaUtilModule } from '@termx-health/util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select';
@@ -66,8 +66,8 @@ export class ResourceReleaseModalComponent implements OnInit {
     return release?.code?.toLowerCase().includes(_input.toLowerCase()) ||
       Object.values(release?.names)?.filter(n => n?.toLowerCase()?.includes(_input.toLowerCase()))?.length > 0 ||
       release?.authors?.filter(a => a?.toLowerCase()?.includes(_input.toLowerCase()))?.length > 0 ||
-      format(release?.planned, getDateFormat(this.translateService.currentLang))?.toLowerCase()?.includes(_input.toLowerCase()) ||
-      format(release?.releaseDate, getDateFormat(this.translateService.currentLang))?.toLowerCase()?.includes(_input.toLowerCase());
+      format(release?.planned, getDateDisplayFormat(this.translateService.currentLang))?.toLowerCase()?.includes(_input.toLowerCase()) ||
+      format(release?.releaseDate, getDateDisplayFormat(this.translateService.currentLang))?.toLowerCase()?.includes(_input.toLowerCase());
   };
 
   public openReleaseManagement(): void {
