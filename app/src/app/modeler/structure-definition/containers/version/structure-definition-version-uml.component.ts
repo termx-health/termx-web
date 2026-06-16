@@ -81,7 +81,9 @@ export class StructureDefinitionVersionUmlComponent implements OnInit {
       this.contentFhir = content;
       return of(undefined);
     }
-    return this.loader.wrap('content', this.chefService.fshToFhir({fsh: content}).pipe(map(r => {
+    // Request a generated snapshot: the FHIR->UML converter renders from the snapshot, but
+    // FSH-authored definitions (logical models, profiles) ship only a differential otherwise.
+    return this.loader.wrap('content', this.chefService.fshToFhirV2(content, {snapshot: true}).pipe(map(r => {
       r.errors?.forEach(e => this.notificationService.error('FSH to FHIR conversion failed', e.message!, {duration: 0, closable: true}));
       this.contentFhir = JSON.stringify(r.fhir?.[0], null, 2);
     })));
