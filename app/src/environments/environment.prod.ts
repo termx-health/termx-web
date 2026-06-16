@@ -12,6 +12,7 @@ export const environment: Environment = {
   guestDisabled: !!dynamicEnv.guestDisabled,
 
   defaultLanguage: dynamicEnv.defaultLanguage || 'en',
+  englishLocale: dynamicEnv.englishLocale || 'en-GB',
   uiLanguages: dynamicEnv.uiLanguages || UI_LANGS,
   contentLanguages: dynamicEnv.contentLanguages || dynamicEnv.uiLanguages || UI_LANGS,
   extraLanguages: dynamicEnv.extraLanguages || {},
