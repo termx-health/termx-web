@@ -871,6 +871,7 @@
 				"concepts": "Concepts",
 				"filters": "Filters",
 				"properties": "Properties",
+				"supplement-of": "Supplement of",
 				"value-set": "Value set",
 				"value-set-version": "Value set version"
 			},

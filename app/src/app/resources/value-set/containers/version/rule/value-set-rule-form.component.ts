@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ApplyPipe, BooleanInput, JoinPipe, LoadingManager, validateForm } from '@termx-health/core-util';
-import { MarinPageLayoutModule, MuiButtonModule, MuiCardModule, MuiFormModule, MuiIconModule, MuiNoDataModule, MuiRadioModule, MuiSelectModule } from '@termx-health/ui';
+import { MarinPageLayoutModule, MuiAlertModule, MuiButtonModule, MuiCardModule, MuiFormModule, MuiIconModule, MuiNoDataModule, MuiRadioModule, MuiSelectModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
 import { CodeSystemLibService, CodeSystemVersion, EntityProperty, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule } from 'term-web/resources/_lib';
@@ -24,6 +24,7 @@ import { ValueSetRuleFilterListComponent } from 'term-web/resources/value-set/co
         MuiIconModule,
         MuiNoDataModule,
         MuiRadioModule,
+        MuiAlertModule,
         CodeSystemSearchComponent,
         MuiSelectModule,
         ValueSetRuleConceptListComponent,
@@ -65,6 +66,7 @@ export class ValueSetRuleFormComponent implements OnChanges {
       this.ruleBase = this.rule.valueSet ? 'value-set' : 'code-system';
       this.conceptsBase = this.rule.filters.length > 0 ? 'filter' : this.rule.concepts.length > 0 ? 'exact' : 'all';
       this.loadCodeSystemVersions(this.rule.codeSystem);
+      this.loadSupplementBase(this.rule.codeSystem);
     }
     if (changes['rule'] || changes['inactiveConcepts']) {
       this.expansionPreview = undefined;
@@ -108,6 +110,22 @@ export class ValueSetRuleFormComponent implements OnChanges {
   protected codeSystemChanged(): void {
     this.rule.codeSystemVersion = undefined;
     this.loadCodeSystemVersions(this.rule.codeSystem);
+    this.loadSupplementBase(this.rule.codeSystem);
+  }
+
+  // When the selected code system is a supplement (content=supplement), surface its base so the
+  // editor sees the rule is supplement-bound — the server derives codeSystemBaseUri and emits the
+  // valueset-supplement extension on export. Issue #47.
+  protected supplementBaseCs?: string;
+
+  private loadSupplementBase(codeSystem?: string): void {
+    this.supplementBaseCs = undefined;
+    if (!codeSystem) {
+      return;
+    }
+    this.codeSystemService.load(codeSystem).subscribe(cs => {
+      this.supplementBaseCs = cs?.content === 'supplement' ? cs.baseCodeSystem : undefined;
+    });
   }
 
   private loadCodeSystemVersions(codeSystem?: string): void {
