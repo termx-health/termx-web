@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {
+  MarinPageLayoutModule,
   MuiAlertModule,
   MuiButtonModule,
   MuiCardModule,
@@ -30,7 +31,7 @@ interface TxTestRow {
 @Component({
   templateUrl: './fhir-conformance.component.html',
   imports: [
-    MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiTableModule,
+    MarinPageLayoutModule, MuiCardModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiTableModule,
     MuiAlertModule, MuiCoreModule, NzProgressModule, FormsModule, PrivilegedDirective
   ],
   providers: [FhirConformanceService]
