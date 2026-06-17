@@ -41,6 +41,7 @@ import {FhirConceptMapClosureComponent} from 'term-web/integration/fhir/concept-
 import {FhirConceptMapTranslateComponent} from 'term-web/integration/fhir/concept-map/fhir-concept-map-translate.component';
 import {IntegrationFhirSyncComponent} from 'term-web/integration/fhir/integration-fhir-sync.component';
 import {FhirValueSetExpandComponent} from 'term-web/integration/fhir/value-set/fhir-value-set-expand.component';
+import {FhirConformanceComponent} from 'term-web/integration/fhir/conformance/fhir-conformance.component';
 import {FhirValueSetValidateCodeComponent} from 'term-web/integration/fhir/value-set/fhir-value-set-validate-code.component';
 import {IntegrationAtcImportComponent} from 'term-web/integration/import/atc/integration-atc-import.component';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
@@ -74,7 +75,8 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent, data: {privilege: ['*.ValueSet.read']}},
       {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent, data: {privilege: ['*.ValueSet.read']}},
       {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent, data: {privilege: ['*.MapSet.read']}},
-      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.read']}}
+      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.read']}},
+      {path: 'fhir/conformance', component: FhirConformanceComponent, data: {privilege: ['*.CodeSystem.write']}}
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.read']}},
@@ -118,6 +120,7 @@ export const INTEGRATION_ROUTES: Routes = [
         FhirCodeSystemFindMatchesComponent,
         FhirCodeSystemValidateCodeComponent,
         FhirValueSetExpandComponent,
+        FhirConformanceComponent,
         FhirValueSetValidateCodeComponent,
         FhirConceptMapTranslateComponent,
         FhirConceptMapClosureComponent,

@@ -1,0 +1,72 @@
+<div class="m-items-middle" style="flex-direction: column">
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <div>
+        <m-title>FHIR terminology conformance</m-title>
+        <div class="m-subtitle" style="margin-top: 0.25rem;">
+          Runs the official HL7 tx-ecosystem test suite against this server's FHIR endpoint.
+        </div>
+      </div>
+      <ng-container *twPrivileged="'*.CodeSystem.write'">
+        <m-button mDisplay="primary" [mLoading]="running" (mClick)="run()">Run conformance tests</m-button>
+      </ng-container>
+    </div>
+    <div *mCardContent>
+      <m-form-row>
+        <m-form-item *mFormCol mLabel="Suite (optional, blank = all)">
+          <m-input name="suite" [(ngModel)]="suite" placeholder="e.g. simple-cases"></m-input>
+        </m-form-item>
+        <m-form-item *mFormCol mLabel="Custom test bundle (optional)">
+          @if (!bundleName) {
+            <input type="file" (change)="onFileSelected($event)"/>
+            @if (uploadProgress !== undefined) {
+              <nz-progress [nzPercent]="uploadProgress || 0"></nz-progress>
+            }
+          } @else {
+            <span>{{bundleName}} <m-button mDisplay="text" (mClick)="clearBundle()">remove</m-button></span>
+          }
+        </m-form-item>
+      </m-form-row>
+
+      @if (running) {
+        <m-form-row>
+          <m-form-item *mFormCol>
+            <div class="m-bold">{{progressNote || 'Running conformance tests…'}}</div>
+            <nz-progress [nzPercent]="progress || 0" nzStatus="active" [nzShowInfo]="false"></nz-progress>
+          </m-form-item>
+        </m-form-row>
+      }
+
+      @if (error) {
+        <m-alert mType="error" [mContent]="error"></m-alert>
+      }
+    </div>
+  </m-card>
+
+  @if (report) {
+    <m-card>
+      <div *m-card-header class="m-justify-between">
+        <m-title>Result: {{report.result}}</m-title>
+        <div class="m-items-middle">
+          <span>Score: {{report.score}}</span>
+          <span style="margin-left: 1rem;">{{passedCount}} / {{tests.length}} passed</span>
+        </div>
+      </div>
+      <m-table [mData]="tests">
+        <tr *mTableHead>
+          <th>Test</th>
+          <th>Result</th>
+        </tr>
+        @for (t of tests; track t.name) {
+          <tr>
+            <td>{{t.name}}</td>
+            <td>{{t.result}}</td>
+          </tr>
+        }
+        <tr *mTableNoData>
+          <td colspan="2">No tests</td>
+        </tr>
+      </m-table>
+    </m-card>
+  }
+</div>

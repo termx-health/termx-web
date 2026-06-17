@@ -31,6 +31,14 @@
           </div>
         </nz-collapse-panel>
       </nz-collapse>
+
+      <nz-collapse nzGhost *twPrivileged="'*.CodeSystem.write'">
+        <nz-collapse-panel nzHeader="Conformance">
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/conformance'">tx-ecosystem tests</m-button>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
     </m-card>
   </div>
   <div nz-col [nzMd]="18" [nzXs]="24">
