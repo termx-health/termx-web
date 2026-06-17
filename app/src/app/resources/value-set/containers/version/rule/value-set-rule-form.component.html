@@ -29,6 +29,14 @@
             </m-select>
           </m-form-item>
         </m-form-row>
+        @if (supplementBaseCs) {
+          <m-form-row>
+            <m-form-item *mFormCol mName="supplementBase" mLabel="entities.value-set-rule-set.rule.supplement-of">
+              <m-alert mType="info">{{supplementBaseCs}}</m-alert>
+            </m-form-item>
+            <div *mFormCol></div>
+          </m-form-row>
+        }
         <m-form-row>
           <m-form-item *mFormCol mName="codeSystemProperties" mLabel="entities.value-set-rule-set.rule.properties">
             <m-select name="codeSystemProperties" [(ngModel)]="rule.properties" multiple>
