@@ -9,7 +9,11 @@ import {environment} from 'environments/environment';
 import {delay, distinctUntilChanged, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService, HasAnyPrivilegePipe} from 'term-web/core/auth';
 import {InfoService} from 'term-web/core/info';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
+import {SkinService} from 'term-web/core/skin/skin.service';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 import { NoPrivilegeComponent } from 'term-web/core/components/no-privilege';
 
 
@@ -27,7 +31,7 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.less'],
-    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe]
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe, FormsModule, NzSwitchComponent]
 })
 export class AppComponent {
   protected auth = inject(AuthService);
@@ -35,6 +39,8 @@ export class AppComponent {
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private translateService = inject(TranslateService);
+  protected preferences = inject(PreferencesService);
+  protected skin = inject(SkinService).skin;
 
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),

@@ -20,7 +20,11 @@ var twConfig = {
   "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
-  "guestDisabled": 'json:${GUEST_DISABLED}'
+  "guestDisabled": 'json:${GUEST_DISABLED}',
+  "skin": "${SKIN}",
+  "skinUrl": "${SKIN_URL}",
+  "branding": 'json:${BRANDING}',
+  "msDevOpsEnabled": 'json:${MS_DEVOPS_ENABLED}'
 };
 
 for (const [key, val] of Object.entries(twConfig)) {

@@ -2,6 +2,34 @@ html {
   font-size: 14px;
 }
 
+// Skin: header background can be overridden per-skin via --skin-header-color
+// (set at runtime by SkinService). Falls back to the marina-ui default.
+.m-header {
+  background-color: var(--skin-header-color, @mui-bg-component);
+}
+
+// Skin: 'black' — a curated dark palette via marina-ui CSS variables (NOT the
+// filter:invert() hack used by the per-user dark theme). Orthogonal to the
+// light/dark toggle. Deeper ng-zorro component theming would additionally need
+// ng-zorro's dark theme; this covers the marina-ui surface.
+html[data-skin="black"] {
+  --color-background: #1f1f1f;
+  --color-background-light: #262626;
+  --color-background-dark: #141414;
+  --color-background-component: #1f1f1f;
+
+  --color-text: rgba(255, 255, 255, 0.85);
+  --color-text-secondary: rgba(255, 255, 255, 0.55);
+  --color-text-disabled: rgba(255, 255, 255, 0.3);
+
+  --color-borders: #3a3a3a;
+  --color-borders-light: #303030;
+  --color-borders-dark: #4a4a4a;
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
 :root {
   --color-action-bar-background: @mui-bg-component;
   --color-table-header-background: #fafafa;

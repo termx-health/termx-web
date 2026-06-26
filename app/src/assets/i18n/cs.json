@@ -962,7 +962,10 @@
   },
   "web": {
     "app": {
-      "header": "TermX"
+      "header": "TermX",
+      "theme": {
+            "dark": "Tmavý režim"
+      }
     },
     "association-type": {
       "form": {
@@ -1541,6 +1544,7 @@
             "load-mapping": "Načíst mapování",
             "preferred": "Preferované",
             "save-mapping": "Uložit mapování",
+            "template": "Použít šablonu",
             "type": "Typ",
             "type-column": "Sloupec {{type}}",
             "validate-data": "Pouze ověřit data"
@@ -2283,6 +2287,14 @@
       "github-pull-confirm-achtung": "POZOR: TATO AKCE JE NEVRATNÁ! MŮŽETE ZTRATIT DATA",
       "github-push": "Odeslat změny na",
       "github-sync": "Synchronizovat s Githubem",
+      "msdevops-clean": "Vše je aktuální!",
+      "msdevops-commit-message": "Zpráva k potvrzení",
+      "msdevops-empty": "Není co potvrdit",
+      "msdevops-pull": "Načíst rozdíly z",
+      "msdevops-pull-confirm": "Opravdu chcete nahradit aktuální data daty z repozitáře?",
+      "msdevops-pull-confirm-achtung": "POZOR: TATO AKCE JE NEVRATNÁ! MŮŽETE ZTRATIT DATA",
+      "msdevops-push": "Odeslat změny na",
+      "msdevops-sync": "Synchronizovat s Azure DevOpsem",
       "import-btn": "Importovat prostor",
       "import-error-message": "Import prostoru selhal",
       "import-success-message": "Import prostoru byl úspěšný",

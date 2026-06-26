@@ -1,0 +1,35 @@
+[
+  {
+    "columnName": "Code System ID",
+    "propertyName": "codeSystemId",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Code System Version",
+    "propertyName": "codeSystemVersion",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Concept Code",
+    "propertyName": "concept-code",
+    "propertyType": "string",
+    "preferred": true,
+    "import": true
+  },
+  {
+    "columnName": "Description (FSN)",
+    "propertyName": "display",
+    "propertyType": "designation",
+    "language": "en",
+    "import": true
+  },
+  {
+    "columnName": "cs-CZ",
+    "propertyName": "display",
+    "propertyType": "designation",
+    "language": "cs",
+    "import": true
+  }
+]

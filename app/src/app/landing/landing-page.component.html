@@ -107,6 +107,14 @@
       }
     }
   </div>
+
+  @if (skin.landingLogos?.length) {
+    <div class="tw-skin-branding">
+      @for (logo of skin.landingLogos; track logo) {
+        <img class="tw-skin-branding__logo" [src]="logo" alt=""/>
+      }
+    </div>
+  }
 </div>
 
 
