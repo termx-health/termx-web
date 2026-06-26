@@ -30,6 +30,7 @@ import { UserModule } from 'term-web/user/user.module';
 import { SequenceModule } from 'term-web/sequence/sequence.module';
 import { ImplementationGuideModule } from 'term-web/implementation-guide/implementation-guide.module';
 import { RootComponent } from './app/root.component';
+import { SkinService } from 'term-web/core/skin/skin.service';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
 
@@ -45,6 +46,10 @@ function initIconAssets(nzIconService: NzIconService, document: Document): () =>
   };
 }
 
+function initSkin(skinService: SkinService): () => Promise<void> {
+  return () => skinService.init();
+}
+
 bootstrapApplication(RootComponent, {
     providers: [
         provideZoneChangeDetection({eventCoalescing: true}),
@@ -58,6 +63,7 @@ bootstrapApplication(RootComponent, {
         }), RootModule, AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, UcumModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
         { provide: LOCALE_ID, useValue: environment.defaultLanguage },
         { provide: APP_INITIALIZER, useFactory: initIconAssets, deps: [NzIconService, DOCUMENT], multi: true },
+        { provide: APP_INITIALIZER, useFactory: initSkin, deps: [SkinService], multi: true },
         { provide: APP_INITIALIZER, useFactory: initAuth, deps: [AuthService], multi: true },
         { provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref },
         { provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true }

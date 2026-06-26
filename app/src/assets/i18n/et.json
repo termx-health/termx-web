@@ -815,7 +815,10 @@
 	},
 	"web": {
 		"app": {
-			"header": "TermX"
+			"header": "TermX",
+			"theme": {
+						"dark": "Tume režiim"
+			}
 		},
 		"value-set-version-modal": {
 			"header": "Loo loendi versioon"
@@ -1343,6 +1346,7 @@
 						"load-mapping": "Lae vastendus",
 						"preferred": "Eelistatud",
 						"save-mapping": "Salvesta vastendus",
+						"template": "Rakenda mall",
 						"type": "Tüüp",
 						"type-column": "{{type}} veerg",
 						"validate-data": "Kontrolli andmeid"
@@ -2064,6 +2068,14 @@
 			"github-pull-confirm-achtung": "ETTEVAATUST: SEE TOIMING ON PÖÖRDUMATU! Te võite kaotada muudatused TermX-is",
 			"github-push": "Salvesta andmed repositooriumi",
 			"github-sync": "Sünkroniseeri GitHub-iga",
+			"msdevops-clean": "Kõik on ajakohane!",
+			"msdevops-commit-message": "Commit teade",
+			"msdevops-empty": "Muudatused puuduvad",
+			"msdevops-pull": "Tõmba uuendused repositooriumist",
+			"msdevops-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
+			"msdevops-pull-confirm-achtung": "ETTEVAATUST: SEE TOIMING ON PÖÖRDUMATU! Te võite kaotada muudatused TermX-is",
+			"msdevops-push": "Salvesta andmed repositooriumi",
+			"msdevops-sync": "Sünkroniseeri Azure DevOps-iga",
 			"import-btn": "Impordi ruum",
 			"import-error-message": "Ruumi import ebaõnnestunud",
 			"import-success-message": "Ruumi import oli edukas",

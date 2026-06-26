@@ -59,6 +59,11 @@
                 <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
                 {{'web.space.github-sync' | translate}}
               </a>
+              <a *mDropdownItemIf="msDevOpsEnabled && !!space?.integration?.msDevops?.repo && ((space.id + '.Space.write') | twPrivileged)"
+                [routerLink]="['/spaces', space?.id, 'msdevops']">
+                <img src="assets/icons/azure-icon.svg" style="height: 1em; vertical-align: -0.15em; margin-right: 0.5rem" alt=""/>
+                {{'web.space.msdevops-sync' | translate}}
+              </a>
             </m-dropdown>
           </div>
         </div>

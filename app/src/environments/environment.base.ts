@@ -47,4 +47,35 @@ export interface Environment {
   snomedBrowserUrl?: string,
   snowstormDailyBuildUrl?: string,
   snomedBrowserDailyBuildUrl?: string,
+
+  /**
+   * Active skin. Either a built-in skin id ('main' | 'black' | 'cs-gov' | 'ee-gov' | 'lt-gov')
+   * or a URL/path to an external skin JSON file (see {@link skinUrl}).
+   */
+  skin?: string,
+  /** Explicit external skin file location, e.g. '/assets/skins/acme/skin.json'. Takes precedence over a built-in `skin` id. */
+  skinUrl?: string,
+  /** Inline branding overrides applied on top of whichever skin resolved (no rebuild needed). */
+  branding?: SkinConfig,
+
+  /** Enables the Space → MS DevOps (Azure) integration UI. Off until termx-server provides /spaces/{id}/msdevops/*. */
+  msDevOpsEnabled?: boolean,
+}
+
+/**
+ * Brandable fields shared by the runtime config and the in-app skin registry.
+ * Kept here (not in app/core) so `environments/*` stays self-contained; the
+ * `SkinDefinition` in app/core/skin extends this.
+ */
+export interface SkinConfig {
+  id?: string,
+  primaryColor?: string,
+  headerColor?: string,
+  headerText?: string,
+  logo?: string,
+  landingLogos?: string[],
+  /** Arbitrary CSS custom properties set on :root, e.g. {'--border-radius': '0.5rem'}. */
+  cssVars?: {[name: string]: string},
+  /** External stylesheet URLs lazily injected as <link> when the skin is active. */
+  stylesheets?: string[],
 }

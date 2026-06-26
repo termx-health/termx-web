@@ -913,7 +913,10 @@
   },
   "web": {
     "app": {
-      "header": "TermX"
+      "header": "TermX",
+      "theme": {
+            "dark": "Tamsus režimas"
+      }
     },
     "association-type": {
       "form": {
@@ -1493,6 +1496,7 @@
             "load-mapping": "Įkelti susiejimą",
             "preferred": "Pageidaujama",
             "save-mapping": "Išsaugoti susiejimą",
+            "template": "Taikyti šabloną",
             "type": "Tipas",
             "type-column": "{{type}} stulpelis",
             "validate-data": "Patikrinti duomenis neimportuojant"
@@ -2236,6 +2240,14 @@
       "github-pull-confirm-achtung": "DĖMESIO. Šio veiksmo neįmanoma atšaukti. Galite prarasti duomenis.",
       "github-push": "Įkelti pakeitimus į",
       "github-sync": "Sinchronizuoti su Github",
+      "msdevops-clean": "Everything is up to date!",
+      "msdevops-commit-message": "Commit message",
+      "msdevops-empty": "Nothing to commit",
+      "msdevops-pull": "Įkelti pakeitimus iš",
+      "msdevops-pull-confirm": "Tikrai norite pakeisti esamus duomenis duomenimis iš kodo saugyklos?",
+      "msdevops-pull-confirm-achtung": "DĖMESIO. Šio veiksmo neįmanoma atšaukti. Galite prarasti duomenis.",
+      "msdevops-push": "Push changes to",
+      "msdevops-sync": "Sinchronizuoti su Azure DevOps",
       "import-btn": "Importuoti darbalaukį",
       "import-error-message": "Darbalaukio importavimas nesėkmingas",
       "import-success-message": "Darbalaukio importavimas sėkmingas",

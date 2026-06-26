@@ -1,4 +1,5 @@
 import { Component, DoCheck, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@termx-health/core-util';
 import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@termx-health/ui';
@@ -32,6 +33,7 @@ const DEF_PROP_WEIGHT = {
 type SavedMappingRow = FileImportPropertyRow & {_newProp?: boolean};
 type SavedMappingPayload = {rows: SavedMappingRow[]};
 type SavedMappingOption = {name: string; rows: SavedMappingRow[]};
+type ImportTemplate = {id: string; name: string};
 
 
 @Component({
@@ -48,6 +50,7 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   private definedPropertyService = inject(DefinedPropertyLibService);
   private destroy$ = inject(DestroyService);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   public breadcrumbs = ['web.integration.file-import.title', 'web.integration.file-import.code-system.import'];
 
@@ -70,6 +73,8 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       format?: string
       file?: string,
     }
+    // selected predefined column-mapping template id (assets/file-import-templates)
+    template?: string
   } = {
     codeSystem: {},
     codeSystemVersion: {},
@@ -98,6 +103,7 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   public jobLog: JobLog;
 
   public dataTypes: string[];
+  protected templates: ImportTemplate[] = [];
   protected selectedMappingName: string | undefined;
   private selectedMappingContext: string | undefined;
 
@@ -116,6 +122,8 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       prop.definedEntityPropertyId = dp.id;
       return prop;
     }));
+    this.http.get<ImportTemplate[]>('./assets/file-import-templates/index.json')
+      .subscribe({next: t => this.templates = t ?? [], error: () => this.templates = []});
   }
 
   public ngDoCheck(): void {
@@ -290,6 +298,32 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       item.language = saved.language;
       item.import = saved.import;
       item['_newProp'] = saved['_newProp'];
+    });
+  }
+
+  /** Apply a predefined column-mapping template (assets/file-import-templates/<id>.json). */
+  protected applyTemplate(): void {
+    if (!this.data.template) {
+      return;
+    }
+    const existingPropertyNames = this.combineWithDefaults(this.formComponent?.sourceCodeSystem?.properties).map(p => p.name);
+
+    this.http.get<FileImportPropertyRow[]>(`./assets/file-import-templates/${this.data.template}.json`).subscribe(resp => {
+      const template = group(resp ?? [], p => p.columnName);
+      this.analyzeResponse.parsedProperties.forEach(pp => {
+        const prop = template[pp.columnName];
+        if (!prop) {
+          return;
+        }
+        pp['_newProp'] = !existingPropertyNames.includes(prop.propertyName);
+        pp.propertyName = prop.propertyName;
+        pp.propertyType = prop.propertyType;
+        pp.propertyTypeFormat = prop.propertyTypeFormat;
+        pp.preferred = prop.preferred;
+        pp.language = prop.language;
+        pp.import = prop.import;
+        this.onPropertyPreferredChange(pp);
+      });
     });
   }
 

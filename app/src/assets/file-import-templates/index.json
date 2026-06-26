@@ -1,0 +1,18 @@
+[
+  {
+    "id": "icf",
+    "name": "ICF (WHO)"
+  },
+  {
+    "id": "npu",
+    "name": "NPU"
+  },
+  {
+    "id": "emdn",
+    "name": "EMDN"
+  },
+  {
+    "id": "mvc",
+    "name": "MVC"
+  }
+]

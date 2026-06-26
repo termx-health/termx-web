@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
 import {isDefined} from '@termx-health/core-util';
 import {saveAs} from 'file-saver';
 import {distinctUntilChanged, map, Observable} from 'rxjs';
+import {environment} from 'environments/environment';
 import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/sys/_lib/space';
 import {SpaceContextParams, SpaceContextService} from 'term-web/core/context/space-context.service';
 import { MarinPageLayoutModule, MuiButtonModule, MuiIconModule, MuiCoreModule, MuiIconButtonModule, MuiDropdownModule } from '@termx-health/ui';
@@ -36,6 +37,7 @@ export class SpaceContextComponent implements OnInit {
   private router = inject(Router);
 
   public loading = true;
+  protected readonly msDevOpsEnabled = environment.msDevOpsEnabled;
 
 
   public get params(): SpaceContextParams {

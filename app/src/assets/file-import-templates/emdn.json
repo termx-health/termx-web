@@ -1,0 +1,40 @@
+[
+  {
+    "columnName": "CATEGORY",
+    "propertyName": "category",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "CATEGORY DESCRIPTION",
+    "propertyName": "categoryDescription",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "CODE",
+    "propertyName": "hierarchical-concept",
+    "propertyType": "string",
+    "import": true,
+    "preferred": true
+  },
+  {
+    "columnName": "TERM",
+    "propertyName": "display",
+    "propertyType": "designation",
+    "import": true,
+    "language": "en"
+  },
+  {
+    "columnName": "LEVEL",
+    "propertyName": "level",
+    "propertyType": "integer",
+    "import": true
+  },
+  {
+    "columnName": "TERMINAL LEVEL YES/NO",
+    "propertyName": "isTerminalLevel",
+    "propertyType": "string",
+    "import": true
+  }
+]

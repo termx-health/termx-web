@@ -3,6 +3,8 @@ import {Routes} from '@angular/router';
 import {SpaceLibModule} from 'term-web/sys/_lib/space';
 import {SpaceGithubComponent} from 'term-web/sys/space/containers/space/space-github.component';
 import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
+import {SpaceMsDevOpsComponent} from 'term-web/sys/space/containers/space/space-ms-dev-ops.component';
+import {SpaceMsDevOpsService} from 'term-web/sys/space/services/space-ms-dev-ops.service';
 import {WikiLibModule} from 'term-web/wiki/_lib';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from 'term-web/resources/_lib';
@@ -33,6 +35,7 @@ export const SPACE_ROUTES: Routes = [
   {path: 'add', data: {privilege: ['*.Space.write']}, component: SpaceEditComponent},
   {path: ':id/edit', data: {privilege: ['{id}.Space.write']}, component: SpaceEditComponent},
   {path: ':id/github', data: {privilege: ['{id}.Space.write']}, component: SpaceGithubComponent},
+  {path: ':id/msdevops', data: {privilege: ['{id}.Space.write']}, component: SpaceMsDevOpsComponent},
   {path: ':spaceId/packages/add', data: {privilege: ['{id}.Space.write']}, component: PackageEditComponent},
   {path: ':spaceId/packages/:id/edit', data: {privilege: ['{id}.Space.write']}, component: PackageEditComponent}
 ];
@@ -63,6 +66,7 @@ export const SERVER_ROUTES: Routes = [
         SpaceDiffComponent,
         SpaceDiffMatrixComponent,
         SpaceGithubComponent,
+        SpaceMsDevOpsComponent,
         PackageEditComponent,
         ServerListComponent,
         ServerEditComponent
@@ -70,6 +74,7 @@ export const SERVER_ROUTES: Routes = [
     providers: [
         SpaceService,
         SpaceGithubService,
+        SpaceMsDevOpsService,
         PackageService,
         PackageResourceService,
         ServerService

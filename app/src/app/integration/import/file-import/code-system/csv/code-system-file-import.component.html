@@ -37,6 +37,21 @@
   <m-card mTitle="web.integration.file-import.code-system.properties.header">
     <div *m-card-content class="tw-flex-container">
       <div class="m-items-middle" style="gap: 0.5rem; flex-wrap: wrap">
+        @if (templates.length) {
+          <m-select
+            name="template"
+            [(ngModel)]="data.template"
+            (ngModelChange)="applyTemplate()"
+            [placeholder]="'web.integration.file-import.code-system.properties.template' | translate"
+            [disabled]="!analyzeResponse.parsedProperties?.length"
+            mAllowClear
+            style="min-width: 16rem">
+            @for (template of templates; track template.id) {
+              <m-option [mValue]="template.id" [mLabel]="template.name"/>
+            }
+          </m-select>
+        }
+
         <m-button
           [disabled]="!canManageMappings"
           (mClick)="saveMapping()">

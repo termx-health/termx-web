@@ -1,0 +1,138 @@
+[
+  {
+    "columnName": "Alph. sorted",
+    "propertyName": "alphaSorted",
+    "propertyType": "integer",
+    "import": true
+  },
+  {
+    "columnName": "Change date",
+    "propertyName": "changeDate",
+    "propertyType": "dateTime",
+    "propertyTypeFormat": "yyyy-MM-dd",
+    "import": true
+  },
+  {
+    "columnName": "Change comment",
+    "propertyName": "changeComment",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Created date",
+    "propertyName": "creationDate",
+    "propertyType": "dateTime",
+    "propertyTypeFormat": "yyyy-MM-dd",
+    "import": true
+  },
+  {
+    "columnName": "NPU code",
+    "propertyName": "concept-code",
+    "propertyType": "string",
+    "preferred": true,
+    "import": true
+  },
+  {
+    "columnName": "Short definition",
+    "propertyName": "display",
+    "propertyType": "designation",
+    "language": "en",
+    "import": true
+  },
+  {
+    "columnName": "System",
+    "propertyName": "system",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Sys-spec.",
+    "propertyName": "systemSpecification",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Prefix",
+    "propertyName": "prefix",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Component",
+    "propertyName": "component",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Comp-spec.",
+    "propertyName": "componentSpecification",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Kind-of-property",
+    "propertyName": "propertyKind",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Proc.",
+    "propertyName": "procedure",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Unit",
+    "propertyName": "unit",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Speciality",
+    "propertyName": "speciality",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Sub-speciality",
+    "propertyName": "subspeciality",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Type",
+    "propertyName": "type",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Code value",
+    "propertyName": "codeValue",
+    "propertyType": "integer",
+    "import": true
+  },
+  {
+    "columnName": "Context dependant",
+    "propertyName": "contextDependant",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Scale type",
+    "propertyName": "scaleType",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Rule",
+    "propertyName": "rule",
+    "propertyType": "string",
+    "import": true
+  },
+  {
+    "columnName": "Active",
+    "propertyName": "active",
+    "propertyType": "boolean",
+    "import": true
+  }
+]

@@ -63,12 +63,23 @@
 }
 
 <ng-template #titleTpl>
-  <a style="color: inherit" [routerLink]="['/landing']">{{'web.app.header' | translate}}</a>
+  <a class="tw-app-title" style="color: inherit" [routerLink]="['/landing']">
+    @if (skin.logo) {
+      <img class="tw-app-title__logo" [src]="skin.logo" alt=""/>
+    }
+    <span>{{'web.app.header' | translate}}</span>
+    @if (skin.headerText) {
+      <span class="tw-app-title__skin">{{skin.headerText}}</span>
+    }
+  </a>
 </ng-template>
 
 <ng-template #userInfoTpl>
   <div class="tw-form-view">
-<!--      <nz-switch name="theme" [ngModel]="(preferences.theme$ | async) === 'dark'" (ngModelChange)="preferences.setTheme($event ? 'dark' : 'light')"></nz-switch>-->
+    <div class="tw-user-info__theme">
+      <span class="m-subtitle">{{'web.app.theme.dark' | translate}}</span>
+      <nz-switch name="theme" [ngModel]="(preferences.theme$ | async) === 'dark'" (ngModelChange)="preferences.setTheme($event ? 'dark' : 'light')"></nz-switch>
+    </div>
     <div class="tw-user-info__user">
       <div>{{auth.user?.username}}</div>
     </div>

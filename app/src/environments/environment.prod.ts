@@ -33,4 +33,9 @@ export const environment: Environment = {
   snomedBrowserUrl: dynamicEnv.snomedBrowserUrl,
   snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl,
   snomedBrowserDailyBuildUrl: dynamicEnv.snomedBrowserDailyBuildUrl,
+
+  skin: dynamicEnv.skin || 'main',
+  skinUrl: dynamicEnv.skinUrl,
+  branding: dynamicEnv.branding || {},
+  msDevOpsEnabled: !!dynamicEnv.msDevOpsEnabled,
 };

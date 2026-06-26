@@ -9,6 +9,7 @@ import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {SkinService} from 'term-web/core/skin/skin.service';
 
 type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
@@ -32,6 +33,7 @@ export class LandingPageComponent {
   private spaceService = inject(SpaceLibService);
   private pageService = inject(PageLibService);
   private taskService = inject(TaskLibService);
+  protected skin = inject(SkinService).skin;
 
   protected data: {
     codeSystemCount?: number,

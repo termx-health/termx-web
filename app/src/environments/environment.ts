@@ -40,4 +40,8 @@ export const environment: Environment = {
   snomedBrowserUrl: 'https://snomed.termx.org/',
   snowstormDailyBuildUrl: 'https://snowstorm-dailybuild.termx.org/',
   snomedBrowserDailyBuildUrl: 'https://snomed-dailybuild.termx.org/',
+
+  // Active skin for local dev. Try 'black', 'cs-gov', 'ee-gov', 'lt-gov',
+  // or point skinUrl at an external skin JSON file.
+  skin: 'main',
 };

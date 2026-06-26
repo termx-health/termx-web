@@ -15,5 +15,9 @@ export class Space {
       repo?: string,
       dirs?: {[key: string]: string}
     };
+    msDevops?: {
+      repo?: string,
+      dirs?: {[key: string]: string}
+    };
   };
 }

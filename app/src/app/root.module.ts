@@ -39,5 +39,6 @@ export class RootModule {
 
     translate.use(preferences.lang);
     translate.onLangChange.subscribe(({lang}) => preferences.setLang(lang));
+    preferences.theme$.subscribe(theme => document.documentElement.classList.toggle('dark', theme === 'dark'));
   }
 }
