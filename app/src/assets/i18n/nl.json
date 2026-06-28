@@ -1,6 +1,10 @@
 {
   "core": {
     "back": "Terug",
+    "shortcut": {
+        "help-title": "Sneltoetsen",
+        "help": "Sneltoetsen tonen"
+    },
     "btn": {
       "add": "Toevoegen",
       "cancel": "Annuleren",
@@ -1260,6 +1264,8 @@
     },
     "global-search": {
       "dashboard": {
+        "all": "Alle",
+        "filter": "Filter",
         "code-systems": "CodeSystems",
         "concepts": "Concepts",
         "filter": {

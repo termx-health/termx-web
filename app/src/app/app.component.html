@@ -13,6 +13,8 @@
   embedded and non-embedded modes is the (mLogout) binding; if marina-ui ever makes that
   optional we can collapse them into one.
 -->
+<tw-shortcut-help/>
+
 @if (semiEmbedded) {
   <m-page-layout
     [class.embedded]="router.url | apply: isEmbedded"

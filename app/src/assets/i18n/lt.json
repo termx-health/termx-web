@@ -1,6 +1,10 @@
 {
   "core": {
     "back": "Grįžti",
+    "shortcut": {
+        "help-title": "Klavišų kombinacijos",
+        "help": "Rodyti klavišų kombinacijas"
+    },
     "btn": {
       "add": "Pridėti",
       "cancel": "Atšaukti",
@@ -1302,6 +1306,8 @@
     },
     "global-search": {
       "dashboard": {
+        "all": "Visi",
+        "filter": "Filtras",
         "code-systems": "Kodų sistemos (code systems)",
         "concepts": "Terminai",
         "filter": {

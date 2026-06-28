@@ -1,6 +1,10 @@
 {
 	"core": {
 		"back": "Back",
+		"shortcut": {
+			"help-title": "Keyboard shortcuts",
+			"help": "Show keyboard shortcuts"
+		},
 		"bool": {
 			"yes": "Yes",
 			"no": "No"
@@ -1339,6 +1343,8 @@
 		},
 		"global-search": {
 			"dashboard": {
+				"all": "All",
+				"filter": "Filter",
 				"code-systems": "CodeSystems",
 				"concepts": "Concepts",
 				"header": "Search",

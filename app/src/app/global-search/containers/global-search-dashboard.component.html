@@ -2,12 +2,24 @@
 
   <div header>
     <m-card mTitle="web.global-search.dashboard.header">
+      @if (spaceButtons.length) {
+        <div class="tw-global-search__spaces">
+          <m-button mDisplay="text" [class.active]="!activeSpace" (mClick)="searchBySpace()">
+            {{'web.global-search.dashboard.all' | translate}}
+          </m-button>
+          @for (s of spaceButtons; track s.code) {
+            <m-button mDisplay="text" [class.active]="activeSpace === s.code" (mClick)="searchBySpace(s.code)">
+              {{s.code}}
+            </m-button>
+          }
+        </div>
+      }
       <nz-input-group [nzSuffix]="suffixIconSearch">
         <input nz-input name="searchText" [(ngModel)]="searchText" (keydown.enter)="search()"/>
       </nz-input-group>
       <ng-template #suffixIconSearch>
-        <i nz-icon nzType="search"></i>
-        <i nz-icon *ngIf="!filter.open" nzType="filter" (click)="onFilterOpen()"></i>
+        <i nz-icon nzType="search" style="cursor: pointer" (click)="search()" m-tooltip mTitle="core.btn.search"></i>
+        <i nz-icon *ngIf="!filter.open" nzType="filter" style="cursor: pointer" (click)="onFilterOpen()" m-tooltip mTitle="web.global-search.dashboard.filter"></i>
       </ng-template>
     </m-card>
   </div>
@@ -17,7 +29,7 @@
     <!-- Filter -->
     <form (ngSubmit)="search()">
       <m-form-item mLabel="web.code-system.list.space">
-        <tw-space-select [(ngModel)]="filter.spaceId" name="spaceId" valuePrimitive/>
+        <tw-space-select [(ngModel)]="filter.spaceId" name="spaceId" valuePrimitive (ngModelChange)="activeSpace = undefined"/>
       </m-form-item>
       <m-form-item mLabel="entities.code-system.publisher">
         <tw-value-set-concept-select [(ngModel)]="filter.publisher" name="publisher" valueSet="publisher" valuePrimitive/>
