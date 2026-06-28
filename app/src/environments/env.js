@@ -24,7 +24,8 @@ var twConfig = {
   "skin": "${SKIN}",
   "skinUrl": "${SKIN_URL}",
   "branding": 'json:${BRANDING}',
-  "msDevOpsEnabled": 'json:${MS_DEVOPS_ENABLED}'
+  "msDevOpsEnabled": 'json:${MS_DEVOPS_ENABLED}',
+  "globalSearchSpaces": 'json:${GLOBAL_SEARCH_SPACES}'
 };
 
 for (const [key, val] of Object.entries(twConfig)) {

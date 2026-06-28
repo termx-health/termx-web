@@ -38,4 +38,5 @@ export const environment: Environment = {
   skinUrl: dynamicEnv.skinUrl,
   branding: dynamicEnv.branding || {},
   msDevOpsEnabled: !!dynamicEnv.msDevOpsEnabled,
+  globalSearchSpaces: dynamicEnv.globalSearchSpaces || [],
 };

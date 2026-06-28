@@ -1,6 +1,10 @@
 {
   "core": {
     "back": "Zurück",
+    "shortcut": {
+        "help-title": "Tastenkürzel",
+        "help": "Tastenkürzel anzeigen"
+    },
     "btn": {
       "add": "Hinzufügen",
       "cancel": "Abbrechen",
@@ -1256,6 +1260,8 @@
     },
     "global-search": {
       "dashboard": {
+        "all": "Alle",
+        "filter": "Filter",
         "code-systems": "CodeSystems",
         "concepts": "Concepts",
         "filter": {

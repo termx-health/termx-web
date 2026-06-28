@@ -11,6 +11,8 @@ import {AuthService, HasAnyPrivilegePipe} from 'term-web/core/auth';
 import {InfoService} from 'term-web/core/info';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {SkinService} from 'term-web/core/skin/skin.service';
+import {ShortcutService} from 'term-web/core/shortcuts/shortcut.service';
+import {ShortcutHelpComponent} from 'term-web/core/shortcuts/shortcut-help.component';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzSwitchComponent } from 'ng-zorro-antd/switch';
@@ -31,7 +33,7 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.less'],
-    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe, FormsModule, NzSwitchComponent]
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe, FormsModule, NzSwitchComponent, ShortcutHelpComponent]
 })
 export class AppComponent {
   protected auth = inject(AuthService);
@@ -41,6 +43,7 @@ export class AppComponent {
   private translateService = inject(TranslateService);
   protected preferences = inject(PreferencesService);
   protected skin = inject(SkinService).skin;
+  private shortcutService = inject(ShortcutService);
 
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),
@@ -91,6 +94,9 @@ export class AppComponent {
     info.version().subscribe(r => {
       this.versions.service = r;
     });
+
+    // Global "?" (Shift+/) opens the keyboard-shortcut help modal.
+    this.shortcutService.registerShortcut('global', 'Shift+Slash', () => this.shortcutService.triggerHelp(), 'help');
   }
 
 

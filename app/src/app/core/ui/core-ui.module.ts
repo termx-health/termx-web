@@ -22,6 +22,7 @@ import {TableFilterComponent} from 'term-web/core/ui/components/table-container/
 import {TableComponent} from 'term-web/core/ui/components/table-container/table.component';
 import {InputDebounceDirective} from 'term-web/core/ui/directives/input-debounce.directive';
 import {ValidateUrlPipe} from 'term-web/core/ui/pipes/validate-url.pipe';
+import {TranslateListPipe} from 'term-web/core/ui/pipes/translate-list.pipe';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
 
 
@@ -57,6 +58,7 @@ const directives = [
 
 const pipes = [
   ValidateUrlPipe,
+  TranslateListPipe,
 ];
 
 

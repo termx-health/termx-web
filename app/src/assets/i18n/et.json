@@ -1,6 +1,10 @@
 {
 	"core": {
 		"back": "Tagasi",
+		"shortcut": {
+				"help-title": "Klaviatuuri otseteed",
+				"help": "Näita klaviatuuri otseteid"
+		},
 		"btn": {
 			"add": "Lisa",
 			"cancel": "Tühista",
@@ -1205,6 +1209,8 @@
 		},
 		"global-search": {
 			"dashboard": {
+				"all": "Kõik",
+				"filter": "Filter",
 				"code-systems": "Koodisüsteemid",
 				"concepts": "Mõisted",
 				"header": "Otsing",

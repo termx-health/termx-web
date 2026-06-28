@@ -3,7 +3,9 @@ import {Router} from '@angular/router';
 import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, forkJoin, map, Observable, of} from 'rxjs';
+import {environment} from 'environments/environment';
 import {AuthService} from 'term-web/core/auth';
+import {Space, SpaceLibService, SpaceSearchParams} from 'term-web/sys/_lib/space';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
 import {
   CodeSystem,
@@ -30,6 +32,19 @@ interface Filter {
 
 @Component({
   templateUrl: './global-search-dashboard.component.html',
+  styles: [`
+    .tw-global-search__spaces {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+
+      .active {
+        font-weight: bold;
+        color: var(--color-primary);
+      }
+    }
+  `],
   standalone: false
 })
 export class GlobalSearchDashboardComponent implements OnInit {
@@ -43,6 +58,10 @@ export class GlobalSearchDashboardComponent implements OnInit {
   public snomedConcepts: SnomedConcept[] = [];
   public filter: Filter = { open: false };
 
+  /** Deployment-configured quick-filter spaces (resolved code → id). */
+  protected spaceButtons: {code: string, id: number}[] = [];
+  protected activeSpace?: string;
+
   protected readonly STORE_KEY = 'global-search';
 
   protected loader = new LoadingManager();
@@ -54,6 +73,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
     private valueSetService: ValueSetLibService,
     private codeSystemService: CodeSystemLibService,
     private codeSystemConceptService: CodeSystemConceptLibService,
+    private spaceService: SpaceLibService,
     private stateStore: ComponentStateStore,
     private cacheService: HttpCacheService,
     private authService: AuthService,
@@ -61,12 +81,39 @@ export class GlobalSearchDashboardComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadSpaceButtons();
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
       this.searchText = state.text;
       this.filter = state.filter;
       this.search();
     }
+  }
+
+  private loadSpaceButtons(): void {
+    const codes = environment.globalSearchSpaces;
+    if (!codes?.length) {
+      return;
+    }
+    const q = new SpaceSearchParams();
+    q.codes = codes.join(',');
+    q.limit = codes.length;
+    this.spaceService.search(q).pipe(
+      map(r => r.data),
+      catchError(() => of([] as Space[]))
+    ).subscribe(spaces => {
+      // Preserve the configured order.
+      this.spaceButtons = codes
+        .map(code => spaces.find(s => s.code === code))
+        .filter((s): s is Space => !!s)
+        .map(s => ({code: s.code, id: s.id}));
+    });
+  }
+
+  protected searchBySpace(code?: string): void {
+    this.activeSpace = code;
+    this.filter.spaceId = code ? this.spaceButtons.find(s => s.code === code)?.id : undefined;
+    this.search();
   }
 
   public search(): void {

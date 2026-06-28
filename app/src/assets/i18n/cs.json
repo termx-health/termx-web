@@ -1,6 +1,10 @@
 {
   "core": {
     "back": "Zpět",
+    "shortcut": {
+        "help-title": "Klávesové zkratky",
+        "help": "Zobrazit klávesové zkratky"
+    },
     "btn": {
       "add": "Přidat",
       "cancel": "Zrušit",
@@ -1350,6 +1354,8 @@
     },
     "global-search": {
       "dashboard": {
+        "all": "Vše",
+        "filter": "Filtr",
         "code-systems": "Kódové systémy",
         "concepts": "Koncepty",
         "filter": {

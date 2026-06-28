@@ -1,6 +1,10 @@
 {
   "core": {
     "back": "Retour",
+    "shortcut": {
+        "help-title": "Raccourcis clavier",
+        "help": "Afficher les raccourcis clavier"
+    },
     "btn": {
       "add": "Ajouter",
       "cancel": "Annuler",
@@ -1256,6 +1260,8 @@
     },
     "global-search": {
       "dashboard": {
+        "all": "Tout",
+        "filter": "Filtre",
         "code-systems": "CodeSystems",
         "concepts": "Concepts",
         "filter": {

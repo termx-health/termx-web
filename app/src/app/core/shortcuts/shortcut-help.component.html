@@ -1,0 +1,16 @@
+<m-modal [(mVisible)]="visible" (mClose)="close()">
+  <h3 *mModalHeader style="margin: 0">
+    {{'core.shortcut.help-title' | translate}}
+  </h3>
+
+  <ng-container *mModalContent>
+    @for (s of shortcuts; track s.key) {
+      <div class="tw-shortcut-row">
+        <kbd class="tw-shortcut-key">{{formatKey(s.key)}}</kbd>
+        <span>{{s.description ? ('core.shortcut.' + s.description | translate) : ''}}</span>
+      </div>
+    } @empty {
+      <m-no-data/>
+    }
+  </ng-container>
+</m-modal>
