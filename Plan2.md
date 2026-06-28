@@ -7,7 +7,7 @@ Follow-up track to Plan 1 (skin switching + file-import template loader + MS Dev
 extension strategies to converge on ONE common plugin / docker-extension approach.
 
 **What may start now vs. what waits:**
-- **Track Q (frontend quick wins)** — no backend → **may proceed immediately**.
+- **Track Q (frontend quick wins)** — no backend → **✅ done (PR #105)**.
 - **Strategic Tracks 1 & 2** and **Track P (backend-dependent ports)** — **wait** for Phase 0 / their backends.
 
 Legend: 🟢 no backend · 🟠 backend extension · 🔴 new backend service · ⏳ gated.
@@ -84,14 +84,14 @@ Generalizes NCLP: the resource definition selects its optimal UI.
   - `editable-table` — new inline-editable grid view.
 - Plugins (Track 1) can register additional view types into the same factory.
 
-## Track Q — Frontend quick wins (no backend) 🟢 ✅ may proceed now
+## Track Q — Frontend quick wins (no backend) ✅ DONE (PR #105)
 
-- **Keyboard shortcuts + help dialog:** port `core/shortcuts/shortcut.service.ts` (global keydown + modifiers +
-  per-context registration); render the help list in **MuiModal** (not gov-dialog); wire in `AppComponent`.
-- **Global-search:** value-set scoping filter (`filter.valueSets` + `tw-value-set-search`), clickable search icon +
-  tooltips, **config-driven** space quick-filter buttons (not hardcoded NCLP/DASTA/UZIS).
-- **`translateList` pipe** into `core/utils` (CSV → translate tokens → join).
-- **Wiki content sanitizer** (DOMPurify, already a dep) — independent security hardening.
+Delivered: keyboard shortcuts + help dialog (MuiModal); global-search clickable search icon + tooltips and
+config-driven space quick-filter buttons (`environment.globalSearchSpaces`); `translateList` pipe.
+
+Deliberately dropped (not pending): the **wiki DOMPurify sanitizer** (mainline already sanitizes via
+`m-quill`/`m-markdown`; the strict allowlist would strip valid Quill formatting) and the **value-set scoping
+filter** (`ConceptSearchParams` has no clean value-set scope; the fork's version was a weak text-override).
 
 ## Track P — Backend-dependent ports ⏳
 
@@ -134,7 +134,7 @@ Implement SMART App Launch fresh (EHR launch + standalone launch). New `core/aut
 - **Measurement-unit registry** — **intentionally removed from TermX**; do not reintroduce.
 
 ## Sequencing
-1. **Track Q** (no backend) — may start now.
+1. ~~**Track Q** (no backend)~~ — ✅ done (PR #105).
 2. **Phase 0** comparative analysis once the CZ backend project arrives → decide the plugin/docker-extension model.
 3. **Strategic Tracks 1 & 2** (plugin infra + view/editor factory) on the chosen architecture.
 4. **Track P** ports as each backend lands (MS DevOps real impl, terminology-server OAuth2, Wiki export, OR-CZ, SMART).
