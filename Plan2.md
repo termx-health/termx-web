@@ -1,187 +1,146 @@
-# Plan 2 — Additional fork features (roadmap)
+# Plan 2 — Strategic architecture + remaining ports (roadmap)
 
-Follow-up track to Plan 1 (skin switching + file-import template loader + MS DevOps UI, delivered on
-branch `feature/skin-switching`). Plan 2 ports the remaining genuinely-useful features found in the
-Czech NCEZ/MZČR fork (`~/Downloads/termx-web-dev_new`, Angular 16) into mainline termx-web.
+Follow-up track to Plan 1 (skin switching + file-import template loader + MS DevOps UI). Plan 2 is
+**strategic-first**: the two big directions are a **plugin infrastructure** for third-party apps and a
+**CodeSystem/ValueSet view & editor factory** (which generalizes the Czech NCLP dashboard). Both are
+**gated** on Phase 0 — obtaining the **CZ backend project** and a comparative analysis of the three real
+extension strategies to converge on ONE common plugin / docker-extension approach.
 
-Each item below lists: **frontend work** (termx-web), **required backend services** (termx-server —
-several do not exist yet and are the gating dependency), classification, and verification.
+**What may start now vs. what waits:**
+- **Track Q (frontend quick wins)** — no backend → **may proceed immediately**.
+- **Strategic Tracks 1 & 2** and **Track P (backend-dependent ports)** — **wait** for Phase 0 / their backends.
 
-Legend: **GENERAL** = ship in core · **CUSTOMER** = Czech-only, ships in the `cs-gov` skin/asset bundle ·
-🟢 no backend needed · 🟠 backend extension needed · 🔴 new backend service needed.
+Legend: 🟢 no backend · 🟠 backend extension · 🔴 new backend service · ⏳ gated.
 
 ---
 
-## Missing backend services — summary (termx-server)
-
-The single biggest risk in Plan 2 is backend coverage. These endpoints are referenced by the fork's
-frontend but are **not confirmed present** in mainline termx-server. Implement/verify these first:
+## Missing / required backend services — summary (termx-server & friends)
 
 | # | Service / endpoints | Used by | Status |
 |---|---|---|---|
-| 1 | `GET /wiki-export/export-pdf?spaceId=&pageId=` · `GET /wiki-export/export-html?...` → returns a file blob | Wiki PDF/HTML export | 🔴 verify/implement |
-| 2 | `GET /ts/measurement-units` (search) · `GET /ts/measurement-units/{id}` · `GET /ts/measurement-units/kinds` · `POST/PUT /ts/measurement-units` | Measurement-unit registry | 🔴 implement |
-| 3 | `GET /spaces/msdevops/providers` · `GET /spaces/{id}/msdevops` · `POST /spaces/{id}/msdevops/authenticate` · `GET /spaces/{id}/msdevops/status` · `GET /spaces/{id}/msdevops/diff?file=` · `POST /spaces/{id}/msdevops/push` · `POST /spaces/{id}/msdevops/pull` | MS DevOps (Plan 1 UI shipped, **flag-gated off**) | 🔴 implement to un-gate Plan 1 §C |
-| 4 | Server (terminology-server) registration model + persistence extended with OAuth2 `clientId`/`clientSecret` + custom headers | Terminology-server auth config | 🟠 extend existing `/spaces/.../servers` |
-| 5 | OR-CZ converter service (`orczApi`, separate base URL): `GET {orczApi}/getconfig?configSource=` · `POST {orczApi}/convert{Type}` · `POST {orczApi}/xmlImport` · `POST {orczApi}/convertFhirSync`. Externalize the fork's hardcoded `asseco:test` credentials. | Custom XML import (OR-CZ) | 🔴 customer-specific service |
-| 6 | SMART App Launch: token endpoint + the app must read FHIR server `/metadata` for OAuth URLs (mostly client-side, but needs a registered SMART client on the auth server). | SMART-on-FHIR auth | 🔴 config + auth-server client |
+| 1 | `GET /wiki-export/export-pdf?spaceId=&pageId=` · `GET /wiki-export/export-html?...` → file blob | Wiki PDF/HTML export | 🔴 verify/implement |
+| 2 | MS DevOps stub already added in termx-server (`SpaceMsDevOpsController`); replace with a **real Azure DevOps git sync** to un-gate the Plan 1 UI | MS DevOps | 🟠 stub→real |
+| 3 | Terminology-server (`Server*`) model + persistence extended with OAuth2 `clientId`/`clientSecret`/`tokenUrl`/`scope` + custom headers; token fetch + per-server cache; secret encrypted at rest | Terminology-server auth config | 🟠 extend existing |
+| 4 | OR-CZ converter service (separate `orczApi`): `GET /getconfig?configSource=` · `POST /convert{Type}` · `POST /xmlImport` · `POST /convertFhirSync`; externalize the fork's hardcoded `asseco:test` creds | Custom XML import (OR-CZ) | 🔴 CZ-backend service |
+| 5 | SMART App Launch: registered SMART client (client_id/redirect_uri/scopes/PKCE) on the auth server + a reachable FHIR server exposing `/metadata` (mostly client-side; no bespoke termx-server endpoint) | SMART-on-FHIR auth | 🔴 config + auth-server client |
+| 6 | Plugin SPI surface (`termx-plugin-api`) + sample plugin module/sidecar — **shape decided by Phase 0** | Plugin infrastructure | ⏳ after Phase 0 |
 
-NCLP dashboard / custom property layouts (item 6 below) need **no new endpoints** — they reuse existing
-code-system/concept APIs; the customer specifics are configuration (hardcoded CS IDs → injected config).
+The view/editor factory (Track 2) needs **no new endpoints** — it reuses existing code-system/concept APIs;
+the customer specifics are configuration on the resource definition.
 
----
-
-## 1. Wiki PDF / HTML export 🟠 GENERAL
-
-**Frontend** (`app/src/app/wiki/page/containers/wiki-page-details.component.{ts,html}`):
-- Add an "Export → PDF / HTML" action to the wiki page header.
-- Call the backend export endpoint, receive a `Blob`, trigger a download named `Wiki-{space}-{page}.{ext}`
-  (mirror fork `wiki-page-details.component.ts:185-196`). Use `HttpClient.get(url, {responseType: 'blob'})`.
-- Optional: port the DOMPurify content sanitizer (`wiki/page/services/wiki-contentSanitizer.service.ts`)
-  as independent security hardening for rendered wiki HTML (`dompurify` is already a dependency).
-
-**Backend (service #1):** `GET /wiki-export/export-pdf` and `/export-html` taking `spaceId` (+ page identifier),
-rendering the page (and optionally its subtree) to a downloadable file. The fork delegates entirely to this
-server service — there is **no** client-side PDF library. Confirm whether mainline termx-server has a
-`wiki-export` module; if not, it must be built (HTML render → headless-Chrome/wkhtmltopdf style PDF, or a
-server-side markdown→PDF pipeline).
-
-**Verify:** open a wiki page → Export PDF → a valid PDF downloads with the page content; Export HTML → valid HTML.
+Measurement-unit registry is **out of scope** — it was intentionally removed from TermX; do not reintroduce.
 
 ---
 
-## 2. Keyboard shortcuts + help dialog 🟢 GENERAL
+## Phase 0 — Comparative analysis & architecture decision (GATING; do first) ⏳
 
-**Frontend** (new `app/src/app/core/shortcuts/`):
-- Port `shortcut.service.ts` — a global `keydown` listener with Ctrl/Alt/Shift modifier mapping and
-  per-context shortcut registration with description labels.
-- Port the help component, but render the shortcut list in **`MuiModalModule`** (the fork used `<gov-dialog>`;
-  do not pull in gov-design-system for a core feature).
-- Register `ShortcutService` in `AppComponent`'s constructor; bind `?` to open the help modal.
-- Add i18n keys for shortcut descriptions.
+Pick ONE common plugin / docker-extension model by analyzing how the three real consumers extend TermX:
+- **LMB fork** (`lmb-terminology-server`, e-medlab): **hard fork** + Gradle subproject *editions*
+  (`edition-est/uzb/int`) with dependency substitution; publishes artifacts; **docker-compose orchestration**
+  pulling separate `termx-server`/`termx-web` images. → backend extension = build-time Gradle modules.
+- **EE project** (`terminology-explorer`, e-medlab): **standalone** Spring Boot 4 + Angular 20; reuses TermX
+  *only* via the published `@termx-health/structure-definition-viewer` + FHIR APIs; **content-negotiation
+  routing** + `ecosystem.json`; **combined docker image**. → API consumer, not a fork.
+- **CZ backend** (not yet available — the "backend project" we are waiting for): OR-CZ converter + NCLP backend.
 
-**Backend:** none.
+**Existing seams to build on:**
+- *Backend SPI:* Micronaut `List<Interface>` + `@Singleton` auto-collection — `SpaceGithubDataHandler`,
+  `SpaceResourceProvider`, `ResourceContentProvider` (in `termx-core`/`termx-api`). Build-time Gradle modules → fat `-all.jar`.
+- *Frontend:* `@angular/elements` web components already exported (`ce-code-system-concept-matrix`,
+  `ce-value-set-concept-matrix`, `ce-structure-definition`, `ce-wiki-comment-popover`); **embedded mode**
+  (`/embedded/*` sandbox); runtime `assets/menu.json` loading.
+- *Shared/deploy:* `web-commons` npm packages; root `docker-compose.yml` + env config; EE's content-negotiation + `ecosystem.json`.
 
-**Verify:** registered shortcuts fire their handlers; `?` opens a modal listing all active shortcuts with keys.
+**Decision to produce:** build-time plugins (Gradle module + Angular build composition; like LMB) vs runtime /
+docker extensions (sidecar services + iframe/web-component embedding + dynamic menu & `ecosystem.json`; like EE),
+or a hybrid. Output = the plugin contract + docker-extension model that Tracks 1 & 2 implement.
 
----
+## Strategic Track 1 — Plugin infrastructure (skeleton: web-app + backend) ⏳
 
-## 3. Global-search enhancements + small wins 🟢 GENERAL
+- **Backend plugin SPI:** formalize a `termx-plugin-api` (existing handler/provider interfaces + a manifest) and a
+  **sample plugin Gradle module** implementing one provider, auto-discovered via Micronaut collection injection.
+  If Phase 0 picks runtime/docker: a **sidecar** variant registered via config (`ecosystem.json`-style).
+- **Frontend plugin host:** a registry that (a) merges plugin menu entries into the runtime `menu.json`,
+  (b) hosts third-party UIs via exported web components and/or sandboxed `/embedded` iframes, (c) lets plugins
+  register Angular components into the view/editor factory (Track 2). Skeleton = one sample third-party web-app
+  embedded + one exported TermX component consumed externally.
 
-**Frontend** (`app/src/app/global-search/containers/global-search-dashboard.component.{ts,html}`):
-- **Value-set scoping filter:** add `filter.valueSets` + a `tw-value-set-search` control; when set, scope the
-  code-system/value-set search to within that value set (fork `:137`).
-- **Clickable search icon + tooltips** on the search/filter affordances (fork HTML `:9-10`).
-- **Configurable space quick-filter buttons:** the fork hardcoded `NCLP / DASTA / UZIS`. Generalize to a
-  config-driven list (e.g. read space codes from runtime config or the user's accessible spaces) so the
-  buttons are not Czech-specific. The Czech preset ships in the `cs-gov` bundle.
-- **`translateList` pipe:** port the tiny `core/utils/TranslatePipe.ts` (split CSV → translate each token →
-  join) into `core/utils` and register it where comma-separated enum/privilege lists are displayed.
-- Drop the fork's `.view`→`.read` privilege regressions (mainline already uses `.read`).
+## Strategic Track 2 — CodeSystem/ValueSet view & editor factory ⏳
 
-**Backend:** none (uses existing search endpoints).
+Generalizes NCLP: the resource definition selects its optimal UI.
+- **Config store (the "TermX extension"):** add `viewType?: string` to `CodeSystem.settings` / `ValueSet.settings`
+  (`resources/_lib/code-system/model/code-system.ts:40`, `value-set.ts:21`); edit it via the existing
+  resource-configuration-attributes mechanism (`termx-resource-configuration` CodeSystem,
+  `resource/components/resource-configuration-attributes.component.ts`).
+- **`ViewComponentFactory`:** registry mapping `(resourceType, viewType) → component class` (pattern from the
+  fork's `LayoutMapFactory`). **Injection point:** `CodeSystemConceptsComponent`
+  (`resources/code-system/containers/concepts/code-system-concepts.component.ts:13-35`) loads the variant
+  dynamically instead of hardcoding `CodeSystemConceptsListComponent`. Summary widgets similarly.
+- **Built-in view types:**
+  - `default` — current tree+table (`CodeSystemConceptsListComponent`).
+  - `loinc` — refactor `integration/loinc/loinc-dashboard.component.ts` from a standalone route into a view variant.
+  - `nclp-dashboard` — generalize the CZ tabbed wrapper + **config-driven property layouts**: extract
+    `LayoutMap`/`LayoutMapFactory` to load layouts from injected JSON, feature-flagged; Czech NČLP config ships in `cs-gov`.
+  - `editable-table` — new inline-editable grid view.
+- Plugins (Track 1) can register additional view types into the same factory.
 
-**Verify:** value-set filter narrows results; config-driven space buttons filter by space; `translateList`
-renders translated comma lists.
+## Track Q — Frontend quick wins (no backend) 🟢 ✅ may proceed now
 
----
+- **Keyboard shortcuts + help dialog:** port `core/shortcuts/shortcut.service.ts` (global keydown + modifiers +
+  per-context registration); render the help list in **MuiModal** (not gov-dialog); wire in `AppComponent`.
+- **Global-search:** value-set scoping filter (`filter.valueSets` + `tw-value-set-search`), clickable search icon +
+  tooltips, **config-driven** space quick-filter buttons (not hardcoded NCLP/DASTA/UZIS).
+- **`translateList` pipe** into `core/utils` (CSV → translate tokens → join).
+- **Wiki content sanitizer** (DOMPurify, already a dep) — independent security hardening.
 
-## 4. Terminology-server OAuth2 auth config 🟠 GENERAL (extends existing)
+## Track P — Backend-dependent ports ⏳
 
-Mainline already has terminology-server management as `Server*` (`/space/servers/*`). The only fork extra is
-**auth configuration** on a registered server.
+- **Wiki PDF/HTML export** (🔴 service #1): export button on `wiki/page/containers/wiki-page-details.component.{ts,html}`
+  → download blob `Wiki-{space}-{page}.{ext}` (mirror fork `:185-196`); verify/build the `wiki-export` service first.
+- **Custom XML import framework** (🔴 service #4): pluggable XML-importer abstraction in `integration/import/`,
+  externalized endpoint/creds; the Czech OR-CZ/Asseco adapter ships in `cs-gov`. Needs the CZ-backend `orczApi`.
 
-**Frontend** (`app/src/app/sys/space/containers/server/server-edit.*` + `Server` model/service):
-- Add OAuth2 fields: `clientId`, `clientSecret` (masked input), and optional custom request headers.
+### Terminology-server OAuth2 auth config (🟠 service #3 — detail)
+Mainline already has terminology-server management as `Server*` (`/space/servers/*`); the fork adds **auth config**.
+- **Model:** extend `Server` (termx-web `sys/_lib/space` model + termx-server `TerminologyServer`) with
+  `authType` (`none|basic|oauth2|apikey`), `clientId`, `clientSecret`, `tokenUrl`, `scope`, and optional custom headers.
+- **Frontend** (`sys/space/.../server` edit form): an "Authentication" section; **`clientSecret` is a masked,
+  write-only input** — never echo the stored secret; the API returns a `secretSet: boolean`. Headers as a key/value list.
+- **Backend:** when TermX calls the external server (`TerminologyServerResourceProvider` / the server HTTP client),
+  run **OAuth2 client-credentials**: `POST tokenUrl` with client id/secret + scope, **cache the bearer token per
+  server with expiry**, attach `Authorization` + custom headers. **Store the secret encrypted at rest.**
+- **Privileges:** reuse the existing server-edit authorization (no new privilege).
+- **Verify:** register a server with OAuth2 client-credentials against a protected CTS/FHIR endpoint → token fetched
+  + cached, resources load, secret never returned to the UI.
 
-**Backend (service #4):** extend the existing server-registration model + persistence to store and use these
-auth fields when calling the external terminology server. No new endpoints — extend the existing ones.
+### SMART-on-FHIR auth (🔴 service #5 — detail; re-implement, fork code is dead/commented)
+Implement SMART App Launch fresh (EHR launch + standalone launch). New `core/auth/smart/`:
+- **Launch detection:** read `iss` (FHIR base) + `launch` (opaque) query params [EHR launch], or a configured `iss` [standalone].
+- **Discovery:** `GET {iss}/metadata` (or `/.well-known/smart-configuration`) → `authorization_endpoint`,
+  `token_endpoint`, supported scopes, PKCE support.
+- **Authorization redirect:** `response_type=code`, `client_id`, `redirect_uri`, `scope`
+  (e.g. `launch openid fhirUser patient/*.read`), `state`, `aud={iss}`, `launch`, **PKCE** `code_challenge`.
+- **Token exchange:** on redirect back, `POST token_endpoint` with `code` + PKCE `code_verifier` → `access_token`
+  (+ `id_token`, patient context). Store token + `iss` (+ patient) in **`sessionStorage`** (not localStorage).
+- **HTTP interceptor:** attach `Authorization: Bearer {token}` (+ `X-Smart-Iss` if needed); handle expiry/refresh.
+- **Wiring:** a `SmartAuthService` + interceptor, gated by a config flag (`smartEnabled`/`iss`); **coexists with the
+  existing OIDC** (`angular-auth-oidc-client`) — SMART is an alternate provider selected by launch context.
+- **Backend/config:** a registered SMART client (client_id, redirect_uri, scopes, PKCE) on the auth server / EHR,
+  and a reachable FHIR server exposing `/metadata`. No bespoke termx-server endpoint.
+- **Verify:** an EHR/standalone launch (`?iss=&launch=`) completes the code+PKCE flow and applies the bearer token
+  to protected calls; token in `sessionStorage`; logout clears it.
 
-**Verify:** save a server with OAuth2 creds (secret masked) → the server authenticates and its resources load.
+## Removed from scope
+- **Measurement-unit registry** — **intentionally removed from TermX**; do not reintroduce.
 
----
-
-## 5. Custom XML import framework (generalize OR-CZ) 🔴 CUSTOMER adapter
-
-**Frontend** (new `app/src/app/integration/import/` abstraction):
-- Build a **pluggable XML-importer** abstraction: config-driven resource-type mapping, externalized
-  endpoint + credentials (no hardcoded `asseco:test`). The Czech OR-CZ adapter (resource types
-  `nclp/dasta/nzis/dlp`) ships in the `cs-gov` bundle, not core.
-- Port from fork `integration/_lib/or-cz/*` and `integration/import/or-cz/**`, removing hardcoded secrets.
-
-**Backend (service #5):** the OR-CZ converter is a **separate service** at its own base URL (`orczApi`,
-distinct from `termxApi`): `GET /getconfig?configSource={type}`, `POST /convert{Type}`, `POST /xmlImport`,
-`POST /convertFhirSync`. This is customer infrastructure (Asseco registry); credentials must come from
-config/secrets, not source. Add `orczApi` to the runtime env config.
-
-**Verify:** a sample adapter imports a fixture XML through the converter into a code system.
-
----
-
-## 6. NCLP dashboard + custom concept-property editors 🔵 CUSTOMER (config-driven)
-
-Largest/most invasive item. The fork's `code-system-property-value-edit.component.ts` ballooned to ~1208 lines
-of Czech NČLP lab-procedure layout/validation logic, plus `nclp/dashboard`, `custom-map.ts`, `group-skala.ts`,
-`layout-map.factory.ts`, and a `gov-dialog` wrapper.
-
-**Frontend (generalize, do not copy verbatim):**
-- Extract a **config-driven concept-property layout** system: a `LayoutMap` interface + a factory that resolves
-  layouts by code-system id, loading the layout config from **injected JSON** (not hardcoded). Feature-flag the
-  layout/validation logic added to `code-system-property-value-edit.component.ts` so default behavior is unchanged.
-- The Czech NČLP layout config + the multi-tab NCLP dashboard ship in the `cs-gov` bundle. Render dialogs in
-  `MuiModalModule`, not `gov-dialog`.
-
-**Backend:** none new — reuses existing code-system/concept APIs. The fork's hardcoded CS IDs (`idSlpPolozky`,
-etc.) become deployment config.
-
-**Verify:** with a feature-flagged config, grouped property layouts render; flag off → property editor unchanged.
-
----
-
-## 7. SMART-on-FHIR auth 🔴 GENERAL (re-implement)
-
-The fork's `core/auth/smart/*` is **fully commented out / abandoned** — do not resurrect it.
-
-**Frontend (fresh, from the SMART App Launch spec):**
-- Detect `?iss=` / `?launch=` params, read the FHIR server `/metadata` for the OAuth authorize/token URLs,
-  redirect to authorize, exchange the auth code for a bearer token, store it, and add an `Authorization: Bearer`
-  (+ `X-Smart-Iss`) HTTP interceptor.
-
-**Backend (service #6):** a registered SMART client on the auth server (client id/scopes) and a reachable FHIR
-server exposing `/metadata`. No bespoke termx-server endpoint, but auth-server + FHIR-server configuration is required.
-
-**Verify:** a SMART launch (`?iss=&launch=`) yields a bearer token applied to protected calls.
-
----
-
-## 8. Measurement-unit registry 🔴 GENERAL (optional)
-
-A writable registry of measurement units with external mappings — **distinct from UCUM** (UCUM stays the
-read-only standard-operations library; the two coexist).
-
-**Frontend** (port `app/src/app/measurement-unit/**`):
-- Module with list / edit / view + a mappings list (model: `{id, code, name, alias, period, ordering, rounding,
-  kind, definitionUnit/Value, mappings[]}`; mapping: `{system, systemUnit, systemValue}`).
-- Add measurement-unit results to global search (fork integrated it there).
-
-**Backend (service #2):** `GET /ts/measurement-units` (search), `GET /ts/measurement-units/{id}`,
-`GET /ts/measurement-units/kinds`, `POST/PUT /ts/measurement-units` — standard CRUD. Does not exist in mainline.
-
-**Verify:** CRUD a measurement unit + mapping; it appears in global search.
-
----
-
-## Suggested sequencing
-
-1. **Un-gate Plan 1 §C** — implement MS DevOps backend (service #3), then flip `msDevOpsEnabled` and runtime-verify.
-2. **Quick GENERAL wins, no backend:** keyboard shortcuts (§2), global-search + `translateList` (§3).
-3. **Backend-extension wins:** terminology-server OAuth2 (§4, service #4), Wiki export (§1, service #1).
-4. **Larger:** measurement-unit registry (§8, service #2), SMART auth (§7).
-5. **Customer-specific (cs-gov bundle):** NCLP layouts (§6), OR-CZ XML import (§5, service #5).
+## Sequencing
+1. **Track Q** (no backend) — may start now.
+2. **Phase 0** comparative analysis once the CZ backend project arrives → decide the plugin/docker-extension model.
+3. **Strategic Tracks 1 & 2** (plugin infra + view/editor factory) on the chosen architecture.
+4. **Track P** ports as each backend lands (MS DevOps real impl, terminology-server OAuth2, Wiki export, OR-CZ, SMART).
 
 ## Notes
-
-- Everything tagged CUSTOMER belongs in the `cs-gov` skin/asset bundle (see `docs/skins.md`), never mainline core.
-- The fork's framework-noise diffs (Angular 16→21, kodality→termx-health rename, `measurement-unit`-as-UCUM,
-  oversized refactored files) are intentionally **not** ported — mainline is newer/superior there.
-- Original analysis + Plan 1 detail: `~/.claude/plans/mossy-gathering-leaf.md`.
+- CUSTOMER-tagged work (Czech NCLP config, OR-CZ adapter, ministry branding) belongs in the `cs-gov` skin/asset
+  bundle (see `docs/skins.md`), never mainline core.
+- Framework-noise diffs (Angular 16→21, kodality→termx-health rename, oversized refactored files) are not ported.
+- Full analysis + Plan 1 detail: `~/.claude/plans/mossy-gathering-leaf.md`.
