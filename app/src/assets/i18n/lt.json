@@ -2,8 +2,8 @@
   "core": {
     "back": "Grįžti",
     "shortcut": {
-        "help-title": "Klavišų kombinacijos",
-        "help": "Rodyti klavišų kombinacijas"
+      "help-title": "Klavišų kombinacijos",
+      "help": "Rodyti klavišų kombinacijas"
     },
     "btn": {
       "add": "Pridėti",
@@ -233,35 +233,35 @@
         "single": "vienas",
         "version": "Versija"
       },
-      "empty-github-url": "",
-      "fhir-version": "",
+      "empty-github-url": "Pradinis tuščias IG Github projektas",
+      "fhir-version": "FHIR versija",
       "github-branch": "Branch",
-      "github-url": "",
+      "github-url": "Visas Github projekto URL",
       "group": {
-        "description": "",
-        "multiple": "",
-        "name": ""
+        "description": "Aprašas",
+        "multiple": "Grupės",
+        "name": "Pavadinimas"
       },
-      "multiple": "",
-      "package-id": "",
+      "multiple": "Versijos",
+      "package-id": "Paketo ID",
       "page": {
-        "group": "",
-        "multiple": "",
-        "name": "",
-        "page": "",
-        "space": "",
-        "type": ""
+        "group": "Grupė",
+        "multiple": "Puslapiai",
+        "name": "Pavadinimas",
+        "page": "Puslapis",
+        "space": "Sritis",
+        "type": "Tipas"
       },
       "resource": {
-        "group": "",
-        "multiple": "",
-        "name": "",
-        "reference": "",
-        "type": "",
-        "version": ""
+        "group": "Grupė",
+        "multiple": "Ištekliai",
+        "name": "Pavadinimas",
+        "reference": "Nuoroda",
+        "type": "Tipas",
+        "version": "Versija"
       },
-      "single": "",
-      "template": "",
+      "single": "Versija",
+      "template": "Šablonas",
       "version": "Versija"
     },
     "map-set": {
@@ -697,7 +697,9 @@
       "shared": "Bendrasis",
       "singular": "Erdvė",
       "servers": "Terminologijos serveriai",
-      "viewers": "Turintys peržiūros teisę"
+      "viewers": "Turintys peržiūros teisę",
+      "global-search": "Visuotinė paieška",
+      "msdevops": "Azure DevOps kodo saugykla"
     },
     "structure-definition": {
       "code": "Kodas",
@@ -866,7 +868,8 @@
         "filters": "Filtrai",
         "properties": "Savybės",
         "value-set": "Reikšmių rinkinys (value set)",
-        "value-set-version": "Reikšmių rinkinio (value set) versija"
+        "value-set-version": "Reikšmių rinkinio (value set) versija",
+        "supplement-of": "Papildo"
       },
       "rules": "Taisyklės"
     },
@@ -919,7 +922,20 @@
     "app": {
       "header": "TermX",
       "theme": {
-            "dark": "Tamsus režimas"
+        "dark": "Tamsus režimas"
+      },
+      "accessibility": {
+        "title": "Pritaikymas neįgaliesiems",
+        "appearance": "Išvaizda",
+        "appearance-white": "Šviesi",
+        "appearance-dark": "Tamsi",
+        "appearance-ncez": "NCEZ",
+        "font-size": "Šrifto dydis",
+        "font-normal": "Įprastas",
+        "font-large": "Didelis",
+        "font-extra-large": "Labai didelis",
+        "apply": "Taikyti",
+        "reset": "Atstatyti"
       }
     },
     "association-type": {
@@ -1069,6 +1085,24 @@
           "version": "Versija"
         },
         "versions": "Versijos"
+      },
+      "coding-refresh": {
+        "action": "Atnaujinti nuorodas",
+        "header": "Atnaujinti nuorodas į kitas kodų sistemas",
+        "allowed-statuses": "Leidžiami paskirties statusai",
+        "allowed-statuses-desc": "Renkant naujausią versiją įvertinamos tik versijos, atitinkančios vieną iš šių statusų.",
+        "preview-btn": "Peržiūrėti pakeitimus",
+        "apply-btn": "Taikyti",
+        "preview-desc": "Bus atnaujinta nuorodų: {{count}}",
+        "property": "Savybė",
+        "target": "Paskirtis",
+        "current": "Dabartinė versija",
+        "candidate": "Nauja versija",
+        "up-to-date": "Visos nuorodos atnaujintos",
+        "up-to-date-desc": "Nerasta savybių reikšmių, nurodančių į senesnę versiją.",
+        "applied": "Nuorodos atnaujintos",
+        "queued": "Nuorodos įtrauktos į atnaujinimo eilę",
+        "validator-desc": "Patikrinti šios kodų sistemos versijos savybių reikšmes ir atnaujinti nuorodas į naujausią prieinamą jų paskirties kodų sistemų versiją."
       }
     },
     "code-system-association": {
@@ -1307,12 +1341,11 @@
     "global-search": {
       "dashboard": {
         "all": "Visi",
-        "filter": "Filtras",
-        "code-systems": "Kodų sistemos (code systems)",
-        "concepts": "Terminai",
         "filter": {
           "space": "Space"
         },
+        "code-systems": "Kodų sistemos (code systems)",
+        "concepts": "Terminai",
         "header": "Ieškoti",
         "map-sets": "Terminijos ryšių rinkiniai (map sets)",
         "measurement-unit": "Matavimo vienetas",
@@ -2264,7 +2297,8 @@
       "resource-import-success-message": "Ištekliaus importavimas sėkmingas",
       "resources": "Ištekliai",
       "select-context": "Pasirinkite kontekstą",
-      "sync-resources": "Sync all resources (from current installation to target server)"
+      "sync-resources": "Sync all resources (from current installation to target server)",
+      "msdevops-integration": "Azure DevOps integracija"
     },
     "structure-definition": {
       "form": {
@@ -2442,7 +2476,16 @@
       "auth-config": {
         "access-token-url": "Prieigos duomenų URL (Access Token URL)",
         "client-id": "Kliento ID",
-        "client-secret": "Kliento raktas (client secret)"
+        "client-secret": "Kliento raktas (client secret)",
+        "auth-type": "Autentifikavimo tipas",
+        "auth-type-none": "Nėra",
+        "auth-type-basic": "Bazinis",
+        "auth-type-oauth2": "OAuth 2.0",
+        "auth-type-apikey": "API raktas",
+        "username": "Naudotojo vardas",
+        "password": "Slaptažodis",
+        "api-key": "API raktas",
+        "scope": "Sritis"
       },
       "edit-header": "Redaguoti serverį",
       "export-ecosystem": "Export to FHIR Ecosystem format",
@@ -2778,7 +2821,7 @@
         "concept": "Terminas",
         "contents": "Turinys",
         "cs": "Kodų sistema (code system)",
-        "csc": "",
+        "csc": "Kodų sistemos terminai",
         "def": "Struktūros apibrėžimas",
         "ms": "Terminijos ryšių rinkiniai (map set)",
         "none": "Nėra",
@@ -2787,7 +2830,7 @@
         "tags": "Gairės",
         "usages": "Rodyklės",
         "vs": "Reikšmių rinkinys (value set)",
-        "vsc": ""
+        "vsc": "Reikšmių rinkinio (value set) terminai"
       },
       "edit": {
         "header": {
@@ -2827,7 +2870,11 @@
       "header": {
         "add-subpage": "Pridėti priklausantį puslapį",
         "copy-raw": "Kopijuoti neapdorotus duomenis",
-        "modified": "Šį puslapį {{date}} redagavo <b>{{user}}</b>."
+        "modified": "Šį puslapį {{date}} redagavo <b>{{user}}</b>.",
+        "export-page-pdf": "Eksportuoti puslapį į PDF",
+        "export-page-html": "Eksportuoti puslapį į HTML",
+        "export-space-pdf": "Eksportuoti sritį į PDF",
+        "export-space-html": "Eksportuoti sritį į HTML"
       },
       "history": {
         "header": {
@@ -2857,7 +2904,8 @@
           "created": "Sukurta {{date}}",
           "header": "Neseniai pakeista",
           "updated": "Atnaujinta {{date}}"
-        }
+        },
+        "export": "Eksportuoti"
       },
       "setup": {
         "add-header": "Pridėti puslapį",
