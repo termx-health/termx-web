@@ -2,8 +2,8 @@
   "core": {
     "back": "Zpět",
     "shortcut": {
-        "help-title": "Klávesové zkratky",
-        "help": "Zobrazit klávesové zkratky"
+      "help-title": "Klávesové zkratky",
+      "help": "Zobrazit klávesové zkratky"
     },
     "btn": {
       "add": "Přidat",
@@ -24,7 +24,11 @@
       "save": "Uložit",
       "search": "Vyhledat",
       "select": "Vybrat",
-      "send": "Odeslat"
+      "send": "Odeslat",
+      "change": "Změnit",
+      "download": "Stáhnout",
+      "yes": "Ano",
+      "no": "Ne"
     },
     "confirm": "Jste si jistý?",
     "data-lost-warning": "Vaše změny nebudou uloženy!",
@@ -70,6 +74,10 @@
     "session-expiration-warning": "Relace vyprší za méně než 5 minut!",
     "version-select": {
       "custom": "Vlastní"
+    },
+    "bool": {
+      "yes": "Ano",
+      "no": "Ne"
     }
   },
   "entities": {
@@ -707,7 +715,9 @@
       "shared": "Sdílené",
       "singular": "Prostor",
       "servers": "Servery",
-      "viewers": "Prohlížeči"
+      "viewers": "Prohlížeči",
+      "global-search": "Globální vyhledávání",
+      "msdevops": "Repozitář Azure DevOps"
     },
     "structure-definition": {
       "code": "Kód",
@@ -720,11 +730,19 @@
       "publisher": "Vydavatel",
       "status": "Stav",
       "url": "URL",
-      "version": "Verze"
+      "version": "Verze",
+      "description": "Popis",
+      "experimental": "Experimentální",
+      "purpose": "Účel",
+      "title": "Název"
     },
     "structure-definition-version": {
       "content-type": "Content type",
-      "description": "Description"
+      "description": "Description",
+      "content-format": "Formát obsahu",
+      "release-date": "Datum distribuce",
+      "status": "Stav",
+      "version": "Verze"
     },
     "task": {
       "assignee": "Přiřazený",
@@ -770,7 +788,17 @@
       "root-url": "Hlavní URL",
       "singular": "Server",
       "supported-operations": "Supported operations",
-      "usage": "Usage"
+      "usage": "Usage",
+      "cache-period": "Doba platnosti mezipaměti (hodiny)",
+      "cert": "Ověření certifikátem",
+      "oauth": "OAuth",
+      "open": "Otevřený přístup",
+      "smart": "SMART on FHIR",
+      "strategy": "Strategie",
+      "token": "Ověření tokenem",
+      "authoritative-conceptmaps": "Authoritative ConceptMaps",
+      "authoritative-structuredefinitions": "Authoritative StructureDefinitions",
+      "authoritative-structuremaps": "Authoritative StructureMaps"
     },
     "transformation-definition": {
       "name": "Název",
@@ -858,7 +886,8 @@
         "filters": "Filtry",
         "properties": "Vlastnosti",
         "value-set": "Sada hodnot",
-        "value-set-version": "Verze sady hodnot"
+        "value-set-version": "Verze sady hodnot",
+        "supplement-of": "Doplněk k"
       },
       "rules": "Pravidla"
     },
@@ -883,6 +912,16 @@
       "designations": "Označení",
       "display": "Zobrazení",
       "order-number": "Číslo pořadí"
+    },
+    "ecosystem": {
+      "active": "Aktivní",
+      "code": "Kód",
+      "description": "Popis",
+      "format-version": "Verze formátu",
+      "name": "Název",
+      "plural": "Ekosystémy",
+      "servers": "Servery",
+      "singular": "Ekosystém"
     }
   },
   "language": {
@@ -968,7 +1007,20 @@
     "app": {
       "header": "TermX",
       "theme": {
-            "dark": "Tmavý režim"
+        "dark": "Tmavý režim"
+      },
+      "accessibility": {
+        "title": "Přístupnost",
+        "appearance": "Vzhled",
+        "appearance-white": "Světlý",
+        "appearance-dark": "Tmavý",
+        "appearance-ncez": "NCEZ",
+        "font-size": "Velikost písma",
+        "font-normal": "Normální",
+        "font-large": "Velké",
+        "font-extra-large": "Extra velké",
+        "apply": "Použít",
+        "reset": "Obnovit"
       }
     },
     "association-type": {
@@ -1118,6 +1170,24 @@
           "version": "Verze"
         },
         "versions": "Verze"
+      },
+      "coding-refresh": {
+        "action": "Aktualizovat odkazy",
+        "header": "Aktualizovat odkazy na jiné kódové systémy",
+        "allowed-statuses": "Povolené cílové stavy",
+        "allowed-statuses-desc": "Při výběru nejnovější verze se berou v úvahu pouze verze odpovídající jednomu z těchto stavů.",
+        "preview-btn": "Náhled změn",
+        "apply-btn": "Použít",
+        "preview-desc": "Bude aktualizováno {{count}} odkazů:",
+        "property": "Vlastnost",
+        "target": "Cíl",
+        "current": "Aktuální verze",
+        "candidate": "Nová verze",
+        "up-to-date": "Všechny odkazy jsou aktuální",
+        "up-to-date-desc": "Nebyly nalezeny žádné hodnoty vlastností odkazující na starší verzi.",
+        "applied": "Odkazy aktualizovány",
+        "queued": "Odkazy zařazeny do fronty k aktualizaci",
+        "validator-desc": "Prohledá hodnoty vlastností v této verzi kódového systému a aktualizuje odkazy na nejnovější dostupnou verzi jejich cílových kódových systémů."
       }
     },
     "code-system-association": {
@@ -1236,7 +1306,8 @@
         "add-supplement": "Přidat doplněk",
         "coding-value-system": "Systém hodnot kódování",
         "delete-property-value": "Smazat hodnotu vlastnosti",
-        "edit-property-value": "Upravit hodnotu vlastnosti"
+        "edit-property-value": "Upravit hodnotu vlastnosti",
+        "edit-composite-values": "Upravit rozšíření"
       }
     },
     "code-system-validator": {
@@ -1355,12 +1426,11 @@
     "global-search": {
       "dashboard": {
         "all": "Vše",
-        "filter": "Filtr",
-        "code-systems": "Kódové systémy",
-        "concepts": "Koncepty",
         "filter": {
           "space": "Space"
         },
+        "code-systems": "Kódové systémy",
+        "concepts": "Koncepty",
         "header": "Vyhledávání",
         "map-sets": "Sady map",
         "measurement-unit": "Měrná jednotka",
@@ -2066,7 +2136,8 @@
       "metadata": "Metadata",
       "properties": "Vlastnosti",
       "provenance": "Původ",
-      "summary": "Shrnutí"
+      "summary": "Shrnutí",
+      "resources": "Zdroje"
     },
     "resource-form": {
       "add-other-title": "Přidat jiný název",
@@ -2311,7 +2382,8 @@
       "resource-import-success-message": "Import zdroje byl úspěšný",
       "resources": "Zdroje",
       "select-context": "Vybrat kontext",
-      "sync-resources": "Synchronizovat všechny zdroje (z aktuální instalace na cílový server)"
+      "sync-resources": "Synchronizovat všechny zdroje (z aktuální instalace na cílový server)",
+      "msdevops-integration": "Integrace s Azure DevOps"
     },
     "struct-definition-constraint": {
       "list": {
@@ -2391,7 +2463,8 @@
         "import-url": "URL",
         "manual": "Vytvořit ručně",
         "open-fhir": "Otevřít v FHIR",
-        "title": "Definice struktur"
+        "title": "Definice struktur",
+        "last-version": "Poslední verze"
       },
       "summary": {
         "add-task": "Add task",
@@ -2402,7 +2475,11 @@
         "related-artifacts": "Related artifacts",
         "versions": "Versions",
         "viewer": "Preview",
-        "recalculate-references": "Recalculate"
+        "recalculate-references": "Recalculate",
+        "duplicate-version-modal": {
+          "header": "Duplikovat verzi definice struktury",
+          "version": "Nová verze"
+        }
       },
       "version-summary": {
         "version-info": "Version info",
@@ -2411,7 +2488,16 @@
       "view": {
         "binding": "Vazba",
         "fixed": "Pevné"
-      }
+      },
+      "code": "Kód",
+      "url": "URL",
+      "name": "Název",
+      "title": "Název",
+      "publisher": "Vydavatel",
+      "content-type": "Typ obsahu",
+      "description": "Popis",
+      "parent": "Rodič",
+      "experimental": "Experimentální"
     },
     "structure-definition-version": {
       "form": {
@@ -2421,20 +2507,20 @@
     },
     "structure-definition-constraint": {
       "list": {
-        "add-constraint": "Add constraint",
-        "header": "Constraint(s)"
+        "add-constraint": "Přidat omezení",
+        "header": "Omezení"
       },
       "modal": {
-        "add-header": "Add constraint",
-        "edit-header": "Edit constraint",
-        "error": "Error",
-        "expression": "Expression",
-        "human": "Human",
-        "key": "Key",
-        "requirements": "Requirements",
-        "severity": "Severity",
-        "source": "Source",
-        "warning": "Warning"
+        "add-header": "Přidat omezení",
+        "edit-header": "Upravit omezení",
+        "error": "Chyba",
+        "expression": "Výraz",
+        "human": "Lidský",
+        "key": "Klíč",
+        "requirements": "Požadavky",
+        "severity": "Závažnost",
+        "source": "Zdroj",
+        "warning": "Upozornění"
       }
     },
     "structure-definition-type": {
@@ -2493,7 +2579,16 @@
       "auth-config": {
         "access-token-url": "URL pro přístupový token",
         "client-id": "ID klienta",
-        "client-secret": "Tajný klíč klienta"
+        "client-secret": "Tajný klíč klienta",
+        "auth-type": "Typ ověření",
+        "auth-type-none": "Žádné",
+        "auth-type-basic": "Basic",
+        "auth-type-oauth2": "OAuth 2.0",
+        "auth-type-apikey": "API klíč",
+        "username": "Uživatelské jméno",
+        "password": "Heslo",
+        "api-key": "API klíč",
+        "scope": "Rozsah"
       },
       "edit-header": "Upravit server",
       "export-ecosystem": "Export to FHIR Ecosystem format",
@@ -2508,7 +2603,27 @@
         "snomed": "SNOMED server",
         "terminology": "Terminologie server"
       },
-      "test": "Test"
+      "test": "Test",
+      "authoritative": "Authoritative Resources",
+      "tab": {
+        "summary": "Shrnutí",
+        "metadata": "Metadata",
+        "resources": "Zdroje"
+      },
+      "view-header": "Detaily serveru",
+      "authoritative-code-systems": "Authoritative Code Systems",
+      "authoritative-value-sets": "Authoritative Value Sets",
+      "authoritative-concept-maps": "Authoritative Concept Maps",
+      "authoritative-structure-definitions": "Authoritative Structure Definitions",
+      "authoritative-structure-maps": "Authoritative Structure Maps",
+      "authoritative-description-code-systems": "Určete, pro které kódové systémy je tento server autoritativní.",
+      "authoritative-description-value-sets": "Určete, pro které sady hodnot je tento server autoritativní.",
+      "authoritative-description-concept-maps": "Určete, pro které konceptové mapy je tento server autoritativní.",
+      "authoritative-description-structure-definitions": "Určete, pro které definice struktur je tento server autoritativní.",
+      "authoritative-description-structure-maps": "Určete, pro které mapy struktur je tento server autoritativní.",
+      "authoritative-preview-btn": "Náhled",
+      "authoritative-preview": "Odpovídající zdroje",
+      "structure-maps": "Mapy struktur"
     },
     "tools": {
       "terminology-service-api": {
@@ -2556,7 +2671,7 @@
         "fml-generation-failed": "Generování FML selhalo",
         "generate": "Generovat",
         "invalid-resource-url": "Nelze načíst platnou definici struktury",
-        "map-set": "ConceptMap",
+        "map-set": "Mapování konceptů",
         "mapping": "Mapování struktury",
         "preview-hide": "Skrýt",
         "preview-show": "Náhled",
@@ -2858,7 +2973,11 @@
       "header": {
         "add-subpage": "Přidat podstránku",
         "copy-raw": "Zkopírovat surový soubor",
-        "modified": "<b>{{user}}</b> upravil tuto stránku {{date}}"
+        "modified": "<b>{{user}}</b> upravil tuto stránku {{date}}",
+        "export-page-pdf": "Exportovat stránku do PDF",
+        "export-page-html": "Exportovat stránku do HTML",
+        "export-space-pdf": "Exportovat prostor do PDF",
+        "export-space-html": "Exportovat prostor do HTML"
       },
       "history": {
         "header": {
@@ -2888,7 +3007,8 @@
           "created": "Vytvořeno {{date}}",
           "header": "Nedávno upraveno",
           "updated": "Aktualizováno {{date}}"
-        }
+        },
+        "export": "Exportovat"
       },
       "setup": {
         "add-header": "Přidat stránku",
@@ -2935,6 +3055,12 @@
           }
         }
       }
+    },
+    "ecosystem": {
+      "add-btn": "Přidat ekosystém",
+      "add-header": "Přidat ekosystém",
+      "edit-header": "Upravit ekosystém",
+      "select-servers": "Vyberte servery..."
     }
   }
 }
