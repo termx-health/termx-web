@@ -18,6 +18,9 @@
             <m-form-item mName="active" mLabel="entities.space.active">
               <m-checkbox name="active" [(ngModel)]="space.active"></m-checkbox>
             </m-form-item>
+            <m-form-item mName="globalSearch" mLabel="entities.space.global-search">
+              <m-checkbox name="globalSearch" [(ngModel)]="space.globalSearch"></m-checkbox>
+            </m-form-item>
             <m-form-item mName="servers" mLabel="entities.space.servers">
               <m-select name="servers" [(ngModel)]="space.terminologyServers" multiple>
                 @for (ts of terminologyServers; track ts) {
@@ -67,6 +70,32 @@
                       </m-form-item>
                     }
                   </div>
+                }
+              }
+            }
+            @if (msDevOpsFeature) {
+              <m-divider>
+                <span>{{'web.space.msdevops-integration' | translate}}</span>
+                <m-checkbox style="padding-left: 10px" [(mChecked)]="msDevOpsEnabled"></m-checkbox>
+              </m-divider>
+              @if (msDevOpsEnabled) {
+                @if (msDevOpsProviders) {
+                  <m-form-item mName="msdevops" mLabel="entities.space.msdevops" class="tw-input-group">
+                    <span class="tw-input-group-addon ant-input-group-addon">https://dev.azure.com/</span>
+                    <m-input name="msdevops" [(ngModel)]="space.integration.msDevops.repo" placeholder="organization/project"></m-input>
+                  </m-form-item>
+                }
+                @if (space.integration.msDevops.repo) {
+                  @if (msDevOpsProviders) {
+                    <div class="github-dirs">
+                      @for (p of msDevOpsProviders | keys | apply:sort; track p) {
+                        <m-form-item mName="msdevops-{{p}}" class="tw-input-group">
+                          <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
+                          <m-input name="msdevops-{{p}}" [(ngModel)]="space.integration.msDevops.dirs[p]"></m-input>
+                        </m-form-item>
+                      }
+                    </div>
+                  }
                 }
               }
             }

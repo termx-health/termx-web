@@ -4,4 +4,5 @@ export class SpaceSearchParams extends QueryParams {
   public codes?: string;
   public textContains?: string;
   public resource?: string;
+  public globalSearch?: boolean;
 }

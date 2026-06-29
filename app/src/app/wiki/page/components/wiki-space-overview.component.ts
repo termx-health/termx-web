@@ -4,10 +4,11 @@ import {Space} from 'term-web/sys/_lib/space';
 import {PageContent} from 'term-web/wiki/_lib';
 import {PageService} from 'term-web/wiki/page/services/page.service';
 
-import { MuiSkeletonModule, MuiCoreModule, MuiIconModule } from '@termx-health/ui';
+import { MuiSkeletonModule, MuiCoreModule, MuiIconModule, MuiButtonModule, MuiDropdownModule } from '@termx-health/ui';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@termx-health/util';
+import {saveAs} from 'file-saver';
 
 @Component({
     selector: 'tw-wiki-space-overview',
@@ -19,7 +20,7 @@ import { MarinaUtilModule } from '@termx-health/util';
       gap: 1rem;
     }
   `],
-    imports: [MuiSkeletonModule, MuiCoreModule, RouterLink, MuiIconModule, TranslatePipe, MarinaUtilModule, AbbreviatePipe, ApplyPipe, LocalDateTimePipe]
+    imports: [MuiSkeletonModule, MuiCoreModule, RouterLink, MuiIconModule, MuiButtonModule, MuiDropdownModule, TranslatePipe, MarinaUtilModule, AbbreviatePipe, ApplyPipe, LocalDateTimePipe]
 })
 export class WikiSpaceOverviewComponent implements OnChanges {
   private pageService = inject(PageService);
@@ -53,5 +54,17 @@ export class WikiSpaceOverviewComponent implements OnChanges {
         });
       }
     }
+  }
+
+  protected exportSpace(format: 'pdf' | 'html'): void {
+    const req$ = this.pageService.exportWiki(format, this.space.id);
+    this.loader.wrap('export', req$).subscribe(resp => {
+      const fallback = `Wiki-${this.space?.code}.${format}`;
+      saveAs(resp.body, this.parseFilename(resp.headers.get('Content-Disposition')) ?? fallback);
+    });
+  }
+
+  private parseFilename(contentDisposition: string): string {
+    return contentDisposition?.match(/filename=([^;]+)/)?.[1]?.trim().replace(/^"|"$/g, '') || undefined;
   }
 }

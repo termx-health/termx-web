@@ -23,6 +23,7 @@
     [mMenu]="menu$ | async" mMenuMode="horizontal"
     [mAuthenticated]="auth.isAuthenticated | async"
     [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
+    [mAccessibilityContent]="a11yThemeTpl"
     (mLangChange)="onLangChange($event)"
     (mLogin)="login()"
   >
@@ -46,6 +47,7 @@
     [mMenu]="menu$ | async" mMenuMode="horizontal"
     [mAuthenticated]="auth.isAuthenticated | async"
     [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
+    [mAccessibilityContent]="a11yThemeTpl"
     (mLangChange)="onLangChange($event)"
     (mLogin)="login()"
     (mLogout)="logout()"
@@ -66,22 +68,18 @@
 
 <ng-template #titleTpl>
   <a class="tw-app-title" style="color: inherit" [routerLink]="['/landing']">
-    @if (skin.logo) {
-      <img class="tw-app-title__logo" [src]="skin.logo" alt=""/>
+    @if (skinService.skin.logo) {
+      <img class="tw-app-title__logo" [src]="skinService.skin.logo" alt=""/>
     }
     <span>{{'web.app.header' | translate}}</span>
-    @if (skin.headerText) {
-      <span class="tw-app-title__skin">{{skin.headerText}}</span>
+    @if (skinService.skin.headerText) {
+      <span class="tw-app-title__skin">{{skinService.skin.headerText}}</span>
     }
   </a>
 </ng-template>
 
 <ng-template #userInfoTpl>
   <div class="tw-form-view">
-    <div class="tw-user-info__theme">
-      <span class="m-subtitle">{{'web.app.theme.dark' | translate}}</span>
-      <nz-switch name="theme" [ngModel]="(preferences.theme$ | async) === 'dark'" (ngModelChange)="preferences.setTheme($event ? 'dark' : 'light')"></nz-switch>
-    </div>
     <div class="tw-user-info__user">
       <div>{{auth.user?.username}}</div>
     </div>
@@ -107,4 +105,15 @@
       </m-form-item>
     </div>
   </div>
+</ng-template>
+
+<!-- Projected into marina-ui's Accessibility modal (above its font-size section). -->
+<ng-template #a11yThemeTpl>
+  <m-form-item mLabel="web.app.accessibility.appearance">
+    <nz-radio-group [ngModel]="appearance" (ngModelChange)="setAppearance($event)" style="display: flex; flex-direction: column; gap: 0.5rem">
+      <label nz-radio nzValue="white">{{'web.app.accessibility.appearance-white' | translate}}</label>
+      <label nz-radio nzValue="dark">{{'web.app.accessibility.appearance-dark' | translate}}</label>
+      <label nz-radio nzValue="ncez">{{'web.app.accessibility.appearance-ncez' | translate}}</label>
+    </nz-radio-group>
+  </m-form-item>
 </ng-template>

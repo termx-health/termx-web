@@ -7,6 +7,7 @@ export class Space {
   public names?: LocalizedName;
   public active?: boolean;
   public shared?: boolean;
+  public globalSearch?: boolean;
   public acl?: {owners?: string, editors?: string, viewers?: string};
   public terminologyServers?: string[];
   public packages?: Package[];

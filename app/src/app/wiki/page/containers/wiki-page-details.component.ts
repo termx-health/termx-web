@@ -22,6 +22,7 @@ import { WikiPageCommentsComponent } from 'term-web/wiki/page/components/wiki-pa
 import { WikiPageSetupModalComponent } from 'term-web/wiki/page/components/wiki-page-setup-modal.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import {saveAs} from 'file-saver';
 
 @Component({
     selector: 'tw-wiki-page-details',
@@ -155,6 +156,18 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
 
   protected openHistory(): void {
     this.router.navigate(this.viewHistoryRoute(this.slug));
+  }
+
+  protected export(format: 'pdf' | 'html'): void {
+    const req$ = this.pageService.exportWiki(format, this.space.id, this.page?.id);
+    this.loader.wrap('export', req$).subscribe(resp => {
+      const fallback = `Wiki-${this.space?.code}-${this.slug}.${format}`;
+      saveAs(resp.body, this.parseFilename(resp.headers.get('Content-Disposition')) ?? fallback);
+    });
+  }
+
+  private parseFilename(contentDisposition: string): string {
+    return contentDisposition?.match(/filename=([^;]+)/)?.[1]?.trim().replace(/^"|"$/g, '') || undefined;
   }
 
   /* WikiComments */

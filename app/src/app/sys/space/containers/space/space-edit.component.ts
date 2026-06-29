@@ -3,11 +3,13 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { validateForm, ApplyPipe, KeysPipe } from '@termx-health/core-util';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
 import {Package, Space, Server, ServerLibService} from 'term-web/sys/_lib/space';
 import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
+import {SpaceMsDevOpsService} from 'term-web/sys/space/services/space-ms-dev-ops.service';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
+import {environment} from 'environments/environment';
 import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@termx-health/util';
@@ -17,6 +19,9 @@ import { MarinaUtilModule } from '@termx-health/util';
     styles: [`
     ::ng-deep .github-dirs {
       padding-left: 40px;
+      margin-top: 1rem;
+      border-top: 1px solid var(--color-borders);
+      padding-top: 1rem;
       & .ant-input-group-addon {
         text-align: right;
         min-width: 160px;
@@ -28,6 +33,7 @@ import { MarinaUtilModule } from '@termx-health/util';
 export class SpaceEditComponent implements OnInit {
   private spaceService = inject(SpaceService);
   private spaceGithubService = inject(SpaceGithubService);
+  private spaceMsDevOpsService = inject(SpaceMsDevOpsService);
   private packageService = inject(PackageService);
   private serverService = inject(ServerLibService);
   private route = inject(ActivatedRoute);
@@ -39,6 +45,9 @@ export class SpaceEditComponent implements OnInit {
   public terminologyServers?: Server[];
   public githubProviders: {[k: string]: string};
   public githubEnabled: boolean;
+  public msDevOpsProviders: {[k: string]: string};
+  public msDevOpsEnabled: boolean;
+  protected readonly msDevOpsFeature = environment.msDevOpsEnabled;
 
   public loading = false;
   public mode: 'add' | 'edit' = 'add';
@@ -62,9 +71,11 @@ export class SpaceEditComponent implements OnInit {
     forkJoin([
       this.spaceService.load(id),
       this.spaceService.loadPackages(id),
-      this.spaceGithubService.getProviders()
-    ]).subscribe(([space, packages, githubProviders]) => {
+      this.spaceGithubService.getProviders(),
+      this.msDevOpsFeature ? this.spaceMsDevOpsService.getProviders() : of({})
+    ]).subscribe(([space, packages, githubProviders, msDevOpsProviders]) => {
       this.githubProviders = githubProviders;
+      this.msDevOpsProviders = msDevOpsProviders;
       this.space = this.writeSpace(space);
       this.packages = packages;
     }).add(() => this.loading = false);
@@ -76,6 +87,7 @@ export class SpaceEditComponent implements OnInit {
     }
     this.loading = true;
     this.space.integration.github = this.githubEnabled ? this.space.integration.github : null;
+    this.space.integration.msDevops = this.msDevOpsEnabled ? this.space.integration.msDevops : null;
     this.spaceService.save(this.space)
       .subscribe(() => this.location.back())
       .add(() => this.loading = false);
@@ -83,10 +95,13 @@ export class SpaceEditComponent implements OnInit {
 
   private writeSpace(s: Space): Space {
     this.githubEnabled = !!s.integration?.github;
+    this.msDevOpsEnabled = !!s.integration?.msDevops;
     s.acl ??= {};
     s.integration ??= {};
     s.integration.github ??= {dirs: this.githubProviders};
     s.integration.github.dirs ??= {};
+    s.integration.msDevops ??= {dirs: this.msDevOpsProviders};
+    s.integration.msDevops.dirs ??= {};
     return s;
   }
 

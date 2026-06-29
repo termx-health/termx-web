@@ -7,7 +7,7 @@
      summaries) use <m-page> with extra context directives that happen to keep DI happy;
      landing doesn't need any of that, just the full-bleed layout — keep .wrapper styles
      intact and skip the page chrome entirely. -->
-<div style="width:100%">
+<div class="tw-landing">
   <div class="wrapper animated">
     <!-- Resources -->
     @if ((['*.CodeSystem.read', '*.ValueSet.read', '*.MapSet.read'] | twPrivileged) && (modules | includes: 'terminology')) {
@@ -108,9 +108,9 @@
     }
   </div>
 
-  @if (skin.landingLogos?.length) {
+  @if (skinService.skin.landingLogos?.length) {
     <div class="tw-skin-branding">
-      @for (logo of skin.landingLogos; track logo) {
+      @for (logo of skinService.skin.landingLogos; track logo) {
         <img class="tw-skin-branding__logo" [src]="logo" alt=""/>
       }
     </div>

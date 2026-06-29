@@ -8,6 +8,65 @@ html {
   background-color: var(--skin-header-color, @mui-bg-component);
 }
 
+// Skin: 'cs-gov' — Czech NCEZ/MZČR. Blue header bar (via --skin-header-color) needs light
+// text/icons for contrast so the branding is clearly visible on every page.
+html[data-skin="cs-gov"] .m-header {
+  color: #fff;
+  position: relative;
+
+  a,
+  span,
+  button,
+  .m-icon {
+    color: #fff !important;
+  }
+
+  // NCEZ logo has navy text/marks; sit it on a white chip so it stays legible on the navy bar.
+  .tw-app-title__logo {
+    height: 1.7rem;
+    background: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    box-sizing: content-box;
+  }
+
+  // NCEZ brand accent stripe under the navy bar: magenta + amber + lime (the logo's mark colours).
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--skin-accent-2, #D21747) 0 33.33%,
+      var(--skin-accent, #F7B935) 33.33% 66.66%,
+      var(--skin-accent-3, #C2CD21) 66.66% 100%);
+  }
+}
+
+// Skin: 'cs-gov' — ng-zorro/marina controls are themed at LESS compile time (@primary-color),
+// so they don't follow the runtime skin. Re-point the primary-coloured controls to NCEZ navy
+// so buttons/checkboxes/switches/radios match the navy header instead of the default blue.
+@cs-gov-navy: #183C62;
+@cs-gov-navy-hover: #2A5183;
+html[data-skin="cs-gov"] {
+  .ant-btn-primary {
+    background-color: @cs-gov-navy;
+    border-color: @cs-gov-navy;
+
+    &:hover, &:focus {
+      background-color: @cs-gov-navy-hover;
+      border-color: @cs-gov-navy-hover;
+    }
+  }
+  .ant-checkbox-checked .ant-checkbox-inner { background-color: @cs-gov-navy; border-color: @cs-gov-navy; }
+  .ant-checkbox-checked::after { border-color: @cs-gov-navy; }
+  .ant-switch-checked { background-color: @cs-gov-navy; }
+  .ant-radio-checked .ant-radio-inner { border-color: @cs-gov-navy; }
+  .ant-radio-inner::after { background-color: @cs-gov-navy; }
+}
+
 // Skin: 'black' — a curated dark palette via marina-ui CSS variables (NOT the
 // filter:invert() hack used by the per-user dark theme). Orthogonal to the
 // light/dark toggle. Deeper ng-zorro component theming would additionally need

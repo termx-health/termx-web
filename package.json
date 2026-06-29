@@ -33,7 +33,7 @@
     "@termx-health/markdown-parser": "^21.0.4",
     "@termx-health/quill": "^21.0.4",
     "@termx-health/structure-definition-viewer": "5.0.7",
-    "@termx-health/ui": "^21.0.4",
+    "@termx-health/ui": "^21.0.5",
     "@termx-health/util": "^21.0.4",
     "angular-auth-oidc-client": "^21.0.0",
     "codemirror": "^6.0.1",
