@@ -143,9 +143,12 @@ export class AuthService {
   private match = (upPart: string, apPart: string): boolean =>
     this.normAction(upPart) === this.normAction(apPart) || upPart === '*' || apPart === '*';
 
-  // Route guards use read/write vocabulary; the backend privilege model uses view/edit/publish.
-  // Treat them as synonyms so view/edit privileges satisfy read/write guards (the backend remains the real enforcer).
-  private normAction = (part: string): string => part === 'read' ? 'view' : part === 'write' ? 'edit' : part;
+  // The backend privilege model uses read/write/maintain (plus triage); some legacy route guards and
+  // templates still use the older view/edit/publish vocabulary. Treat them as synonyms so the guards
+  // resolve against the granted privileges (the backend remains the real enforcer):
+  //   read <-> view, write <-> edit, maintain <-> publish.
+  private normAction = (part: string): string =>
+    part === 'read' ? 'view' : part === 'write' ? 'edit' : part === 'publish' ? 'maintain' : part;
 
 
   public hasPrivilege(privilege: string): boolean {
