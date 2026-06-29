@@ -68,7 +68,7 @@
         {{'web.code-system-version.summary.info.create-approve' | translate}}</a>
       </div>
     }
-    <div class="m-items-middle" *twPrivileged="'publish'">
+    <div class="m-items-middle" *twPrivileged="'maintain'">
       <m-icon mCode="tool"></m-icon>
       @if (version.status !== 'draft') {
         <a (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>

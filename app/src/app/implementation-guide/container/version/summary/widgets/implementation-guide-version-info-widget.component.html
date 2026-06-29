@@ -29,7 +29,7 @@
       <span>{{'web.implementation-guide-version.summary.last-modified' | translate}}:
       {{(version.date | localDate) || ('web.implementation-guide-version.summary.none' | translate)}} </span>
     </div>
-    <div class="m-items-middle" *twPrivileged="'publish'">
+    <div class="m-items-middle" *twPrivileged="'maintain'">
       <m-icon mCode="tool"></m-icon>
       @if (version.status !== 'draft') {
         <a (mClick)="changeVersionStatus('draft')">{{'web.implementation-guide-version.summary.make-draft' | translate}}</a>

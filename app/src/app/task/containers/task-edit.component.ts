@@ -399,7 +399,7 @@ export class TaskEditComponent implements OnInit {
       .flatMap(c => {
         const resource = this.taskContextResourceMap[c.type];
         const id = c.type == 'snomed-translation' ? 'snomed-ct' : c.id;
-        return [[id, resource, 'edit'].join('.'), [id, resource, 'publish'].join('.')];
+        return [[id, resource, 'edit'].join('.'), [id, resource, 'maintain'].join('.')];
       });
   };
 
