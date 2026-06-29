@@ -60,9 +60,6 @@ export interface Environment {
 
   /** Enables the Space → MS DevOps (Azure) integration UI. Off until termx-server provides /spaces/{id}/msdevops/*. */
   msDevOpsEnabled?: boolean,
-
-  /** Space codes surfaced as one-click quick-filter buttons on the global-search dashboard (deployment-specific). */
-  globalSearchSpaces?: string[],
 }
 
 /**

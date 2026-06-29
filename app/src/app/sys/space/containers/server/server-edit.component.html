@@ -57,9 +57,19 @@
             </div>
             @if (server.authConfig; as conf) {
               <div style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem; margin-top: 0.5rem;">
-                <div><strong>{{'web.server.auth-config.access-token-url' | translate}}:</strong> {{conf.accessTokenUrl}}</div>
-                <div><strong>{{'web.server.auth-config.client-id' | translate}}:</strong> {{conf.clientId}}</div>
-                <div><strong>{{'web.server.auth-config.client-secret' | translate}}:</strong> ●●●●●●●●</div>
+                <div><strong>{{'web.server.auth-config.auth-type' | translate}}:</strong> {{('web.server.auth-config.auth-type-' + (conf.authType || 'oauth2')) | translate}}</div>
+                @if (conf.authType !== 'apikey' && conf.authType !== 'none') {
+                  @if (conf.authType !== 'basic') {
+                    <div><strong>{{'web.server.auth-config.access-token-url' | translate}}:</strong> {{conf.accessTokenUrl}}</div>
+                  }
+                  <div><strong>{{'web.server.auth-config.client-id' | translate}}:</strong> {{conf.clientId}}</div>
+                }
+                @if (conf.authType !== 'none') {
+                  <div><strong>{{'web.server.auth-config.client-secret' | translate}}:</strong> ●●●●●●●●</div>
+                }
+                @if (conf.authType === 'oauth2' && conf.scope) {
+                  <div><strong>{{'web.server.auth-config.scope' | translate}}:</strong> {{conf.scope}}</div>
+                }
               </div>
             }
           </m-form-item>
@@ -191,7 +201,7 @@
                   @if (server.authConfig) {
                     <m-checkbox mChecked (mCheckedChange)="server.authConfig = undefined"/>
                   } @else {
-                    <m-checkbox (mCheckedChange)="server.authConfig = {}"/>
+                    <m-checkbox (mCheckedChange)="server.authConfig = {authType: 'oauth2'}"/>
                   }
                   <m-divider mVertical/>
                   <m-checkbox name="open" [(ngModel)]="server.open">{{'entities.server.open' | translate}}</m-checkbox>
@@ -204,21 +214,42 @@
 
               @if (server.authConfig; as conf) {
                 <div style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem">
-                  <m-form-item mName="oauth-url" mLabel="web.server.auth-config.access-token-url" required>
-                    <m-input name="oauth-url" [(ngModel)]="conf.accessTokenUrl" required/>
+                  <m-form-item mName="auth-type" mLabel="web.server.auth-config.auth-type">
+                    <m-select name="auth-type" [(ngModel)]="conf.authType">
+                      @for (t of authTypeOptions; track t) {
+                        <m-option [mValue]="t" [mLabel]="'web.server.auth-config.auth-type-' + t | translate"/>
+                      }
+                    </m-select>
                   </m-form-item>
-                  <m-form-item mName="oauth-client-id" mLabel="web.server.auth-config.client-id" required>
-                    <m-input name="oauth-client-id" [(ngModel)]="conf.clientId" required/>
-                  </m-form-item>
-                  <m-form-item mName="oauth-client-secret" mLabel="web.server.auth-config.client-secret"
-                               class="tw-input-group" [required]="!conf['_masked']">
-                    @if (conf['_masked']) {
-                      <span>●●●●●●●● <m-icon class="m-clickable" mCode="edit" (click)="conf['_masked'] = false"/></span>
-                    }
-                    @if (!conf['_masked']) {
-                      <m-input name="oauth-client-secret" [(ngModel)]="conf.clientSecret" required/>
-                    }
-                  </m-form-item>
+
+                  @if (conf.authType === 'oauth2') {
+                    <m-form-item mName="oauth-url" mLabel="web.server.auth-config.access-token-url" required>
+                      <m-input name="oauth-url" [(ngModel)]="conf.accessTokenUrl" required/>
+                    </m-form-item>
+                  }
+                  @if (conf.authType === 'oauth2' || conf.authType === 'basic') {
+                    <m-form-item mName="oauth-client-id"
+                                 [mLabel]="conf.authType === 'basic' ? 'web.server.auth-config.username' : 'web.server.auth-config.client-id'" required>
+                      <m-input name="oauth-client-id" [(ngModel)]="conf.clientId" required/>
+                    </m-form-item>
+                  }
+                  @if (conf.authType && conf.authType !== 'none') {
+                    <m-form-item mName="oauth-client-secret"
+                                 [mLabel]="conf.authType === 'basic' ? 'web.server.auth-config.password' : (conf.authType === 'apikey' ? 'web.server.auth-config.api-key' : 'web.server.auth-config.client-secret')"
+                                 class="tw-input-group" [required]="!conf['_masked']">
+                      @if (conf['_masked']) {
+                        <span>●●●●●●●● <m-icon class="m-clickable" mCode="edit" (click)="conf['_masked'] = false"/></span>
+                      }
+                      @if (!conf['_masked']) {
+                        <m-input name="oauth-client-secret" [(ngModel)]="conf.clientSecret" required/>
+                      }
+                    </m-form-item>
+                  }
+                  @if (conf.authType === 'oauth2') {
+                    <m-form-item mName="oauth-scope" mLabel="web.server.auth-config.scope">
+                      <m-input name="oauth-scope" [(ngModel)]="conf.scope"/>
+                    </m-form-item>
+                  }
                 </div>
               }
             </m-form-item>

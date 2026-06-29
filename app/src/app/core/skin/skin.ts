@@ -24,8 +24,13 @@ const BLACK: SkinDefinition = {id: 'black'};
 /** Czech NCEZ / MZČR (Ministry of Health) skin — branding-only by default. */
 const CS_GOV: SkinDefinition = {
   id: 'cs-gov',
-  primaryColor: '#1464C0',
-  headerText: 'NCEZ',
+  // Authentic NCEZ brand palette (extracted from the NCEZ logo): navy primary + amber accent.
+  primaryColor: '#183C62',
+  headerColor: '#183C62',
+  // NCEZ palette: navy primary, amber accent; magenta + lime are tertiary marks (kept available
+  // as CSS vars for small accents — not applied prominently to avoid competing with navy/amber).
+  cssVars: {'--skin-accent': '#F7B935', '--skin-accent-2': '#D21747', '--skin-accent-3': '#C2CD21'},
+  logo: 'assets/skins/cs-gov/ncez-rgb.png',
   landingLogos: [
     'assets/skins/cs-gov/generated_image.png',
     'assets/skins/cs-gov/CS_FundedbytheEU_RGB_POS.svg',

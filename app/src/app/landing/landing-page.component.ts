@@ -33,7 +33,7 @@ export class LandingPageComponent {
   private spaceService = inject(SpaceLibService);
   private pageService = inject(PageLibService);
   private taskService = inject(TaskLibService);
-  protected skin = inject(SkinService).skin;
+  protected skinService = inject(SkinService);
 
   protected data: {
     codeSystemCount?: number,

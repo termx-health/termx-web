@@ -24,9 +24,39 @@ const ALLOWED_KEYS: (keyof SkinConfig)[] = [
 export class SkinService {
   private http = inject(HttpClient);
   private _skin: SkinDefinition = BUILTIN_SKINS['main'];
+  private appliedVarKeys: string[] = [];
+
+  private static readonly STORAGE_KEY = 'tw-skin';
+  // Inline CSS custom properties this service sets; cleared before each apply so switching skins resets cleanly.
+  private static readonly RESET_PROPS = ['--color-primary', '--primary-color', '--skin-header-color'];
 
   public get skin(): SkinDefinition {
     return this._skin;
+  }
+
+  public get skinId(): string {
+    return this._skin.id || 'main';
+  }
+
+  /** Switch the active built-in skin at runtime and persist the choice (overrides the deployment default). */
+  public setSkin(id: string): void {
+    let resolved: SkinDefinition = {...(BUILTIN_SKINS[id] || BUILTIN_SKINS['main'])};
+    if (environment.branding) {
+      resolved = {...resolved, ...this.sanitize(environment.branding)};
+    }
+    this._skin = resolved;
+    this.applySkin();
+    try {
+      localStorage.setItem(SkinService.STORAGE_KEY, this._skin.id);
+    } catch { /* storage unavailable */ }
+  }
+
+  private readStoredSkin(): string | null {
+    try {
+      return localStorage.getItem(SkinService.STORAGE_KEY);
+    } catch {
+      return null;
+    }
   }
 
   /** Resolve the active skin then apply it. Never throws — falls back to 'main'. */
@@ -42,7 +72,8 @@ export class SkinService {
   public async resolve(): Promise<SkinDefinition> {
     let resolved: SkinDefinition = {...BUILTIN_SKINS['main']};
 
-    const ref = environment.skinUrl || environment.skin;
+    // A user-selected skin (from the Accessibility modal) overrides the deployment default.
+    const ref = this.readStoredSkin() || environment.skinUrl || environment.skin;
     if (ref && this.isExternal(ref)) {
       const ext = await this.fetchExternal(ref);
       // External skins are CSS/branding only — drop any code hook.
@@ -61,6 +92,11 @@ export class SkinService {
   public applySkin(): void {
     const skin = this._skin;
     const root = document.documentElement;
+
+    // Reset properties set by the previously-applied skin so runtime switching doesn't leak vars.
+    [...SkinService.RESET_PROPS, ...this.appliedVarKeys].forEach(p => root.style.removeProperty(p));
+    this.appliedVarKeys = [];
+
     root.setAttribute('data-skin', skin.id || 'main');
 
     if (skin.primaryColor) {
@@ -71,7 +107,10 @@ export class SkinService {
       root.style.setProperty('--skin-header-color', skin.headerColor);
     }
     if (skin.cssVars) {
-      Object.entries(skin.cssVars).forEach(([k, v]) => root.style.setProperty(k, v));
+      Object.entries(skin.cssVars).forEach(([k, v]) => {
+        root.style.setProperty(k, v);
+        this.appliedVarKeys.push(k);
+      });
     }
     (skin.stylesheets || []).forEach(href => this.injectStylesheet(href));
 

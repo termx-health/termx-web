@@ -2,11 +2,26 @@
   {{space?.names | localName: space?.code ?? '...'}}
 </div>
 
-<div class="m-items-top">
-  <h1 class="m-bold" style="margin-top: 1rem">
-    {{'web.wiki-page.overview.pages' | translate}}
-  </h1>
-  <span style="margin-top: 1rem">{{totalPages}}</span>
+<div class="m-items-top m-justify-between">
+  <div class="m-items-top">
+    <h1 class="m-bold" style="margin-top: 1rem">
+      {{'web.wiki-page.overview.pages' | translate}}
+    </h1>
+    <span style="margin-top: 1rem">{{totalPages}}</span>
+  </div>
+  @if (space) {
+    <m-dropdown style="margin-top: 1rem">
+      <m-button *m-dropdown-container mDisplay="text" [mLoading]="loader.state['export']">
+        <m-icon mCode="download"/>&nbsp;{{'web.wiki-page.overview.export' | translate}}
+      </m-button>
+      <a *m-dropdown-item class="m-items-middle" (click)="exportSpace('pdf')">
+        <m-icon mCode="download"/>&nbsp;{{'web.wiki-page.header.export-space-pdf' | translate}}
+      </a>
+      <a *m-dropdown-item class="m-items-middle" (click)="exportSpace('html')">
+        <m-icon mCode="download"/>&nbsp;{{'web.wiki-page.header.export-space-html' | translate}}
+      </a>
+    </m-dropdown>
+  }
 </div>
 
 

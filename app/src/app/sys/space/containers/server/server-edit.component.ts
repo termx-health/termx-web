@@ -36,6 +36,7 @@ export class ServerEditComponent implements OnInit {
   protected readonly operationOptions = ['$expand', '$validate-code', '$lookup', '$translate', '$subsumes', '$closure'];
   protected readonly fhirVersionOptions = ['R3', 'R4', 'R4B', 'R5', 'R6'];
   protected readonly strategyOptions = ['inline', 'cached', 'local'];
+  protected readonly authTypeOptions = ['none', 'basic', 'oauth2', 'apikey'];
 
   @ViewChild("form") public form?: NgForm;
 
@@ -69,9 +70,13 @@ export class ServerEditComponent implements OnInit {
   private initServer(server: Server): void {
     server.fhirVersions = server.fhirVersions?.length ? server.fhirVersions : [{}];
     this.server = server;
+    if (server.authConfig && isNil(server.authConfig.authType)) {
+      server.authConfig.authType = 'oauth2'; // legacy configs predate authType
+    }
     if (server.id) {
       if (server.authConfig) {
-        server.authConfig['_masked'] = isDefined(server.authConfig.clientId) && isNil(server.authConfig.clientSecret);
+        const conf = server.authConfig;
+        server.authConfig['_masked'] = isNil(conf.clientSecret) && (isDefined(conf.clientId) || conf.authType === 'apikey');
       }
       if (server.headers) {
         server.headers.filter(h => "Authorization" === h.key && isNil(h.value)).forEach(h => h['_masked'] = true);

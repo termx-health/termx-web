@@ -19,6 +19,14 @@
           <m-icon mCode="copy"/>
           {{'web.wiki-page.header.copy-raw' | translate}}
         </a>
+        <a *m-dropdown-item class="m-items-middle" (click)="export('pdf')">
+          <m-icon mCode="download"/>
+          {{'web.wiki-page.header.export-page-pdf' | translate}}
+        </a>
+        <a *m-dropdown-item class="m-items-middle" (click)="export('html')">
+          <m-icon mCode="download"/>
+          {{'web.wiki-page.header.export-page-html' | translate}}
+        </a>
         <a *mDropdownItemIf="'edit' | twPrivileged" class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
           <m-icon mCode="file-add"/>
           {{'web.wiki-page.header.add-subpage' | translate}}

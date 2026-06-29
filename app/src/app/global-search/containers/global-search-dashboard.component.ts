@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@termx-health/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, forkJoin, map, Observable, of} from 'rxjs';
-import {environment} from 'environments/environment';
 import {AuthService} from 'term-web/core/auth';
 import {Space, SpaceLibService, SpaceSearchParams} from 'term-web/sys/_lib/space';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
@@ -91,21 +90,16 @@ export class GlobalSearchDashboardComponent implements OnInit {
   }
 
   private loadSpaceButtons(): void {
-    const codes = environment.globalSearchSpaces;
-    if (!codes?.length) {
-      return;
-    }
+    // Quick-filter buttons are the spaces flagged "Global search" (Space.globalSearch).
     const q = new SpaceSearchParams();
-    q.codes = codes.join(',');
-    q.limit = codes.length;
+    q.globalSearch = true;
+    q.limit = -1;
     this.spaceService.search(q).pipe(
       map(r => r.data),
       catchError(() => of([] as Space[]))
     ).subscribe(spaces => {
-      // Preserve the configured order.
-      this.spaceButtons = codes
-        .map(code => spaces.find(s => s.code === code))
-        .filter((s): s is Space => !!s)
+      this.spaceButtons = spaces
+        .sort((a, b) => (a.code || '').localeCompare(b.code || ''))
         .map(s => ({code: s.code, id: s.id}));
     });
   }

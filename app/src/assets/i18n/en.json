@@ -721,7 +721,9 @@
 			"active": "Active",
 			"code": "Code",
 			"editors": "Editors",
+			"global-search": "Global search",
 			"github": "Github",
+			"msdevops": "Azure DevOps repository",
 			"name": "Name",
 			"owners": "Owners",
 			"packages": "Packages",
@@ -963,6 +965,19 @@
 		},
 		"app": {
 			"header": "TermX",
+			"accessibility": {
+				"title": "Accessibility",
+				"appearance": "Appearance",
+				"appearance-white": "White",
+				"appearance-dark": "Dark",
+				"appearance-ncez": "NCEZ",
+				"font-size": "Font size",
+				"font-normal": "Normal",
+				"font-large": "Large",
+				"font-extra-large": "Extra large",
+				"apply": "Apply",
+				"reset": "Reset"
+			},
 			"theme": {
 				"dark": "Dark mode"
 			}
@@ -2332,6 +2347,7 @@
 			"github-commit-message": "Commit message",
 			"github-empty": "Nothing to commit",
 			"github-integration": "Github integration",
+			"msdevops-integration": "Azure DevOps integration",
 			"github-pull": "Pull diff from",
 			"github-pull-confirm": "Are you sure you want to replace current data with the data from repository?",
 			"github-pull-confirm-achtung": "CAUTION: THIS ACTION IS IRREVERSIBLE! YOU MAY LOSE DATA",
@@ -2544,9 +2560,18 @@
 			"add-header": "Add server",
 			"authoritative": "Authoritative Resources",
 			"auth-config": {
+				"auth-type": "Authentication type",
+				"auth-type-none": "None",
+				"auth-type-basic": "Basic",
+				"auth-type-oauth2": "OAuth 2.0",
+				"auth-type-apikey": "API key",
 				"access-token-url": "Access Token URL",
 				"client-id": "Client ID",
-				"client-secret": "Client Secret"
+				"client-secret": "Client Secret",
+				"username": "Username",
+				"password": "Password",
+				"api-key": "API key",
+				"scope": "Scope"
 			},
 			"edit-header": "Edit server",
 			"export-ecosystem": "Export to FHIR Ecosystem format",
@@ -2847,6 +2872,10 @@
 			"header": {
 				"add-subpage": "Add subpage",
 				"copy-raw": "Copy raw file",
+				"export-page-pdf": "Export page to PDF",
+				"export-page-html": "Export page to HTML",
+				"export-space-pdf": "Export space to PDF",
+				"export-space-html": "Export space to HTML",
 				"modified": "<b>{{user}}</b> edited this page on {{date}}"
 			},
 			"history": {
@@ -2873,6 +2902,7 @@
 			},
 			"overview": {
 				"pages": "Pages",
+				"export": "Export",
 				"recently-modified": {
 					"created": "Created {{date}}",
 					"header": "Recently modified",

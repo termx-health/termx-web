@@ -36,9 +36,11 @@ export class ServerHeader {
 }
 
 export class ServerAuthConfig {
+  public authType?: 'none' | 'basic' | 'oauth2' | 'apikey';
   public accessTokenUrl?: string;
   public clientId?: string;
   public clientSecret?: string;
+  public scope?: string;
 }
 
 export class AuthoritativeResource {

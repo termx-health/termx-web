@@ -1,3 +1,4 @@
+import {HttpParams, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {isDefined} from '@termx-health/core-util';
 import {map, Observable} from 'rxjs';
@@ -5,6 +6,16 @@ import {Page, PageAttachment, PageContent, PageLibService} from 'term-web/wiki/_
 
 @Injectable()
 export class PageService extends PageLibService {
+  // export
+
+  public exportWiki(format: 'pdf' | 'html', spaceId: number, pageId?: number): Observable<HttpResponse<Blob>> {
+    let params = new HttpParams().set('spaceId', spaceId);
+    if (isDefined(pageId)) {
+      params = params.set('pageId', pageId);
+    }
+    return this.http.get(`${this.baseUrl}/wiki-export/export-${format}`, {params, responseType: 'blob', observe: 'response'});
+  }
+
   // page
 
   public savePage(page: Page, pageContent: PageContent): Observable<Page> {

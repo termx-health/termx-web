@@ -15,7 +15,7 @@ import {ShortcutService} from 'term-web/core/shortcuts/shortcut.service';
 import {ShortcutHelpComponent} from 'term-web/core/shortcuts/shortcut-help.component';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NoPrivilegeComponent } from 'term-web/core/components/no-privilege';
 
 
@@ -33,16 +33,34 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.less'],
-    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe, FormsModule, NzSwitchComponent, ShortcutHelpComponent]
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe, FormsModule, NzRadioModule, ShortcutHelpComponent]
 })
 export class AppComponent {
   protected auth = inject(AuthService);
+  protected preferences = inject(PreferencesService);
+
+  /** Appearance preset shown in the Accessibility modal: White (main skin), Dark (dark theme), NCEZ (cs-gov skin). */
+  protected get appearance(): 'white' | 'dark' | 'ncez' {
+    if (this.preferences.theme === 'dark') {
+      return 'dark';
+    }
+    return this.skinService.skinId === 'cs-gov' ? 'ncez' : 'white';
+  }
+
+  protected setAppearance(value: 'white' | 'dark' | 'ncez'): void {
+    if (value === 'dark') {
+      this.skinService.setSkin('main');
+      this.preferences.setTheme('dark');
+    } else {
+      this.preferences.setTheme('light');
+      this.skinService.setSkin(value === 'ncez' ? 'cs-gov' : 'main');
+    }
+  }
   protected router = inject(Router);
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private translateService = inject(TranslateService);
-  protected preferences = inject(PreferencesService);
-  protected skin = inject(SkinService).skin;
+  protected skinService = inject(SkinService);
   private shortcutService = inject(ShortcutService);
 
   protected menu$ = this.translateService.onLangChange.pipe(
