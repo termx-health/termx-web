@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoadingManager, FilterPipe } from '@termx-health/core-util';
-import {CodeSystem, CodeSystemArtifactImpact, CodeSystemVersion} from 'term-web/resources/_lib';
+import {CodeSystem, CodeSystemArtifactImpact, CodeSystemUtil, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
@@ -53,7 +53,7 @@ export class CodeSystemSummaryComponent implements OnInit {
   public link(codeSystemVersion: string, entityVersionIds: number[]): void {
     this.loader.wrap('link', this.codeSystemService.linkEntityVersions(this.codeSystem.id, codeSystemVersion, entityVersionIds))
       .subscribe(() => {
-        this.codeSystemService.searchVersions(this.codeSystem.id, {limit: -1}).subscribe(versions => this.versions = versions.data);
+        this.codeSystemService.searchVersions(this.codeSystem.id, {limit: -1}).subscribe(versions => this.versions = CodeSystemUtil.sortVersions(versions.data));
         this.unlinkedConceptsComponent.loadUnlinkedConcepts();
       });
   }
@@ -71,7 +71,7 @@ export class CodeSystemSummaryComponent implements OnInit {
       forkJoin([this.codeSystemService.load(id), this.codeSystemService.searchVersions(id, {limit: -1}), this.codeSystemService.loadValueSetImpacts(id)]))
       .subscribe(([cs, versions, impacts]) => {
         this.codeSystem = cs;
-        this.versions = versions.data;
+        this.versions = CodeSystemUtil.sortVersions(versions.data);
         this.valueSetImpacts = impacts;
       });
   }
