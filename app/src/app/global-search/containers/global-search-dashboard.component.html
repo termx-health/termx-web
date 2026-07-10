@@ -4,11 +4,11 @@
     <m-card mTitle="web.global-search.dashboard.header">
       @if (spaceButtons.length) {
         <div class="tw-global-search__spaces">
-          <m-button mDisplay="text" [class.active]="!activeSpace" (mClick)="searchBySpace()">
+          <m-button [mDisplay]="!activeSpace ? 'primary' : 'text'" [class.active]="!activeSpace" (mClick)="searchBySpace()">
             {{'web.global-search.dashboard.all' | translate}}
           </m-button>
           @for (s of spaceButtons; track s.code) {
-            <m-button mDisplay="text" [class.active]="activeSpace === s.code" (mClick)="searchBySpace(s.code)">
+            <m-button [mDisplay]="activeSpace === s.code ? 'primary' : 'text'" [class.active]="activeSpace === s.code" (mClick)="searchBySpace(s.code)">
               {{s.code}}
             </m-button>
           }

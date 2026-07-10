@@ -37,11 +37,6 @@ interface Filter {
       flex-wrap: wrap;
       gap: 0.25rem;
       margin-bottom: 0.5rem;
-
-      .active {
-        font-weight: bold;
-        color: var(--color-primary);
-      }
     }
   `],
   standalone: false
