@@ -105,12 +105,7 @@ class LocalizedConceptNameService {
       return alias;
     }
 
-    // Supplemented reference without an alias: show the code, not the wordy display designation.
-    if (designations.some(d => d.supplement)) {
-      return concept.code;
-    }
-
-    // Default (non-supplemented references, e.g. specimen/method concepts): preferred display, else code.
+    // Otherwise: preferred display designation, else the code.
     const localized = this.localize({
       display: designations.filter(d => d.designationType === 'display'),
       additional: designations.filter(d => d.designationType !== 'display'),
