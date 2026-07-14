@@ -94,10 +94,27 @@ class LocalizedConceptNameService {
       return concept.code;
     }
 
+    const designations = conceptVersion.designations;
+    const langPriority = [lang, environment.defaultLanguage];
+
+    // Prefer an `alias` designation (e.g. the ucum-lt supplement's localized unit symbol like `mg/l`).
+    // Language-prioritised, then any alias regardless of language (unit symbols are language-neutral).
+    const aliases = designations.filter(d => d.designationType === 'alias');
+    const alias = this.localize({display: aliases, additional: []}, langPriority) ?? aliases.sort(sortFn('preferred'))[0]?.name;
+    if (isDefined(alias)) {
+      return alias;
+    }
+
+    // Supplemented reference without an alias: show the code, not the wordy display designation.
+    if (designations.some(d => d.supplement)) {
+      return concept.code;
+    }
+
+    // Default (non-supplemented references, e.g. specimen/method concepts): preferred display, else code.
     const localized = this.localize({
-      display: conceptVersion.designations.filter(d => d.designationType === 'display'),
-      additional: conceptVersion.designations.filter(d => d.designationType !== 'display'),
-    }, [lang, environment.defaultLanguage]);
+      display: designations.filter(d => d.designationType === 'display'),
+      additional: designations.filter(d => d.designationType !== 'display'),
+    }, langPriority);
 
     return localized ?? concept.code;
   }
