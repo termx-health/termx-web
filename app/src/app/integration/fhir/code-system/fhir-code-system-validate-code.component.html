@@ -10,7 +10,11 @@
     </div>
 
     <!-- System -->
-    <m-form-item mLabel="System" required>
+    <m-form-item [mLabel]="systemLabel" required>
+      <ng-template #systemLabel>
+        <div>{{'web.integration.fhir.code-system.validate-code.url' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.url-tooltip' | translate}}"></m-icon>
+      </ng-template>
       <tw-code-system-search name="system" [(ngModel)]="codeSystem" (ngModelChange)="onSystemSelect($event)"></tw-code-system-search>
       @if (data.url) {
         <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.url}}</div>
@@ -18,32 +22,47 @@
     </m-form-item>
 
     <!-- Version (optional) -->
-    <m-form-item mLabel="Version">
+    <m-form-item [mLabel]="versionLabel">
+      <ng-template #versionLabel>
+        <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.version-tooltip' | translate}}"></m-icon>
+      </ng-template>
       <tw-code-system-version-select name="version" valueType="full" [autoSelect]="false"
         [codeSystemId]="codeSystem?.id" [disabled]="!codeSystem"
         [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-code-system-version-select>
     </m-form-item>
 
     <!-- Code (free text + concept autocomplete) -->
-    <m-form-item mLabel="Code" required>
-      <m-input name="code" [(ngModel)]="data.code" placeholder="Enter any code, or pick a concept below"></m-input>
+    <m-form-item [mLabel]="codeLabel" required>
+      <ng-template #codeLabel>
+        <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.code-tooltip' | translate}}"></m-icon>
+      </ng-template>
+      <m-input name="code" [(ngModel)]="data.code" placeholder="{{'web.integration.code-placeholder' | translate}}"></m-input>
       @if (codeSystem) {
         <div style="margin-top: .25rem">
           <tw-concept-search name="codePick" valueType="code" displayType="codeName"
             [codeSystem]="codeSystem.id" [codeSystemVersion]="versionObj?.version" [searchDebounce]="600"
             [ngModel]="data.code" (ngModelChange)="data.code = $event"
-            placeholder="Search concept…"></tw-concept-search>
+            placeholder="{{'web.integration.concept-search-placeholder' | translate}}"></tw-concept-search>
         </div>
       }
     </m-form-item>
 
     <!-- Display (to validate the term) -->
-    <m-form-item mLabel="Display">
+    <m-form-item [mLabel]="displayLabel">
+      <ng-template #displayLabel>
+        <div>{{'web.integration.fhir.code-system.validate-code.display' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="displayLabelTooltip"></m-icon>
+        <ng-template #displayLabelTooltip>
+          <span [innerHTML]="'web.integration.fhir.code-system.validate-code.display-tooltip' | translate"></span>
+        </ng-template>
+      </ng-template>
       <m-input name="display" [(ngModel)]="data.display"></m-input>
     </m-form-item>
 
     <!-- Request command preview -->
-    <m-form-item mLabel="Request command">
+    <m-form-item mLabel="{{'web.integration.request-command' | translate}}">
       <div class="m-items-middle" style="align-items: flex-start">
         <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
         <m-button (click)="copyCommand()">

@@ -1618,6 +1618,13 @@
 			},
 			"response": "Vastus",
 			"send-request": "Saada päring",
+			"request-command": "Päringu käsk",
+			"code-placeholder": "Sisesta suvaline kood või vali allpool mõiste",
+			"concept-search-placeholder": "Otsi mõistet…",
+			"languages-placeholder": "Keeled",
+			"designation-languages": "Tekstide keeled",
+			"show-designations": "Näita tekste",
+			"include-designations": "Kaasa tekstid",
 			"set-default-data": "Määra vaikimisi andmed",
 			"systems": {
 				"atc": "ATC",
