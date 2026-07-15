@@ -124,8 +124,13 @@ export class AuthService {
     }
 
     return userPrivileges.some(userPrivilege => {
-      let upParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege).splice(1, 3);  //userPrivilege.split('.');
-      let apParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege).splice(1, 3);  //authPrivilege.split('.');
+      const upMatch = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege);
+      const apMatch = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege);
+      if (!upMatch || !apMatch) { // a privilege that isn't dot-qualified can never match
+        return false;
+      }
+      let upParts = upMatch.splice(1, 3);  //userPrivilege.split('.');
+      let apParts = apMatch.splice(1, 3);  //authPrivilege.split('.');
       if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.read'
         apParts = ['*'].concat(apParts);
       }

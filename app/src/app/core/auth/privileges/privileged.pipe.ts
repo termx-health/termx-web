@@ -20,7 +20,8 @@ export class PrivilegedPipe implements PipeTransform {
         return v;
       }
       if (!ctx) {
-        throw Error('context privileges can only be used within twPrivilegeContext directive');
+        console.warn(`twPrivileged: context directive not found for '${v}', privilege check may be incorrect`);
+        return v;
       }
       return ctx.privilegeContext + '.' + v;
     });
