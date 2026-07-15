@@ -10,7 +10,11 @@
     </div>
 
     <!-- ValueSet -->
-    <m-form-item mLabel="ValueSet" required>
+    <m-form-item [mLabel]="urlLabel" required>
+      <ng-template #urlLabel>
+        <div>{{'web.integration.fhir.value-set.expand.url' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.value-set.expand.url-tooltip' | translate}}"></m-icon>
+      </ng-template>
       <tw-value-set-search name="valueSet" [(ngModel)]="valueSet" (ngModelChange)="onValueSetSelect($event)"></tw-value-set-search>
       @if (data.url) {
         <div style="margin-top: .25rem; color: var(--color-text-secondary, #888); word-break: break-all">{{data.url}}</div>
@@ -18,20 +22,24 @@
     </m-form-item>
 
     <!-- ValueSet version (optional) -->
-    <m-form-item mLabel="Version">
+    <m-form-item [mLabel]="versionLabel">
+      <ng-template #versionLabel>
+        <div>{{'web.integration.fhir.value-set.expand.value-set-version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.value-set.expand.value-set-version-tooltip' | translate}}"></m-icon>
+      </ng-template>
       <tw-value-set-version-select name="valueSetVersion" valueType="full"
         [valueSetId]="valueSet?.id" [disabled]="!valueSet"
         [(ngModel)]="versionObj" (ngModelChange)="onVersionSelect($event)"></tw-value-set-version-select>
     </m-form-item>
 
     <!-- Include designations -->
-    <m-form-item mLabel="Include designations">
+    <m-form-item mLabel="{{'web.integration.include-designations' | translate}}">
       <m-checkbox name="includeDesignations" [(ngModel)]="data.includeDesignations"></m-checkbox>
     </m-form-item>
 
     <!-- Designation languages — any language selectable; the version's languages listed first -->
-    <m-form-item mLabel="Designation languages">
-      <m-select name="langs" [multiple]="true" [(ngModel)]="designationLanguages" placeholder="Languages">
+    <m-form-item mLabel="{{'web.integration.designation-languages' | translate}}">
+      <m-select name="langs" [multiple]="true" [(ngModel)]="designationLanguages" placeholder="{{'web.integration.languages-placeholder' | translate}}">
         @for (l of languageOptions; track l.code) {
           <m-option [mValue]="l.code" [mLabel]="l.label"></m-option>
         }
@@ -39,7 +47,7 @@
     </m-form-item>
 
     <!-- Request command preview -->
-    <m-form-item mLabel="Request command">
+    <m-form-item mLabel="{{'web.integration.request-command' | translate}}">
       <div class="m-items-middle" style="align-items: flex-start">
         <m-textarea name="command" [ngModel]="command" readonly style="flex: 1; font-family: monospace"></m-textarea>
         <m-button (click)="copyCommand()">
