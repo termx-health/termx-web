@@ -1064,6 +1064,7 @@
         },
         "opened-tasks": "Aktyvios užduotys",
         "related-artifacts": "Susiję artefaktai",
+        "value-sets": "Reikšmių rinkiniai",
         "value-set-impacts": "Reikšmių rinkinių poveikis",
         "value-set-impacts.source": "Taisyklės šaltinis",
         "value-set-impacts.current": "Dabartinė kodų sistemos versija",
