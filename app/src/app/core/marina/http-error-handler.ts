@@ -76,8 +76,8 @@ export class HttpErrorHandler implements HttpInterceptor {
 
     if (error.status === 405 && isDelete && isTermxTsEndpoint) {
       this.showError(
-        'Kustutamine ebaõnnestus',
-        'Mõiste koodis ei ole lubatud kasutada erimärke.'
+        this.i18nService.instant('core.error.delete-405.title'),
+        this.i18nService.instant('core.error.delete-405.message')
       );
       return;
     }

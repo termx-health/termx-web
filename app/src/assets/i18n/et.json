@@ -34,6 +34,10 @@
 			"403": {
 				"title": "Juurdepääs keelatud",
 				"message": "Teil puudub juurdepääs ressursi pärimiseks."
+			},
+			"delete-405": {
+				"title": "Kustutamine ebaõnnestus",
+				"message": "Mõiste koodis ei ole lubatud kasutada erimärke."
 			}
 		},
 		"session-expiration-warning": "Sessioon aegub vähem kui 5 minuti pärast! Vajadusel salvesta!",

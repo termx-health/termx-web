@@ -38,6 +38,10 @@
 			"403": {
 				"title": "Access Denied",
 				"message": "You do not have access to resource."
+			},
+			"delete-405": {
+				"title": "Delete failed",
+				"message": "Special characters are not allowed in the concept code."
 			}
 		},
 		"confirm": "Are you sure?",
