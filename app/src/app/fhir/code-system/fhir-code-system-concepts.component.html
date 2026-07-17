@@ -1,0 +1,55 @@
+<div style="display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; flex-wrap: wrap;">
+  <m-input [(ngModel)]="filterContent" (ngModelChange)="onSearch()" name="concept-search"
+    placeholder="Search code, display or definition" style="flex-grow: 1; min-width: 220px;"/>
+
+  @if (treeAvailable) {
+    <m-button [mDisplay]="viewMode === 'tree' ? 'primary' : 'text'" (click)="setView('tree')">Tree</m-button>
+    <m-button [mDisplay]="viewMode === 'list' ? 'primary' : 'text'" (click)="setView('list')">List</m-button>
+  }
+
+  @if (viewMode === 'tree') {
+    <m-button mDisplay="text" (click)="expandAll()">
+      <m-icon mCode="caret-down"></m-icon>&nbsp;Expand all
+    </m-button>
+    <m-button mDisplay="text" (click)="collapseAll()">
+      <m-icon mCode="caret-up"></m-icon>&nbsp;Collapse all
+    </m-button>
+  }
+</div>
+
+@if (flattenedNodes.length === 0) {
+  <div class="m-text-secondary" style="padding: 1rem 0;">No concepts found</div>
+} @else {
+  <cdk-virtual-scroll-viewport [itemSize]="itemSize"
+    style="height: min(60vh, 640px); border: 1px solid var(--color-borders, #e5e7eb); border-radius: 4px; background: var(--color-bg-container, #fff);">
+    <div *cdkVirtualFor="let node of flattenedNodes; trackBy: trackByCode"
+      [style.height.px]="itemSize"
+      [style.padding-left.px]="node.level * 20 + 12"
+      style="display: flex; align-items: center; gap: .5rem; padding-right: 12px; border-bottom: 1px solid var(--color-borders, #f0f0f0); white-space: nowrap; overflow: hidden;">
+
+      @if (node.expandable) {
+        <span (click)="toggle(node.concept.code)"
+          style="cursor: pointer; user-select: none; width: 16px; flex-shrink: 0; text-align: center; color: var(--color-text-secondary, #666);">
+          {{ node.expanded ? '▾' : '▸' }}
+        </span>
+      } @else {
+        <span style="width: 16px; flex-shrink: 0;"></span>
+      }
+
+      <a [routerLink]="['/fhir/CodeSystem', codeSystem.id, 'lookup']" [queryParams]="{ _code: node.concept.code }"
+        style="font-weight: 600; flex-shrink: 0;">{{ node.concept.code }}</a>
+
+      @if (node.concept.display) {
+        <span class="m-text-secondary" style="flex-shrink: 0;">—</span>
+        <span style="overflow: hidden; text-overflow: ellipsis;" [title]="node.concept.display">{{ node.concept.display }}</span>
+      }
+      @if (node.concept.definition) {
+        <span class="m-text-secondary" style="overflow: hidden; text-overflow: ellipsis;" [title]="node.concept.definition">· {{ node.concept.definition }}</span>
+      }
+    </div>
+  </cdk-virtual-scroll-viewport>
+
+  <div class="m-text-secondary" style="margin-top: .35rem; font-size: 12px;">
+    {{ flattenedNodes.length }} row(s) shown@if (viewMode === 'tree') {&nbsp;· expand nodes to see children}
+  </div>
+}

@@ -1,14 +1,15 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 import { MuiTableModule, MuiTagModule, MuiCoreModule } from '@termx-health/ui';
 
 import { LocalDatePipe } from '@termx-health/core-util';
+import { FhirCodeSystemConceptsComponent } from 'term-web/fhir/code-system/fhir-code-system-concepts.component';
 
 @Component({
     selector: 'tw-fhir-code-system',
     templateUrl: './fhir-code-system.component.html',
-    imports: [MuiTableModule, MuiTagModule, MuiCoreModule, RouterLink, LocalDatePipe]
+    imports: [MuiTableModule, MuiTagModule, MuiCoreModule, LocalDatePipe, FhirCodeSystemConceptsComponent]
 })
 export class FhirCodeSystemComponent implements OnChanges {
   private valueSetService = inject(FhirValueSetLibService);
