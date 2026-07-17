@@ -1149,6 +1149,7 @@
         },
         "opened-tasks": "Otevřené úkoly",
         "related-artifacts": "Související artefakty",
+        "value-sets": "Množiny hodnot",
         "value-set-impacts": "Dopady na množiny hodnot",
         "value-set-impacts.source": "Zdroj pravidla",
         "value-set-impacts.current": "Aktuální verze systému kódů",

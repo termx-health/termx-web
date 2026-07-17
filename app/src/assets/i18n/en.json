@@ -1120,6 +1120,7 @@
 				},
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
+				"value-sets": "Value sets",
 				"value-set-impacts": "Value set impacts",
 				"value-set-impacts.source": "Rule source",
 				"value-set-impacts.current": "Current code system version",

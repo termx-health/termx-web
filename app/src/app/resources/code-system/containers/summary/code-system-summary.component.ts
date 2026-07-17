@@ -33,6 +33,8 @@ export class CodeSystemSummaryComponent implements OnInit {
   protected codeSystem?: CodeSystem;
   protected versions?: CodeSystemVersion[];
   protected valueSetImpacts: CodeSystemArtifactImpact[] = [];
+  // Value sets are shown by the dedicated value-set widget below, so hide them from "Related artifacts".
+  protected readonly relatedArtifactExcludeTypes = ['vs'];
   protected showOnlyOpenedTasks?: boolean = true;
   protected loader = new LoadingManager();
 
