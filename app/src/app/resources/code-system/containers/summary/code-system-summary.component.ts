@@ -34,7 +34,8 @@ export class CodeSystemSummaryComponent implements OnInit {
   protected versions?: CodeSystemVersion[];
   protected valueSetImpacts: CodeSystemArtifactImpact[] = [];
   // Value sets are shown by the dedicated value-set widget below, so hide them from "Related artifacts".
-  protected readonly relatedArtifactExcludeTypes = ['vs'];
+  // The related-artifact `type` carries the RelatedArtifactType *value* ("ValueSet"), not the enum key ("vs").
+  protected readonly relatedArtifactExcludeTypes = ['ValueSet'];
   protected showOnlyOpenedTasks?: boolean = true;
   protected loader = new LoadingManager();
 
