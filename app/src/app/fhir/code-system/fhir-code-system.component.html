@@ -39,20 +39,11 @@
     </div>
   }
 
-  <div>
-    <h2>Content</h2>
-    <p>This code system <m-tag>{{codeSystem.url}}</m-tag> defines the following codes:</p>
-    <m-table [mData]="codeSystem.concept">
-      <tr *mTableHead>
-        <th>Code</th>
-        <th>Display</th>
-        <th>Definition</th>
-      </tr>
-      <tr *mTableRow="let c">
-        <td><a [routerLink]="['/fhir/CodeSystem', this.codeSystem.id, 'lookup']" [queryParams]="{ _code: c.code }">{{c.code}}</a></td>
-        <td>{{c.display}}</td>
-        <td>{{c.definition}}</td>
-      </tr>
-    </m-table>
-  </div>
+  @if (codeSystem.concept?.length > 0) {
+    <div>
+      <h2>Content</h2>
+      <p>This code system <m-tag>{{codeSystem.url}}</m-tag> defines the following codes:</p>
+      <tw-fhir-code-system-concepts [codeSystem]="codeSystem"></tw-fhir-code-system-concepts>
+    </div>
+  }
 </div>
