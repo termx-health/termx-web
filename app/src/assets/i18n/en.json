@@ -1609,7 +1609,6 @@
 				"code-system-name": "CodeSystem name",
 				"code-system-version-description": "CodeSystem version description",
 				"icd-10": "ICD-10 {{edition}} import",
-				"ichi": "ICHI {{edition}} import",
 				"loinc": "LOINC import",
 				"orphanet": "Rare diseases import",
 				"publisher": "Publisher",
@@ -1653,7 +1652,6 @@
 				"atc": "ATC",
 				"fhir": "FHIR",
 				"icd-10": "ICD-10",
-				"ichi": "ICHI",
 				"loinc": "LOINC",
 				"orphanet": "Orphanet",
 				"ucum": "UCUM"

@@ -8,7 +8,6 @@ export * from 'term-web/integration/_lib/chef/pipe/fhir-to-fsh-pipe';
 export * from 'term-web/integration/_lib/chef/pipe/fsh-to-fhir-pipe';
 export * from 'term-web/integration/_lib/chef/services/chef.service';
 export * from 'term-web/integration/_lib/icd-10/service/integration-icd-lib.service';
-export * from 'term-web/integration/_lib/ichi/service/integration-ichi-lib.service';
 export * from 'term-web/integration/_lib/integration-lib.module';
 export * from 'term-web/integration/_lib/model/integration-import-configuration';
 export * from 'term-web/integration/_lib/orphanet/service/integration-orphanet-lib.service';

@@ -1590,7 +1590,6 @@
         "code-system-name": "Kodų sistemos pavadinimas",
         "code-system-version-description": "Kodų sistemos versijos aprašas",
         "icd-10": "ICD-10 {{edition}} importavimas",
-        "ichi": "ICHI {{edition}} importavimas",
         "loinc": "LOINC importavimas",
         "orphanet": "Retų ligų importavimas",
         "publisher": "Leidėjas",
@@ -1624,7 +1623,6 @@
         "atc": "ATC",
         "fhir": "FHIR",
         "icd-10": "ICD-10",
-        "ichi": "ICHI",
         "loinc": "LOINC",
         "orphanet": "Orphanet",
         "ucum": "UCUM"

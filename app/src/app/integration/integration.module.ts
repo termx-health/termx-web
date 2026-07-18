@@ -47,7 +47,6 @@ import {IntegrationAtcImportComponent} from 'term-web/integration/import/atc/int
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {ConceptMapFileImportComponent} from 'term-web/integration/import/file-import/concept-map/concept-map-file-import.component';
 import {IntegrationIcdImportComponent} from 'term-web/integration/import/icd-10/integration-icd-import.component';
-import {IntegrationIchiImportComponent} from 'term-web/integration/import/ichi/integration-ichi-import.component';
 import {SnomedConceptInfoComponent} from 'term-web/integration/snomed/containers/snomed-concept-info.component';
 import {SnomedDashboardComponent} from 'term-web/integration/snomed/containers/snomed-dashboard.component';
 
@@ -57,7 +56,6 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent, data: {privilege: ['*.CodeSystem.write', '*.ValueSet.write', '*.MapSet.write']}},
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.write']}},
-      {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.write']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.write']}},
@@ -114,7 +112,6 @@ export const INTEGRATION_ROUTES: Routes = [
         IntegrationFhirSyncComponent,
         IntegrationAtcImportComponent,
         IntegrationIcdImportComponent,
-        IntegrationIchiImportComponent,
         FhirCodeSystemLookupComponent,
         FhirCodeSystemSubsumesComponent,
         FhirCodeSystemFindMatchesComponent,
