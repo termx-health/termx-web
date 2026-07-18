@@ -1595,7 +1595,6 @@
 				"code-system-name": "Koodisüsteemi nimetus",
 				"code-system-version-description": "Koodisüsteemi versiooni kirjeldus",
 				"icd-10": "ICD-10 {{edition}} import",
-				"ichi": "ICHI {{edition}} import",
 				"loinc": "LOINC import",
 				"orphanet": "ORPHAcode import",
 				"publisher": "Avaldaja/haldaja",
@@ -1635,7 +1634,6 @@
 				"atc": "ATC",
 				"fhir": "FHIR",
 				"icd-10": "ICD-10",
-				"ichi": "ICHI",
 				"loinc": "LOINC",
 				"orphanet": "Orphanet",
 				"ucum": "UCUM"

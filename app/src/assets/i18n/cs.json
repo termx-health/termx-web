@@ -1675,7 +1675,6 @@
         "code-system-name": "Název kódového systému",
         "code-system-version-description": "Popis verze kódového systému",
         "icd-10": "Import ICD-10 {{edition}}",
-        "ichi": "Import ICHI {{edition}}",
         "loinc": "Import LOINC",
         "orphanet": "Import vzácných onemocnění",
         "publisher": "Vydavatel",
@@ -1709,7 +1708,6 @@
         "atc": "ATC",
         "fhir": "FHIR",
         "icd-10": "ICD-10",
-        "ichi": "ICHI",
         "loinc": "LOINC",
         "orphanet": "Orphanet",
         "ucum": "UCUM"

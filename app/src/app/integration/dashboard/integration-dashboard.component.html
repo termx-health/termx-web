@@ -56,15 +56,6 @@
         <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'int'}">
           {{'web.integration.import.icd-10' | translate: ({edition: 'int'})}}
         </m-button>
-        <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'est'}">
-          {{'web.integration.import.icd-10' | translate: ({edition: 'est'})}}</m-button>
-      </div>
-
-      <m-divider [mText]="'web.integration.systems.ichi' | translate" *twPrivileged="'*.CodeSystem.write'"></m-divider>
-      <div style="display: grid" *twPrivileged="'*.CodeSystem.write'">
-        <m-button mDisplay="link" [routerLink]="'./ichi/import'">
-          {{'web.integration.import.ichi' | translate: ({edition: 'uz'})}}
-        </m-button>
       </div>
 
       <m-divider [mText]="'web.integration.systems.orphanet' | translate" *twPrivileged="'*.CodeSystem.write'"></m-divider>

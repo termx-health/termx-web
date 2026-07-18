@@ -12,7 +12,6 @@ import {FhirToFshPipe} from 'term-web/integration/_lib/chef/pipe/fhir-to-fsh-pip
 import {FshToFhirPipe} from 'term-web/integration/_lib/chef/pipe/fsh-to-fhir-pipe';
 import {ChefService} from 'term-web/integration/_lib/chef/services/chef.service';
 import {IntegrationIcdLibService} from 'term-web/integration/_lib/icd-10/service/integration-icd-lib.service';
-import {IntegrationIchiLibService} from 'term-web/integration/_lib/ichi/service/integration-ichi-lib.service';
 import {IntegrationOrphanetLibService} from 'term-web/integration/_lib/orphanet/service/integration-orphanet-lib.service';
 import {SnomedSearchComponent} from 'term-web/integration/_lib/snomed/containers/snomed-search.component';
 import {SnomedConceptNamePipe} from 'term-web/integration/_lib/snomed/pipe/snomed-concept-name-pipe';
@@ -36,7 +35,6 @@ import {SnomedLibService} from 'term-web/integration/_lib/snomed/services/snomed
         IntegrationAtcLibService,
         IntegrationIcdLibService,
         IntegrationOrphanetLibService,
-        IntegrationIchiLibService,
         SnomedLibService,
         SnomedTranslationLibService,
         ChefService,
