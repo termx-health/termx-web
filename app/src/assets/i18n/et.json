@@ -2921,7 +2921,9 @@
 				"edit-header": "Muuda lehekülge",
 				"relation-header": "Seosed teiste lehekülgedega",
 				"usages": "Viited",
-				"description-tooltip": "Lühikokkuvõte, mida kasutatakse avaldatud staatilise saidi metakirjeldusena (SEO)"
+				"description-tooltip": "Lühikokkuvõte, mida kasutatakse avaldatud staatilise saidi metakirjeldusena (SEO)",
+				"slug-placeholder": "Tuletatakse nimest",
+				"slug-tooltip": "Lehekülje URL-i identifikaator. Jäta tühjaks, et see nimest tuletada. Muutmine muudab lehekülje URL-i; olemasolevad lingid ei suunata ümber."
 			},
 			"sidebar": {
 				"delete-confirm": "Kas oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",

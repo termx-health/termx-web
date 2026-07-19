@@ -2930,7 +2930,9 @@
         "edit-header": "Keisti nustatymus",
         "relation-header": "Ryšiai",
         "usages": "Panaudojimai",
-        "description-tooltip": "Trumpa santrauka, naudojama kaip puslapio meta aprašymas paskelbtoje statinėje svetainėje (SEO)"
+        "description-tooltip": "Trumpa santrauka, naudojama kaip puslapio meta aprašymas paskelbtoje statinėje svetainėje (SEO)",
+        "slug-placeholder": "Sudaroma iš pavadinimo",
+        "slug-tooltip": "Puslapio URL identifikatorius. Palikite tuščią, kad būtų sudarytas iš pavadinimo. Pakeitus pasikeičia puslapio URL; esamos nuorodos nebus peradresuotos."
       },
       "sidebar": {
         "delete-confirm": "Tikrai šalinti? Visi priklausantys puslapiai taip pat bus pašalinti!",
