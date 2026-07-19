@@ -7,6 +7,7 @@ export class PageContent {
   public lang?: string;
   public content?: string;
   public contentType?: 'markdown' | 'html';
+  public description?: string;
 
   public createdAt?: Date;
   public createdBy?: string;

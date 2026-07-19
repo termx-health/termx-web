@@ -6,7 +6,7 @@ import {environment} from 'environments/environment';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/wiki/_lib';
 import {PageService} from 'term-web/wiki/page/services/page.service';
-import { MuiModalModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiIconModule, MuiTooltipModule, MuiButtonModule } from '@termx-health/ui';
+import { MuiModalModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiSelectModule, MuiIconModule, MuiTooltipModule, MuiButtonModule } from '@termx-health/ui';
 
 import { MarinaUtilModule } from '@termx-health/util';
 
@@ -18,6 +18,7 @@ import { MarinaUtilModule } from '@termx-health/util';
     FormsModule,
     MuiFormModule,
     MuiInputModule,
+    MuiTextareaModule,
     AutofocusDirective,
     MuiSelectModule,
     MuiIconModule,

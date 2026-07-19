@@ -496,7 +496,8 @@
 			"content": "Sisu",
 			"content-type": "Sisu tüüp",
 			"lang": "Keel",
-			"name": "Nimetus"
+			"name": "Nimetus",
+			"description": "Kirjeldus"
 		},
 		"page-link": {
 			"order-number": "Jnr",
@@ -703,7 +704,12 @@
 			"servers": "Terminoloogiaserver",
 			"viewers": "Vaatajad",
 			"global-search": "Üldotsing",
-			"msdevops": "Azure DevOps repositoorium"
+			"msdevops": "Azure DevOps repositoorium",
+			"default-language": "Vaikekeel",
+			"description": "Kirjeldus",
+			"languages": "Keeled",
+			"site-url": "Saidi URL",
+			"ssg": "Staatiline sait"
 		},
 		"structure-definition": {
 			"code": "Kood",
@@ -2371,7 +2377,16 @@
 			"change-source-server": "Muuda ressursside lähteserverit",
 			"reload-diff-matrix": "Lae erinevuste maatriks uuesti",
 			"sync-resources": "Sünkroniseeri kõik ressursid (antud installatsioonist sihtserverisse)",
-			"clear-sync-resources": "Kustuta ja sünkroniseeri kõik ressursid (antud installatsioonist sihtserverisse)"
+			"clear-sync-resources": "Kustuta ja sünkroniseeri kõik ressursid (antud installatsioonist sihtserverisse)",
+			"import-github": "Impordi GitHubist",
+			"import-github-branch": "Haru",
+			"import-github-confirm": "Kas asendada selle ruumi lehed hoidla sisuga?",
+			"import-github-dir": "Kataloog",
+			"import-github-done": "Imporditud",
+			"import-github-run": "Impordi",
+			"import-github-token": "Juurdepääsuluba",
+			"import-github-url": "GitHubi URL",
+			"import-github-warning": "Import asendab selle ruumi olemasolevad lehed hoidla sisuga. Pilte ja manuseid ei impordita."
 		},
 		"structure-definition": {
 			"form": {
@@ -2905,7 +2920,8 @@
 				"copy-to-clipboard": "Kopeeri {{val}}",
 				"edit-header": "Muuda lehekülge",
 				"relation-header": "Seosed teiste lehekülgedega",
-				"usages": "Viited"
+				"usages": "Viited",
+				"description-tooltip": "Lühikokkuvõte, mida kasutatakse avaldatud staatilise saidi metakirjeldusena (SEO)"
 			},
 			"sidebar": {
 				"delete-confirm": "Kas oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",

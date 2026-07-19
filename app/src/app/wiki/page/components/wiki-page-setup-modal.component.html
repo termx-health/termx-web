@@ -9,6 +9,13 @@
         <m-form-item mName="name" mLabel="entities.page-content.name" required>
           <m-input name="name" [(ngModel)]="pageContent.name" autofocus required></m-input>
         </m-form-item>
+        <m-form-item mName="description" [mLabel]="descriptionLabel">
+          <ng-template #descriptionLabel>
+            <label>{{'entities.page-content.description' | translate}}</label>
+            <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.wiki-page.setup.description-tooltip"></m-icon>
+          </ng-template>
+          <m-textarea name="description" [(ngModel)]="pageContent.description"></m-textarea>
+        </m-form-item>
         <m-form-item mName="template" mLabel="entities.page.template">
           <m-select name="template" [(ngModel)]="page.settings.templateId">
             @for (template of templates; track template) {

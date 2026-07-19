@@ -10,6 +10,10 @@ export class Space {
   public globalSearch?: boolean;
   public acl?: {owners?: string, editors?: string, viewers?: string};
   public terminologyServers?: string[];
+  public description?: LocalizedName;
+  public defaultLanguage?: string;
+  public languages?: string[];
+  public siteUrl?: string;
   public packages?: Package[];
   public integration?: {
     github?: {
