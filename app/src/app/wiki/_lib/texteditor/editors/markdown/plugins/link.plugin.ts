@@ -1,5 +1,5 @@
 import {parsePageRelationLink} from 'term-web/wiki/_lib/page/utils/page-relation.utils';
-import {tokenAttrValue} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/plugin.util';
+import {filesLink, filesRe, tokenAttrValue} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/plugin.util';
 
 const transformHref = (href: string, ctx: {spaceId?: number}): string => {
   const [system, value] = href.split(':');
@@ -53,7 +53,9 @@ export function localLink(md, mdOptions): void {
 
   md.renderer.rules.link_open = function (tokens, idx, options, env, self): string {
     const [val, setVal] = tokenAttrValue(tokens[idx], 'href');
-    if (val.includes(':')) {
+    if (filesRe.test(val)) {
+      setVal(filesLink(val, mdOptions?.token)); // page attachment download
+    } else if (val.includes(':')) {
       setVal(processHref(val, mdOptions));
     }
     return renderer(tokens, idx, options, env, self);
