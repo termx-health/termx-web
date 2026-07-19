@@ -467,7 +467,8 @@
       "content": "Turinys",
       "content-type": "Turinio tipas",
       "lang": "Kalba",
-      "name": "Pavadinimas"
+      "name": "Pavadinimas",
+      "description": "Aprašymas"
     },
     "page-link": {
       "order-number": "Užsakymo numeris",
@@ -699,7 +700,12 @@
       "servers": "Terminologijos serveriai",
       "viewers": "Turintys peržiūros teisę",
       "global-search": "Visuotinė paieška",
-      "msdevops": "Azure DevOps kodo saugykla"
+      "msdevops": "Azure DevOps kodo saugykla",
+      "default-language": "Numatytoji kalba",
+      "description": "Aprašymas",
+      "languages": "Kalbos",
+      "site-url": "Svetainės URL",
+      "ssg": "Statinė svetainė"
     },
     "structure-definition": {
       "code": "Kodas",
@@ -2297,7 +2303,16 @@
       "resources": "Ištekliai",
       "select-context": "Pasirinkite kontekstą",
       "sync-resources": "Sync all resources (from current installation to target server)",
-      "msdevops-integration": "Azure DevOps integracija"
+      "msdevops-integration": "Azure DevOps integracija",
+      "import-github": "Importuoti iš GitHub",
+      "import-github-branch": "Šaka",
+      "import-github-confirm": "Pakeisti šios erdvės puslapius saugyklos turiniu?",
+      "import-github-dir": "Katalogas",
+      "import-github-done": "Importuota",
+      "import-github-run": "Importuoti",
+      "import-github-token": "Prieigos raktas",
+      "import-github-url": "GitHub URL",
+      "import-github-warning": "Importas pakeičia esamus šios erdvės puslapius saugyklos turiniu. Paveikslėliai ir priedai neimportuojami."
     },
     "structure-definition": {
       "form": {
@@ -2914,7 +2929,8 @@
         "copy-to-clipboard": "Kopijuoti",
         "edit-header": "Keisti nustatymus",
         "relation-header": "Ryšiai",
-        "usages": "Panaudojimai"
+        "usages": "Panaudojimai",
+        "description-tooltip": "Trumpa santrauka, naudojama kaip puslapio meta aprašymas paskelbtoje statinėje svetainėje (SEO)"
       },
       "sidebar": {
         "delete-confirm": "Tikrai šalinti? Visi priklausantys puslapiai taip pat bus pašalinti!",

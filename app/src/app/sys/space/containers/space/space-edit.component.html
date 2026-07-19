@@ -49,6 +49,27 @@
                 </div>
               </m-list-item>
             </m-list>
+            <m-divider mText="entities.space.ssg"></m-divider>
+            <m-form-item mName="description" mLabel="entities.space.description">
+              <m-multi-language-input name="description" [(ngModel)]="space.description" mInputType="textarea"/>
+            </m-form-item>
+            <m-form-item mName="languages" mLabel="entities.space.languages">
+              <m-select name="languages" [(ngModel)]="space.languages" multiple>
+                @for (lang of contentLanguages; track lang) {
+                  <m-option [mLabel]="'language.' + lang" [mValue]="lang"></m-option>
+                }
+              </m-select>
+            </m-form-item>
+            <m-form-item mName="defaultLanguage" mLabel="entities.space.default-language">
+              <m-select name="defaultLanguage" [(ngModel)]="space.defaultLanguage">
+                @for (lang of (space.languages?.length ? space.languages : contentLanguages); track lang) {
+                  <m-option [mLabel]="'language.' + lang" [mValue]="lang"></m-option>
+                }
+              </m-select>
+            </m-form-item>
+            <m-form-item mName="siteUrl" mLabel="entities.space.site-url">
+              <m-input name="siteUrl" [(ngModel)]="space.siteUrl" placeholder="https://example.org/"></m-input>
+            </m-form-item>
             <m-divider>
               <span>{{'web.space.github-integration' | translate}}</span>
               <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
@@ -116,6 +137,12 @@
         }
 
         <ng-container *m-card-footer>
+          @if (mode === 'edit') {
+            <m-button (click)="openImport()">
+              <m-icon mCode="github"></m-icon>
+              {{'web.space.import-github' | translate}}
+            </m-button>
+          }
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
             {{'core.btn.save' | translate}}
           </m-button>
@@ -124,3 +151,39 @@
     </m-spinner>
   </div>
 </m-form-row>
+
+<m-modal [(mVisible)]="importModalVisible" [mMaskClosable]="false">
+  <ng-container *m-modal-header>{{'web.space.import-github' | translate}}</ng-container>
+  <ng-container *m-modal-content>
+    <form>
+      <m-alert mType="warning">{{'web.space.import-github-warning' | translate}}</m-alert>
+      <m-form-item mName="importUrl" mLabel="web.space.import-github-url">
+        <m-input name="importUrl" [(ngModel)]="importReq.url" placeholder="https://github.com/owner/repo/tree/branch/dir"></m-input>
+      </m-form-item>
+      <m-form-item mName="importBranch" mLabel="web.space.import-github-branch">
+        <m-input name="importBranch" [(ngModel)]="importReq.branch" placeholder="(default branch)"></m-input>
+      </m-form-item>
+      <m-form-item mName="importDir" mLabel="web.space.import-github-dir">
+        <m-input name="importDir" [(ngModel)]="importReq.dir" placeholder="(auto-detected from pages.json)"></m-input>
+      </m-form-item>
+      <m-form-item mName="importToken" mLabel="web.space.import-github-token">
+        <m-input name="importToken" [(ngModel)]="importReq.token" placeholder="(only for private repos)"></m-input>
+      </m-form-item>
+      @if (importResult) {
+        <m-alert mType="success">
+          {{'web.space.import-github-done' | translate}} {{importResult.repo}}@{{importResult.branch}} — {{importResult.pages}} page(s)
+        </m-alert>
+      }
+      @if (importError) {
+        <m-alert mType="error">{{importError}}</m-alert>
+      }
+    </form>
+  </ng-container>
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="importModalVisible = false">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" [mLoading]="importLoading" [disabled]="importLoading || (!importReq.url && !importReq.owner)"
+      m-popconfirm mPopconfirmTitle="web.space.import-github-confirm" (mOnConfirm)="runImport()">
+      {{'web.space.import-github-run' | translate}}
+    </m-button>
+  </div>
+</m-modal>

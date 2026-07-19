@@ -527,6 +527,7 @@
 		"page-content": {
 			"content": "Content",
 			"content-type": "Content type",
+			"description": "Description",
 			"lang": "Language",
 			"name": "Name"
 		},
@@ -724,9 +725,12 @@
 			"acl": "ACL",
 			"active": "Active",
 			"code": "Code",
+			"default-language": "Default language",
+			"description": "Description",
 			"editors": "Editors",
 			"global-search": "Global search",
 			"github": "Github",
+			"languages": "Languages",
 			"msdevops": "Azure DevOps repository",
 			"name": "Name",
 			"owners": "Owners",
@@ -735,6 +739,8 @@
 			"shared": "Shared",
 			"singular": "Space",
 			"servers": "Servers",
+			"site-url": "Site URL",
+			"ssg": "Static site",
 			"viewers": "Viewers"
 		},
 		"ecosystem": {
@@ -2357,6 +2363,15 @@
 			"github-commit-message": "Commit message",
 			"github-empty": "Nothing to commit",
 			"github-integration": "Github integration",
+			"import-github": "Import from GitHub",
+			"import-github-branch": "Branch",
+			"import-github-confirm": "Replace this space's pages with the repository's content?",
+			"import-github-dir": "Directory",
+			"import-github-done": "Imported",
+			"import-github-run": "Import",
+			"import-github-token": "Token",
+			"import-github-url": "GitHub URL",
+			"import-github-warning": "Import replaces this space's existing pages with the repository's content. Images and attachments are not imported.",
 			"msdevops-integration": "Azure DevOps integration",
 			"github-pull": "Pull diff from",
 			"github-pull-confirm": "Are you sure you want to replace current data with the data from repository?",
@@ -2925,6 +2940,7 @@
 				"content-header": "",
 				"content-type-tooltip": "Changing the content type can change the content value",
 				"copy-to-clipboard": "",
+				"description-tooltip": "Short summary used as the page meta description on the published static site (SEO)",
 				"edit-header": "Configure",
 				"relation-header": "",
 				"usages": ""

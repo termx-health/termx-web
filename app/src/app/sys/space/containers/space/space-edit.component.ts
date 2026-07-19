@@ -9,8 +9,9 @@ import {SpaceGithubService} from 'term-web/sys/space/services/space-github.servi
 import {SpaceMsDevOpsService} from 'term-web/sys/space/services/space-ms-dev-ops.service';
 import {PackageService} from 'term-web/sys/space/services/package.service';
 import {SpaceService} from 'term-web/sys/space/services/space.service';
+import {SpaceGithubImportService, WikiGithubImportRequest, WikiGithubImportResult} from 'term-web/sys/space/services/space-github-import.service';
 import {environment} from 'environments/environment';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@termx-health/ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule, MuiModalModule, MuiAlertModule } from '@termx-health/ui';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@termx-health/util';
 
@@ -28,10 +29,11 @@ import { MarinaUtilModule } from '@termx-health/util';
       }
     }
   `],
-    imports: [MuiFormModule, MuiSpinnerModule, MuiCardModule, FormsModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule, TranslatePipe, MarinaUtilModule, ApplyPipe, KeysPipe]
+    imports: [MuiFormModule, MuiSpinnerModule, MuiCardModule, FormsModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule, MuiModalModule, MuiAlertModule, TranslatePipe, MarinaUtilModule, ApplyPipe, KeysPipe]
 })
 export class SpaceEditComponent implements OnInit {
   private spaceService = inject(SpaceService);
+  private spaceGithubImportService = inject(SpaceGithubImportService);
   private spaceGithubService = inject(SpaceGithubService);
   private spaceMsDevOpsService = inject(SpaceMsDevOpsService);
   private packageService = inject(PackageService);
@@ -48,9 +50,17 @@ export class SpaceEditComponent implements OnInit {
   public msDevOpsProviders: {[k: string]: string};
   public msDevOpsEnabled: boolean;
   protected readonly msDevOpsFeature = environment.msDevOpsEnabled;
+  protected readonly contentLanguages = environment.contentLanguages;
 
   public loading = false;
   public mode: 'add' | 'edit' = 'add';
+
+  // Import wiki content directly from a GitHub repo (no git integration required).
+  public importModalVisible = false;
+  public importLoading = false;
+  public importReq: WikiGithubImportRequest = {} as WikiGithubImportRequest;
+  public importResult?: WikiGithubImportResult;
+  public importError?: string;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -120,6 +130,26 @@ export class SpaceEditComponent implements OnInit {
 
   private loadTerminologyServers(): void {
     this.serverService.search({limit: -1}).subscribe(r => this.terminologyServers = r.data);
+  }
+
+  public openImport(): void {
+    this.importReq = {spaceId: this.space.id} as WikiGithubImportRequest;
+    this.importResult = undefined;
+    this.importError = undefined;
+    this.importModalVisible = true;
+  }
+
+  public runImport(): void {
+    this.importResult = undefined;
+    this.importError = undefined;
+    this.importLoading = true;
+    this.importReq.spaceId = this.space.id;
+    this.spaceGithubImportService.importFromGithub(this.importReq)
+      .subscribe({
+        next: r => this.importResult = r,
+        error: e => this.importError = e?.error?.[0]?.message || e?.message || 'Import failed'
+      })
+      .add(() => this.importLoading = false);
   }
 
   protected sort(arr: any[]): any[] {
