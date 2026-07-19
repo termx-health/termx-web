@@ -705,7 +705,16 @@
       "description": "Aprašymas",
       "languages": "Kalbos",
       "site-url": "Svetainės URL",
-      "ssg": "Statinė svetainė"
+      "ssg": "Statinė svetainė",
+      "ssg-generator": "Statinės svetainės generatorius",
+      "ssg-skin": "Temos apipavidalinimas",
+      "ssg-accent": "Akcento spalva",
+      "ssg-theme-switcher": "Rodyti temos perjungiklį",
+      "ssg-footer-message": "Poraštės žinutė",
+      "ssg-footer-copyright": "Poraštės autorių teisės",
+      "ssg-tx-server": "Terminologijos serveris (FHIR)",
+      "ssg-search": "Įjungti paiešką",
+      "ssg-logo": "Logotipas"
     },
     "structure-definition": {
       "code": "Kodas",
@@ -2278,6 +2287,7 @@
       "github-clean": "Viskas atnaujinta!",
       "github-commit-message": "Pranešimas apie pakeitimus",
       "github-empty": "Nėra pakeitimų",
+      "ssg-generator-hint": "Repozitorijoje esantis rankiniu būdu sukurtas .mdbook/config.yml nustelbia šias reikšmes.",
       "github-integration": "Github integravimas",
       "github-pull": "Įkelti pakeitimus iš",
       "github-pull-confirm": "Tikrai norite pakeisti esamus duomenis duomenimis iš kodo saugyklos?",
@@ -2914,6 +2924,7 @@
       },
       "overview": {
         "pages": "Puslapiai",
+        "configure": "Konfigūruoti",
         "recently-modified": {
           "created": "Sukurta {{date}}",
           "header": "Neseniai pakeista",
