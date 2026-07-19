@@ -709,7 +709,16 @@
 			"description": "Kirjeldus",
 			"languages": "Keeled",
 			"site-url": "Saidi URL",
-			"ssg": "Staatiline sait"
+			"ssg": "Staatiline sait",
+			"ssg-generator": "Staatilise saidi generaator",
+			"ssg-skin": "Teema kujundus",
+			"ssg-accent": "Rõhuvärv",
+			"ssg-theme-switcher": "Näita teemavahetajat",
+			"ssg-footer-message": "Jaluse sõnum",
+			"ssg-footer-copyright": "Jaluse autoriõigus",
+			"ssg-tx-server": "Terminoloogiaserver (FHIR)",
+			"ssg-search": "Luba otsing",
+			"ssg-logo": "Logo"
 		},
 		"structure-definition": {
 			"code": "Kood",
@@ -2346,6 +2355,7 @@
 			"github-clean": "Kõik on ajakohane!",
 			"github-commit-message": "Commit teade",
 			"github-empty": "Muudatused puuduvad",
+			"ssg-generator-hint": "Repositooriumis olev käsitsi kirjutatud .mdbook/config.yml alistab need väärtused.",
 			"github-integration": "GitHub integratsioon",
 			"github-pull": "Tõmba uuendused repositooriumist",
 			"github-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
@@ -2905,6 +2915,7 @@
 			},
 			"overview": {
 				"pages": "Leheküljed",
+				"configure": "Seadista",
 				"recently-modified": {
 					"created": "Loodud {{date}}",
 					"header": "Hiljuti muudetud",

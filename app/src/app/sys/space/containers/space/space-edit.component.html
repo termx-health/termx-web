@@ -70,6 +70,32 @@
             <m-form-item mName="siteUrl" mLabel="entities.space.site-url">
               <m-input name="siteUrl" [(ngModel)]="space.siteUrl" placeholder="https://example.org/"></m-input>
             </m-form-item>
+            <m-divider mText="entities.space.ssg-generator"></m-divider>
+            <m-alert mType="info" style="margin-bottom: 1rem">{{'web.space.ssg-generator-hint' | translate}}</m-alert>
+            <m-form-item mName="ssgSkin" mLabel="entities.space.ssg-skin">
+              <m-input name="ssgSkin" [(ngModel)]="space.ssgSkin" placeholder="default"></m-input>
+            </m-form-item>
+            <m-form-item mName="ssgThemeAccent" mLabel="entities.space.ssg-accent">
+              <m-input name="ssgThemeAccent" [(ngModel)]="space.ssgThemeAccent" placeholder="#2f6feb"></m-input>
+            </m-form-item>
+            <m-form-item mName="ssgThemeSwitcher" mLabel="entities.space.ssg-theme-switcher">
+              <m-checkbox name="ssgThemeSwitcher" [(ngModel)]="space.ssgThemeSwitcher"></m-checkbox>
+            </m-form-item>
+            <m-form-item mName="ssgFooterMessage" mLabel="entities.space.ssg-footer-message">
+              <m-input name="ssgFooterMessage" [(ngModel)]="space.ssgFooterMessage"></m-input>
+            </m-form-item>
+            <m-form-item mName="ssgFooterCopyright" mLabel="entities.space.ssg-footer-copyright">
+              <m-input name="ssgFooterCopyright" [(ngModel)]="space.ssgFooterCopyright"></m-input>
+            </m-form-item>
+            <m-form-item mName="ssgTxServer" mLabel="entities.space.ssg-tx-server">
+              <m-input name="ssgTxServer" [(ngModel)]="space.ssgTxServer" placeholder="https://example.org/api/fhir"></m-input>
+            </m-form-item>
+            <m-form-item mName="ssgSearch" mLabel="entities.space.ssg-search">
+              <m-checkbox name="ssgSearch" [(ngModel)]="space.ssgSearch"></m-checkbox>
+            </m-form-item>
+            <m-form-item mName="ssgLogo" mLabel="entities.space.ssg-logo">
+              <m-input name="ssgLogo" [(ngModel)]="space.ssgLogo"></m-input>
+            </m-form-item>
             <m-divider>
               <span>{{'web.space.github-integration' | translate}}</span>
               <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>

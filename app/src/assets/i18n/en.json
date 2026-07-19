@@ -741,6 +741,15 @@
 			"servers": "Servers",
 			"site-url": "Site URL",
 			"ssg": "Static site",
+			"ssg-generator": "Static site generator",
+			"ssg-skin": "Theme skin",
+			"ssg-accent": "Accent color",
+			"ssg-theme-switcher": "Show theme switcher",
+			"ssg-footer-message": "Footer message",
+			"ssg-footer-copyright": "Footer copyright",
+			"ssg-tx-server": "Terminology server (FHIR)",
+			"ssg-search": "Enable search",
+			"ssg-logo": "Logo",
 			"viewers": "Viewers"
 		},
 		"ecosystem": {
@@ -2362,6 +2371,7 @@
 			"github-clean": "Everything is up to date!",
 			"github-commit-message": "Commit message",
 			"github-empty": "Nothing to commit",
+			"ssg-generator-hint": "A hand-written .mdbook/config.yml in the repository still overrides these values.",
 			"github-integration": "Github integration",
 			"import-github": "Import from GitHub",
 			"import-github-branch": "Branch",
@@ -2928,6 +2938,7 @@
 			"overview": {
 				"pages": "Pages",
 				"export": "Export",
+				"configure": "Configure",
 				"recently-modified": {
 					"created": "Created {{date}}",
 					"header": "Recently modified",

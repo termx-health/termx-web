@@ -14,6 +14,14 @@ export class Space {
   public defaultLanguage?: string;
   public languages?: string[];
   public siteUrl?: string;
+  public ssgSkin?: string;
+  public ssgThemeAccent?: string;
+  public ssgThemeSwitcher?: boolean;
+  public ssgFooterMessage?: string;
+  public ssgFooterCopyright?: string;
+  public ssgTxServer?: string;
+  public ssgSearch?: boolean;
+  public ssgLogo?: string;
   public packages?: Package[];
   public integration?: {
     github?: {

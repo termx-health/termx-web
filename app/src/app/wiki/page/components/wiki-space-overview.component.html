@@ -10,7 +10,11 @@
     <span style="margin-top: 1rem">{{totalPages}}</span>
   </div>
   @if (space) {
-    <m-dropdown style="margin-top: 1rem">
+    <div class="m-items-middle" style="margin-top: 1rem; gap: 0.5rem">
+    <m-button mDisplay="text" [routerLink]="['/spaces', space.id, 'edit']">
+      <m-icon mCode="setting"/>&nbsp;{{'web.wiki-page.overview.configure' | translate}}
+    </m-button>
+    <m-dropdown>
       <m-button *m-dropdown-container mDisplay="text" [mLoading]="loader.state['export']">
         <m-icon mCode="download"/>&nbsp;{{'web.wiki-page.overview.export' | translate}}
       </m-button>
@@ -21,6 +25,7 @@
         <m-icon mCode="download"/>&nbsp;{{'web.wiki-page.header.export-space-html' | translate}}
       </a>
     </m-dropdown>
+    </div>
   }
 </div>
 
