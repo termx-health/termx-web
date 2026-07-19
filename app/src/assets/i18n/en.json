@@ -2943,6 +2943,8 @@
 				"description-tooltip": "Short summary used as the page meta description on the published static site (SEO)",
 				"edit-header": "Configure",
 				"relation-header": "",
+				"slug-placeholder": "Derived from the name",
+				"slug-tooltip": "The page's URL identifier. Leave blank to derive it from the name. Changing it changes the page URL; existing links won't redirect.",
 				"usages": ""
 			},
 			"sidebar": {

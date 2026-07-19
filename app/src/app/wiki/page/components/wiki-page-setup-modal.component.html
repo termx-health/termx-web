@@ -9,6 +9,13 @@
         <m-form-item mName="name" mLabel="entities.page-content.name" required>
           <m-input name="name" [(ngModel)]="pageContent.name" autofocus required></m-input>
         </m-form-item>
+        <m-form-item mName="slug" [mLabel]="slugLabel">
+          <ng-template #slugLabel>
+            <label>{{'entities.page-content.slug' | translate}}</label>
+            <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.wiki-page.setup.slug-tooltip"></m-icon>
+          </ng-template>
+          <m-input name="slug" [(ngModel)]="pageContent.slug" placeholder="{{'web.wiki-page.setup.slug-placeholder' | translate}}"></m-input>
+        </m-form-item>
         <m-form-item mName="description" [mLabel]="descriptionLabel">
           <ng-template #descriptionLabel>
             <label>{{'entities.page-content.description' | translate}}</label>
