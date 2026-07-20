@@ -76,7 +76,11 @@ which builds to `/assets/skins/<id>/`). Reference them with paths relative to th
 - **`cs-gov`** — Czech NCEZ / MZČR branding (logos under `assets/skins/cs-gov/`, primary `#183C62`).
   Branding-only by default; to enable the full gov.cz design-system look, serve its CSS and add it
   to the skin's `stylesheets` (see the registry in `app/src/app/core/skin/skin.ts`).
-- **`ee-gov`, `lt-gov`** — Estonian / Lithuanian scaffolds: primary colour only, so they theme the
-  controls but ship no official logos or design tokens yet.
+- **`ee-gov`** — Estonian government tokens, from TEHIK's AKK deployment: brand cyan-blue primary
+  plus its page background and corner radii. The primary is AKK's `#0083ba` nudged to `#007cb0`,
+  the nearest shade of the same hue that meets WCAG AA on white (4.66:1 vs 4.24:1) — the primary
+  is used for headings and links, so it has to clear the text threshold. Institutional logos and
+  the deployment's own corporate stylesheet are not bundled; add them via `logo` / `stylesheets`.
+- **`lt-gov`** — Lithuanian scaffold: primary colour only, no official tokens or logos yet.
 
 To add or change a built-in skin, edit `app/src/app/core/skin/skin.ts`.
