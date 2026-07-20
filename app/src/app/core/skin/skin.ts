@@ -42,10 +42,29 @@ const CS_GOV: SkinDefinition = {
   // stylesheets: ['assets/skins/cs-gov/gov-design-system.css'],
 };
 
-/** Estonian government skin — scaffold. TODO: official ee-gov design tokens + logos. */
+/**
+ * Estonian government skin — design tokens from TEHIK's AKK (Andmekirjelduskeskkond) deployment,
+ * which until now carried them as a compiled-in theme in its own shell application.
+ *
+ * The primary is AKK's brand cyan-blue at the nearest shade that meets WCAG AA: the original
+ * `#0083ba` reaches only 4.24:1 on white, below the 4.5:1 needed for normal text, and the primary
+ * is used for headings and card titles. `#007cb0` keeps the hue (197.7°) and saturation (100%)
+ * and drops lightness 36.5% → 34%, giving 4.66:1 — visually near-identical, and consistent with
+ * the contrast floor marina-ui already holds itself to for secondary text and placeholders.
+ *
+ * Deliberately not carried over from AKK: `--page-header-height: 0` and
+ * `--header-border-bottom-width: 0` suppress TermX's own header because that shell supplies its
+ * own navbar — a standalone TermX would lose its header. Institutional logos and the MTA corporate
+ * stylesheet stay with the deployment; serve them via `stylesheets`/`logo` (see docs/skins.md).
+ */
 const EE_GOV: SkinDefinition = {
   id: 'ee-gov',
-  primaryColor: '#0050a0',
+  primaryColor: '#007cb0',
+  cssVars: {
+    '--color-background': '#dbdfe2',
+    '--border-radius': '0.3em',
+    '--border-radius-component': '6px',
+  },
 };
 
 /** Lithuanian government skin — scaffold. TODO: official lt-gov design tokens + logos. */

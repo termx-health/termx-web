@@ -36,7 +36,7 @@ An external skin is a JSON object with these (all optional) fields:
 ```jsonc
 {
   "id": "acme",
-  "primaryColor": "#0a7d3c",          // sets --color-primary / --primary-color
+  "primaryColor": "#0a7d3c",          // themes ng-zorro controls + --color-primary (see below)
   "headerColor": "#0a7d3c",           // sets the app header background
   "headerText": "ACME Terminology",   // shown next to the app title
   "logo": "/assets/skins/acme/logo.svg",
@@ -50,6 +50,20 @@ External skins are **CSS + branding + tokens only** — they cannot ship JavaScr
 web components (that is reserved for built-in skins). A malformed or unreachable skin file falls
 back to `main` without breaking the app.
 
+## How `primaryColor` reaches ng-zorro controls
+
+ng-zorro is compiled with ant-design's **variable** theme (`styles/styles.less`), so components
+resolve `var(--ant-primary-*)` at runtime rather than a colour baked in at LESS compile time.
+`SkinService` derives the full palette from `primaryColor` — the 1–10 shades plus hover, active and
+outline, matching ant-design v4's own `registerTheme` — and sets those variables on `<html>`.
+
+That means one `primaryColor` themes buttons, checkboxes, radios, switches, tabs, menus, steps,
+pickers, trees and pagination together; a skin does **not** need hand-written `.ant-*` overrides.
+Semantic colours are untouched by design — a `dangerous` button stays red under every skin.
+
+Defaults live in `styles/theme.less` (`:root`), so a deployment with no skin renders unchanged.
+Keep them in sync with `antPrimaryPalette()` in `app/src/app/core/skin/ant-primary-palette.ts`.
+
 ## Adding assets
 
 Mount skin assets anywhere served under `/assets/` (e.g. `app/src/assets/skins/<id>/` in source,
@@ -59,10 +73,14 @@ which builds to `/assets/skins/<id>/`). Reference them with paths relative to th
 
 - **`main`** — default TermX look (no-op).
 - **`black`** — curated dark palette (marina-ui CSS variables; see `styles/theme.less`).
-- **`cs-gov`** — Czech NCEZ / MZČR branding (logos under `assets/skins/cs-gov/`, primary `#1464C0`).
+- **`cs-gov`** — Czech NCEZ / MZČR branding (logos under `assets/skins/cs-gov/`, primary `#183C62`).
   Branding-only by default; to enable the full gov.cz design-system look, serve its CSS and add it
   to the skin's `stylesheets` (see the registry in `app/src/app/core/skin/skin.ts`).
-- **`ee-gov`, `lt-gov`** — Estonian / Lithuanian scaffolds (primary color only; official design
-  tokens + logos TODO).
+- **`ee-gov`** — Estonian government tokens, from TEHIK's AKK deployment: brand cyan-blue primary
+  plus its page background and corner radii. The primary is AKK's `#0083ba` nudged to `#007cb0`,
+  the nearest shade of the same hue that meets WCAG AA on white (4.66:1 vs 4.24:1) — the primary
+  is used for headings and links, so it has to clear the text threshold. Institutional logos and
+  the deployment's own corporate stylesheet are not bundled; add them via `logo` / `stylesheets`.
+- **`lt-gov`** — Lithuanian scaffold: primary colour only, no official tokens or logos yet.
 
 To add or change a built-in skin, edit `app/src/app/core/skin/skin.ts`.

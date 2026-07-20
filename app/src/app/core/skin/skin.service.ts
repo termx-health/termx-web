@@ -3,6 +3,7 @@ import {Injectable, inject} from '@angular/core';
 import {environment} from 'environments/environment';
 import {SkinConfig} from 'environments/environment.base';
 import {catchError, firstValueFrom, of} from 'rxjs';
+import {ANT_PRIMARY_VARS, antPrimaryPalette} from './ant-primary-palette';
 import {BUILTIN_SKINS, SkinDefinition} from './skin';
 
 /** Fields an external/inline skin is allowed to set. Anything else is ignored. */
@@ -27,8 +28,11 @@ export class SkinService {
   private appliedVarKeys: string[] = [];
 
   private static readonly STORAGE_KEY = 'tw-skin';
-  // Inline CSS custom properties this service sets; cleared before each apply so switching skins resets cleanly.
-  private static readonly RESET_PROPS = ['--color-primary', '--primary-color', '--skin-header-color'];
+  // Inline CSS custom properties this service sets; cleared before each apply so switching skins
+  // resets cleanly. Clearing the ant vars falls back to the defaults in styles/theme.less.
+  private static readonly RESET_PROPS = [
+    '--color-primary', '--primary-color', '--skin-header-color', ...ANT_PRIMARY_VARS
+  ];
 
   public get skin(): SkinDefinition {
     return this._skin;
@@ -102,6 +106,11 @@ export class SkinService {
     if (skin.primaryColor) {
       root.style.setProperty('--color-primary', skin.primaryColor);
       root.style.setProperty('--primary-color', skin.primaryColor);
+      // ng-zorro is compiled with ant's variable theme, so driving the --ant-primary-* palette is
+      // what makes buttons/checkboxes/pickers/menus follow the skin. Without it a skin only
+      // recoloured marina-ui surfaces and every skin needed its own hand-written .ant-* block.
+      Object.entries(antPrimaryPalette(skin.primaryColor))
+        .forEach(([k, v]) => root.style.setProperty(k, v));
     }
     if (skin.headerColor) {
       root.style.setProperty('--skin-header-color', skin.headerColor);
