@@ -1,4 +1,7 @@
-@import "ng-zorro-antd/ng-zorro-antd.less";
+// ng-zorro's **variable** theme: components emit `var(--ant-primary-*)` instead of a colour baked
+// in at LESS compile time, so a skin's primaryColor can reach ant controls at runtime. Defaults for
+// those vars are set in theme.less; SkinService overrides them when a skin defines a primary colour.
+@import "ng-zorro-antd/ng-zorro-antd.variable.less";
 @import "@termx-health/ui/mui.styles.less";
 @import "@termx-health/ui/src/style/themes/default";
 @import "@termx-health/markdown-parser/markdown.styles.less";
@@ -6,7 +9,11 @@
 @import "diff2html/bundles/css/diff2html.min.css";
 @import "prismjs/themes/prism.css";
 
-@primary-color: #1464C0;
+// Must stay last: LESS resolves root-scope variables last-declaration-wins, and both the ant
+// variable theme and marina-ui's default theme assign @primary-color. Pointing it at the CSS
+// variable (rather than a literal) is what makes the whole ant cascade runtime-switchable —
+// it also flows into marina-ui's `--color-primary: @primary-color` mapping.
+@primary-color: ~'var(--ant-primary-color)';
 
 @import "theme";
 
