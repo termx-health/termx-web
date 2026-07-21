@@ -6,10 +6,16 @@ import {MuiNotificationService} from '@termx-health/ui';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
-import {catchError, filter, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
+import {catchError, filter, interval, map, mergeMap, Observable, of, switchMap, take, tap} from 'rxjs';
+import {shouldWarnAboutExpiry} from './session-expiry';
 
 const COOKIE_OAUTH_TOKEN_KEY = 'termx-oauth-token';
 const REDIRECT_ORIGIN_URL = '__termx-redirect_origin_url';
+
+/** How often the session is checked for imminent expiry. */
+const SESSION_CHECK_INTERVAL_MS = 60_000;
+/** Warn when this little of the session is left. Matches the wording of core.session-expiration-warning. */
+const SESSION_WARNING_THRESHOLD_SEC = 300;
 
 export interface UserInfo {
   username: string;
@@ -30,6 +36,9 @@ export class AuthService {
     map(result => result.isAuthenticated)
   );
 
+  /** Set once per expiry window so the sticky warning isn't re-raised every check; cleared on refresh. */
+  private sessionWarningShown = false;
+
   public get token(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
   }
@@ -43,6 +52,7 @@ export class AuthService {
     this.updateAuthTokenCookie(oidcSecurityService);
     this.processAuthFinishEvents(eventService);
     this.processUserDataChangeEvents(eventService);
+    this.watchSessionExpiry();
   }
 
   public refresh(): Observable<UserInfo> {
@@ -216,5 +226,46 @@ export class AuthService {
           this.notificationService.error('core.session-expiration-error' , null, {duration: 0, closable: true});
         }
       });
+  }
+
+  /**
+   * Warns before the session dies, so a long edit isn't lost to a silent expiry.
+   *
+   * `core.session-expiration-error` (above) only fires once the session is already gone — by then
+   * unsaved work is unrecoverable. This polls the access token and raises a sticky warning while
+   * there is still time to act.
+   *
+   * Guests are skipped (they have no session to lose), and the warning is only raised when the
+   * refresh token cannot rescue the session — otherwise a silent refresh is about to happen and
+   * warning would be noise.
+   */
+  private watchSessionExpiry(): void {
+    interval(SESSION_CHECK_INTERVAL_MS).pipe(
+      switchMap(() => this.isAuthenticated.pipe(take(1))),
+      filter(isAuthenticated => isAuthenticated),
+      switchMap(() => this.oidcSecurityService.getPayloadFromAccessToken().pipe(take(1)))
+    ).subscribe(payload => this.checkSessionExpiry(payload?.['exp']));
+  }
+
+  private checkSessionExpiry(accessExp?: number): void {
+    const nowSec = Date.now() / 1000;
+    if (accessExp && accessExp - nowSec > SESSION_WARNING_THRESHOLD_SEC) {
+      // Comfortably alive — re-arm so a later expiry window warns again.
+      this.sessionWarningShown = false;
+      return;
+    }
+    if (this.sessionWarningShown) {
+      return;
+    }
+
+    this.oidcSecurityService.getRefreshToken().pipe(take(1)).subscribe(refreshToken => {
+      const warn = shouldWarnAboutExpiry({
+        accessExp, refreshToken, nowSec, thresholdSec: SESSION_WARNING_THRESHOLD_SEC
+      });
+      if (warn) {
+        this.sessionWarningShown = true;
+        this.notificationService.warning('core.session-expiration-warning', null, {duration: 0, closable: true});
+      }
+    });
   }
 }
