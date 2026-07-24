@@ -85,17 +85,18 @@ export class CodeSystemFileImportFormComponent {
   }
 
 
-  protected onCodeSystemSelect(id: string): void {
+  // `version` is supplied when prefilling from a loaded import configuration; a plain user selection omits it.
+  public onCodeSystemSelect(id: string, version?: string): void {
     const req$ = id ? this.codeSystemLibService.load(id, true) : of(undefined);
 
     this.loader.wrap('cs', req$).subscribe(cs => {
       this.sourceCodeSystem = cs;
-      this.data.codeSystemVersion = {};
+      this.data.codeSystemVersion = version ? {version} : {};
       this.data.cleanRun = false;
       this.data.cleanConceptRun = false;
 
       const draftVersions = cs?.versions?.filter(v => this.filterVersion(v, 'draft'));
-      if (!draftVersions?.length) {
+      if (!version && !draftVersions?.length) {
         this.createCodeSystemVersion();
       }
     });

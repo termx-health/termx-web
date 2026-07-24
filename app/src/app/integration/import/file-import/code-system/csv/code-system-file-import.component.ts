@@ -34,6 +34,14 @@ type SavedMappingRow = FileImportPropertyRow & {_newProp?: boolean};
 type SavedMappingPayload = {rows: SavedMappingRow[]};
 type SavedMappingOption = {name: string; rows: SavedMappingRow[]};
 type ImportTemplate = {id: string; name: string};
+type ImportConfig = {
+  termxImportConfig: number;
+  codeSystem?: string;
+  codeSystemVersion?: string;
+  sourceFormat?: string;
+  sourceType?: string;
+  rows: SavedMappingRow[];
+};
 
 
 @Component({
@@ -43,6 +51,12 @@ type ImportTemplate = {id: string; name: string};
 })
 export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   private readonly mappingStoragePrefix = 'termx.code-system-file-import.mapping';
+  // Delimiters wrapping the machine-readable import configuration appended to the downloaded log,
+  // so the same file can later prefill the importer (target CS + version + source format + column mapping).
+  private readonly configBlockStart = '===TERMX-IMPORT-CONFIG===';
+  private readonly configBlockEnd = '===END-TERMX-IMPORT-CONFIG===';
+  // Column mapping parsed from a loaded configuration, applied once the file has been analyzed.
+  private pendingConfigRows?: SavedMappingRow[];
   private notificationService = inject(MuiNotificationService);
   private valueSetLibService = inject(ValueSetLibService);
   private importService = inject(CodeSystemFileImportService);
@@ -161,6 +175,7 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
 
       this.validations = [];
       this.selectedMappingName = this.getDefaultSelectedMappingName();
+      this.applyPendingConfigRows();
     });
   }
 
@@ -227,12 +242,14 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
   };
 
   protected downloadLog(): void {
-    const warnings = this.jobLog.warnings?.join('\n');
-    const errors = this.jobLog.errors?.join('\n');
+    const warnings = this.jobLog?.warnings?.join('\n');
+    const errors = this.jobLog?.errors?.join('\n');
 
+    // Append the machine-readable configuration so this single file can later prefill the importer.
     const file = [
       warnings,
-      errors
+      errors,
+      this.buildConfigBlock()
     ].filter(Boolean).join('\n\n');
 
     const element = document.createElement('a');
@@ -243,6 +260,7 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
     element.click();
     document.body.removeChild(element);
   }
+
   protected saveMapping(): void {
     if (!this.canManageMappings) {
       return;
@@ -255,20 +273,7 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       }
 
       const mappings = this.readSavedMappings();
-      mappings[mappingName] = {
-        rows: this.analyzeResponse.parsedProperties.map(p => ({
-          columnName: p.columnName,
-          propertyName: p.propertyName,
-          propertyType: p.propertyType,
-          propertyTypeFormat: p.propertyTypeFormat,
-          propertyCodeSystem: p.propertyCodeSystem,
-          propertyDelimiter: p.propertyDelimiter,
-          preferred: p.preferred,
-          language: p.language,
-          import: p.import,
-          _newProp: p['_newProp']
-        }))
-      };
+      mappings[mappingName] = {rows: this.currentMappingRows()};
       localStorage.setItem(this.getMappingStorageKey(), JSON.stringify(mappings));
       this.selectedMappingName = mappingName;
     } catch {
@@ -281,8 +286,74 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
     if (!savedMapping?.rows?.length) {
       return;
     }
+    this.applyMappingRows(savedMapping.rows);
+  }
 
-    const savedRows = group(savedMapping.rows, p => p.columnName);
+  /* Portable import configuration (file-based, sharable across browsers/instances) */
+
+  protected onConfigFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = ''; // allow re-selecting the same file
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => this.applyConfig(this.parseConfig(String(reader.result ?? '')));
+    reader.onerror = () => this.notificationService.error('web.integration.file-import.code-system.properties.config-invalid');
+    reader.readAsText(file);
+  }
+
+  private parseConfig(text: string): ImportConfig | undefined {
+    try {
+      const start = text.indexOf(this.configBlockStart);
+      let raw = text;
+      if (start >= 0) {
+        const from = start + this.configBlockStart.length;
+        const end = text.indexOf(this.configBlockEnd, from);
+        raw = text.substring(from, end >= 0 ? end : undefined);
+      }
+      const parsed = JSON.parse(raw.trim());
+      return Array.isArray(parsed?.rows) ? parsed : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private applyConfig(config: ImportConfig | undefined): void {
+    if (!config) {
+      this.notificationService.error('web.integration.file-import.code-system.properties.config-invalid');
+      return;
+    }
+
+    this.data.source = {
+      ...this.data.source,
+      ...(config.sourceFormat && {format: config.sourceFormat}),
+      ...(config.sourceType && {type: config.sourceType})
+    };
+    this.pendingConfigRows = config.rows;
+
+    if (config.codeSystem) {
+      this.data.codeSystem = {id: config.codeSystem};
+      this.formComponent?.onCodeSystemSelect(config.codeSystem, config.codeSystemVersion);
+    }
+    // Already analyzed (config re-loaded on an active session) — apply the column mapping right away.
+    if (this.analyzeResponse.parsedProperties?.length) {
+      this.applyPendingConfigRows();
+    }
+    this.notificationService.success('web.integration.file-import.code-system.properties.config-loaded');
+  }
+
+  private applyPendingConfigRows(): void {
+    if (!this.pendingConfigRows?.length || !this.analyzeResponse.parsedProperties?.length) {
+      return;
+    }
+    this.applyMappingRows(this.pendingConfigRows);
+    this.pendingConfigRows = undefined;
+  }
+
+  private applyMappingRows(rows: SavedMappingRow[]): void {
+    const savedRows = group(rows, p => p.columnName);
     this.analyzeResponse.parsedProperties.forEach(item => {
       const saved = savedRows[item.columnName];
       if (!saved) {
@@ -299,6 +370,36 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
       item.import = saved.import;
       item['_newProp'] = saved['_newProp'];
     });
+  }
+
+  private currentMappingRows(): SavedMappingRow[] {
+    return this.analyzeResponse.parsedProperties.map(p => ({
+      columnName: p.columnName,
+      propertyName: p.propertyName,
+      propertyType: p.propertyType,
+      propertyTypeFormat: p.propertyTypeFormat,
+      propertyCodeSystem: p.propertyCodeSystem,
+      propertyDelimiter: p.propertyDelimiter,
+      preferred: p.preferred,
+      language: p.language,
+      import: p.import,
+      _newProp: p['_newProp']
+    }));
+  }
+
+  private buildConfigBlock(): string {
+    if (!this.analyzeResponse.parsedProperties?.length) {
+      return '';
+    }
+    const config: ImportConfig = {
+      termxImportConfig: 1,
+      codeSystem: this.data.codeSystem?.id,
+      codeSystemVersion: this.data.codeSystemVersion?.version,
+      sourceFormat: this.data.source?.format,
+      sourceType: this.data.source?.type,
+      rows: this.currentMappingRows()
+    };
+    return [this.configBlockStart, JSON.stringify(config, null, 2), this.configBlockEnd].join('\n');
   }
 
   /** Apply a predefined column-mapping template (assets/file-import-templates/<id>.json). */
