@@ -20,6 +20,7 @@ var twConfig = {
   "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
+  "i18nOverlays": 'json:${I18N_OVERLAYS}',
   "guestDisabled": 'json:${GUEST_DISABLED}',
   "skin": "${SKIN}",
   "skinUrl": "${SKIN_URL}",

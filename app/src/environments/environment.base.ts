@@ -29,6 +29,16 @@ export interface Environment {
    * },
    */
   extraLanguages: {[lang: string]: {[k: string]: string}},
+  /**
+   * Extra translation catalogues merged on top of the built-in `assets/i18n/{lang}.json`.
+   *
+   * URL templates containing `{lang}`, loaded in order; later entries win on key collision. Lets a
+   * deployment add or reword strings by serving its own file, instead of editing the bundled ones.
+   * A source that 404s is skipped, so a catalogue need not cover every UI language.
+   *
+   * @example i18nOverlays: ['./assets/locales/{lang}.json']
+   */
+  i18nOverlays?: string[],
 
   oauthIssuer: string,
   oauthClientId: string,

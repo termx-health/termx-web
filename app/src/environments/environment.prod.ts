@@ -16,6 +16,7 @@ export const environment: Environment = {
   uiLanguages: dynamicEnv.uiLanguages || UI_LANGS,
   contentLanguages: dynamicEnv.contentLanguages || dynamicEnv.uiLanguages || UI_LANGS,
   extraLanguages: dynamicEnv.extraLanguages || {},
+  i18nOverlays: dynamicEnv.i18nOverlays || [],
 
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
