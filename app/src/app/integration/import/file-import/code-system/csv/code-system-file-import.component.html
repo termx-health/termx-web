@@ -72,6 +72,11 @@
             <m-option [mValue]="mapping.name" [mLabel]="mapping.name"/>
           }
         </m-select>
+
+        <m-button (mClick)="configFileInput.click()">
+          {{'web.integration.file-import.code-system.properties.load-config' | translate}}
+        </m-button>
+        <input #configFileInput type="file" accept=".txt,.json" (change)="onConfigFileSelected($event)" style="display: none">
       </div>
 
       <m-table [mData]="analyzeResponse.parsedProperties">
