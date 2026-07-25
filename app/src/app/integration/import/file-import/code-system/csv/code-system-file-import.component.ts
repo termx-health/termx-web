@@ -245,11 +245,12 @@ export class CodeSystemFileImportComponent implements OnInit, DoCheck {
     const warnings = this.jobLog?.warnings?.join('\n');
     const errors = this.jobLog?.errors?.join('\n');
 
-    // Append the machine-readable configuration so this single file can later prefill the importer.
+    // Lead with the machine-readable configuration so this single file can later prefill the importer;
+    // the human-readable diff/errors follow. `parseConfig` locates the block by its delimiters regardless of position.
     const file = [
+      this.buildConfigBlock(),
       warnings,
-      errors,
-      this.buildConfigBlock()
+      errors
     ].filter(Boolean).join('\n\n');
 
     const element = document.createElement('a');
