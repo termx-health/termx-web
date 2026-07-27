@@ -1,0 +1,11 @@
+apiVersion: v2
+name: termx-web
+description: Reference Helm chart for the TermX web frontend on Kubernetes.
+type: application
+# Chart version — bump on chart changes (SemVer).
+version: 0.1.0
+# App version — the termx-web image tag this chart defaults to. Overridable via image.tag.
+appVersion: "latest"
+home: https://github.com/termx-health/termx-web
+sources:
+  - https://github.com/termx-health/termx-web

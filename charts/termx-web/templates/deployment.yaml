@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "termx-web.fullname" . }}
+  labels:
+    {{- include "termx-web.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "termx-web.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "termx-web.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.containerPort }}
+          {{- if .Values.config }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "termx-web.fullname" . }}-config
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.containerPort }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
