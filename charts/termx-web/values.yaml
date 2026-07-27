@@ -1,0 +1,52 @@
+# Default values for the termx-web reference chart.
+# The container is configured entirely at runtime via env vars → env.js (no rebuild).
+# See docs/configuration.md for every supported key; put the ones you need under `config` below.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/termx-health/termx-web
+  pullPolicy: IfNotPresent
+  # Defaults to Chart.appVersion ("latest"). Pin a real tag in production, e.g. "3.4.0".
+  tag: ""
+
+# Names of pre-created imagePullSecrets, if the image is in a private registry.
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Runtime configuration, rendered into a ConfigMap and injected as env vars.
+# These map 1:1 to the ${VAR} placeholders in the image's env.js — see docs/configuration.md.
+config:
+  # BASE_HREF: "/"                 # set to "/termx/" (trailing slash) when served on a sub-path
+  # TERMX_API: "/api"             # same-origin /api, or the absolute API URL
+  # OAUTH_ISSUER: ""              # OIDC issuer / realm URL (required in production)
+  # OAUTH_CLIENT_ID: ""           # public OIDC client id
+  # UI_LANGUAGES: '["en","et"]'   # JSON array
+  # SKIN: ""                      # built-in skin id or external skin URL
+  # GUEST_DISABLED: "true"        # JSON bool
+
+service:
+  type: ClusterIP
+  port: 8000
+  # nginx in the image listens on 80.
+  containerPort: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: termx.example.org
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
