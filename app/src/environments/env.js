@@ -25,6 +25,7 @@ var twConfig = {
   "guestDisabled": 'json:${GUEST_DISABLED}',
   "skin": "${SKIN}",
   "skinUrl": "${SKIN_URL}",
+  "menuUrl": "${MENU_URL}",
   "branding": 'json:${BRANDING}',
   "msDevOpsEnabled": 'json:${MS_DEVOPS_ENABLED}'
 };

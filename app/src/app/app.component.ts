@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router, RouterLink, RouterOutlet, Routes } from '@angular/router';
 import { group, ApplyPipe } from '@termx-health/core-util';
 import { MuiPageMenuItem, MarinPageLayoutModule, MuiCoreModule, MuiFormModule } from '@termx-health/ui';
 import {LocalizedName} from '@termx-health/util';
@@ -28,6 +28,19 @@ interface FileMenu {
 }
 
 const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot => snap.firstChild ? getRouteLastChild(snap.firstChild) : snap;
+
+/**
+ * Every concrete path the router config can match, as slash-joined strings (no leading slash),
+ * e.g. `resources`, `resources/code-systems`. Used to disable menu entries that point at a route
+ * this build doesn't have — so a deployment can serve a shared menu listing routes it omits.
+ * Pathless and empty-path routes pass their prefix through (they group children, add no segment);
+ * `**`/param routes are collected verbatim and simply never equal a real menu link.
+ */
+const collectRoutePaths = (routes: Routes = [], prefix = ''): string[] =>
+  routes.flatMap(r => {
+    const full = r.path ? [prefix, r.path].filter(Boolean).join('/') : prefix;
+    return [full, ...collectRoutePaths(r.children, full)];
+  });
 
 
 @Component({
@@ -63,9 +76,11 @@ export class AppComponent {
   protected skinService = inject(SkinService);
   private shortcutService = inject(ShortcutService);
 
+  // Concrete route paths this build has, for menu route-gating (see collectRoutePaths / createMenu).
+  private readonly availableRoutePaths = new Set(collectRoutePaths(this.router.config));
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),
-    switchMap(() => this.http.get<FileMenu[]>("./assets/menu.json")),
+    switchMap(() => this.http.get<FileMenu[]>(environment.menuUrl || './assets/menu.json')),
     map(resp => this.createMenu(resp))
   );
   protected activeRoutePrivileges$ = this.router.events.pipe(
@@ -144,12 +159,14 @@ export class AppComponent {
     return items.map(fm => {
       const map = (fm: FileMenu): MuiPageMenuItem => {
         const [route, queryParams] = parseLink(fm.link);
+        const missingRoute = !!route && !this.availableRoutePaths.has(route.replace(/^\//, ''));
         return {
           label: fm.label?.[this.translateService.currentLang],
           icon: fm.icon,
           route: route,
           queryParams: queryParams,
-          disabled: fm.privileges && !this.auth.hasAnyPrivilege(fm.privileges),
+          // Disable when the target route isn't in this build, or the user lacks the privilege.
+          disabled: missingRoute || (fm.privileges && !this.auth.hasAnyPrivilege(fm.privileges)),
           items: this.createMenu(fm.items)
         };
       };
