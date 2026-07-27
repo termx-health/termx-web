@@ -76,6 +76,15 @@ export interface Environment {
   /** Inline branding overrides applied on top of whichever skin resolved (no rebuild needed). */
   branding?: SkinConfig,
 
+  /**
+   * Source of the navigation menu. A path or URL returning the same JSON shape as the bundled
+   * `assets/menu.json` (a `FileMenu[]`). Lets a deployment serve its own menu — a static override
+   * mounted under `/assets`, or a menu service endpoint — without a rebuild. Defaults to the
+   * bundled `./assets/menu.json` when unset. Menu entries whose `link` targets a route this build
+   * does not have are disabled automatically, so a shared menu can list routes not present here.
+   */
+  menuUrl?: string,
+
   /** Enables the Space → MS DevOps (Azure) integration UI. Off until termx-server provides /spaces/{id}/msdevops/*. */
   msDevOpsEnabled?: boolean,
 }

@@ -38,6 +38,7 @@ export const environment: Environment = {
 
   skin: dynamicEnv.skin || 'main',
   skinUrl: dynamicEnv.skinUrl,
+  menuUrl: dynamicEnv.menuUrl || undefined,
   branding: dynamicEnv.branding || {},
   msDevOpsEnabled: !!dynamicEnv.msDevOpsEnabled,
 };
