@@ -81,6 +81,8 @@ export class AppComponent {
   );
   protected isEmbedded = (url: string): boolean => url?.startsWith('/embedded');
   protected readonly semiEmbedded = !!environment.embedded;
+  // Host app supplies its own chrome → hide TermX's header, keep normal routing. See Environment.externalChrome.
+  protected readonly externalChrome = !!environment.externalChrome;
   protected versions = {
     web: environment.appVersion,
     service: ''
