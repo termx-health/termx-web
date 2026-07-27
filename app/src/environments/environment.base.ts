@@ -5,6 +5,14 @@ export interface Environment {
   production: boolean,
   yupiEnabled: boolean,
   embedded: boolean,
+  /**
+   * External-chrome mode: a host application supplies its own navbar/sidebar/footer around TermX,
+   * so TermX's own top header is suppressed and the content reclaims the space. Unlike `embedded`
+   * (the `/embedded/*` iframe sandbox), routing stays normal — the host's chrome links to real
+   * TermX routes. Enabling this commits the deployment to providing its own login/navigation, since
+   * those live in the hidden header. Set via `EXTERNAL_CHROME`.
+   */
+  externalChrome?: boolean,
   baseHref: string,
   guestDisabled: boolean,
 

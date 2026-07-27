@@ -8,6 +8,7 @@ export const environment: Environment = {
   production: true,
   yupiEnabled: false,
   embedded: dynamicEnv.embedded ?? false,
+  externalChrome: dynamicEnv.externalChrome ?? false,
   baseHref: dynamicEnv.baseHref || '/',
   guestDisabled: !!dynamicEnv.guestDisabled,
 

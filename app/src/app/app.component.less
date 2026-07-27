@@ -54,6 +54,18 @@
 
 }
 
+// External-chrome mode (EXTERNAL_CHROME=true): a host app supplies its own navbar/sidebar/footer,
+// so hide TermX's own top header and let the content reclaim the space. Unlike `.embedded`, this is
+// driven by config (not the /embedded URL), so routing stays normal and the host chrome links to
+// real TermX routes. Content padding is left at the default — the host owns outer spacing.
+::ng-deep .tw-external-chrome {
+  --page-header-height: 0;
+
+  .m-page__header-wrapper {
+    display: none;
+  }
+}
+
 ::ng-deep .semi-embedded {
   .m-page-header__dropdown__border-top {
     display: none;

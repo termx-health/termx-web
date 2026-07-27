@@ -19,6 +19,7 @@
   <m-page-layout
     [class.embedded]="router.url | apply: isEmbedded"
     [class.semi-embedded]="semiEmbedded"
+    [class.tw-external-chrome]="externalChrome"
     [mTitle]="titleTpl"
     [mMenu]="menu$ | async" mMenuMode="horizontal"
     [mAuthenticated]="auth.isAuthenticated | async"
@@ -43,6 +44,7 @@
   <m-page-layout
     [class.embedded]="router.url | apply: isEmbedded"
     [class.semi-embedded]="semiEmbedded"
+    [class.tw-external-chrome]="externalChrome"
     [mTitle]="titleTpl"
     [mMenu]="menu$ | async" mMenuMode="horizontal"
     [mAuthenticated]="auth.isAuthenticated | async"

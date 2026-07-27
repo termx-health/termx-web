@@ -1,5 +1,6 @@
 var twConfig = {
   "embedded": 'json:${EMBEDDED}',
+  "externalChrome": 'json:${EXTERNAL_CHROME}',
   "baseHref": "${BASE_HREF}",
   "oauthIssuer": "${OAUTH_ISSUER}",
   "oauthClientId": "${OAUTH_CLIENT_ID}",
