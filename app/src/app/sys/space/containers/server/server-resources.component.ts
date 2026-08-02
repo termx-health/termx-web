@@ -1,7 +1,7 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {LoadingManager} from '@termx-health/core-util';
-import {MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule} from '@termx-health/ui';
+import {MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule, MuiTooltipModule} from '@termx-health/ui';
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthoritativeResource, Server} from 'term-web/sys/_lib/space';
@@ -10,7 +10,7 @@ import {ResourceContextComponent} from 'term-web/resources/resource/components/r
 
 @Component({
   templateUrl: './server-resources.component.html',
-  imports: [MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule,
+  imports: [MuiCardModule, MuiFormModule, MuiListModule, MuiSpinnerModule, MuiNoDataModule, MuiTagModule, MuiIconModule, MuiTooltipModule,
     FormsModule, TranslatePipe, RouterLink, ResourceContextComponent]
 })
 export class ServerResourcesComponent implements OnInit {
@@ -59,14 +59,49 @@ export class ServerResourcesComponent implements OnInit {
       .subscribe(r => this.matchedResources = r);
   }
 
-  getResourceLink(resource: AuthoritativeResource): string[] | null {
-    switch (this.selectedResourceType) {
-      case 'code-systems': return ['/resources', 'code-systems', resource.name, 'summary'];
-      case 'value-sets': return ['/resources', 'value-sets', resource.name, 'summary'];
-      case 'concept-maps': return ['/resources', 'map-sets', resource.name, 'summary'];
-      case 'structure-definitions': return ['/modeler', 'structure-definitions', resource.name];
-      case 'structure-maps': return ['/modeler', 'transformation-definitions', resource.name];
+  protected get remote(): boolean {
+    return !!this.server && !this.server.currentInstallation;
+  }
+
+  private fhirType(type = this.selectedResourceType): string | null {
+    switch (type) {
+      case 'code-systems': return 'CodeSystem';
+      case 'value-sets': return 'ValueSet';
+      case 'concept-maps': return 'ConceptMap';
+      case 'structure-definitions': return 'StructureDefinition';
+      case 'structure-maps': return 'StructureMap';
       default: return null;
     }
+  }
+
+  getResourceLink(resource: AuthoritativeResource): string[] | null {
+    // Local installation: open the rich local editors as before.
+    if (!this.remote) {
+      switch (this.selectedResourceType) {
+        case 'code-systems': return ['/resources', 'code-systems', resource.name, 'summary'];
+        case 'value-sets': return ['/resources', 'value-sets', resource.name, 'summary'];
+        case 'concept-maps': return ['/resources', 'map-sets', resource.name, 'summary'];
+        case 'structure-definitions': return ['/modeler', 'structure-definitions', resource.name];
+        case 'structure-maps': return ['/modeler', 'transformation-definitions', resource.name];
+        default: return null;
+      }
+    }
+    // Remote server: render the remote resource in the FHIR viewer (fetched via the server proxy).
+    const type = this.fhirType();
+    return type === 'CodeSystem' || type === 'ValueSet' || type === 'ConceptMap' ? ['/fhir', type, resource.name] : null;
+  }
+
+  /** For remote servers, tells the FHIR viewer to fetch the resource from this server instead of the local DB. */
+  getResourceQueryParams(): {[key: string]: string} | null {
+    return this.remote && this.server ? {server: String(this.server.id)} : null;
+  }
+
+  /** Direct link to the resource on the remote server's own FHIR endpoint (opens in a new tab). */
+  remoteResourceUrl(resource: AuthoritativeResource): string | null {
+    if (!this.remote || !this.server?.rootUrl || !resource.name) {
+      return null;
+    }
+    const type = this.fhirType();
+    return type ? `${this.server.rootUrl.replace(/\/+$/, '')}/${type}/${resource.name}` : null;
   }
 }

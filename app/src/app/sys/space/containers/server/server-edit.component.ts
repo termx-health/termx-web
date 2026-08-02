@@ -3,9 +3,9 @@ import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {NgForm, FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@termx-health/core-util';
-import {Server, ServerHeader} from 'term-web/sys/_lib/space';
+import {Server, ServerConnectionCheckResult, ServerHeader} from 'term-web/sys/_lib/space';
 import {ServerService} from 'term-web/sys/space/services/server.service';
-import {MuiFormModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiIconButtonModule, MuiDividerModule} from '@termx-health/ui';
+import {MuiFormModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiIconButtonModule, MuiDividerModule, MuiTagModule, MuiTooltipModule, MuiNotificationService} from '@termx-health/ui';
 import {MarinaUtilModule} from '@termx-health/util';
 import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink} from '@angular/router';
@@ -16,7 +16,7 @@ import {ResourceContextComponent} from 'term-web/resources/resource/components/r
   imports: [
     MuiFormModule, MuiCardModule, FormsModule, MuiTextareaModule, MuiMultiLanguageInputModule,
     MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiDividerModule,
-    MuiButtonModule, MuiIconButtonModule, TranslatePipe, ResourceContextComponent, MarinaUtilModule, RouterLink,
+    MuiButtonModule, MuiIconButtonModule, MuiTagModule, MuiTooltipModule, TranslatePipe, ResourceContextComponent, MarinaUtilModule, RouterLink,
   ],
 })
 export class ServerEditComponent implements OnInit {
@@ -24,9 +24,11 @@ export class ServerEditComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private location = inject(Location);
+  private notificationService = inject(MuiNotificationService);
 
   protected server: Server;
   protected serverKinds: string[];
+  protected connectionResult?: ServerConnectionCheckResult;
 
   protected mode: 'add' | 'edit' | 'view' = 'add';
   protected viewMode = false;
@@ -102,4 +104,24 @@ export class ServerEditComponent implements OnInit {
   protected keyDefined = (h: ServerHeader): boolean => {
     return !!h.key?.trim().length;
   };
+
+  protected checkConnection(): void {
+    if (!this.server?.id) {
+      return;
+    }
+    this.loader.wrap('check', this.serverService.checkConnection(this.server.id)).subscribe(res => {
+      this.connectionResult = res;
+      if (res.success) {
+        const details = [
+          res.software ? `${res.software} ${res.softwareVersion ?? ''}`.trim() : undefined,
+          res.fhirVersion ? `FHIR ${res.fhirVersion}` : undefined,
+          isDefined(res.durationMs) ? `${res.durationMs} ms` : undefined,
+        ].filter(isDefined).join(' · ');
+        this.notificationService.success('web.server.connection-ok', `HTTP ${res.statusCode}${details ? ' · ' + details : ''}`);
+      } else {
+        const detail = res.error || (isDefined(res.statusCode) ? `HTTP ${res.statusCode}` : '');
+        this.notificationService.error('web.server.connection-failed', detail, {duration: 0, closable: true});
+      }
+    });
+  }
 }

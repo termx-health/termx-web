@@ -2621,7 +2621,15 @@
 			"authoritative-description-structure-maps": "Määra, milliste struktuuri transformatsioonide jaoks see server on autoriteetne.",
 			"authoritative-preview-btn": "Eelvaade",
 			"authoritative-preview": "Sobivad ressursid",
-			"structure-maps": "Struktuuri transformatsioonid"
+			"structure-maps": "Struktuuri transformatsioonid",
+			"check-connection": "Kontrolli ühendust",
+			"connection-ok": "Ühendus õnnestus",
+			"connection-failed": "Ühendus ebaõnnestus",
+			"resources-open-remote": "Ava kaugserveris",
+			"resources-source": {
+				"local": "Kohalik paigaldus",
+				"remote": "Kaugserver"
+			}
 		},
 		"tools": {
 			"terminology-service-api": {

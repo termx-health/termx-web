@@ -2643,7 +2643,15 @@
 			"authoritative-description-structure-maps": "Define which Structure Maps this server is authoritative for.",
 			"authoritative-preview-btn": "Preview",
 			"authoritative-preview": "Matching Resources",
-			"structure-maps": "Structure Maps"
+			"structure-maps": "Structure Maps",
+			"check-connection": "Check connection",
+			"connection-ok": "Connection successful",
+			"connection-failed": "Connection failed",
+			"resources-open-remote": "Open on the remote server",
+			"resources-source": {
+				"local": "Local installation",
+				"remote": "Remote server"
+			}
 		},
 		"tools": {
 			"terminology-service-api": {
