@@ -57,10 +57,32 @@ export class FhirResourceComponent implements OnInit {
   }
 
   private loadResource(id: string, type: string): void {
+    const server = this.meta.params?.get('server');
+    if (isDefined(server)) {
+      this.loadRemoteResource(server, type, id);
+      return;
+    }
     const url = `${environment.termxApi}/fhir/${type}/${id}`;
     this.composeCurl(url);
     const request = this.http.get<any>(url);
     request.subscribe(r => this.result = r, err => {
+      this.result = err;
+      this.error = true;
+    });
+  }
+
+  // Fetches the resource from a remote terminology server through the backend (read-only) proxy.
+  private loadRemoteResource(serverId: string, type: string, id: string): void {
+    const url = `${environment.termxApi}/servers/${serverId}/resource/${type}/${id}`;
+    this.composeCurl(url);
+    const request = this.http.get<{resource: string}>(url);
+    request.subscribe(r => {
+      try {
+        this.result = r?.resource ? JSON.parse(r.resource) : undefined;
+      } catch {
+        this.result = r?.resource;
+      }
+    }, err => {
       this.result = err;
       this.error = true;
     });

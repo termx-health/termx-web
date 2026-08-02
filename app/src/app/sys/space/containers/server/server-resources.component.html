@@ -23,6 +23,14 @@
         }
       }
 
+      <div *m-card-header style="margin-left: auto;">
+        @if (remote) {
+          <m-tag mColor="blue" [mTooltip]="server.rootUrl">{{'web.server.resources-source.remote' | translate}}</m-tag>
+        } @else {
+          <m-tag>{{'web.server.resources-source.local' | translate}}</m-tag>
+        }
+      </div>
+
       @if (matchedResources.length === 0 && !loader.state['resources']) {
         <m-no-data/>
       }
@@ -31,22 +39,28 @@
         <m-list mSeparated>
           @for (ar of matchedResources; track ar.url) {
             <m-list-item mClickable>
-              <a [routerLink]="getResourceLink(ar)" class="m-justify-between" style="text-decoration: none; color: inherit; display: flex; width: 100%;">
-                <div class="m-items-middle">
+              <div class="m-justify-between m-items-middle" style="display: flex; width: 100%; gap: 0.5rem;">
+                <a [routerLink]="getResourceLink(ar)" [queryParams]="getResourceQueryParams()" class="m-items-middle"
+                   style="text-decoration: none; color: inherit; min-width: 0;">
                   <m-icon mCode="link"/>
-                  <span>{{ar.url}}</span>
+                  <span class="m-text-ellipsis">{{ar.url}}</span>
                   @if (ar.version) {
                     <m-tag>{{ar.version}}</m-tag>
                   }
-                </div>
-                <div class="m-items-middle">
+                </a>
+                <div class="m-items-middle" style="gap: 0.5rem;">
                   @if (ar.status) {
                     <m-tag [style.color]="ar.status === 'active' ? 'var(--color-green-7)' : ar.status === 'draft' ? 'var(--color-amber-7)' : 'inherit'">
                       {{ar.status}}
                     </m-tag>
                   }
+                  @if (remoteResourceUrl(ar); as href) {
+                    <a [href]="href" target="_blank" rel="noopener" [mTooltip]="'web.server.resources-open-remote' | translate">
+                      <m-icon mCode="export"/>
+                    </a>
+                  }
                 </div>
-              </a>
+              </div>
             </m-list-item>
           }
         </m-list>

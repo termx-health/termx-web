@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@termx-health/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {AuthoritativeResource, Server} from 'term-web/sys/_lib/space/model/server';
+import {AuthoritativeResource, Server, ServerConnectionCheckResult} from 'term-web/sys/_lib/space/model/server';
 import {ServerSearchParams} from 'term-web/sys/_lib/space/model/server-search-params';
 
 @Injectable()
@@ -44,5 +44,9 @@ export class ServerLibService {
 
   public loadMatchingResources(serverId: number, type: string): Observable<AuthoritativeResource[]> {
     return this.http.get<AuthoritativeResource[]>(`${this.baseUrl}/${serverId}/resources/${type}`);
+  }
+
+  public checkConnection(serverId: number): Observable<ServerConnectionCheckResult> {
+    return this.http.get<ServerConnectionCheckResult>(`${this.baseUrl}/${serverId}/check-connection`);
   }
 }

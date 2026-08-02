@@ -301,6 +301,18 @@
           </form>
         }
 
+        @if (server.id) {
+          <m-button *m-card-footer [mLoading]="loader.state['check']" (mClick)="checkConnection()">
+            <m-icon mCode="api"/>&nbsp;{{'web.server.check-connection' | translate}}
+          </m-button>
+        }
+        @if (connectionResult) {
+          <m-tag *m-card-footer [mColor]="connectionResult.success ? 'green' : 'red'" [mTooltip]="connectionResult.url">
+            {{(connectionResult.success ? 'web.server.connection-ok' : 'web.server.connection-failed') | translate}}
+            @if (connectionResult.statusCode) { · HTTP {{connectionResult.statusCode}} }
+            @if (connectionResult.software) { · {{connectionResult.software}} {{connectionResult.softwareVersion}} }
+          </m-tag>
+        }
         @if (viewMode) {
           <m-button *m-card-footer mDisplay="primary" [routerLink]="['/servers', server.id, 'edit']">
             <m-icon mCode="edit"/>&nbsp;{{'core.btn.edit' | translate}}

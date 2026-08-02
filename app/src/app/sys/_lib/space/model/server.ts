@@ -54,3 +54,14 @@ export class ServerFhirVersion {
   public version?: string;
   public url?: string;
 }
+
+export class ServerConnectionCheckResult {
+  public success?: boolean;
+  public statusCode?: number;
+  public url?: string;
+  public durationMs?: number;
+  public software?: string;
+  public softwareVersion?: string;
+  public fhirVersion?: string;
+  public error?: string;
+}
