@@ -46,6 +46,13 @@
       @if (node.concept.definition) {
         <span class="m-text-secondary" style="overflow: hidden; text-overflow: ellipsis;" [title]="node.concept.definition">· {{ node.concept.definition }}</span>
       }
+
+      <!-- Parent codes as an attribute: with a flat concept list this is what carries the hierarchy,
+           so the list view stays fully informative instead of being a degraded tree. -->
+      @if (node.parents.length) {
+        <span class="m-text-secondary" style="margin-left: auto; flex-shrink: 0; font-size: 12px; overflow: hidden; text-overflow: ellipsis; max-width: 40%;"
+          [title]="'Part of: ' + node.parents.join(', ')">⊂ {{ node.parents.join(', ') }}</span>
+      }
     </div>
   </cdk-virtual-scroll-viewport>
 
