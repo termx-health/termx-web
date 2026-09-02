@@ -9,6 +9,8 @@ import {MuiInputModule, MuiButtonModule, MuiIconModule} from '@termx-health/ui';
 import {
   buildHierarchyForMode,
   codeSystemSupportsTreeView,
+  getParentPropertyCodes,
+  readParentKeys,
   resolveHierarchyModeWithConcepts,
 } from 'term-web/fhir/code-system/code-system-hierarchy';
 
@@ -17,6 +19,10 @@ interface FlatNode {
   level: number;
   expandable: boolean;
   expanded: boolean;
+  /** Unique per placement — a multi-parent concept appears under each of its parents. */
+  key: string;
+  /** Parent codes shown as an attribute, so the list view is as informative as the tree. */
+  parents: string[];
 }
 
 /**
@@ -45,7 +51,8 @@ export class FhirCodeSystemConceptsComponent implements OnChanges {
 
   private readonly recurseKey = 'concept';
   private treeConcepts: any[] = [];       // hierarchy-shaped concepts
-  private flatConcepts: any[] = [];       // every concept flattened to one level (list mode)
+  private flatConcepts: any[] = [];       // every concept, exactly once (list mode)
+  private parentPropertyCodes: string[] = [];
   private filteredTree: any[] = [];       // tree after the active search filter
   private expandedKeys = new Set<string>();
   private search$ = new Subject<void>();
@@ -63,14 +70,29 @@ export class FhirCodeSystemConceptsComponent implements OnChanges {
   private init(): void {
     const raw: any[] = this.codeSystem.concept || [];
     const mode = resolveHierarchyModeWithConcepts(this.codeSystem, raw);
+    this.parentPropertyCodes = mode ? [...new Set([...getParentPropertyCodes(mode), 'parent'])] : [];
     this.treeConcepts = mode && raw.length ? buildHierarchyForMode([...raw], mode, this.recurseKey) : raw;
-    this.flatConcepts = this.flattenAll(this.treeConcepts);
+    // List mode reads the SOURCE concepts, not the tree. The tree repeats a multi-parent concept
+    // under each parent, so flattening it back would show the same code several times — the very
+    // duplication the flat export exists to avoid.
+    this.flatConcepts = this.dedupeByCode(this.flattenAll(raw));
     this.treeAvailable = codeSystemSupportsTreeView(this.codeSystem);
     // Default to tree only when the code system declares a hierarchy meaning; otherwise list.
     this.viewMode = this.treeAvailable && this.codeSystem.hierarchyMeaning ? 'tree' : 'list';
     this.filterContent = '';
     this.expandedKeys.clear();
     this.applyFilter();
+  }
+
+  /** Guards against a legacy nested export, where one code can appear under several parents. */
+  private dedupeByCode(concepts: any[]): any[] {
+    const byCode = new Map<string, any>();
+    for (const c of concepts) {
+      if (!byCode.has(String(c.code))) {
+        byCode.set(String(c.code), c);
+      }
+    }
+    return [...byCode.values()];
   }
 
   private flattenAll(concepts: any[]): any[] {
@@ -104,7 +126,14 @@ export class FhirCodeSystemConceptsComponent implements OnChanges {
     const term = this.filterContent.trim().toLowerCase();
     if (this.viewMode === 'list') {
       const list = term ? this.flatConcepts.filter(c => this.matches(c, term)) : this.flatConcepts;
-      this.flattenedNodes = list.map(c => ({concept: c, level: 0, expandable: false, expanded: false}));
+      this.flattenedNodes = list.map(c => ({
+        concept: c,
+        level: 0,
+        expandable: false,
+        expanded: false,
+        key: String(c.code),
+        parents: this.parentsOf(c),
+      }));
     } else {
       this.filteredTree = term ? this.filterTree(this.treeConcepts, term) : this.treeConcepts;
       // Auto-expand matches while searching; restore manual state when the box is cleared.
@@ -132,15 +161,22 @@ export class FhirCodeSystemConceptsComponent implements OnChanges {
     }, []);
   }
 
-  private flattenVisible(concepts: any[], level: number): FlatNode[] {
+  private parentsOf(concept: any): string[] {
+    return this.parentPropertyCodes.length ? readParentKeys(concept, this.parentPropertyCodes) : [];
+  }
+
+  private flattenVisible(concepts: any[], level: number, parentKey = ''): FlatNode[] {
     const nodes: FlatNode[] = [];
     for (const c of concepts) {
       const kids = c[this.recurseKey];
       const expandable = kids?.length > 0;
       const expanded = this.expandedKeys.has(c.code);
-      nodes.push({concept: c, level, expandable, expanded});
+      // Keyed by path, not by code: the same concept can be rendered under several parents, and a
+      // code-only trackBy would collide across those placements.
+      const key = `${parentKey}/${c.code}`;
+      nodes.push({concept: c, level, expandable, expanded, key, parents: this.parentsOf(c)});
       if (expandable && expanded) {
-        nodes.push(...this.flattenVisible(kids, level + 1));
+        nodes.push(...this.flattenVisible(kids, level + 1, key));
       }
     }
     return nodes;
@@ -180,5 +216,5 @@ export class FhirCodeSystemConceptsComponent implements OnChanges {
     this.flattenedNodes = this.flattenVisible(this.filteredTree, 0);
   }
 
-  protected trackByCode = (_index: number, node: FlatNode): string => node.concept.code;
+  protected trackByCode = (_index: number, node: FlatNode): string => node.key;
 }
