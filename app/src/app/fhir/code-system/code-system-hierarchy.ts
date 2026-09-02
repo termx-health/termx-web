@@ -177,12 +177,104 @@ export function getParentPropertyCodes(mode: HierarchyMode): string[] {
   }
 }
 
-function readParentKey(concept: any, propertyCodes: string[]): string | undefined {
-  const prop = concept.property?.find((p: any) => propertyCodes.includes(p.code));
-  if (!prop) {
-    return undefined;
+/** Every parent code this concept declares (a concept may legitimately have several). */
+export function readParentKeys(concept: any, propertyCodes: string[]): string[] {
+  const keys: string[] = [];
+  for (const p of concept.property || []) {
+    if (!propertyCodes.includes(p.code)) {
+      continue;
+    }
+    const key = p.valueCode ?? p.valueCoding?.code;
+    if (key !== undefined && key !== null && !keys.includes(String(key))) {
+      keys.push(String(key));
+    }
   }
-  return prop.valueCode ?? prop.valueCoding?.code;
+  return keys;
+}
+
+function readParentKey(concept: any, propertyCodes: string[]): string | undefined {
+  return readParentKeys(concept, propertyCodes)[0];
+}
+
+/**
+ * Materialising a DAG as a tree repeats a multi-parent concept under each parent, so the node count
+ * can exceed the concept count by a lot. Cap it so a pathological code system cannot freeze the tab.
+ */
+const MAX_TREE_NODES = 200000;
+
+/**
+ * Shared core for the flat-list builders: link concepts to their parents by property reference.
+ *
+ * A concept is placed under EVERY parent it declares, not just the first — the server exports a flat
+ * concept[] precisely because a hierarchy can be a DAG (a lab analyte belongs to many panels), and
+ * reading only the first reference would hide every other membership.
+ */
+function buildFromParentRefs(
+  flatConcepts: any[],
+  propertyCodes: string[],
+  childKey: string,
+  synthesizeMissingParents: boolean
+): any[] {
+  const byCode = new Map<string, any>();
+  for (const c of flatConcepts) {
+    byCode.set(String(c.code), c);
+  }
+
+  const childrenOf = new Map<string, string[]>();
+  const synthetic = new Map<string, any>();
+  const placed = new Set<string>();
+  const rootCodes: string[] = [];
+
+  for (const c of flatConcepts) {
+    const code = String(c.code);
+    const parents = readParentKeys(c, propertyCodes).filter(pk => pk !== code);
+    let attached = false;
+    for (const pk of parents) {
+      if (!byCode.has(pk)) {
+        if (!synthesizeMissingParents) {
+          continue;
+        }
+        // A dangling reference — the parent concept is not in this set, so stand one in. Its display
+        // is the best label the child can offer (a plain valueCode carries none), else the raw code.
+        if (!synthetic.has(pk)) {
+          const prop = (c.property || []).find((x: any) => propertyCodes.includes(x.code) && (x.valueCode ?? x.valueCoding?.code) === pk);
+          synthetic.set(pk, {code: pk, display: prop?.valueCoding?.display || pk});
+          rootCodes.push(pk);
+        }
+      }
+      childrenOf.set(pk, [...(childrenOf.get(pk) || []), code]);
+      placed.add(code);
+      attached = true;
+    }
+    if (!attached) {
+      rootCodes.push(code);
+    }
+  }
+
+  if (!placed.size) {
+    return [];
+  }
+
+  let budget = MAX_TREE_NODES;
+  let truncated = false;
+  const nodeFor = (code: string): any => byCode.get(code) ?? synthetic.get(code) ?? {code};
+  const materialise = (code: string, ancestors: Set<string>): any => {
+    budget--;
+    const children = childrenOf.get(code) || [];
+    // Stop on a cycle (a concept reachable from itself) or once the node budget is spent.
+    if (!children.length || ancestors.has(code) || budget <= 0) {
+      truncated = truncated || (children.length > 0 && budget <= 0);
+      return {...nodeFor(code), [childKey]: []};
+    }
+    const nextAncestors = new Set(ancestors).add(code);
+    return {...nodeFor(code), [childKey]: children.map(child => materialise(child, nextAncestors))};
+  };
+
+  const tree = rootCodes.filter(code => !placed.has(code)).map(code => materialise(code, new Set<string>()));
+  if (truncated) {
+    console.warn(`CodeSystem hierarchy truncated at ${MAX_TREE_NODES} nodes; use the list view for the complete set.`);
+  }
+  return tree;
 }
 
 /**
@@ -196,56 +288,23 @@ export function buildHierarchyByParentRef(
   if (!flatConcepts.length) {
     return flatConcepts;
   }
-  const nodes = flatConcepts.map(c => ({...c, [childKey]: [] as any[]}));
-  const byCode = new Map(nodes.map(n => [String(n.code), n]));
-  const isChild = new Set<string>();
-
-  for (const n of nodes) {
-    const pk = readParentKey(n, propertyCodes);
-    if (pk && byCode.has(String(pk)) && String(pk) !== String(n.code)) {
-      byCode.get(String(pk))![childKey].push(n);
-      isChild.add(String(n.code));
-    }
-  }
-
-  return nodes.filter(n => !isChild.has(String(n.code)));
+  return buildFromParentRefs(flatConcepts, propertyCodes, childKey, false);
 }
 
 /**
- * Build tree by grouping under parent keys (synthetic parents when parent concept missing) — part-of style.
+ * Build tree by grouping under parent keys — part-of style. Unlike {@link buildHierarchyByParentRef}
+ * this stands in a placeholder for a parent that is not in the set, so nothing is dropped; a parent
+ * that IS present is used as itself rather than being shadowed by a code-only stub.
  */
 export function buildHierarchyBySyntheticParents(
   flatConcepts: any[],
   propertyCodes: string[],
   childKey = 'concept'
 ): any[] {
-  const groupMap = new Map<string, any[]>();
-  const roots: any[] = [];
-
-  for (const concept of flatConcepts) {
-    const pk = readParentKey(concept, propertyCodes);
-    if (pk) {
-      if (!groupMap.has(pk)) {
-        groupMap.set(pk, []);
-      }
-      groupMap.get(pk)!.push({...concept, [childKey]: []});
-    } else {
-      roots.push({...concept, [childKey]: []});
-    }
+  if (!flatConcepts.length) {
+    return flatConcepts;
   }
-
-  groupMap.forEach((children, groupKey) => {
-    const first = children[0];
-    const prop = first.property?.find((p: any) => propertyCodes.includes(p.code));
-    const display = prop?.valueCoding?.display || groupKey;
-    roots.push({
-      code: groupKey,
-      display,
-      [childKey]: children
-    });
-  });
-
-  return roots;
+  return buildFromParentRefs(flatConcepts, propertyCodes, childKey, true);
 }
 
 /**
@@ -283,7 +342,8 @@ export function buildHierarchyForMode(concepts: any[], mode: HierarchyMode, chil
     if (hasNestedConcepts(concepts, childKey)) {
       return concepts;
     }
-    return buildHierarchyBySyntheticParents(concepts, codes, childKey);
+    const tree = buildHierarchyBySyntheticParents(concepts, codes, childKey);
+    return tree.length ? tree : concepts.map(c => ({...c, [childKey]: []}));
   }
   return concepts;
 }
