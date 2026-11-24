@@ -20,9 +20,11 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public created?: Date;
   public algorithm?: string;
   /**
-   * How this version's concept hierarchy is written in its FHIR resource:
-   * 'nested' | 'nested-with-parent' | 'flat'. Undefined leaves it to the server, which derives a
-   * shape that is lossless for the data. Only changeable while the version is a draft.
+   * How this version's concept hierarchy is written in its FHIR resource: 'nested' — the export
+   * termx had before the concept list was flattened, restored unchanged — or 'flat'. Undefined
+   * leaves it to the server, which derives one that is both lossless and valid for the data at
+   * hand: nested for a tree, flat where a concept has several parents and nesting would repeat
+   * codes. Only changeable while the version is a draft.
    */
   public hierarchyShape?: string;
   public identifiers?: Identifier[];
