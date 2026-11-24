@@ -103,6 +103,28 @@
                 }
               </m-form-item>
             </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="hierarchyShape" mLabel="entities.code-system-version.hierarchy-shape"
+                mLabelHint="entities.code-system-version.hierarchy-shape-hint">
+                @if (!viewMode) {
+                  <!-- Fixed once the version leaves draft: the shape changes what the version's FHIR
+                       resource looks like, and a consumer that read an active version must find the
+                       same resource next time. The server enforces this too. -->
+                  <m-select name="hierarchyShape" [(ngModel)]="version.hierarchyShape"
+                    [disabled]="!!version.status && version.status !== 'draft'"
+                    [allowClear]="true" [placeholder]="'entities.code-system-version.hierarchy-shape-option.default' | translate">
+                    @for (shape of hierarchyShapes; track shape) {
+                      <m-option [mValue]="shape" [mLabel]="'entities.code-system-version.hierarchy-shape-option.' + shape | translate"></m-option>
+                    }
+                  </m-select>
+                }
+                @if (viewMode) {
+                  <span>{{(version.hierarchyShape
+                    ? 'entities.code-system-version.hierarchy-shape-option.' + version.hierarchyShape
+                    : 'entities.code-system-version.hierarchy-shape-option.default') | translate}}</span>
+                }
+              </m-form-item>
+            </m-form-row>
             @if (version.baseCodeSystem) {
               <m-form-item mName="baseVersion" mLabel="entities.code-system-version.base-version">
                 @if (!viewMode) {
