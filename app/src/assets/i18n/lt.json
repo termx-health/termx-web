@@ -155,6 +155,13 @@
       "status": "Statusas"
     },
     "code-system-version": {
+      "hierarchy-shape": "Hierarchija FHIR",
+      "hierarchy-shape-hint": "Kaip šios versijos sąvokų hierarchija įrašoma FHIR ištekliuje. Nenurodžius serveris įprastą hierarchiją pateikia hierarchiškai, o kai sąvoka turi kelis pirminius elementus — paprastu sąrašu, nes hierarchinis pavaizdavimas ją pakartotų. Keisti galima tik kol versija yra juodraštis.",
+      "hierarchy-shape-option": {
+        "default": "Serverio numatytasis",
+        "nested": "Hierarchija (hierarchinis)",
+        "flat": "Paprastas sąrašas su pirminio elemento savybe"
+      },
       "base-version": "Parent code system version",
       "description": "Aprašas",
       "entities": "Esybės versijos",

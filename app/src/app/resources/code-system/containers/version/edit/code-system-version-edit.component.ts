@@ -6,7 +6,7 @@ import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {AuthService} from 'term-web/core/auth';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiButtonModule, MuiIconModule } from '@termx-health/ui';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiButtonModule, MuiIconModule, MuiSelectModule } from '@termx-health/ui';
 import { AsyncPipe } from '@angular/common';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
@@ -30,6 +30,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     SemanticVersionSelectComponent,
     MuiInputModule,
     MuiDatePickerModule,
+    MuiSelectModule,
     ValueSetConceptSelectComponent,
     MuiMultiLanguageInputModule,
     CodeSystemVersionSelectComponent,
@@ -60,6 +61,12 @@ export class CodeSystemVersionEditComponent implements OnInit {
   protected canEdit = false;
 
   public readonly versionPattern: string = '[A-Za-z0-9\\-\\.]{1,64}';
+  /**
+   * The shapes a version's hierarchy can be written in, in the FHIR resource. An empty selection
+   * means "no setting": the server then derives one that is both lossless and valid for the data —
+   * nested for a tree, flat for a polyhierarchy, where nesting repeats codes.
+   */
+  protected readonly hierarchyShapes = ['nested', 'flat'];
 
   @ViewChild("form") public form?: NgForm;
 

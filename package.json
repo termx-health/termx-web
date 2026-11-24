@@ -1,6 +1,6 @@
 {
   "name": "termx",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "scripts": {
     "ng": "ng",
     "postinstall": "node etc/postinstall-strip-fhir-ts.js",

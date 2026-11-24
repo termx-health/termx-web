@@ -184,6 +184,13 @@
 			"designation": "Tekst"
 		},
 		"code-system-version": {
+			"hierarchy-shape": "Hierarhia FHIR-is",
+			"hierarchy-shape-hint": "Kuidas selle versiooni mõistete hierarhia on kirja pandud FHIR-ressursis. Tühjaks jäetuna pesastab server tavalise hierarhia ja kasutab lihtloendit siis, kui mõistel on mitu vanemat, sest pesastamine kordaks seda. Muudetav ainult siis, kui versioon on mustand.",
+			"hierarchy-shape-option": {
+				"default": "Serveri vaikeväärtus",
+				"nested": "Hierarhia (pesastatud)",
+				"flat": "Lihtloend, vanema atribuudiga"
+			},
 			"base-version": "Aluskoodisüsteemi versioon",
 			"description": "Kirjeldus",
 			"entities": "Mõiste versioonid",

@@ -19,6 +19,12 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public expirationDate?: Date | string;
   public created?: Date;
   public algorithm?: string;
+  /**
+   * How this version's concept hierarchy is written in its FHIR resource:
+   * 'nested' | 'nested-with-parent' | 'flat'. Undefined leaves it to the server, which derives a
+   * shape that is lossless for the data. Only changeable while the version is a draft.
+   */
+  public hierarchyShape?: string;
   public identifiers?: Identifier[];
 
   public conceptsTotal?: number;

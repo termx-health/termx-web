@@ -173,6 +173,13 @@
       "status": "Stav"
     },
     "code-system-version": {
+      "hierarchy-shape": "Hierarchie ve FHIR",
+      "hierarchy-shape-hint": "Jak je hierarchie pojmů této verze zapsána ve zdroji FHIR. Pokud zůstane prázdné, server běžnou hierarchii vnoří a tam, kde má pojem více nadřazených prvků, použije jednoduchý seznam, protože vnoření by jej zopakovalo. Lze změnit pouze dokud je verze koncept.",
+      "hierarchy-shape-option": {
+        "default": "Výchozí nastavení serveru",
+        "nested": "Hierarchie (vnořeně)",
+        "flat": "Jednoduchý seznam s vlastností nadřazeného prvku"
+      },
       "base-version": "Verze rodičovského kódového systému",
       "description": "Popis",
       "entities": "Verze entity",
