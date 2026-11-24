@@ -184,6 +184,13 @@
 			"status": "Status"
 		},
 		"code-system-version": {
+			"hierarchy-shape": "Hierarchy in FHIR",
+			"hierarchy-shape-hint": "How this version's concept hierarchy is written in its FHIR resource. Left empty, the server nests an ordinary hierarchy and falls back to a plain list where a concept has several parents, since nesting would then repeat it. Only changeable while the version is a draft.",
+			"hierarchy-shape-option": {
+				"default": "Server default",
+				"nested": "Hierarchy (nested)",
+				"flat": "Plain list, with parent property"
+			},
 			"base-version": "Parent code system version",
 			"single": "Code System Version",
 			"uri": "URI",
