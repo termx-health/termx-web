@@ -147,6 +147,13 @@
       "status": "Status"
     },
     "code-system-version": {
+      "hierarchy-shape": "Hiërarchie in FHIR",
+      "hierarchy-shape-hint": "Hoe de begrippenhiërarchie van deze versie in haar FHIR-resource wordt geschreven. Leeg gelaten nest de server een gewone hiërarchie en valt terug op een platte lijst wanneer een begrip meerdere parents heeft, omdat nesten het dan zou herhalen. Alleen te wijzigen zolang de versie een concept is.",
+      "hierarchy-shape-option": {
+        "default": "Standaard van de server",
+        "nested": "Hiërarchie (genest)",
+        "flat": "Platte lijst, met parent-eigenschap"
+      },
       "base-version": "Parent code system version",
       "description": "Description",
       "entities": "Entity versions",

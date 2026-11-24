@@ -147,6 +147,13 @@
       "status": "Status"
     },
     "code-system-version": {
+      "hierarchy-shape": "Hiérarchie dans FHIR",
+      "hierarchy-shape-hint": "La façon dont la hiérarchie des concepts de cette version est écrite dans sa ressource FHIR. Si le champ reste vide, le serveur imbrique une hiérarchie ordinaire et bascule vers une liste simple lorsqu'un concept a plusieurs parents, car l'imbrication le répéterait. Modifiable uniquement tant que la version est un brouillon.",
+      "hierarchy-shape-option": {
+        "default": "Valeur par défaut du serveur",
+        "nested": "Hiérarchie (imbriquée)",
+        "flat": "Liste simple, avec propriété parent"
+      },
       "base-version": "Parent code system version",
       "description": "Description",
       "entities": "Entity versions",

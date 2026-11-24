@@ -147,6 +147,13 @@
       "status": "Status"
     },
     "code-system-version": {
+      "hierarchy-shape": "Hierarchie in FHIR",
+      "hierarchy-shape-hint": "Wie die Begriffshierarchie dieser Version in ihrer FHIR-Ressource geschrieben wird. Bleibt das Feld leer, verschachtelt der Server eine gewöhnliche Hierarchie und weicht auf eine einfache Liste aus, wenn ein Begriff mehrere übergeordnete Begriffe hat, da die Verschachtelung ihn dann wiederholen würde. Änderbar nur, solange die Version ein Entwurf ist.",
+      "hierarchy-shape-option": {
+        "default": "Server-Standard",
+        "nested": "Hierarchie (verschachtelt)",
+        "flat": "Einfache Liste, mit Parent-Eigenschaft"
+      },
       "base-version": "Parent code system version",
       "description": "Description",
       "entities": "Entity versions",
